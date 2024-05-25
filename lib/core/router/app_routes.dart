@@ -1,0 +1,74 @@
+class AppRoutes {
+  static const String splashScreen = '/';
+  static const String introScreen = '/introScreen';
+  static const String loginScreen = '/loginScreen';
+  static const String verifyCodeScreen = '/verifyCodeScreen';
+  static const String homeScreen = '/homeScreen';
+  static const String calendarScreen = '/calendarScreen';
+  static const String ordersScreen = '/ordersScreen';
+  static const String orderScreen = '/orderScreen';
+  static const String officesScreen = '/officesScreen';
+  static const String moreScreen = '/moreScreen';
+  static const String profileScreen = '/profileScreen';
+  static const String editProfileScreen = '/editProfileScreen';
+  static const String invoicesAndStatementsScreen =
+      '/invoicesAndStatementsScreen';
+  static const String specificInoiceAndAccountScreen =
+      '/specificInoiceAndAccountScreen';
+  static const String userAgreementScreen = '/userAgreementScreen';
+  static const String contactUsScreen = '/contactUsScreen';
+  static const String complaintsScreen = '/complaintsScreen';
+  static const String weeklyReportScreen = '/weeklyReportScreen';
+  static const String pricesScreen = '/pricesScreen';
+  static const String financialTransactionScreen =
+      '/financialTransactionScreen';
+  static const String contractsScreen = '/contractsScreen';
+  static const String contractAndOrderScreen = '/contractAndOrderScreen';
+  static const String weeklyDiscountScreen = '/weeklyDiscountScreen';
+  static const String stcPayPolicyScreen = '/stcPayPolicyScreen';
+  static const String bankPaymentScreen = '/bankPaymentScreen';
+  static const String moneyTransfersScreen = '/moneyTransfersScreen';
+  static const String addedOffersScreen = '/addedOffersScreen';
+  static const String accountSummaryScreen = '/accountSummaryScreen';
+  static const String receivingMethodScreen = '/receivingMethodScreen';
+  static const String verifyAccountWithNationalAccess =
+      '/verifyAccountWithNationalAccess';
+  static const String unitScreen = '/unitScreen';
+  static const String monthlyAccountStatementScreen =
+      '/monthlyAccountStatementScreen';
+  static const String officeScreen = '/officeScreen';
+  static const String createOfficeScreen = '/createOfficeScreen';
+  static const String createUnitScreen = '/createUnitScreen';
+  static const String unitCalendarScreen = 'unitCalendarScreen';
+  static const String unitSettingsScreen = '/unitSettingsScreen';
+  static const String taxScreen = '/taxScreen';
+  static const String cancelPolicyScreen = '/cancelPolicyScreen';
+  static const String bookingConditionScreen = '/bookingConditionScreen';
+  static const String stcPayActivateScreen = '/stcPayActivateScreen';
+  static const String updateOfficeLoctionScreen = 'updateOfficeLocationScreen';
+  static const String updateOfficeInfoScreen = 'updateOfficeInfoScreen';
+  static const String unitDetailsScreen = 'unitDetailsScreen';
+  static const String contractsSamplesScreen = 'contractsSamplesScreen';
+  static const String specificContractsScreen = 'specificContractsScreen';
+  static const String basicPricesScreen = 'basicPricesScreen';
+  static const String offerPricesScreen = 'offerPricesScreen';
+  static const String depositScreen = 'depositScreen';
+  static const String couponsScreen = 'couponsScreen';
+  static const String updateUnitInfoScreen = 'updateUnitInfoScreen';
+  static const String updateUnitCategoryScreen = 'updateUnitCategoryScreen';
+  static const String updateUnitDetailsScreen = 'updateUnitDetailsScreen';
+  static const String updateUnitDescriptionScreen =
+      'updateUnitDescriptionScreen';
+  static const String updateUnitFacilitiesScreen = 'updateUnitFacilitiesScreen';
+  static const String updateUnitFeaturesScreen = 'updateUnitFeaturesScreen';
+  static const String updateUnitServicesScreen = 'updateUnitServicesScreen';
+  static const String updateUnitComfortsScreen = 'updateUnitComfortsScreen';
+  static const String updateUnitFilesScreen = 'updateUnitFilesScreen';
+  static const String updateUnitPricesScreen = 'updateUnitPricesScreen';
+  static const String updateUnitDepositScreen = 'updateUnitDepositScreen';
+  static const String unitOffersScreen = 'unitOffersScreen';
+  static const String createOfferScreen = 'createOfferScreen';
+  static const String unitCouponsScreen = 'unitCouponsScreen';
+  static const String createCouponScreen = 'createCouponScreen';
+  static const String marketingRequestsScreen = 'marketingRequestsScreen';
+}

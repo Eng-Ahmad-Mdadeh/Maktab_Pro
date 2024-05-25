@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+import 'package:maktab/data/models/facility/facility_model.dart';
+import 'package:maktab/presentation/office/widgets/office_item_box.dart';
+import 'package:maktab/presentation/resources/app_colors.dart';
+
+class FacilityBox extends StatelessWidget {
+  const FacilityBox({
+    super.key,
+    required this.facility,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  final Facility facility;
+  final bool isSelected;
+  final Function() onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return OfficeItemBox(
+      title: facility.arName,
+      icon: facility.icon,
+      backgroundColor: isSelected ? AppColors.lightCyan : AppColors.white,
+      textColor: isSelected ? AppColors.white : AppColors.slateGray,
+      onTap: onTap,
+    );
+  }
+}

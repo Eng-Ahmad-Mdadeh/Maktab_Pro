@@ -1,0 +1,86 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab/core/router/app_routes.dart';
+import 'package:maktab/domain/offices/offices_cubit.dart';
+import 'package:maktab/domain/receiving_method/receiving_method_bloc.dart';
+import 'package:maktab/presentation/offices/widgets/required_info_item.dart';
+import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab/presentation/widgets/body_text.dart';
+import 'package:maktab/presentation/widgets/maktab_button.dart';
+import 'package:maktab/presentation/widgets/page_title.dart';
+
+class RequiredInfoDialog extends StatelessWidget {
+  const RequiredInfoDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      titlePadding: EdgeInsets.symmetric(vertical: 5.v, horizontal: 15.h),
+      title: Column(
+        children: [
+          Row(
+            children: [
+              const Expanded(
+                child: PageTitle(
+                  title: 'عذراً!',
+                  textAlign: TextAlign.right,
+                ),
+              ),
+              IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () => context.pop(),
+                icon: const Icon(
+                  Icons.close,
+                  color: AppColors.lightBlack,
+                ),
+              ),
+            ],
+          ),
+          const Divider(color: AppColors.softAsh),
+        ],
+      ),
+      contentPadding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 5.v),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const BodyText(text: 'الرجاء التأكد من إضافة المعلومات الآتية:'),
+          if (context.read<ReceivingMethodBloc>().state.receivingMethod == null)
+            RequiredInfoItem(
+              title: 'إضافة طريقة استلام المبالغ',
+              onTap: () {
+                context.pop();
+                context.pushNamed(AppRoutes.receivingMethodScreen);
+              },
+            ),
+          // if (context.read<ProfileBloc>().state.user != null &&
+          //     !context.read<ProfileBloc>().state.user!.isNafath)
+          //   RequiredInfoItem(
+          //     title: 'توثيق الحساب بالنفاذ الوطني',
+          //     onTap: () {
+          //       context.pop();
+          //       context.pushNamed(AppRoutes.verifyAccountWithNationalAccess);
+          //     },
+          //   ),
+        ],
+      ),
+      actionsPadding: EdgeInsets.symmetric(vertical: 20.v, horizontal: 70.h),
+      actions: [
+        MaktabButton(
+          onPressed: () {
+            context.pop();
+            if (context.read<OfficesCubit>().state.searchData != null) {
+              context.pushNamed(AppRoutes.createOfficeScreen);
+            }
+          },
+          padding: EdgeInsets.zero,
+          height: 50.v,
+          backgroundColor: AppColors.mintTeal,
+          text: 'إكمال',
+        ),
+      ],
+    );
+  }
+}

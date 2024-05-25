@@ -1,0 +1,39 @@
+// ignore_for_file: depend_on_referenced_packages
+
+import 'package:flutter/material.dart';
+import 'package:maktab/presentation/resources/app_colors.dart';
+
+class MaktabSnackbar {
+  static void showSuccess(BuildContext context, String message) {
+    _showSnackbar(context, message, AppColors.emeraldTeal);
+  }
+
+  static void showWarning(BuildContext context, String message) {
+    _showSnackbar(context, message, AppColors.yellow);
+  }
+
+  static void showError(BuildContext context, String message) {
+    _showSnackbar(context, message, AppColors.cherryRed);
+  }
+
+  static void _showSnackbar(
+      BuildContext context, String message, Color backgroundColor) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: backgroundColor,
+        duration: const Duration(seconds: 3),
+        content: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall!
+                .copyWith(color: AppColors.white),
+          ),
+        ),
+      ),
+    );
+  }
+}
