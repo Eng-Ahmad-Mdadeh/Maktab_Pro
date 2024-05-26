@@ -52,9 +52,9 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
     units = List.from(context.read<OfficesCubit>().state.offers.expand(
           (office) => office.units,
         ));
-    offerNameController = TextEditingController(text: widget.offer!.name);
+    offerNameController = TextEditingController(text: widget.offer?.name);
     offerDepositController =
-        TextEditingController(text: widget.offer!.discount.toString());
+        TextEditingController(text: widget.offer?.discount.toString());
     offerDateRangeController = TextEditingController(
         text: widget.offer != null
             ? '${DateFormatterHelper.getFormated(widget.offer!.startDate)} - ${DateFormatterHelper.getFormated(widget.offer!.endDate)}'
