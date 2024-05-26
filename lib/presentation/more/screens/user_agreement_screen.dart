@@ -42,7 +42,9 @@ class _UserAgreementScreenState extends State<UserAgreementScreen> {
             children: [
               SectionTitle(title: userBloc.state.agreement!.titleAr),
               SizedBox(height: 30.v),
-              Html(data: userBloc.state.agreement!.contentAr),
+              Html(
+                data: userBloc.state.agreement!.contentAr,
+              ),
             ],
           ),
         ),
