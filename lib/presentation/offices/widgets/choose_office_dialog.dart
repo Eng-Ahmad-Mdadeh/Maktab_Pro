@@ -18,26 +18,34 @@ class ChooseOfficeDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       titlePadding: EdgeInsets.symmetric(vertical: 5.v, horizontal: 15.h),
-      title: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(child: PageTitle(title: title)),
-              IconButton(
-                padding: EdgeInsets.zero,
-                onPressed: () => context.pop(),
-                icon: const Icon(
-                  Icons.close,
-                  color: AppColors.lightBlack,
+      title: SizedBox(
+        height: 200,
+        width: 100,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(child: PageTitle(title: title)),
+                IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () => context.pop(),
+                  icon: const Icon(
+                    Icons.close,
+                    color: AppColors.lightBlack,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          const Divider(color: AppColors.softAsh),
-        ],
+              ],
+            ),
+            const Divider(color: AppColors.softAsh),
+          ],
+        ),
       ),
       contentPadding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 5.v),
-      content: officesList,
+      content: SizedBox(
+        height: 300,
+        width: 300,
+        child: officesList,
+      ),
     );
   }
 }
