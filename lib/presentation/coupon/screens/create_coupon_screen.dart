@@ -95,6 +95,9 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
           context.pop();
         
           context.read<OfficesCubit>().getAllCoupons(isUpdate: true);
+          if(widget.coupon!=null){
+            context.read<OfficesCubit>().getOfficeById(widget.unit!.id,isUpdate: true);
+          }
 
         } else if (state.couponApiCallState == OfferApiCallState.failure) {
          // LoadingDialog.hide(context);
@@ -103,7 +106,7 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
       },
       builder: (context, state) => state.isInitialized
           ? Scaffold(
-        appBar: const MaktabAppBar(title: 'إنشاء كود خصم'),
+        appBar:  MaktabAppBar(title:widget.coupon!=null?'تعديل كود الخصم': 'إنشاء كود خصم'),
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,7 +163,7 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                         MaktabTextFormField(
                           controller: useTimesController,
                           title: 'مرات الاستخدام:',
-                          hintText: '1000',
+                          hintText: '1',
                           textInputType: TextInputType.number,
                           inputFormatters: [
                             FilteringTextInputFormatter.digitsOnly,

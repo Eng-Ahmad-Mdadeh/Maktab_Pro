@@ -1,5 +1,5 @@
 class UserAgreement {
-  int id;
+  int? id;
   String titleAr;
   String titleEn;
   String contentAr;

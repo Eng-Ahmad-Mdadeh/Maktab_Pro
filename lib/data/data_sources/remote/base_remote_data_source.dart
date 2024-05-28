@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:maktab/core/classes/exception/app_exception.dart';
 import 'package:maktab/core/network/network_helper.dart';
@@ -25,6 +27,7 @@ class BaseRemoteDataSource<T> {
 
   Future<Either<AppException, r.Response>> fetchData(
       {required String endpoint, Map<String, dynamic>? data}) async {
+    log(baseEndpoint+endpoint);
     try {
       final Either response = await _networkHelper.get(
         baseEndpoint + endpoint,

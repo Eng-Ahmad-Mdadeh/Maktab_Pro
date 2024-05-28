@@ -16,6 +16,7 @@ import 'package:maktab/data/data_sources/remote/office_remote_data_source.dart';
 import 'package:maktab/data/data_sources/remote/price_remote_data_source.dart';
 import 'package:maktab/data/data_sources/remote/profile_remote_data_source.dart';
 import 'package:maktab/data/data_sources/remote/settings_remote_data_source.dart';
+import 'package:maktab/data/data_sources/remote/transfer_money_data_source.dart';
 import 'package:maktab/data/data_sources/remote/user_remote_data_source.dart';
 import 'package:maktab/data/repositories/auth_repository.dart';
 import 'package:maktab/data/repositories/calendar_repository.dart';
@@ -27,6 +28,7 @@ import 'package:maktab/data/repositories/offer_repository.dart';
 import 'package:maktab/data/repositories/office_repository.dart';
 import 'package:maktab/data/repositories/price_repository.dart';
 import 'package:maktab/data/repositories/profile_repository.dart';
+import 'package:maktab/data/repositories/transfer_money_repository.dart';
 import 'package:maktab/data/repositories/user_repository.dart';
 import 'package:maktab/domain/auth/auth_bloc.dart';
 import 'package:maktab/domain/calendar/calendar_bloc.dart';
@@ -43,6 +45,7 @@ import 'package:maktab/domain/office/office_bloc.dart';
 import 'package:maktab/domain/profile/profile_bloc.dart';
 import 'package:maktab/domain/shimmer/shimmer_bloc.dart';
 import 'package:maktab/domain/splash/splash_bloc.dart';
+import 'package:maktab/domain/transfers/transdfers_bloc.dart';
 import 'package:maktab/domain/unit/unit_bloc.dart';
 import 'package:maktab/domain/user/user_bloc.dart';
 import 'package:maktab/domain/video/video_bloc.dart';
@@ -100,6 +103,11 @@ Future<void> setup() async {
       repository: locator<FinancialTransactionsRepository>(),
     ),
   );
+  locator.registerFactory<TransferBloc>(
+        () => TransferBloc(
+      transferMoneyRepository: locator<TransferMoneyRepository>(),
+    ),
+  );
   locator.registerFactory<NationalAccessBloc>(
     () => NationalAccessBloc(
       repository: locator<FinancialTransactionsRepository>(),
@@ -153,6 +161,11 @@ Future<void> setup() async {
       remoteDataSource: locator<ProfileRemoteDataSource>(),
     ),
   );
+  locator.registerLazySingleton<TransferMoneyRepository>(
+        () => TransferMoneyRepository(
+      transferMoneyRemoteDataSource: locator<TransferMoneyRemoteDataSource>(),
+    ),
+  );
   locator.registerLazySingleton<UserRepository>(
     () => UserRepository(
       remoteDataSource: locator<UserRemoteDataSource>(),
@@ -204,6 +217,9 @@ Future<void> setup() async {
   //Data Sources
   locator.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSource(),
+  );
+  locator.registerLazySingleton<TransferMoneyRemoteDataSource>(
+        () => TransferMoneyRemoteDataSource(),
   );
   locator.registerLazySingleton<UserLocalDataSource>(
     () => UserLocalDataSource(),

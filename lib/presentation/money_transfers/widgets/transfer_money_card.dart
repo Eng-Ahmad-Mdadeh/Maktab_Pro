@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab/data/models/transfers/transfer_pagination_model.dart';
 
 import '../../resources/app_colors.dart';
 import 'money_transfer_item.dart';
 
 class TransferMoneyCard extends StatelessWidget {
-  const TransferMoneyCard({super.key});
+  final TransferModel model;
+
+  const TransferMoneyCard({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -18,39 +21,41 @@ class TransferMoneyCard extends StatelessWidget {
           padding: EdgeInsets.all(20.v),
           child: Column(
             children: [
-              const MoneyTransferItem(
+              MoneyTransferItem(
                 title: 'رقم الحوالة',
-                text: '12345nf',
+                text: model.transferNumber,
               ),
               SizedBox(height: 10.v),
-              const MoneyTransferItem(
+              MoneyTransferItem(
                 title: 'تاريخ التنفيذ',
-                text: '15 نوفمبر 2022 ',
+                text: model.executionDate.toString().split(' ').first,
               ),
               SizedBox(height: 10.v),
-              const MoneyTransferItem(
+              MoneyTransferItem(
                 title: 'تاريخ الإنشاء',
-                text: '15 نوفمبر 2022',
+                text: model.createdAt.toString().split(' ').first,
               ),
               SizedBox(height: 10.v),
-              const MoneyTransferItem(
+              MoneyTransferItem(
                 title: 'طريقة التحويل',
-                text: 'stc pay',
+                text: model.transferMethod,
               ),
               SizedBox(height: 10.v),
-              const MoneyTransferItem(
+              MoneyTransferItem(
                 title: 'رقم الجوال محول له',
-                text: '054000000',
+                text: model.receiverMobile,
               ),
               SizedBox(height: 10.v),
-              const MoneyTransferItem(
+              MoneyTransferItem(
                 title: 'عدد الطلبات',
-                text: 'طلب واحد',
+                text: model.numOrder,
               ),
               SizedBox(height: 10.v),
-              const MoneyTransferItem(
+              MoneyTransferItem(
                 title: 'رسوم التحويل',
-                text: '0.5%',
+                text: model.transferFeesRate != '0'
+                    ? '${model.transferFeesRate}%'
+                    : '${model.transferFeesValue}ريال',
               ),
               SizedBox(height: 10.v),
               const MoneyTransferItem(

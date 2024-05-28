@@ -20,6 +20,7 @@ import 'package:maktab/domain/navigation/navigation_cubit.dart';
 import 'package:maktab/domain/profile/profile_bloc.dart';
 import 'package:maktab/domain/shimmer/shimmer_bloc.dart';
 import 'package:maktab/domain/splash/splash_bloc.dart';
+import 'package:maktab/domain/transfers/transdfers_bloc.dart';
 import 'package:maktab/domain/unit/unit_bloc.dart';
 import 'package:maktab/domain/user/user_bloc.dart';
 import 'package:maktab/domain/video/video_bloc.dart';
@@ -55,6 +56,7 @@ class MaktabApp extends StatelessWidget {
           BlocProvider(create: (context) => locator<ReceivingMethodBloc>()),
           BlocProvider(create: (context) => locator<UserBloc>()),
           BlocProvider(create: (context) => locator<CouponBloc>()),
+          BlocProvider(create: (context) => locator<TransferBloc>()),
 
         ],
         child: MaterialApp.router(

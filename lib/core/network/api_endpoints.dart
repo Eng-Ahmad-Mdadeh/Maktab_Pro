@@ -127,4 +127,6 @@ class ApiEndpoints {
   //National Access
   static const verifyNationalID = 'verifyNationalID';
   static const verifyResidenceID = 'verifyResidenceID';
+  //transfer
+  static const transfers = 'transfers';
 }

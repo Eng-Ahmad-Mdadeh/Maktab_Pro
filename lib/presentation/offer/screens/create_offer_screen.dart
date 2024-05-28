@@ -83,13 +83,16 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
         if (state.offerApiCallState == OfferApiCallState.success) {
           context.read<OfficesCubit>().getAllOffers(isUpdate: true);
           context.pop();
+          if(widget.offer!=null){
+            context.read<OfficesCubit>().getOfficeById(widget.unit!.id,isUpdate: true);
+          }
         } else if (state.offerApiCallState == OfferApiCallState.failure) {
           MaktabSnackbar.showError(context, 'حدث خطأ ما');
         }
       },
       builder: (context, state) => state.isInitialized
           ? Scaffold(
-              appBar: const MaktabAppBar(title: 'إنشاء عرض'),
+              appBar:  MaktabAppBar(title:widget.offer!=null?'تعديل العرض': 'إنشاء عرض'),
               body: SafeArea(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -179,7 +182,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                   Expanded(
                                     flex: 3,
                                     child: DropdownButtonFormField2(
-                                      value: DiscountTypes.price,
+                                      value:state.discountType,
                                       iconStyleData: const IconStyleData(
                                         icon: Icon(
                                           Icons.keyboard_arrow_down_sharp,
@@ -521,7 +524,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                         builder: (context, state) {
                           return MaktabButton(
                             height: 70.v,
-                            text: 'إضافة',
+                            text: widget.offer != null?'تحديث': 'إضافة',
                             isBordered: true,
                             isLoading: state.offerApiCallState ==
                                 OfferApiCallState.loading,
@@ -532,7 +535,13 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                 _formKey.currentState!.save();
                                 context
                                     .read<OfferBloc>()
-                                    .add(CreateOfferEvent());
+                                    .add(CreateOfferEvent(
+                                    isUpdate:
+                                    widget.offer != null ? true : false,
+                                    offerId: widget.offer != null
+                                        ? widget.offer!.id
+                                        : null
+                                ));
                               } else if (state.pricesCount == -1) {
                                 context
                                     .read<OfferBloc>()
