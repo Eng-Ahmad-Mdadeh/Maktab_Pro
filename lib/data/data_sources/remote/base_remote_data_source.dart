@@ -75,6 +75,7 @@ class BaseRemoteDataSource<T> {
   Future<Either<AppException, r.Response>> deleteData(
       {String endpoint = '', data}) async {
     try {
+      print(baseEndpoint + endpoint);
       final Either response =
           await _networkHelper.delete(baseEndpoint + endpoint, data: data);
       return response.fold(

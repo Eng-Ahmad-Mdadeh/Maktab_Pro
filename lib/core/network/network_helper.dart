@@ -94,6 +94,7 @@ class NetworkHelper {
     if (await Connectivity().checkConnectivity() != ConnectivityResult.none) {
       try {
         Response response = await request();
+        log("RESULT");
         log(response.data.toString());
         return Right(response.data);
       } catch (e) {

@@ -10,6 +10,7 @@ import 'package:maktab/core/services/service_locator.dart';
 import 'package:maktab/core/themes/app_theme.dart';
 import 'package:maktab/domain/auth/auth_bloc.dart';
 import 'package:maktab/domain/calendar/calendar_bloc.dart';
+import 'package:maktab/domain/coupon/coupon_bloc.dart';
 import 'package:maktab/domain/home/home_bloc.dart';
 import 'package:maktab/domain/map/map_cubit.dart';
 import 'package:maktab/domain/offices/offices_cubit.dart';
@@ -53,6 +54,8 @@ class MaktabApp extends StatelessWidget {
           BlocProvider(create: (context) => locator<ProfileBloc>()),
           BlocProvider(create: (context) => locator<ReceivingMethodBloc>()),
           BlocProvider(create: (context) => locator<UserBloc>()),
+          BlocProvider(create: (context) => locator<CouponBloc>()),
+
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

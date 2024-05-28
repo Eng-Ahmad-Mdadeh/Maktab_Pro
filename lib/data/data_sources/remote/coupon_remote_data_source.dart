@@ -49,6 +49,7 @@ class CouponRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   }
 
   Future<Either<AppException, r.Response>> deleteCoupon(id) async {
-    return deleteData(endpoint: ApiEndpoints.delete, data: id);
+    return deleteData(   endpoint: '${ApiEndpoints.delete}/$id',);
+
   }
 }

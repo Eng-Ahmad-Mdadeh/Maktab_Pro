@@ -81,6 +81,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           context.pushNamed(AppRoutes.editProfileScreen, extra: true);
         } else if (state.profileCompleteness == ProfileCompleteness.complete) {
           Navigator.popUntil(context, (route) => route.isFirst);
+          context.pushReplacementNamed(AppRoutes.homeScreen);
           context
               .read<ReceivingMethodBloc>()
               .add(GetReceivingMoneyMethodEvent());
@@ -90,7 +91,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           context.read<HomeBloc>().add(GetStatisticsEvent());
           await context.read<HomeBloc>().stream.firstWhere(
               (state) => state.homeApiCallState != HomeApiCallState.loading);
-          context.pushReplacementNamed(AppRoutes.homeScreen);
+
         } else if (state.profileCompleteness == ProfileCompleteness.unknown) {
           Navigator.popUntil(context, (route) => route.isFirst);
           context.pushReplacementNamed(AppRoutes.splashScreen);

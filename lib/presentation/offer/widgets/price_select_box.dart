@@ -23,13 +23,13 @@ class PriceSelectBox extends StatelessWidget {
         margin: EdgeInsets.only(left: 10.h),
         padding: EdgeInsets.symmetric(vertical: 15.v, horizontal: 20.h),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.softAsh : AppColors.palePlatinum,
+          color: isSelected ? AppColors.mintTeal : AppColors.palePlatinum,
           borderRadius: BorderRadius.circular(15.adaptSize),
         ),
         child: Center(
           child: BodyText(
             text: title,
-            textColor: isSelected ? AppColors.cherryRed : AppColors.slateGray,
+            textColor: isSelected ? AppColors.white : AppColors.slateGray,
           ),
         ),
       ),

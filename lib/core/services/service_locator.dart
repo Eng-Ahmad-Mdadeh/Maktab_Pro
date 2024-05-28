@@ -30,6 +30,7 @@ import 'package:maktab/data/repositories/profile_repository.dart';
 import 'package:maktab/data/repositories/user_repository.dart';
 import 'package:maktab/domain/auth/auth_bloc.dart';
 import 'package:maktab/domain/calendar/calendar_bloc.dart';
+import 'package:maktab/domain/coupon/coupon_bloc.dart';
 import 'package:maktab/domain/home/home_bloc.dart';
 import 'package:maktab/domain/map/map_cubit.dart';
 import 'package:maktab/domain/national_access/national_access_bloc.dart';
@@ -134,6 +135,11 @@ Future<void> setup() async {
       offerRepository: locator<OfferRepository>(),
     ),
   );
+  locator.registerFactory<CouponBloc>(
+    () => CouponBloc(
+      offerRepository: locator<CouponRepository>(),
+    ),
+  );
 
   //Repositories
   locator.registerLazySingleton<AuthRepository>(
@@ -183,6 +189,7 @@ Future<void> setup() async {
       couponRemoteDataSource: locator<CouponRemoteDataSource>(),
     ),
   );
+
   locator.registerLazySingleton<ComplaintRepository>(
     () => ComplaintRepository(
       complaintRemoteDataSource: locator<ComplaintRemoteDataSource>(),

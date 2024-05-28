@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:maktab/core/classes/exception/app_exception.dart';
 import 'package:maktab/core/classes/exception/data_exceptions.dart';
 import 'package:maktab/data/data_sources/remote/coupon_remote_data_source.dart';
@@ -43,19 +46,23 @@ class CouponRepository {
     );
   }
 
-  Future<Either<AppException, Coupon>> createCoupon({
+  Future<Either<AppException, String>> createCoupon({
     required String name,
     required String discount,
+    required String code,
+    required int numberUsed,
     required String discountType,
     required DateTime startDate,
     required DateTime endDate,
     required String status,
     required int officeId,
-    required List<OfficePrice> prices,
+    required List<int> prices,
   }) async {
     try {
       final offerModelData = _createCouponDataMap(
           name: name,
+          code: code,
+          numberUsed: numberUsed,
           discount: discount,
           discountType: discountType,
           startDate: startDate,
@@ -63,16 +70,18 @@ class CouponRepository {
           status: status,
           officeId: officeId,
           prices: prices);
+      log(offerModelData.toString());
       final result = await _remoteDataSource.createCoupon(offerModelData);
       return result.fold(
         (error) => Left(error),
         (right) {
-          try {
-            final Coupon coupon = Coupon.fromJson(right.data);
-            return Right(coupon);
-          } catch (e) {
-            return Left(ConversionException(e.toString()));
-          }
+
+            if (right.status) {
+              return const Right('تمت اضافة الكوبون بنجاح');
+            } else {
+              return Left(AppException(right.message));
+            }
+
         },
       );
     } catch (e) {
@@ -80,7 +89,7 @@ class CouponRepository {
     }
   }
 
-  Future<Either<AppException, Coupon>> updateCoupon({
+  Future<Either<AppException, String>> updateCoupon({
     required int couponId,
     required String name,
     required String discount,
@@ -89,29 +98,39 @@ class CouponRepository {
     required DateTime endDate,
     required String status,
     required int officeId,
-    required List<OfficePrice> prices,
+    required List<int> prices,
+    required List<int> mainPrices,
+    required String code,
+    required int numberUsed,
   }) async {
     try {
       final offerModelData = _createCouponDataMap(
           name: name,
+          isUpdate: true,
+          code: code,
+          numberUsed: numberUsed,
           discount: discount,
           discountType: discountType,
           startDate: startDate,
           endDate: endDate,
           status: status,
+          mainPrices: mainPrices,
           officeId: officeId,
-          prices: prices);
+          prices: prices,
+      );
       final result =
           await _remoteDataSource.updateCoupon(couponId, offerModelData);
       return result.fold(
         (error) => Left(error),
         (right) {
-          try {
-            final Coupon coupon = Coupon.fromJson(right.data);
-            return Right(coupon);
-          } catch (e) {
-            return Left(ConversionException(e.toString()));
+
+          if(right.status){
+            return const Right('تم اضافة كود الخصم بنجاج');
+          }else{
+            return Left(AppException(right.message));
           }
+
+
         },
       );
     } catch (e) {
@@ -161,6 +180,7 @@ class CouponRepository {
   }
 
   Future<Either<AppException, void>> deleteCoupon(couponId) async {
+    log(couponId.toString());
     final result = await _remoteDataSource.deleteCoupon(couponId);
     return result.fold(
       (error) => Left(error),
@@ -193,16 +213,22 @@ class CouponRepository {
   Map<String, dynamic> _createCouponDataMap({
     required String name,
     required String discount,
+    required String code,
+    required int numberUsed,
     required String discountType,
     required DateTime startDate,
     required DateTime endDate,
     required String status,
     required int officeId,
-    required List<OfficePrice> prices,
+     bool isUpdate=false,
+    required List<int> prices,
+    List<int> mainPrices=const[],
   }) {
     Map<String, dynamic> offerMap = {};
     offerMap.addAll({
       'name': name,
+      'code': code,
+      'number_used': numberUsed,
       'discount': discount,
       'type_discount': discountType,
       'start_date': startDate.toIso8601String(),
@@ -211,10 +237,18 @@ class CouponRepository {
       'ads_id': officeId,
     });
     for (int i = 0; i < prices.length; i++) {
-      offerMap.addAll({
-        'prices[$i][ads_price_id]': prices[i].id,
-      });
+      if(isUpdate){
+        offerMap.addAll({
+          'ads_prices[$i][id]': prices[i],
+        });
+      }
+        offerMap.addAll({
+          'ads_prices[$i][ads_price_id]':isUpdate?mainPrices[i]: prices[i],
+        });
+
+
     }
+    log(offerMap.toString());
     return offerMap;
   }
 
@@ -228,7 +262,7 @@ class CouponRepository {
     });
     for (int i = 0; i < prices.length; i++) {
       offerMap.addAll({
-        'prices[$i][ads_price_id]': prices[i].id,
+        'prices[$i][ads_price_id]': 52
       });
     }
     return offerMap;
