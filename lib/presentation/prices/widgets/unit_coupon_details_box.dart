@@ -1,22 +1,34 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:maktab/core/helpers/date_formatter_helper.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/data/models/coupon/coupon_model.dart';
+import 'package:maktab/domain/coupon/coupon_bloc.dart';
 import 'package:maktab/presentation/prices/widgets/unit_offer_info_item.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/maktab_switch.dart';
 import 'package:maktab/presentation/widgets/section_title.dart';
 
+import '../../../core/router/app_routes.dart';
+import '../../../core/services/service_locator.dart';
+import '../../../data/models/office/office_model.dart';
+import '../../../domain/offices/offices_cubit.dart';
+import '../../widgets/confirm_alert_dialog.dart';
+
 class UnitCouponDetailsBox extends StatelessWidget {
   const UnitCouponDetailsBox(
-      {super.key, required this.coupon, required this.unitId});
+      {super.key, required this.coupon, required this.unit});
 
   final Coupon coupon;
-  final int unitId;
+  final  Office unit;
 
   @override
   Widget build(BuildContext context) {
+    log('${coupon.priceTypeIds}.......');
     return Container(
       width: SizeHelper.width,
       padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 15.v),
@@ -33,7 +45,9 @@ class UnitCouponDetailsBox extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () => context.pushNamed(
+                        AppRoutes.createCouponScreen,
+                        extra: {'coupon': coupon, 'unit': unit}),
                     icon: const Icon(
                       Icons.edit,
                       color: AppColors.emeraldTeal,
@@ -41,39 +55,39 @@ class UnitCouponDetailsBox extends StatelessWidget {
                   ),
                   IconButton(
                     onPressed: () {
-                      // showDialog(
-                      //   context: context,
-                      //   barrierDismissible: false,
-                      //   builder: (context2) {
-                      //     return BlocProvider(
-                      //       create: (context) => locator.get<OfferBloc>(),
-                      //       child: BlocConsumer<OfferBloc, OfferState>(
-                      //         listener: (context2, state) {
-                      //           if (state.offerApiCallState ==
-                      //               OfferApiCallState.success) {
-                      //             context2
-                      //                 .read<OfficesCubit>()
-                      //                 .getOfficeById(unitId, isUpdate: true);
-                      //             context2.pop();
-                      //           }
-                      //         },
-                      //         builder: (context, state) {
-                      //           return ConfirmAlertDialog(
-                      //             alertText: 'لايمكنك التراجع بعد التأكيد',
-                      //             isLoading: state.offerApiCallState ==
-                      //                 OfferApiCallState.loading,
-                      //             confirmOnPressed: () {
-                      //               context
-                      //                   .read<OfferBloc>()
-                      //                   .add(DeleteOfferEvent(offer.id));
-                      //             },
-                      //             cancelOnPressed: () => context.pop(),
-                      //           );
-                      //         },
-                      //       ),
-                      //     );
-                      //   },
-                      // );
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (context2) {
+                          return BlocProvider(
+                            create: (context) => locator.get<CouponBloc>(),
+                            child: BlocConsumer<CouponBloc, CouponState>(
+                              listener: (context2, state) {
+                                if (state.couponApiCallState ==
+                                    OfferApiCallState.update) {
+                                  context2
+                                      .read<OfficesCubit>()
+                                      .getOfficeById(unit.id, isUpdate: true);
+                                  context2.pop();
+                                }
+                              },
+                              builder: (context, state) {
+                                return ConfirmAlertDialog(
+                                  alertText: 'لايمكنك التراجع بعد التأكيد',
+                                  isLoading: state.couponApiCallState ==
+                                      OfferApiCallState.loading,
+                                  confirmOnPressed: () {
+                                    context
+                                        .read<CouponBloc>()
+                                        .add(DeleteCouponEvent(coupon.id));
+                                  },
+                                  cancelOnPressed: () => context.pop(),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      );
                     },
                     icon: const Icon(
                       Icons.delete,
@@ -90,7 +104,7 @@ class UnitCouponDetailsBox extends StatelessWidget {
             child: Column(
               children: [
                 UnitOfferInfoItem(
-                  title: 'قيمة العرض',
+                  title: 'قيمة الخصم',
                   value: coupon.discountType == 'percent'
                       ? '${coupon.discount.round().toString()}%'
                       : '${coupon.discount.round().toString()} ريال',
@@ -113,39 +127,39 @@ class UnitCouponDetailsBox extends StatelessWidget {
                         activeColor: AppColors.emeraldTeal,
                         activeTrackColor: AppColors.mintGreen,
                         onChanged: (value) {
-                          // showDialog(
-                          //   context: context,
-                          //   barrierDismissible: false,
-                          //   builder: (context2) {
-                          //     return BlocProvider(
-                          //       create: (context) => locator.get<OfferBloc>(),
-                          //       child: BlocConsumer<OfferBloc, OfferState>(
-                          //         listener: (context2, state) {
-                          //           if (state.offerApiCallState ==
-                          //               OfferApiCallState.success) {
-                          //             context2
-                          //                 .read<OfficesCubit>()
-                          //                 .getOfficeById(unitId,
-                          //                     isUpdate: true);
-                          //             context2.pop();
-                          //           }
-                          //         },
-                          //         builder: (context, state) {
-                          //           return ConfirmAlertDialog(
-                          //             alertText: 'لايمكنك التراجع بعد التأكيد',
-                          //             isLoading: state.offerApiCallState ==
-                          //                 OfferApiCallState.loading,
-                          //             confirmOnPressed: () {
-                          //               context.read<OfferBloc>().add(
-                          //                   UpdateOfferStatusEvent(offer.id));
-                          //             },
-                          //             cancelOnPressed: () => context.pop(),
-                          //           );
-                          //         },
-                          //       ),
-                          //     );
-                          //   },
-                          // );
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context2) {
+                              return BlocProvider(
+                                create: (context) => locator.get<CouponBloc>(),
+                                child: BlocConsumer<CouponBloc, CouponState>(
+                                  listener: (context2, state) {
+                                    if (state.couponApiCallState ==
+                                        OfferApiCallState.update) {
+                                      context2
+                                          .read<OfficesCubit>()
+                                          .getOfficeById(unit.id,
+                                              isUpdate: true);
+                                      context2.pop();
+                                    }
+                                  },
+                                  builder: (context, state) {
+                                    return ConfirmAlertDialog(
+                                      alertText: 'لايمكنك التراجع بعد التأكيد',
+                                      isLoading: state.couponApiCallState ==
+                                          OfferApiCallState.loading,
+                                      confirmOnPressed: () {
+                                        context.read<CouponBloc>().add(
+                                            UpdateCouponStatusEvent(coupon.id));
+                                      },
+                                      cancelOnPressed: () => context.pop(),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                          );
                         },
                       ),
                       SizedBox(width: 10.h),

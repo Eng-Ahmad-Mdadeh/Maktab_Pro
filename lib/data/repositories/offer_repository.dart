@@ -110,7 +110,7 @@ class OfferRepository {
     required DateTime endDate,
     required String status,
     required int officeId,
-    required List<OfficePrice> prices,
+    required List<int> prices,
   }) async {
     try {
       final offerData = _createOfferDataMap(
@@ -219,7 +219,7 @@ class OfferRepository {
     required DateTime endDate,
     required String status,
     required int officeId,
-    required List<OfficePrice> prices,
+    required List<int> prices,
   }) {
     Map<String, dynamic> offerMap = {};
     offerMap.addAll({
@@ -233,7 +233,7 @@ class OfferRepository {
     });
     for (int i = 0; i < prices.length; i++) {
       offerMap.addAll({
-        'prices[$i][ads_price_id]': prices[i].id,
+        'prices[$i][ads_price_id]': prices[i],
       });
     }
     return offerMap;

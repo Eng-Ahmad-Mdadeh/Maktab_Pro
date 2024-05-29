@@ -24,7 +24,7 @@ class UnitCouponsScreen extends StatelessWidget {
                     child: ListView.separated(
                       itemBuilder: (context, index) {
                         return UnitCouponDetailsBox(
-                          unitId: state.selectedOffice!.id,
+                          unit: state.selectedOffice!,
                           coupon: state.selectedOffice!.coupons[index],
                         );
                       },

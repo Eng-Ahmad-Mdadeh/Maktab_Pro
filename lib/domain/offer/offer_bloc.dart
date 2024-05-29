@@ -32,6 +32,7 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
         state.endDate = event.offer!.endDate;
         state.isValidOfferDateRange = true;
         state.priceTypes = event.offer!.priceTypeIds;
+        state.discountType=event.offer!.discountType=='percent'?DiscountTypes.percentage:DiscountTypes.price;
         for (OfficePrice price in event.unit!.prices) {
           if (state.priceTypes.contains(price.typeResId)) {
             state.prices[price.id] = price.price;
@@ -140,16 +141,35 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
     });
     on<CreateOfferEvent>((event, emit) async {
       emit(state.copyWith(offerApiCallState: OfferApiCallState.loading));
-      final result = await _offerRepository.createOffer(
-        name: state.name,
-        discount: state.discountAmount,
-        discountType:
+       dynamic result;
+      if(event.isUpdate){
+
+        result = await _offerRepository.updateOfferToOffice(
+            name: state.name,
+            offerId: event.offerId!,
+            status: '1',
+            discount: state.discountAmount.toString(),
+            discountType:
             state.discountType == DiscountTypes.percentage ? 'percent' : 'rial',
-        startDate: state.startDate!,
-        endDate: state.endDate!,
-        officeId: state.unit!.id,
-        prices: state.prices.keys.toList(),
-      );
+            startDate: state.startDate!,
+            endDate: state.endDate!,
+            officeId: state.unit!.id,
+            prices: state.prices.keys.toList(),
+         //   mainPrices:state.prices.keys.toList()
+        );
+      }else {
+         result = await _offerRepository.createOffer(
+          name: state.name,
+          discount: state.discountAmount,
+          discountType: state.discountType == DiscountTypes.percentage
+              ? 'percent'
+              : 'rial',
+          startDate: state.startDate!,
+          endDate: state.endDate!,
+          officeId: state.unit!.id,
+          prices: state.prices.keys.toList(),
+        );
+      }
       result.fold(
         (failure) {
           emit(state.copyWith(offerApiCallState: OfferApiCallState.failure));

@@ -33,7 +33,7 @@ class OfferPricesScreen extends StatelessWidget {
                     child: MaktabButton(
                       height: 60.v,
                       text: 'إنشاء عرض',
-                      padding: EdgeInsets.symmetric(horizontal: 25.h),
+                      padding: EdgeInsets.symmetric(horizontal: 15.h),
                       icon: const Icon(Icons.add),
                       onPressed: () =>
                           context.pushNamed(AppRoutes.createOfferScreen),

@@ -6,7 +6,7 @@ class OfferState extends Equatable {
   final OfferApiCallState offerApiCallState;
   Office? unit;
   String name;
-  final DiscountTypes discountType;
+  DiscountTypes discountType;
   final num discountAmount;
   DateTime? startDate;
   DateTime? endDate;

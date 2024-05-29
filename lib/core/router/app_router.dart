@@ -2,8 +2,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab/core/router/app_routes.dart';
 import 'package:maktab/core/services/service_locator.dart';
+import 'package:maktab/data/models/coupon/coupon_model.dart';
 import 'package:maktab/data/models/offer/offer_model.dart';
 import 'package:maktab/data/models/office/office_model.dart';
+import 'package:maktab/domain/coupon/coupon_bloc.dart';
 import 'package:maktab/domain/offer/offer_bloc.dart';
 import 'package:maktab/domain/office/office_bloc.dart';
 import 'package:maktab/domain/unit/unit_bloc.dart';
@@ -457,7 +459,16 @@ final GoRouter appRouter = GoRouter(
               path: AppRoutes.createCouponScreen,
               name: AppRoutes.createCouponScreen,
               builder: (context, state) {
-                return const CreateCouponScreen();
+                Map<String, dynamic>? data =
+                state.extra as Map<String, dynamic>?;
+                Coupon? coupon = data != null ? data['coupon'] : null;
+                Office? unit = data != null ? data['unit'] : null;
+                return BlocProvider(
+                  create: (context) => locator.get<CouponBloc>()
+                    ..add(InitialCouponEvent(coupon, unit)),
+                  child: CreateCouponScreen(coupon: coupon, unit: unit),
+                );
+
               },
             ),
           ],

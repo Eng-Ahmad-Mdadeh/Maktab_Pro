@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:maktab/core/classes/exception/app_exception.dart';
 import 'package:maktab/core/network/api_endpoints.dart';
@@ -25,6 +27,7 @@ class ComfortRemoteDataSource extends BaseRemoteDataSource<r.Response> {
 
   Future<Either<AppException, r.Response>> deleteFromOffice(
       officeId, data) async {
+
     return deleteData(
       endpoint: '${ApiEndpoints.delete}/$officeId',
       data: data,

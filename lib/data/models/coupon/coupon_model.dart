@@ -1,5 +1,8 @@
+import '../office/office_price_model.dart';
+
 class Coupon {
   String name;
+  int id;
   bool status;
   String code;
   num discount;
@@ -7,8 +10,11 @@ class Coupon {
   DateTime startDate;
   DateTime endDate;
   int numberUsed;
+  List<int> priceTypeIds;
+  List<OfficePrice> prices;
 
   Coupon({
+    required this.id,
     required this.name,
     required this.status,
     required this.code,
@@ -17,9 +23,12 @@ class Coupon {
     required this.startDate,
     required this.endDate,
     required this.numberUsed,
+    required this.priceTypeIds,
+    required this.prices,
   });
 
   factory Coupon.fromJson(Map<String, dynamic> json) => Coupon(
+        id: json["id"],
         name: json["name"],
         status: json["status"] is bool
             ? json["status"]
@@ -32,6 +41,14 @@ class Coupon {
         startDate: DateTime.parse(json["start_date"]),
         endDate: DateTime.parse(json["end_date"]),
         numberUsed: int.parse(json["number_used"]),
+    priceTypeIds: json["ads_prices"] != null
+        ? List<int>.from(json["ads_prices"]
+        .map((price) => OfficePrice.fromJson(price).typeResId))
+        : [],
+    prices: json["ads_prices"] != null
+        ? List<OfficePrice>.from(json["ads_prices"]
+        .map((price) => OfficePrice.fromJson(price)))
+        : <OfficePrice>[],
       );
 
   Map<String, dynamic> toJson() => {
