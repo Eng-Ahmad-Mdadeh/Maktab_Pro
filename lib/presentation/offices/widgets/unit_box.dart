@@ -21,7 +21,7 @@ class UnitBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<OfficesCubit, OfficesState>(
       listener: (context, state) {
-        if (state.officeApiCallState == OfficesApiCallState.update) {
+        if (state.officeApiCallState == OfficesApiCallState.update ) {
           LoadingDialog.hide(context);
         } else if (state.officeApiCallState == OfficesApiCallState.loading) {
           LoadingDialog.show(context);

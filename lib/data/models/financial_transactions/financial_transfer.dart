@@ -6,7 +6,7 @@ class FinancialTransfer {
   String transferMethod;
   String numOrder;
   dynamic receiverMobile;
-  String receiverIban;
+  String? receiverIban;
   String transferFeesRate;
   String transferFeesValue;
   String entitlementAmount;

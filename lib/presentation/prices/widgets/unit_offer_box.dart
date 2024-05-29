@@ -21,14 +21,18 @@ class UnitOfferBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<OfficesCubit, OfficesState>(
       listener: (context, state) {
-        if (state.officeApiCallState == OfficesApiCallState.update) {
+        if (state.officeApiCallState == OfficesApiCallState.update &&
+            state.selectedOffice?.id == unit.id) {
           LoadingDialog.hide(context);
-        } else if (state.officeApiCallState == OfficesApiCallState.loading) {
+        } else if (state.officeApiCallState == OfficesApiCallState.loading &&
+            state.selectedOffice?.id == unit.id) {
           LoadingDialog.show(context);
-        } else if (state.officeApiCallState == OfficesApiCallState.success) {
+        } else if (state.officeApiCallState == OfficesApiCallState.success &&
+            state.selectedOffice?.id == unit.id) {
           LoadingDialog.hide(context);
           context.pushNamed(AppRoutes.unitOffersScreen, extra: unit);
-        } else if (state.officeApiCallState == OfficesApiCallState.failure) {
+        } else if (state.officeApiCallState == OfficesApiCallState.failure &&
+            state.selectedOffice?.id == unit.id) {
           LoadingDialog.hide(context);
           MaktabSnackbar.showError(context, 'حدث خطأ ما');
         }

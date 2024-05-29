@@ -223,6 +223,7 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                         extra: state.selectedOffice),
                     infoWidget: Column(
                       children: [
+
                         OfficeInfoItem(
                           title: 'الدور',
                           value: state.selectedOffice!.details

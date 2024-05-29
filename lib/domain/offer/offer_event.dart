@@ -63,7 +63,11 @@ class SetOfferNameEvent extends OfferEvent {
 
 class ClearPriceCountEvent extends OfferEvent {}
 
-class CreateOfferEvent extends OfferEvent {}
+class CreateOfferEvent extends OfferEvent {
+bool isUpdate;
+int? offerId;
+CreateOfferEvent({this.isUpdate = false,this.offerId});
+}
 
 class InitialOfferEvent extends OfferEvent {
   final Offer? offer;

@@ -144,7 +144,7 @@ class Office {
       title: json["title"],
       refNumber:
           json["ref_number"] != null ? json["ref_number"].toString() : '',
-      licenseNumber: json["license_number"] ?? '',
+      licenseNumber: json["license_number"].toString() ?? '',
       viewerName: json["viewer_name"] ?? '',
       viewerPhone: json["viewer_phone"] != null
           ? json["viewer_phone"].toString().substring(4)

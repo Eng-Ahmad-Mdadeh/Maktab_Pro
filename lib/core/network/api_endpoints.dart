@@ -92,10 +92,10 @@ class ApiEndpoints {
   static const evaluations = 'evaluations/';
   static const getMy = 'get_my';
   //Coupons
-  static const coupons = 'coupons';
-  static const setAdsPrice = '/set_ads_price';
-  static const updateStatus = '/update_status';
-  static const deleteAdsPrice = '/delete_ads_price_id';
+  static const coupons = 'coupons/';
+  static const setAdsPrice = 'set_ads_price';
+  static const updateStatus = 'update_status';
+  static const deleteAdsPrice = 'delete_ads_price_id';
   //Orders
   static const orders = 'orders/';
   static const pending = 'pending/1';
@@ -127,4 +127,6 @@ class ApiEndpoints {
   //National Access
   static const verifyNationalID = 'verifyNationalID';
   static const verifyResidenceID = 'verifyResidenceID';
+  //transfer
+  static const transfers = 'transfers';
 }

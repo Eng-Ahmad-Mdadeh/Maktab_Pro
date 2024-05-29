@@ -6,11 +6,11 @@ class Evaluation {
   String comment;
   String adsId;
   dynamic userBId;
-  String userOrdId;
+  String? userOrdId;
   DateTime createdAt;
   DateTime updatedAt;
   dynamic user;
-  User userOrdinary;
+  User? userOrdinary;
 
   Evaluation({
     required this.id,
@@ -35,7 +35,9 @@ class Evaluation {
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
         user: json["user"],
-        userOrdinary: User.fromJson(json["user_ordinary"]),
+        userOrdinary: json["user_ordinary"] != null
+            ? User.fromJson(json["user_ordinary"])
+            : null,
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,6 +50,6 @@ class Evaluation {
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
         "user": user,
-        "user_ordinary": userOrdinary.toJson(),
+        "user_ordinary": userOrdinary?.toJson(),
       };
 }
