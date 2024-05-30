@@ -25,8 +25,7 @@ class TransferBloc extends Bloc<TransfersEvent, TransfersState> {
         result.fold(
           (failure) {
             log(failure.message);
-            emit(state.copyWith(fetchingDataState: FetchingDataStates.failure,
-            page:state.page>1?state.page++:null ));
+            emit(state.copyWith(fetchingDataState: FetchingDataStates.failure, ));
           },
           (transferPagination) {
             List<TransferModel> transfers = state.transfers.toList();
@@ -46,8 +45,7 @@ class TransferBloc extends Bloc<TransfersEvent, TransfersState> {
         log(e.toString());
         log(e.toString());
 
-        emit(state.copyWith(fetchingDataState: FetchingDataStates.failure,
-            page:state.page>1?state.page++:null ));
+        emit(state.copyWith(fetchingDataState: FetchingDataStates.failure,));
       }
     });
   }

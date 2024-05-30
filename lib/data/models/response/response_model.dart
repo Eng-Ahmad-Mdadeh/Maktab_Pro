@@ -13,7 +13,7 @@ class Response {
 
   factory Response.fromJson(Map<String, dynamic> json) => Response(
         status: json["status"],
-        errNum: json["errNum"],
+        errNum: json["errNum"].toString(),
         message: json["message"],
         data: json["data"],
       );
