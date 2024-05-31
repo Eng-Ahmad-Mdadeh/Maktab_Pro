@@ -77,6 +77,10 @@ class NetworkHelper {
 
   Future<dynamic> delete(String url, {dynamic data}) async {
     String? token = await getToken();
+    log("REQUEST DATA");
+    log(data.toString());
+    log("REQUEST URL");
+    log(url.toString());
     return _performRequest(() => _dio.delete(
           url,
           options: Options(
@@ -91,14 +95,16 @@ class NetworkHelper {
 
   Future<Either<Exception, dynamic>> _performRequest(
       Future<Response> Function() request) async {
-    if (await Connectivity().checkConnectivity() != ConnectivityResult.none) {
+    if (!(await Connectivity().checkConnectivity()).contains(ConnectivityResult.none)) {
       try {
         Response response = await request();
-        log("RESULT");
+        log("RESPONSE RESULT");
         log(response.data.toString());
         return Right(response.data);
       } catch (e) {
-        return Left(AppException('أعد المحاولة'));
+        print("eeeeeeeeee: $e");
+        rethrow;
+        // return Left(AppException('أعد المحاولة'));
       }
     } else {
       return Left(NoInternetConnectionException());

@@ -77,7 +77,7 @@ Future<void> setup() async {
     ),
   );
   locator.registerFactory<CalendarBloc>(
-    () => CalendarBloc(),
+    () => CalendarBloc(locator<CalendarRepository>()),
   );
   locator.registerFactory<OfficeBloc>(
     () => OfficeBloc(

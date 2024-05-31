@@ -23,7 +23,7 @@ class UnitDepositBox extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SectionTitle(title: unit.title),
+            SectionTitle(title: unit.title??''),
             InkWell(
               onTap: () => context.pushNamed(AppRoutes.updateUnitDepositScreen,
                   extra: unit),
@@ -46,7 +46,7 @@ class UnitDepositBox extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.v),
                 border: Border.all(color: AppColors.slateGray),
               ),
-              child: unit.mainImage.isNotEmpty
+              child: unit.mainImage!.isNotEmpty
                   ? MaktabImageView(
                       imagePath: unit.mainImage,
                       fit: BoxFit.cover,

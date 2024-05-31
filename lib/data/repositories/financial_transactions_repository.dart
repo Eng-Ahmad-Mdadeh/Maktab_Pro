@@ -76,7 +76,7 @@ class FinancialTransactionsRepository {
       (error) => Left(error),
       (right) {
         if (right.status) {
-          log(right.message);
+          // log(right.message);
           return const Right(null);
         } else {
           return Left(AppException(right.message));

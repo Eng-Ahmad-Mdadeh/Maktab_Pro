@@ -114,8 +114,9 @@ final GoRouter appRouter = GoRouter(
           path: AppRoutes.unitCalendarScreen,
           name: AppRoutes.unitCalendarScreen,
           builder: (context, state) {
-            Office unit = state.extra as Office;
-            return UnitCalendarScreen(unit: unit);
+            int officeID = (state.extra as Map)['officeID'] as int;
+            int unitID = (state.extra as Map)['unitID'] as int;
+            return UnitCalendarScreen(unitId: unitID, officeId: officeID,);
           },
         ),
       ],

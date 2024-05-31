@@ -39,7 +39,7 @@ class OfficeBox extends StatelessWidget {
           children: [
             Expanded(
               child: SectionTitle(
-                title: office.title,
+                title: office.title??'',
                 textAlign: TextAlign.right,
               ),
             ),

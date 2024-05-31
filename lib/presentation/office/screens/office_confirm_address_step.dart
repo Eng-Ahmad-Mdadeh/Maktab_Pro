@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/office/office_interface_model.dart';
+import 'package:maktab/data/models/interface_aqar/interface_aqar_model.dart';
 import 'package:maktab/domain/office/office_bloc.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/maktab_drop_down_form_field.dart';
@@ -23,7 +23,7 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
   late TextEditingController _neighborhoodController;
   late TextEditingController _streetController;
   late GlobalKey<FormState> _addressConfirmFormKey;
-  late OfficeInterface? interface;
+  late InterfaceAqar? interface;
 
   @override
   void initState() {
@@ -109,7 +109,7 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                       .state
                       .searchData!
                       .officeInterfaces
-                      .map((interface) => interface.arName)
+                      .map((interface) => interface.arName!)
                       .toList(),
                   validator: (value) {
                     if (value!.isEmpty) {

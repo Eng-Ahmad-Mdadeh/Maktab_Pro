@@ -37,7 +37,8 @@ class AppColors {
   static const Color deepEbony = Color(0XFF1B1614);
   static const Color gray = Color.fromRGBO(180, 180, 180, 1);
   // Green
-  static const Color mintGreen = Color(0XFFC7EBCE);
+  static const Color mintGreen = Color(0XFF34A4B0);
+  // static const Color mintGreen = Color(0XFFC7EBCE);
   static const Color emeraldGreen = Color(0XFF4BAC4F);
   static const Color lushGreen = Color(0XFF28A63F);
   static const Color deepForestGreen = Color.fromARGB(255, 7, 194, 79);

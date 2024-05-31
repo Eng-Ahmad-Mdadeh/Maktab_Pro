@@ -46,7 +46,6 @@ class MaktabApp extends StatelessWidget {
           BlocProvider(create: (context) => locator<AuthBloc>()),
           BlocProvider(create: (context) => locator<NavigationCubit>()),
           BlocProvider(create: (context) => locator<HomeBloc>()),
-          BlocProvider(create: (context) => locator<CalendarBloc>()),
           BlocProvider(create: (context) => locator<MapCubit>()),
           BlocProvider(create: (context) => locator<VideoBloc>()),
           BlocProvider(create: (context) => locator<LocationBloc>()),

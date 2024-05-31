@@ -18,7 +18,7 @@ class OfficeCalendarBox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SectionTitle(title: office.title),
+          SectionTitle(title: office.title ?? ''),
           SizedBox(height: 20.v),
           Flexible(
             child: ListView.separated(
@@ -26,6 +26,7 @@ class OfficeCalendarBox extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => UnitCalendarBox(
                 unit: office.units[index],
+                officeId: office.id,
               ),
               separatorBuilder: (context, index) => SizedBox(width: 25.h),
               itemCount: office.units.length,

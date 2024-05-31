@@ -67,7 +67,7 @@ class MapRepository {
       (right) async {
         if (right['status'] == 'OK') {
           var location = right['result']['geometry']['location'];
-          log(location.toString());
+          // log(location.toString());
           return Right(LatLng(location['lat'], location['lng']));
         } else {
           return const Right(null);

@@ -28,7 +28,7 @@ class OfficeDepositBox extends StatelessWidget {
             Expanded(
               flex: 2,
               child:
-                  SectionTitle(title: office.title, textAlign: TextAlign.right),
+                  SectionTitle(title: office.title??'', textAlign: TextAlign.right),
             ),
             SizedBox(width: 10.h),
             Expanded(

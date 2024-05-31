@@ -20,7 +20,7 @@ class ReceivingMethodBloc
       : _repository = repository,
         super(ReceivingMethodState()) {
     on<ChooseReceivingMoneyMethodEvent>((event, emit) async {
-      log(state.receivingMethod.toString());
+      // log(state.receivingMethod.toString());
       emit(state.copyWith(
           selectedReceivingMoneyMethod: ReceivingMoneyMethods.none));
       if (state.receivingMethod == null) {
@@ -58,7 +58,7 @@ class ReceivingMethodBloc
             getReceivingMoneyMethodState: FinancialTransactionsApiState.failure,
           )),
           (method) {
-            log(method.toString());
+            // log(method.toString());
             emit(
               state.copyWith(
                 getReceivingMoneyMethodState:
@@ -104,7 +104,7 @@ class ReceivingMethodBloc
                 FinancialTransactionsApiState.failure,
           )),
           (method) {
-            log(method.type);
+            // log(method.type);
             emit(
               state.copyWith(
                 editReceivingMoneyMethodState:
@@ -137,7 +137,7 @@ class ReceivingMethodBloc
                 FinancialTransactionsApiState.failure,
           )),
           (method) {
-            log(method.type);
+            // log(method.type);
             emit(
               state.copyWith(
                 editReceivingMoneyMethodState:

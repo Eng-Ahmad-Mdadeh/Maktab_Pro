@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/office/office_interface_model.dart';
+import 'package:maktab/data/models/interface_aqar/interface_aqar_model.dart';
 import 'package:maktab/data/models/office/office_model.dart';
 import 'package:maktab/domain/office/office_bloc.dart';
 import 'package:maktab/domain/offices/offices_cubit.dart';
@@ -35,7 +35,7 @@ class _UpdateOfficeLocationScreenState
   late TextEditingController _neighborhoodController;
   late TextEditingController _streetController;
   late GlobalKey<FormState> _addressConfirmFormKey;
-  late OfficeInterface? interface;
+  late InterfaceAqar? interface;
 
   @override
   void initState() {
@@ -178,7 +178,7 @@ class _UpdateOfficeLocationScreenState
                                                   .searchData!
                                                   .officeInterfaces
                                                   .map((interface) =>
-                                                      interface.arName)
+                                                      interface.arName!)
                                                   .toList(),
                                               validator: (value) {
                                                 if (value!.isEmpty) {

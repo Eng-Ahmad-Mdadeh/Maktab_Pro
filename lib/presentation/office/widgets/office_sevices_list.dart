@@ -36,7 +36,7 @@ class OfficeServicesList extends StatelessWidget {
                     onTap: () {
                       context
                           .read<OfficeBloc>()
-                          .add(SelectServiceEvent(service!.id));
+                          .add(SelectServiceEvent(service!.id!));
                     },
                   );
                 },

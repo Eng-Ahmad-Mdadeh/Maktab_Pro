@@ -27,7 +27,7 @@ class OfficeComplaintBox extends StatelessWidget {
             Expanded(
               flex: 2,
               child: SectionTitle(
-                title: office.title,
+                title: office.title??'',
                 textAlign: TextAlign.right,
               ),
             ),
@@ -70,7 +70,7 @@ class OfficeComplaintBox extends StatelessWidget {
                                   textColor: AppColors.lightBlack,
                                 ),
                                 Expanded(
-                                  child: BodyText(text: complaint.reason),
+                                  child: BodyText(text: complaint.reason??''),
                                 ),
                               ],
                             ),
@@ -100,7 +100,7 @@ class OfficeComplaintBox extends StatelessWidget {
                                 ),
                                 Expanded(
                                   child: BodyText(
-                                    text: complaint.text,
+                                    text: complaint.text??'',
                                   ),
                                 ),
                               ],

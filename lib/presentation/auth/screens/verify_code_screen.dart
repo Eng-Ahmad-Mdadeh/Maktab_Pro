@@ -31,6 +31,7 @@ class VerifyCodeScreen extends StatefulWidget {
 class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   final TextEditingController _codeController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   //Timer? timer;
   int remainingSeconds = 120;
 
@@ -82,16 +83,11 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         } else if (state.profileCompleteness == ProfileCompleteness.complete) {
           Navigator.popUntil(context, (route) => route.isFirst);
           context.pushReplacementNamed(AppRoutes.homeScreen);
-          context
-              .read<ReceivingMethodBloc>()
-              .add(GetReceivingMoneyMethodEvent());
+          context.read<ReceivingMethodBloc>().add(GetReceivingMoneyMethodEvent());
           context.read<OfficesCubit>().getIncompleteUnits();
-          await context.read<OfficesCubit>().stream.firstWhere((state) =>
-              state.incompleteUnitsApiCallState != OfficesApiCallState.loading);
+          context.read<OfficesCubit>().stream.firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading);
           context.read<HomeBloc>().add(GetStatisticsEvent());
-          await context.read<HomeBloc>().stream.firstWhere(
-              (state) => state.homeApiCallState != HomeApiCallState.loading);
-
+          context.read<HomeBloc>().stream.firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading);
         } else if (state.profileCompleteness == ProfileCompleteness.unknown) {
           Navigator.popUntil(context, (route) => route.isFirst);
           context.pushReplacementNamed(AppRoutes.splashScreen);
@@ -112,8 +108,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                     const PageTitle(title: 'أدخل رقم رمز التحقق'),
                     SizedBox(height: 20.v),
                     const BodyText(
-                      text:
-                          'الرجاء إدخال رمز التحقق المكون من 4 أرقام المرسل إليك.',
+                      text: 'الرجاء إدخال رمز التحقق المكون من 4 أرقام المرسل إليك.',
                     ),
                     SizedBox(height: 40.v),
                     Form(

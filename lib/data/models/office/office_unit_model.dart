@@ -1,4 +1,4 @@
-import 'package:maktab/data/models/offer/offer_model.dart';
+import '../offer/offer_model.dart';
 
 class OfficeUnit {
   int id;
