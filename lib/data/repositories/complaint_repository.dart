@@ -23,7 +23,7 @@ class ComplaintRepository {
           );
           return Right(reports);
         } else {
-          return Left(ApiException(right.message));
+          return Left(ApiException(right.message?? 'Unknown error'));
         }
       },
     );

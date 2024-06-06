@@ -149,6 +149,7 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
       if (event.isUpdate) {
         // log(state.prices.keys.toList().toString());
         log("////////////////////////////////////");
+        log("////////////////////////////////////");
         result = await _couponRepository.updateCoupon(
             name: state.name,
             couponId: event.couponId!,

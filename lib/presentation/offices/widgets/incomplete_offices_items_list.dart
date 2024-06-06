@@ -20,10 +20,10 @@ class _IncompleteOfficesItemsListState
     extends State<IncompleteOfficesItemsList> {
   @override
   void initState() {
-    if (context.read<OfficesCubit>().state.incompleteOfficesApiCallState !=
-        OfficesApiCallState.success) {
-      context.read<OfficesCubit>().getIncompleteOffices();
-    }
+    // if (context.read<OfficesCubit>().state.incompleteOfficesApiCallState !=
+    //     OfficesApiCallState.success) {
+    //   context.read<OfficesCubit>().getIncompleteOffices();
+    // }
     super.initState();
   }
 

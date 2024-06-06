@@ -23,10 +23,7 @@ class _IncompleteUnitItemsListState extends State<IncompleteUnitItemsList> {
 
   @override
   void initState() {
-    if (context.read<OfficesCubit>().state.incompleteUnitsApiCallState !=
-        OfficesApiCallState.success) {
-      context.read<OfficesCubit>().getIncompleteUnits();
-    }
+
     super.initState();
   }
 

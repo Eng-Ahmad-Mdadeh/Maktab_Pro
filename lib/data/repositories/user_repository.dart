@@ -18,11 +18,11 @@ class UserRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if (right.status) {
+        if ((right.status??false)) {
           Statistics statistics = Statistics.fromJson(right.data);
           return Right(statistics);
         } else {
-          return Left(ApiException(right.message));
+          return Left(ApiException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -33,30 +33,34 @@ class UserRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if (right.status) {
+        if ((right.status??false)) {
           List<UserType> userTypes =
               List<UserType>.from(right.data.map((x) => UserType.fromJson(x)));
           return Right(userTypes);
         } else {
-          return Left(ApiException(right.message));
+          return Left(ApiException(right.message?? 'Unknown error'));
         }
       },
     );
   }
 
   Future<Either<AppException, UserAgreement?>> getUserAgreement() async {
-    final result = await _remoteDataSource.getUserAgreement();
-    return result.fold(
-      (error) => Left(error),
-      (right) async {
-        if (right.status) {
-          UserAgreement agreement = UserAgreement.fromJson(right.data);
-          return Right(agreement);
-        } else {
-          return Left(ApiException(right.message));
-        }
-      },
-    );
+    try{
+      final result = await _remoteDataSource.getUserAgreement();
+      return result.fold(
+            (error) => Left(error),
+            (right) async {
+          if ((right.status??false)) {
+            UserAgreement agreement = UserAgreement.fromJson(right.data['data']);
+            return Right(agreement);
+          } else {
+            return Left(ApiException(right.message??'Unknown error'));
+          }
+        },
+      );
+    }catch(e){
+      rethrow;
+    }
   }
 
   Future<Either<AppException, UnitSettings?>> getUnitSettings() async {
@@ -65,10 +69,10 @@ class UserRepository {
       (error) => Left(error),
       (right) async {
         if (right.status) {
-          UnitSettings settings = UnitSettings.fromJson(right.data);
+          UnitSettings? settings = right.data == null ? null : UnitSettings.fromJson(right.data);
           return Right(settings);
         } else {
-          return Left(ApiException(right.message));
+          return Left(ApiException(right.message??'Unknown error'));
         }
       },
     );
@@ -87,11 +91,11 @@ class UserRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if (right.status) {
+        if ((right.status??false)) {
           UnitSettings settings = UnitSettings.fromJson(right.data);
           return Right(settings);
         } else {
-          return Left(ApiException(right.message));
+          return Left(ApiException(right.message??'Unknown error'));
         }
       },
     );

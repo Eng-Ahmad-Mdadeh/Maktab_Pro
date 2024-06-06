@@ -19,7 +19,7 @@ class AccountSummaryRepository{
           final AccountSummaryModel accountSummary = AccountSummaryModel.fromJson(right.data);
           return Right(accountSummary);
         } else {
-          return Left(ApiException(right.message));
+          return Left(ApiException(right.message??'Unknown error'));
         }
       },
     );

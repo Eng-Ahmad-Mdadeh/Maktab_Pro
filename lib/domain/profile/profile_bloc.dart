@@ -13,6 +13,8 @@ import 'package:maktab/data/repositories/auth_repository.dart';
 import 'package:maktab/data/repositories/profile_repository.dart';
 import 'package:maktab/data/repositories/user_repository.dart';
 
+import '../../core/services/notification_services.dart';
+
 part 'profile_event.dart';
 part 'profile_state.dart';
 
@@ -49,7 +51,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             profileState: ProfileStates.failure,
             message: failure.message,
           )),
-          (user) {
+          (user) async {
             if (user.type?.arName != '') {
               int ind = getUserTypeAccountInd(user);
               emit(state.copyWith(
@@ -63,6 +65,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
                 user: user,
               ));
             }
+            await NotificationService.init(user.id);
+
           },
         );
       } catch (e) {

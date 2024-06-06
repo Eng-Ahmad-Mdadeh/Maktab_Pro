@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../core/network/api_endpoints.dart';
-import '../../../presentation/resources/app_assets.dart';
 
 class OfficeDetail extends Equatable{
   final int id;

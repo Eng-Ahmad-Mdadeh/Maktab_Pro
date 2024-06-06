@@ -39,6 +39,7 @@ class AppRoutes {
   static const String cancelPolicyScreen = '/cancelPolicyScreen';
   static const String bookingConditionScreen = '/bookingConditionScreen';
   static const String stcPayActivateScreen = '/stcPayActivateScreen';
+  static const String notificationsScreen = 'notificationsScreen';
   static const String updateOfficeLoctionScreen = 'updateOfficeLocationScreen';
   static const String updateOfficeInfoScreen = 'updateOfficeInfoScreen';
   static const String unitDetailsScreen = 'unitDetailsScreen';

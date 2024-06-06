@@ -99,14 +99,18 @@ class NetworkHelper {
         Response response = await request();
         log("RESPONSE RESULT");
         log(response.data.toString());
-        return Right(response.data);
+        if(response.data['status']) {
+          return Right(response.data);
+        }else{
+          return Left(_handleError(response.data['errNum'], response.data['message']));
+        }
       } catch (e) {
         // print("eeeeeeeeee: $e");
         // rethrow;
         if(e is DioException){
           return Left(_handleError(e.response?.statusCode, e.message));
         }
-        return Left(AppException('أعد المحاولة'));
+        return Left(ApiException('أعد المحاولة'));
       }
     } else {
       return Left(NoInternetConnectionException());

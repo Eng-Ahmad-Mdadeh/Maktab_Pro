@@ -63,7 +63,8 @@ class InvoiceItemCard extends StatelessWidget {
                         : invoice.invoiceStatus == 'partial'
                             ? 'مسدد جزئي'
                             : '',
-                    textColor: invoice.invoiceStatus == 'paid' ? AppColors.deepForestGreen : AppColors.coralPink,
+                    textColor:
+                        invoice.invoiceStatus == 'paid' ? AppColors.deepForestGreen : AppColors.coralPink,
                     fontSize: 15.0,
                   ),
                 ),
@@ -73,6 +74,7 @@ class InvoiceItemCard extends StatelessWidget {
                 BodyText(
                   invoice.createdAt!.dayFormatWithLocale('ar'),
                   textColor: AppColors.black,
+                  fontSize: 13.0,
                 ),
               ],
             ),
@@ -81,10 +83,23 @@ class InvoiceItemCard extends StatelessWidget {
             width: 55,
             height: 100,
             decoration: BoxDecoration(
-              color: invoice.invoiceStatus == 'paid' ? AppColors.mintGreen : AppColors.coralPink,
+              // color: invoice.invoiceStatus == 'paid' ? AppColors.mintGreen : AppColors.coralPink,
               borderRadius: const BorderRadius.horizontal(
                 right: Radius.circular(10),
               ),
+              gradient: invoice.invoiceStatus == 'paid'
+                  ? const LinearGradient(
+                      colors: [
+                        AppColors.lushGreen,
+                        AppColors.mintGreen,
+                      ],
+                    )
+                  : const LinearGradient(
+                      colors: [
+                        AppColors.cherryRed,
+                        AppColors.coralPink,
+                      ],
+                    ),
             ),
             child: Align(
               alignment: const Alignment(0, .6),
@@ -100,8 +115,8 @@ class InvoiceItemCard extends StatelessWidget {
                       final fullInvoice = await locator<InvoiceRepository>().getInvoice(invoice.id);
 
                       fullInvoice.fold(
-                            (l) {},
-                            (r) async {
+                        (l) {},
+                        (r) async {
                           final pdf = pw.Document();
                           final font = await PdfGoogleFonts.tajawalMedium();
                           final materialFont = await PdfGoogleFonts.materialIcons();
@@ -123,7 +138,8 @@ class InvoiceItemCard extends StatelessWidget {
                           );
                           final path = await getDownloadsDirectory();
 
-                          final file = File('${path?.path}/invoice ${invoice.releaseDate?.toIso8601String()}.pdf');
+                          final file =
+                              File('${path?.path}/invoice ${invoice.releaseDate?.toIso8601String()}.pdf');
 
                           await file.writeAsBytes(await pdf.save());
                           Share.shareXFiles([XFile(file.path)]);

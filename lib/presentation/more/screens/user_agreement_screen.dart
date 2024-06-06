@@ -16,11 +16,9 @@ class UserAgreementScreen extends StatefulWidget {
 }
 
 class _UserAgreementScreenState extends State<UserAgreementScreen> {
-  late UserBloc userBloc;
-
   @override
   void initState() {
-    userBloc = context.read<UserBloc>();
+    // context.read<UserBloc>().add(GetUserAgreementEvent());
     super.initState();
   }
 
@@ -37,15 +35,17 @@ class _UserAgreementScreenState extends State<UserAgreementScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 25.v),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SectionTitle(title: userBloc.state.agreement!.titleAr),
-              SizedBox(height: 30.v),
-              Html(
-                data: userBloc.state.agreement!.contentAr,
-              ),
-            ],
+          child: BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SectionTitle(title: state.agreement!.titleAr??''),
+                  SizedBox(height: 30.v),
+                  Html(data: state.agreement?.contentAr??''),
+                ],
+              );
+            },
           ),
         ),
       ),

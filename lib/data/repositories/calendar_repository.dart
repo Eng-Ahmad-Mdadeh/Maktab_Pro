@@ -26,7 +26,7 @@ class CalendarRepository {
           );
           return Right(calendars);
         } else {
-          return Left(ApiException(right.message));
+          return Left(ApiException(right.message?? 'Unknown error'));
         }
       },
     );

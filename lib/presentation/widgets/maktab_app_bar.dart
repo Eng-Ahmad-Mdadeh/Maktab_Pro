@@ -28,6 +28,16 @@ class MaktabAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       automaticallyImplyLeading: false,
       backgroundColor: backgroundColor,
+      flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: <Color>[
+              AppColors.deepBlue,
+              AppColors.mintGreen,
+            ],
+          ),
+        ),
+      ),
       leading: leading ??
           IconButton(
             onPressed: () => Navigator.pop(context),
