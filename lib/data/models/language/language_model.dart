@@ -1,3 +1,5 @@
+import 'package:maktab/core/network/api_endpoints.dart';
+
 class Language {
   int id;
   String title;
@@ -26,7 +28,7 @@ class Language {
         direction: json["direction"],
         left: json["left"],
         right: json["right"],
-        icon: json["icon"],
+        icon: ApiEndpoints.siteUrl + json["icon"],
         boxStatus: json["box_status"],
       );
 

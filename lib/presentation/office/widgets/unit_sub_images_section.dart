@@ -56,7 +56,7 @@ class UnitSubImagesSection extends StatelessWidget {
                                     state.selectedImagesMap[key]!,
                                     state.createdUnit!.files)
                                 ? state.selectedImagesMap[key]!
-                                : 'https://aqartik.com/${state.selectedImagesMap[key]!}',
+                                : 'https://maktab.sa/${state.selectedImagesMap[key]!}',
                             imageNumber: index + 1,
                             selectImageOnTap: () {},
                             clearImageOnTap: () {

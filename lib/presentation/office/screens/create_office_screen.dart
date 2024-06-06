@@ -63,16 +63,13 @@ class _CreateOfficeScreenState extends State<CreateOfficeScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => locator.get<OfficeBloc>()
-        ..add(InitialOfficeEvent(
-            widget.office, context.read<OfficesCubit>().state.searchData)),
+        ..add(InitialOfficeEvent(widget.office, context.read<OfficesCubit>().state.searchData)),
       child: BlocBuilder<OfficeBloc, OfficeState>(
         builder: (context, state) {
           return state.isInitialized
               ? Scaffold(
                   appBar: MaktabAppBar(
-                      title: widget.office != null
-                          ? 'استكمال: ${widget.office!.title}'
-                          : 'انشاء مكتب جديد'),
+                      title: widget.office != null ? 'استكمال: ${widget.office!.title}' : 'انشاء مكتب جديد'),
                   body: SafeArea(
                     child: SizedBox(
                       width: SizeHelper.width,
@@ -81,8 +78,7 @@ class _CreateOfficeScreenState extends State<CreateOfficeScreen> {
                         children: [
                           Expanded(
                             child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20.v, vertical: 25.v),
+                              padding: EdgeInsets.symmetric(horizontal: 20.v, vertical: 25.v),
                               child: PageView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 controller: _pageController,
@@ -93,8 +89,7 @@ class _CreateOfficeScreenState extends State<CreateOfficeScreen> {
                               ),
                             ),
                           ),
-                          CreateOfficeNavigationSection(
-                              pageController: _pageController),
+                          CreateOfficeNavigationSection(pageController: _pageController),
                         ],
                       ),
                     ),

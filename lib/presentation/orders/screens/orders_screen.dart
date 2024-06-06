@@ -1,15 +1,18 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/navigation/navigation_cubit.dart';
 import 'package:maktab/domain/shimmer/shimmer_bloc.dart';
 import 'package:maktab/presentation/orders/widgets/orders_search_box.dart';
 import 'package:maktab/presentation/orders/widgets/orders_list.dart';
 import 'package:maktab/presentation/orders/widgets/orders_states.dart';
+import 'package:maktab/presentation/widgets/body_text.dart';
+import 'package:maktab/presentation/widgets/loading_dialog.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
-import 'package:maktab/presentation/widgets/maktab_bottom_app_bar.dart';
+import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
 import 'package:maktab/presentation/widgets/shimmer_effect.dart';
+
+import '../../../domain/orders/orders_bloc.dart';
+import '../../widgets/maktab_bottom_app_bar.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
@@ -19,72 +22,107 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-  ScrollController scrollController = ScrollController();
-  int page = 0;
+  final ScrollController _scrollController = ScrollController();
+  int currentPage = 1;
+  int lastPage = 1;
+  late final OrderReservationCubit _orderReservationCubit;
+  bool listEndTriggered = false;
 
   @override
   void initState() {
-    //   context.read<ProductsBloc>().add(GetProductsEvent(page: 0));
-    // scrollController.addListener(() {
-    //   if (scrollController.offset ==
-    //           scrollController.position.maxScrollExtent &&
-    //       context.read<ProductsBloc>().state.fetchingPrroductsState !=
-    //           FetchingDataStates.loadingPaginate) {
-    //     page = page + 10;
-    //     context.read<ProductsBloc>().add(GetProductsEvent(page: page));
-    //   }
-    // });
+    context.read<OrdersBloc>().add(const GetOrdersEvent(1));
+    _orderReservationCubit = OrderReservationCubit();
+    _scrollController.addListener(_scrollListener);
     super.initState();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+      print('Reached the end of the list');
+      if (!listEndTriggered) {
+        context.read<OrdersBloc>().add(GetMoreOrdersEvent(currentPage, lastPage));
+        listEndTriggered = true;
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<NavigationCubit, NavigationState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          appBar: const MaktabAppBar(title: 'الطلبات'),
-          body: WillPopScope(
-            onWillPop: () async {
-              if (state.currentIndexs.length > 1) {
-                log(state.currentIndexs.toString());
-                state.currentIndexs.removeLast();
-                log(state.currentIndexs.toString());
-                context
-                    .read<NavigationCubit>()
-                    .getNavBarItem(state.currentIndexs.last);
-              } else if (state.currentIndexs.length == 1) {
-                state.currentIndexs.clear();
-                context.read<NavigationCubit>().getNavBarItem(0);
-              }
-              return true;
-            },
-            child: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 25.v),
-                child: BlocBuilder<ShimmerBloc, ShimmerState>(
+    return BlocProvider(
+      create: (context) => _orderReservationCubit,
+      child: Scaffold(
+        appBar: const MaktabAppBar(
+          title: 'الطلبات',
+          leading: SizedBox(),
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 25.v),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                OrdersSearchBox(currentPage: currentPage),
+                SizedBox(height: 10.v),
+                const OrdersStates(),
+                SizedBox(height: 10.v),
+                BlocConsumer<OrdersBloc, OrdersState>(
+                  listener: (context, orderState) {
+                    if (orderState is OrdersFailure) {
+                      MaktabSnackbar.showError(context, orderState.message);
+                    }
+                  },
                   builder: (context, state) {
-                    return ShimmerEffect(
-                      isLoading: state is ShowShimmerEffectState,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          OrdersSearchBox(),
-                          SizedBox(height: 10.v),
-                          const OrdersStates(),
-                          SizedBox(height: 10.v),
-                          OrdersList(),
-                        ],
-                      ),
-                    );
+                    if (state is OrdersLoading)
+                      return const Center(
+                        child: LoadingDialog(),
+                      );
+                    if (state is OrdersFailure)
+                      return const Center(
+                        child: BodyText(
+                          text: "Error",
+                        ),
+                      );
+                    if (state is OrdersSuccess) {
+                      lastPage = state.orders.firstOrNull?.lastPage ?? 1;
+                      currentPage = state.currentPage;
+                      listEndTriggered = false;
+                      return OrdersList(
+                        _scrollController,
+                        orders: state.orders,
+                        moreOrderLoader: false,
+                      );
+                    }
+                    if (state is MoreOrdersLoading) {
+                      return OrdersList(
+                        _scrollController,
+                        orders: state.prevOrders,
+                        moreOrderLoader: true,
+                      );
+                    }
+                    if (state is OrdersFilter) {
+                      return OrdersList(
+                        // _scrollController,
+                        null,
+                        orders: state.orders,
+                        moreOrderLoader: false,
+                      );
+                    }
+                    return const SizedBox();
                   },
                 ),
-              ),
+              ],
             ),
           ),
-          bottomNavigationBar: const MaktabBottomAppBar(),
-        );
-      },
+        ),
+        bottomNavigationBar: const MaktabBottomAppBar(),
+      ),
     );
   }
 }

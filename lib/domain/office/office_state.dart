@@ -166,7 +166,7 @@ class OfficeState extends Equatable {
         services,
         comforts,
         additionalServiceKeys,
-        additionalServices,
+        additionalServices.values,
         addressPosition,
         currentMapZoom,
         city,

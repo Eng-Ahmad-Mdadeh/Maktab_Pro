@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab/core/network/api_endpoints.dart';
 import 'package:maktab/core/router/app_routes.dart';
 import 'package:maktab/data/models/office/office_model.dart';
 import 'package:maktab/domain/offices/offices_cubit.dart';
@@ -61,7 +62,7 @@ class UnitOfferBox extends StatelessWidget {
                   ),
                   child: (unit.mainImage??'').isNotEmpty
                       ? MaktabImageView(
-                          imagePath: unit.mainImage,
+                          imagePath: unit.mainImage!,
                           fit: BoxFit.cover,
                           radius: BorderRadius.circular(15.v),
                         )

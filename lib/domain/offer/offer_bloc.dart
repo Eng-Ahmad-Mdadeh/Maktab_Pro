@@ -35,7 +35,7 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
         state.discountType=event.offer!.discountType=='percent'?DiscountTypes.percentage:DiscountTypes.price;
         for (OfficePrice price in event.unit!.prices) {
           if (state.priceTypes.contains(price.typeResId)) {
-            state.prices[price.id!] = price.price!;
+            state.prices[price.id] = price.price;
           }
         }
         state.pricesCount = event.offer!.priceTypeIds.length;
@@ -97,7 +97,7 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
         } else {
           state.pricesCount++;
         }
-        prices[price.id!] =price.price!;
+        prices[price.id] =price.price;
         priceTypes.add(event.id);
       } else {
         if (state.pricesCount > 0) {
@@ -114,7 +114,7 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
       if (state.prices.length < state.unit!.prices.length) {
         Map<int, num> prices = {};
         for (OfficePrice price in state.unit!.prices) {
-          prices[price.id!] = price.price!;
+          prices[price.id] = price.price;
         }
         emit(state.copyWith(
             prices: prices,
@@ -153,7 +153,7 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
             state.discountType == DiscountTypes.percentage ? 'percent' : 'rial',
             startDate: state.startDate!,
             endDate: state.endDate!,
-            officeId: state.unit!.id!,
+            officeId: state.unit!.id,
             prices: state.prices.keys.toList(),
          //   mainPrices:state.prices.keys.toList()
         );
@@ -166,7 +166,7 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
               : 'rial',
           startDate: state.startDate!,
           endDate: state.endDate!,
-          officeId: state.unit!.id!,
+          officeId: state.unit!.id,
           prices: state.prices.keys.toList(),
         );
       }

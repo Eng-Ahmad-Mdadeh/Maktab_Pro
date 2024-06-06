@@ -23,6 +23,7 @@ class ApiEndpoints {
   static const settings = 'settings/';
   static const searchData = 'search_data';
   static const officeSettings = 'office_settings';
+  static const general = 'general';
   //Office
   static const offices = 'offices/';
   static const updateOfficeInfo = 'updateInfo';
@@ -99,8 +100,9 @@ class ApiEndpoints {
   static const deleteAdsPrice = 'delete_ads_price_id';
   //Orders
   static const orders = 'orders/';
-  static const pending = 'pending/1';
-  static const cancel = 'cancel/1';
+  static const pending = 'pending';
+  static const cancel = 'cancel';
+  static const allWithoutPagenation = 'getAllWithoutPagenation';
   //Reports
   static const reports = 'reports';
   //Notifications
@@ -125,9 +127,17 @@ class ApiEndpoints {
   static const save = 'save';
   static const update = 'update';
   static const delete = 'delete';
+  static const approveDelete = 'approveDelete';
   //National Access
   static const verifyNationalID = 'verifyNationalID';
   static const verifyResidenceID = 'verifyResidenceID';
   //transfer
   static const transfers = 'transfers';
+
+  // account_statements
+  static const accountStatements = 'account_statements';
+
+  // invoices
+  static const invoices = 'invoices';
+
 }

@@ -81,13 +81,23 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           locator<ProfileBloc>().add(GetUserTypes());
           context.pushNamed(AppRoutes.editProfileScreen, extra: true);
         } else if (state.profileCompleteness == ProfileCompleteness.complete) {
-          Navigator.popUntil(context, (route) => route.isFirst);
-          context.pushReplacementNamed(AppRoutes.homeScreen);
           context.read<ReceivingMethodBloc>().add(GetReceivingMoneyMethodEvent());
           context.read<OfficesCubit>().getIncompleteUnits();
-          context.read<OfficesCubit>().stream.firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading);
-          context.read<HomeBloc>().add(GetStatisticsEvent());
-          context.read<HomeBloc>().stream.firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading);
+          context
+              .read<OfficesCubit>()
+              .stream
+              .firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading)
+              .then((e) {
+            context.read<HomeBloc>().add(GetStatisticsEvent());
+            context
+                .read<HomeBloc>()
+                .stream
+                .firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading)
+                .then((e) {
+              Navigator.popUntil(context, (route) => route.isFirst);
+              context.pushReplacementNamed(AppRoutes.homeScreen);
+            });
+          });
         } else if (state.profileCompleteness == ProfileCompleteness.unknown) {
           Navigator.popUntil(context, (route) => route.isFirst);
           context.pushReplacementNamed(AppRoutes.splashScreen);

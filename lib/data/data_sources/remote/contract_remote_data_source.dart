@@ -15,8 +15,8 @@ class ContractRemoteDataSource extends BaseRemoteDataSource<r.Response> {
     return fetchDataWithId(id);
   }
 
-  Future<Either<AppException, r.Response>> createContract(data) async {
-    return postData(endpoint: ApiEndpoints.create, data: data);
+  Future<Either<AppException, r.Response>> createContract(data, ) async {
+    return postData(endpoint: ApiEndpoints.create, data: data, files: [{'field_name': 'record_file', 'path': data['record_file']}]);
   }
 
   Future<Either<AppException, r.Response>> updateContract(id, data) async {
@@ -27,6 +27,6 @@ class ContractRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   }
 
   Future<Either<AppException, r.Response>> deleteContract(id) async {
-    return deleteData(endpoint: '/$id');
+    return deleteData(endpoint: '${ApiEndpoints.approveDelete}/$id');
   }
 }

@@ -21,7 +21,8 @@ class AppTheme {
     elevatedButtonTheme: elevatedButtonTheme,
     datePickerTheme: const DatePickerThemeData(
       //surfaceTintColor: Colors.transparent,
-      todayBackgroundColor: MaterialStatePropertyAll(AppColors.royalPurple),
+      todayBackgroundColor: WidgetStatePropertyAll(AppColors.royalPurple),
+      backgroundColor: AppColors.black
       //todayBorder: BorderSide(color: AppColors.royalPurple, width: 2),
     ),
     switchTheme: const SwitchThemeData(

@@ -9,18 +9,37 @@ class OrderRepository {
 
   OrderRepository(this._remoteDataSource);
 
-  Future<Either<AppException, List<o.OrderModel>>> getAllOrders() async {
-    final result = await _remoteDataSource.getAllOrders();
+  Future<Either<AppException, List<o.OrderModel>>> getAllOrders(int page) async {
+    final result = await _remoteDataSource.getAllOrders(page);
     return result.fold(
       (error) => Left(error),
       (right) {
+        try {
+          final List<o.OrderModel> orders = List<o.OrderModel>.from(
+            right.data['data'].map((dynamic data) => o.OrderModel.fromJson(data, int.parse(right.data['last_page'].toString()))),
+          );
+          return Right(orders);
+        } catch (e) {
+          rethrow;
+          // return Left(ConversionException(e.toString()));
+        }
+      },
+    );
+  }
+
+  Future<Either<AppException, List<o.OrderModel>>> getOrdersWithoutPage() async {
+    final result = await _remoteDataSource.getOrdersWithoutPage();
+    return result.fold(
+          (error) => Left(error),
+          (right) {
         try {
           final List<o.OrderModel> orders = List<o.OrderModel>.from(
             right.data.map((dynamic data) => o.OrderModel.fromJson(data)),
           );
           return Right(orders);
         } catch (e) {
-          return Left(ConversionException(e.toString()));
+          rethrow;
+          // return Left(ConversionException(e.toString()));
         }
       },
     );
@@ -56,8 +75,8 @@ class OrderRepository {
     );
   }
 
-  Future<Either<AppException, o.OrderModel>> setCancel() async {
-    final result = await _remoteDataSource.setCancel();
+  Future<Either<AppException, o.OrderModel>> setCancel(int id) async {
+    final result = await _remoteDataSource.setCancel(id);
     return result.fold(
       (error) => Left(error),
       (right) {

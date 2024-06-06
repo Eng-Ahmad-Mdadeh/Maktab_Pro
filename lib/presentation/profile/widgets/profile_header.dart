@@ -29,8 +29,8 @@ class ProfileHeader extends StatelessWidget {
                       backgroundColor: AppColors.white,
                       child: MaktabImageView(
                         imagePath: state.profileState == ProfileStates.success
-                            ? state.user!.image!.isNotEmpty
-                                ? state.user!.image
+                            ? (state.user?.image??'').isNotEmpty
+                                ? state.user!.image!
                                 : AppAssets.profile
                             : AppAssets.profile,
                         height: 70.adaptSize,

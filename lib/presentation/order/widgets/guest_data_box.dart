@@ -3,8 +3,12 @@ import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/order/widgets/order_info_item.dart';
 import 'package:maktab/presentation/widgets/section_title.dart';
 
+import '../../../data/models/order/order_model.dart';
+
 class GuestDataBox extends StatelessWidget {
-  const GuestDataBox({super.key});
+  const GuestDataBox({super.key, this.order});
+
+  final OrderModel? order;
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +19,9 @@ class GuestDataBox extends StatelessWidget {
         children: [
           const SectionTitle(title: 'بيانات الضيف'),
           SizedBox(height: 12.v),
-          const OrderInfoItem(
+          OrderInfoItem(
             title: 'الاسم',
-            text: 'وائل الديري',
+            text: order?.tenant?.username??'',
           ),
           SizedBox(height: 10.v),
           const OrderInfoItem(

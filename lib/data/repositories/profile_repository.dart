@@ -10,7 +10,7 @@ class ProfileRepository {
   ProfileRepository({required ProfileRemoteDataSource remoteDataSource})
       : _remoteDataSource = remoteDataSource;
 
-  Future<Either<AppException, User>> getProfile() async {
+  Future<Either<ApiException, User>> getProfile() async {
     final result = await _remoteDataSource.getProfile();
     return result.fold(
       (error) => Left(error),

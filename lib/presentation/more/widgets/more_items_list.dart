@@ -30,10 +30,10 @@ class MoreItemsList extends StatelessWidget {
         MoreListTile(
           title: 'العقود',
           icon: FontAwesomeIcons.fileInvoiceDollar,
-          onTap: () => context.pushNamed(AppRoutes.contractsScreen),
+          onTap: () => context.pushNamed(AppRoutes.contractsMenuScreen),
         ),
         MoreListTile(
-          title: 'الفواتير وكشوف الحساب',
+          title: 'الفواتير',
           icon: FontAwesomeIcons.fileInvoice,
           onTap: () => context.pushNamed(AppRoutes.invoicesAndStatementsScreen),
         ),

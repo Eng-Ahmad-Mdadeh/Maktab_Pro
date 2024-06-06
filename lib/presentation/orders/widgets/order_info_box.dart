@@ -1,18 +1,26 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/core/router/app_routes.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 
-class OrderInfoBox extends StatelessWidget {
-  const OrderInfoBox({super.key, required this.status});
+import '../../../data/models/order/order_model.dart';
+import '../../../domain/orders/order/order_bloc.dart';
+import '../../widgets/section_title.dart';
 
-  final int status;
+class OrderInfoBox extends StatelessWidget {
+  const OrderInfoBox({super.key, required this.order});
+
+  final OrderModel order;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        context.read<OrderBloc>().add(GetOrderEvent(order.id));
         context.pushNamed(AppRoutes.orderScreen);
       },
       child: Container(
@@ -23,7 +31,7 @@ class OrderInfoBox extends StatelessWidget {
             begin: Alignment.centerRight,
             end: Alignment.centerLeft,
             stops: const [0.03, 0.03],
-            colors: [getColorFromStatus(status), Colors.white],
+            colors: [getColorFromStatus(order.reservation), Colors.white],
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -35,22 +43,19 @@ class OrderInfoBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'علي',
+                  order.tenant?.username ?? '',
                   softWrap: true,
                   style: Theme.of(context).textTheme.titleSmall!,
                 ),
                 RichText(
                   text: TextSpan(
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
+                      fontWeight: FontWeight.w500,
+                    ),
                     children: [
                       TextSpan(
-                        text: '3000',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(color: AppColors.emeraldTeal),
+                        text: order.totalPriceLessor?.toString() ?? '',
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(color: AppColors.emeraldTeal),
                       ),
                       WidgetSpan(child: SizedBox(width: 6.h)),
                       const TextSpan(text: 'ريال')
@@ -60,21 +65,29 @@ class OrderInfoBox extends StatelessWidget {
               ],
             ),
             SizedBox(height: 10.v),
-            Text(
-              'مكتب 1 (وحدة1)',
-              softWrap: true,
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  order.office?.title??'',
+                  softWrap: true,
+                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     fontWeight: FontWeight.w500,
                     color: AppColors.slateGray,
                   ),
+                ),
+                SectionTitle(title: '#${order.id}'),
+
+              ],
             ),
             Text(
-              'من الجمعة 12 نوفمبر الى السبت 13 نوفمبر',
+              // 'من الجمعة 12 نوفمبر الى السبت 13 نوفمبر',
+              order.startDate?.toIso8601String().split('T').firstOrNull??'',
               softWrap: true,
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.slateGray,
-                  ),
+                fontWeight: FontWeight.w500,
+                color: AppColors.slateGray,
+              ),
             ),
           ],
         ),
@@ -82,16 +95,18 @@ class OrderInfoBox extends StatelessWidget {
     );
   }
 
-  Color getColorFromStatus(int status) {
+  Color getColorFromStatus(String? status) {
     switch (status) {
-      case 0:
+      case 'acceptably':
         return AppColors.emeraldGreen;
-      case 1:
+      case 'canceled':
         return AppColors.cherryRed;
-      case 2:
+      case 'new':
         return AppColors.rustOrange;
-      case 3:
+      case 'pending':
         return AppColors.yellow;
+      case 'complete':
+        return AppColors.skyBlue;
       default:
         return AppColors.black;
     }

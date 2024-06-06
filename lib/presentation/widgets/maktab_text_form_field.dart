@@ -8,8 +8,9 @@ import 'package:maktab/presentation/widgets/section_title.dart';
 
 class MaktabTextFormField extends StatelessWidget {
   const MaktabTextFormField({
-    Key? key,
+    super.key,
     this.title,
+    this.initialValue,
     this.smallTitle,
     this.width,
     this.scrollPadding,
@@ -34,14 +35,18 @@ class MaktabTextFormField extends StatelessWidget {
     this.filled = true,
     this.errorStyle,
     this.readOnly = false,
+    this.disabled = false,
+    this.autofocus = false,
+    this.unFocusWhenTabOutside = true,
     this.inputFormatters,
     this.validator,
     this.onChanged,
     this.onSaved,
     this.onTap,
-  }) : super(key: key);
+  });
 
   final String? title;
+  final String? initialValue;
   final String? smallTitle;
   final double? width;
   final TextEditingController? scrollPadding;
@@ -65,6 +70,9 @@ class MaktabTextFormField extends StatelessWidget {
   final Color? fillColor;
   final bool readOnly;
   final bool? filled;
+  final bool disabled;
+  final bool autofocus;
+  final bool unFocusWhenTabOutside;
   final TextStyle? errorStyle;
   final List<TextInputFormatter>? inputFormatters;
   final FormFieldValidator<String>? validator;
@@ -103,7 +111,9 @@ class MaktabTextFormField extends StatelessWidget {
             : const SizedBox.shrink(),
         TextFormField(
           controller: controller,
+          initialValue: initialValue,
           focusNode: focusNode,
+          autofocus: autofocus,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           style: textStyle ?? Theme.of(context).textTheme.titleMedium,
           obscureText: obscureText!,
@@ -113,19 +123,21 @@ class MaktabTextFormField extends StatelessWidget {
           maxLines: maxLines,
           minLines: minLines,
           readOnly: readOnly,
-          decoration: (const InputDecoration())
-              .applyDefaults(Theme.of(context).inputDecorationTheme)
-              .copyWith(
-                fillColor: fillColor,
-                hintText: hintText,
-                prefixIcon: prefix,
-                suffixIcon: suffix,
-                errorStyle: errorStyle,
-              ),
+          enabled: !disabled,
+          decoration:
+              (const InputDecoration()).applyDefaults(Theme.of(context).inputDecorationTheme).copyWith(
+                    fillColor: fillColor,
+                    hintText: hintText,
+                    prefixIcon: prefix,
+                    suffixIcon: suffix,
+                    errorStyle: errorStyle,
+                  ),
           inputFormatters: inputFormatters,
           validator: validator,
           onTapOutside: (event) {
-            FocusManager.instance.primaryFocus?.unfocus();
+            if (unFocusWhenTabOutside) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            }
           },
           onChanged: onChanged,
           onSaved: onSaved,

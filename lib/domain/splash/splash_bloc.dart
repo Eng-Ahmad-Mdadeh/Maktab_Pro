@@ -14,9 +14,7 @@ part 'splash_state.dart';
 class SplashBloc extends Bloc<SplashEvent, SplashState> {
   final AuthRepository _authRepository;
 
-  SplashBloc(
-      {required AuthRepository authRepository,
-      required ProfileRepository profileRepository})
+  SplashBloc({required AuthRepository authRepository, required ProfileRepository profileRepository})
       : _authRepository = authRepository,
         super(SplashInitialState()) {
     on<CheckAuthenticationEvent>((event, emit) async {
@@ -29,7 +27,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     bool authState = await _authRepository.checkAuthentication();
 
     if (authState) {
-      ProfileBloc profileBloc=locator<ProfileBloc>();
+      ProfileBloc profileBloc = locator<ProfileBloc>();
       profileBloc.add(GetProfileEvent());
       await profileBloc.stream.firstWhere(
         (state) {
@@ -40,9 +38,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
         emit(ConnectionFailed());
         return;
       }
-      if (profileBloc
-              .checkIfProfileCompleted(locator<ProfileBloc>().state.user!) ==
-          true) {
+      if (profileBloc.checkIfProfileCompleted(locator<ProfileBloc>().state.user!) == true) {
         emit(NavigationToHomeScreenState());
       } else {
         profileBloc.add(GetUserTypes());

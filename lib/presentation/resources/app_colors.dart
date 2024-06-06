@@ -7,6 +7,7 @@ class AppColors {
   static const Color yellow = Colors.yellow;
   //Black
   static const Color lightBlack = Color(0xff333333);
+  static const Color black2 = Color(0xFF222222);
   // Blue
   static const Color skyBlue = Color(0XFF72AAE0);
   static const Color paleBlue = Color(0XFFEDF8FD);
@@ -38,6 +39,8 @@ class AppColors {
   static const Color gray = Color.fromRGBO(180, 180, 180, 1);
   // Green
   static const Color mintGreen = Color(0XFF34A4B0);
+  static const Color darkGreen = Color(0xFF02594f);
+  static const Color lGrey = Color(0xFFe3e9e3);
   // static const Color mintGreen = Color(0XFFC7EBCE);
   static const Color emeraldGreen = Color(0XFF4BAC4F);
   static const Color lushGreen = Color(0XFF28A63F);
