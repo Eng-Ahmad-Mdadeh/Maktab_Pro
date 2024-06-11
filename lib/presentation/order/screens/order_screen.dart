@@ -62,16 +62,15 @@ import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/widgets/maktab_button.dart';
 
 import '../../../core/constants/app_constants.dart';
-import '../../../core/themes/text_theme.dart';
 import '../../../data/models/order/order_model.dart';
 import '../../../domain/orders/order/order_bloc.dart';
 import '../../../domain/orders/orders_bloc.dart';
 import '../../resources/app_colors.dart';
 import '../../widgets/maktab_app_bar.dart';
+import '../../widgets/page_title.dart';
 import '../../widgets/shimmer_effect.dart';
-import '../../widgets/text/body_text.dart';
-import '../../widgets/text/page_title.dart';
-import '../../widgets/text/section_title.dart';
+import '../../widgets/body_text.dart';
+import '../../widgets/section_title.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
@@ -86,7 +85,7 @@ class OrderScreen extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is OrderFailure) {
-          return const BodyText("error");
+          return const BodyText(text: "error");
         }
         if (state is OrderLoading) {
           return Scaffold(
@@ -129,7 +128,7 @@ class OrderScreen extends StatelessWidget {
                           height: 45.0.v,
                           width: 150.0.h,
                           text: "إنشاء عقد",
-                          textStyle: textTheme.bodyLarge!.copyWith(color: AppColors.white),
+                            color: AppColors.white,
                           onPressed: () {
                             // todo: link this with create contract page after work on contract
                           },
@@ -141,7 +140,7 @@ class OrderScreen extends StatelessWidget {
                           height: 45.0.v,
                           width: 150.0.h,
                           text: "إلغاء الطلب",
-                          textStyle: textTheme.bodyLarge!.copyWith(color: AppColors.white),
+        color: AppColors.white,
                           backgroundColor: AppColors.cherryRed,
                           onPressed: () {
                             showDialog<bool>(
@@ -160,7 +159,7 @@ class OrderScreen extends StatelessWidget {
                                     const SectionTitle(
                                       title: 'هل انت متأكد؟',
                                     ),
-                                    const BodyText("هل انت متأكد من قيامك بهذه العملية")
+                                    const BodyText(text: "هل انت متأكد من قيامك بهذه العملية")
                                   ],
                                 ),
                                 actionsAlignment: MainAxisAlignment.center,
@@ -173,7 +172,7 @@ class OrderScreen extends StatelessWidget {
                                     },
                                     text: 'نعم',
                                     backgroundColor: AppColors.cherryRed,
-                                    textStyle: textTheme.bodyLarge!.copyWith(color: AppColors.white),
+                                    color: AppColors.white,
                                   ),
                                   MaktabButton(
                                     width: 70,
@@ -183,7 +182,7 @@ class OrderScreen extends StatelessWidget {
                                     },
                                     text: 'لا',
                                     backgroundColor: AppColors.gray,
-                                    textStyle: textTheme.bodyLarge!.copyWith(color: AppColors.white),
+                                    color: AppColors.white,
                                   ),
                                 ],
                               ),
@@ -260,7 +259,7 @@ class OrderScreen extends StatelessWidget {
         }
         return const Scaffold(
           body: Center(
-            child: BodyText("no data"),
+            child: BodyText(text: "no data"),
           ),
         );
       },
@@ -354,7 +353,7 @@ class OrderDetailsItem extends StatelessWidget {
             fontSize: 15,
           ),
           BodyText(
-            text,
+            text: text,
           ),
         ],
       ),

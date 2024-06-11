@@ -10,12 +10,9 @@ import '../../../../presentation/contracts_menu/screens/contracts/screens/contra
 import '../../../../presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/step2/order_info_widget.dart';
 import '../../../../presentation/widgets/maktab_snack_bar.dart';
 import "../../../../core/extension/date_time_extension.dart";
-import '../../../../core/services/service_locator.dart';
 import '../../../../data/models/contract/contract_model_model.dart';
 import '../../../../data/models/order/order_model.dart';
-import '../../../orders/orders_bloc.dart';
 import '../../contracts_step_cubit.dart';
-import '../contract_bloc.dart';
 import 'contract_state.dart';
 
 class ContractCubit extends Cubit<ContractEntity> {
@@ -38,7 +35,6 @@ class ContractCubit extends Cubit<ContractEntity> {
   final GlobalKey<FormState> step3Key = GlobalKey<FormState>();
   final GlobalKey<FormState> step4Key = GlobalKey<FormState>();
 
-  late GoogleMapController _mapController;
   late LatLng _position;
 
   PageController get pageController => _controller;
@@ -213,7 +209,6 @@ class ContractCubit extends Cubit<ContractEntity> {
 
   void onContractMapCreated(GoogleMapController controller) {
     _position = const LatLng(24.7113719, 46.6744867);
-    _mapController = controller;
   }
 
   void onContractCameraMove(CameraPosition position) {

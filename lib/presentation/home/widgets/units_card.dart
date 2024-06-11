@@ -18,7 +18,7 @@ import 'package:maktab/presentation/widgets/section_title.dart';
 class UnitsCard extends StatelessWidget {
   UnitsCard({super.key});
 
-  Office? selectedUnit;
+  Office? selectedOffice;
 
   @override
   Widget build(BuildContext context) {
@@ -34,74 +34,70 @@ class UnitsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SectionTitle(title: 'اعرض مكتبك'),
+            SizedBox(
+              height: 10.0.v,
+            ),
+            const SectionTitle(
+              title: 'استكمل اضافة اعلانك',
+              fontSize: 15,
+            ),
             SizedBox(height: 10.v),
             ConstrainedBox(
               constraints: BoxConstraints(maxHeight: 250.v),
               child: BlocConsumer<OfficesCubit, OfficesState>(
                 listener: (context, state) {
-                  if (state.unitApiCallState == OfficesApiCallState.loading) {
+                  if (state.officeApiCallState == OfficesApiCallState.loading) {
                     LoadingDialog.show(context);
-                  } else if (state.unitApiCallState ==
-                      OfficesApiCallState.success) {
+                  } else if (state.officeApiCallState == OfficesApiCallState.success) {
                     LoadingDialog.hide(context);
                     context.pushNamed(
-                      AppRoutes.createUnitScreen,
-                      extra: {
-                        'office': state.selectedOffice,
-                        'unit': selectedUnit,
-                      },
+                      AppRoutes.createOfficeScreen,
+                      extra: state.selectedOffice,
                     );
-                  } else if (state.unitApiCallState ==
-                      OfficesApiCallState.failure) {
+                  } else if (state.officeApiCallState == OfficesApiCallState.failure) {
                     LoadingDialog.hide(context);
                   }
                 },
                 builder: (context, state) {
-                  if (state.incompleteUnitsApiCallState ==
-                      OfficesApiCallState.loading) {
+                  if (state.incompleteOfficesApiCallState == OfficesApiCallState.loading) {
                     return Center(child: loadingItem());
-                  } else if (state.incompleteUnitsApiCallState ==
-                      OfficesApiCallState.success) {
+                  } else if (state.incompleteOfficesApiCallState == OfficesApiCallState.success) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         BodyText(
-                            text:
-                                'لديك ${state.incompleteUnits.length} وحدة قيد النشر'),
+                          text: 'لديك ${state.incompleteOffices.length} اعلان قيد النشر',
+                          textColor: AppColors.deepOrange,
+                        ),
                         SizedBox(height: 10.v),
                         Flexible(
                           child: ListView.separated(
                             shrinkWrap: true,
+                            padding: const EdgeInsets.symmetric(horizontal: 10.0),
                             itemBuilder: (context, index) {
                               return UnitInfoItem(
-                                unit: state.incompleteUnits[index],
+                                unit: state.incompleteOffices[index],
                                 onPressed: () async {
                                   await context
                                       .read<OfficesCubit>()
-                                      .getUnitById(
-                                          state.incompleteUnits[index].unitId!);
-                                  selectedUnit = state.incompleteUnits[index];
+                                      .getOfficeById(state.incompleteOffices[index].id);
+                                  print("object");
+                                  selectedOffice = state.incompleteOffices[index];
                                 },
                               );
                             },
-                            separatorBuilder: (context, index) =>
-                                SizedBox(height: 12.v),
-                            itemCount: state.incompleteUnits.length < 5
-                                ? state.incompleteUnits.length
-                                : state.incompleteUnits.sublist(0, 5).length,
+                            separatorBuilder: (context, index) => SizedBox(height: 12.v),
+                            itemCount: state.incompleteOffices.length < 5
+                                ? state.incompleteOffices.length
+                                : state.incompleteOffices.sublist(0, 5).length,
                           ),
                         ),
                       ],
                     );
-                  } else if (state.incompleteUnitsApiCallState ==
-                      OfficesApiCallState.failure) {
+                  } else if (state.incompleteOfficesApiCallState == OfficesApiCallState.failure) {
                     return Center(
-                      child: RetryButton(
-                          onTap: () => context
-                              .read<OfficesCubit>()
-                              .getIncompleteUnits()),
+                      child: RetryButton(onTap: () => context.read<OfficesCubit>().getIncompleteOffices()),
                     );
                   }
                   return const SizedBox.shrink();

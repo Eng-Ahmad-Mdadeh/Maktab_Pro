@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 
-import 'text/body_text.dart';
-import 'text/section_title.dart';
+import 'body_text.dart';
+import 'section_title.dart';
 
 class MaktabButton extends StatelessWidget {
   MaktabButton({
@@ -18,7 +18,8 @@ class MaktabButton extends StatelessWidget {
     this.icon,
     this.backgroundColor = AppColors.mintTeal,
     this.color = Colors.white,
-    this.textStyle,
+    this.fontWeight,
+    // this.textStyle,
     this.isBordered = false,
     this.borderRadius,
     this.borderColor,
@@ -26,6 +27,7 @@ class MaktabButton extends StatelessWidget {
     this.shadow,
     required this.onPressed,
     this.isLoading = false,
+    this.isCircle = false,
     this.isEnabled = true,
     this.bold = true,
   });
@@ -39,12 +41,15 @@ class MaktabButton extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final Color backgroundColor;
   final Color color;
-  final TextStyle? textStyle;
+
+  // final TextStyle? textStyle;
   final bool isBordered;
+  final bool isCircle;
   final BorderRadiusGeometry? borderRadius;
   final Color? borderColor;
   final void Function()? onPressed;
   final BoxShadow? shadow;
+  final FontWeight? fontWeight;
   bool isLoading;
   bool isEnabled;
   bool bold;
@@ -58,25 +63,31 @@ class MaktabButton extends StatelessWidget {
       curve: Curves.easeInCubic,
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: borderRadius ?? BorderRadius.circular(15.0),
-        boxShadow: shadow != null ? [
-          shadow!
-        ] : null,
+        borderRadius: isCircle ? null : borderRadius ?? BorderRadius.circular(15.0),
+        boxShadow: shadow != null ? [shadow!] : null,
+        shape: isCircle ? BoxShape.circle : BoxShape.rectangle,
       ),
       child: ElevatedButton(
         onPressed: isLoading || !isEnabled ? () {} : onPressed,
         style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
-              elevation: MaterialStatePropertyAll(elevation),
-              padding: const MaterialStatePropertyAll(EdgeInsets.zero),
-              backgroundColor: MaterialStatePropertyAll<Color>(backgroundColor),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              elevation: WidgetStatePropertyAll(elevation),
+              padding: const WidgetStatePropertyAll(EdgeInsets.zero),
+              backgroundColor: WidgetStatePropertyAll<Color>(backgroundColor),
+              shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: borderRadius ?? BorderRadius.circular(15.0),
-                    side: isBordered ? BorderSide(color: borderColor ?? AppColors.softAsh, width: 1) : BorderSide.none),
+                    side: isBordered
+                        ? BorderSide(color: borderColor ?? AppColors.softAsh, width: 1)
+                        : BorderSide.none),
               ),
             ),
         child: isLoading
             ? const CircularProgressIndicator(color: AppColors.white)
+            : icon != null && text == null ?
+        Align(
+          alignment: Alignment.center,
+          child: icon!,
+        )
             : Padding(
                 padding: padding ?? EdgeInsets.symmetric(horizontal: 20.h, vertical: 15.v),
                 child: Row(
@@ -100,12 +111,14 @@ class MaktabButton extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                     textColor: color,
                                     fontSize: fontSize,
+                                    textFontWeight: fontWeight,
                                   )
                                 : BodyText(
-                                    text!,
+                                    text: text!,
                                     textAlign: TextAlign.center,
                                     textColor: color,
                                     fontSize: fontSize,
+                                    fontWeight: fontWeight,
                                   ),
                           )
                         : const SizedBox.shrink()

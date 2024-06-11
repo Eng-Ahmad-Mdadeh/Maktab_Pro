@@ -15,6 +15,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;
   Timer? timer;
 
+  String loginType = 'whatsapp';
+
   AuthBloc({required AuthRepository authRepository})
       : _authRepository = authRepository,
         super(const AuthState(
@@ -37,7 +39,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           profileCompleteness: ProfileCompleteness.initial));
       try {
         var result = await _authRepository.login(
-            phone: event.phone, messageType: event.messageType);
+            phone: event.phone, messageType: event.messageType??loginType);
+        loginType = event.messageType??'whatsapp';
+
         // await Future.delayed(const Duration(seconds: 4));
         result.fold(
           (failure) => emit(state.copyWith(

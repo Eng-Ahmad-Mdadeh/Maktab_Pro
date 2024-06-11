@@ -14,7 +14,6 @@ class DiscountButton extends StatelessWidget {
       height: 65.v,
       padding: EdgeInsets.zero,
       backgroundColor: AppColors.palePlatinum,
-      textStyle: Theme.of(context).textTheme.titleSmall,
       text: 'الخصم الأسبوعي والشهري',
       icon: const Icon(
         Icons.calendar_month_rounded,

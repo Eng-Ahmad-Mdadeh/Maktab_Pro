@@ -49,7 +49,7 @@ class _UnitInfoStepState extends State<UnitInfoStepStep> {
                 return null;
               },
               onChanged: (value) {
-                context.read<UnitBloc>().add(SetUnitNameEvent(value!.trim()));
+                context.read<UnitBloc>().add(SetUnitNameEvent(value.trim()));
               },
             ),
           ),

@@ -9,8 +9,8 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
       emit(HomeNavigationState());
     });
 
-    on<CalendarNavigationEvent>((event, emit){
-      emit(CalendarNavigationState());
+    on<AddOfficeNavigationEvent>((event, emit){
+      emit(AddOfficeNavigationState());
     });
 
     on<OrdersNavigationEvent>((event, emit){

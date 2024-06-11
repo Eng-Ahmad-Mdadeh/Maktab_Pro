@@ -19,10 +19,10 @@ class _OfficeAddressStepState extends State<OfficeAddressStep> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PageTitle(title: 'عنوان المكتب'),
+          const PageTitle(title: 'عنوان المكان والخدمة'),
           SizedBox(height: 30.v),
           const SectionTitle(
-            title: 'يرجى تحديد موقع المكتب',
+            title: 'يرجى تحديد موقع المكان والخدمة',
             textFontWeight: FontWeight.w500,
           ),
           SizedBox(height: 20.v),

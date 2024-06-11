@@ -25,6 +25,7 @@ class AppColors {
   static const Color palePurple = Color.fromARGB(219, 218, 232, 248);
   static const Color deepPurple = Color.fromARGB(141, 51, 12, 179);
   static const Color royalPurple = Color(0xFF5A409B);
+  static const Color royalPurpleDeep = Color(0xFF2B1B5D);
   static const Color deepPlaum = Color(0XFF392738);
   // Gray
   static const Color lightGray = Color(0XFFF7F7F7);

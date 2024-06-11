@@ -1,10 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/network/api_endpoints.dart';
 import 'package:maktab/data/models/category_aqar/category_aqar_model.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/maktab_image_view.dart';
+
+import '../../widgets/body_text.dart';
 
 class OfficeCategoryBox extends StatelessWidget {
   const OfficeCategoryBox({
@@ -25,31 +25,41 @@ class OfficeCategoryBox extends StatelessWidget {
       child: Container(
         width: 60.h,
         height: 60.v,
-        padding: EdgeInsets.symmetric(vertical: 15.v, horizontal: 15.h),
+        // padding: EdgeInsets.symmetric(vertical: 15.v, horizontal: 15.h),
         decoration: BoxDecoration(
+          color: isSelected ? AppColors.royalPurpleDeep: null,
           borderRadius: BorderRadius.circular(15),
-          border: isSelected
-              ? Border.all(color: AppColors.cherryRed, width: 1)
-              : null,
-          gradient: RadialGradient(
+          // border: isSelected ? Border.all(color: AppColors.cherryRed, width: 1) : null,
+          gradient: isSelected ? null : const LinearGradient(
             colors: [
+              AppColors.mintGreen,
               AppColors.royalPurple,
-              AppColors.royalPurple.withOpacity(0.8),
-              AppColors.royalPurple.withOpacity(0.7),
             ],
-            stops: const [0, 0.8, 1],
-            center: Alignment.center,
-            radius: 0.55,
           ),
         ),
         child: Stack(
           children: [
-            MaktabImageView(imagePath: officeCategory.icon),
-            Text(
-              officeCategory.arName,
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: AppColors.white,
-                  ),
+            Align(
+              alignment: Alignment.center,
+              child: MaktabImageView(
+                width: 50.h,
+                height: 50.v,
+                imagePath: officeCategory.icon,
+                color: AppColors.white,
+              ),
+            ),
+            // Container(
+            //   width: 100.h,
+            //   height: 100.v,
+            //   color: AppColors.black.withOpacity(.3),
+            // ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: BodyText(
+                text: officeCategory.arName,
+                textColor: AppColors.white,
+                textAlign: TextAlign.center,
+              ),
             ),
           ],
         ),

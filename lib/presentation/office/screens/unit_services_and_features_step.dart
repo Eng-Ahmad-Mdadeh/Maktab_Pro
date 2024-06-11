@@ -15,7 +15,7 @@ class UnitServicesAndFeaturesStep extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PageTitle(title: 'الخدمات والميزات', hint: '(اختياري)'),
+          const PageTitle(title: 'الخدمات والميزات(اختياري)'),
           SizedBox(height: 30.v),
           UnitFeaturesList(),
           SizedBox(height: 20.v),

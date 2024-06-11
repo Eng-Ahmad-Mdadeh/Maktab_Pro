@@ -1,5 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:developer';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +10,6 @@ import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/data/models/office/office_model.dart';
 import 'package:maktab/presentation/calendar/widgets/calendar_header.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/loading_dialog.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab/presentation/widgets/maktab_button.dart';
@@ -74,7 +75,7 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                 }
                 if (state is CalendarFailure) {
                   LoadingDialog.hide(context);
-                  print("CalendarFailure error: ${state.message}");
+                  log("CalendarFailure error: ${state.message}");
                 }
                 if (state is CalendarSuccess) {
                   LoadingDialog.hide(context);
@@ -142,7 +143,7 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                                       );
                                     },
                                   ),
-                                const BodyText(text: "RangeCalendarSection")
+                                // const BodyText(text: "RangeCalendarSection")
                                 // const RangeCalendarSection(),
                               ],
                             ),

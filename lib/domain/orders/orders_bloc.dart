@@ -69,11 +69,11 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         _filteredList = _orders.where((e) {
           final tenantFilter = e.tenant?.username?.contains(event.value) ?? false;
           final idFilter = e.id.toString() == event.value;
-          print("______________________________________");
-          print("event.value: ${event.value}");
-          print("e.id: ${e.id}");
-          print("tenantFilter: $tenantFilter");
-          print("idFilter: $idFilter");
+          log("______________________________________");
+          log("event.value: ${event.value}");
+          log("e.id: ${e.id}");
+          log("tenantFilter: $tenantFilter");
+          log("idFilter: $idFilter");
           return tenantFilter || idFilter;
         }).toList();
 

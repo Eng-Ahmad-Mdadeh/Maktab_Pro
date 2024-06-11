@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,7 +11,7 @@ import '../../../../../../../../../../data/models/contract/contract_model_model.
 import '../../../../../../../../../../domain/contract_models/contract_models_bloc.dart';
 import '../../../../../../../../../../domain/contracts/contract/add/contract_cubit.dart';
 import '../../../../../../../../../widgets/maktab_drop_down_form_field.dart';
-import '../../../../../../../../../widgets/text/body_text.dart';
+import '../../../../../../../../../widgets/body_text.dart';
 
 class ContractStep4 extends StatelessWidget {
   const ContractStep4({super.key});
@@ -79,7 +81,7 @@ class ContractHtmlEditorWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BodyText(
-          title,
+          text: title,
         ),
         HtmlEditor(
           controller: _controller,
@@ -108,21 +110,21 @@ class ContractHtmlEditorWidget extends StatelessWidget {
             dropdownBackgroundColor: AppColors.white,
             //by default
             onButtonPressed: (ButtonType type, bool? status, Function? updateStatus) {
-              print("button '$type' pressed, the current selected status is $status");
+              log("button '$type' pressed, the current selected status is $status");
               return true;
             },
             onDropdownChanged: (DropdownType type, dynamic changed, Function(dynamic)? updateSelectedItem) {
-              print("dropdown '$type' changed to $changed");
+              log("dropdown '$type' changed to $changed");
               return true;
             },
             mediaLinkInsertInterceptor: (String url, InsertFileType type) {
-              print(url);
+              log(url);
               return true;
             },
             mediaUploadInterceptor: (PlatformFile file, InsertFileType type) async {
-              print(file.name); //filename
-              print(file.size); //size in bytes
-              print(file.extension); //file extension (eg jpeg or mp4)
+              log(file.name); //filename
+              log(file.size.toString()); //size in bytes
+              log(file.extension.toString()); //file extension (eg jpeg or mp4)
               return true;
             },
           ),
@@ -137,7 +139,7 @@ class ContractHtmlEditorWidget extends StatelessWidget {
               },
               mentionsWeb: ['test1', 'test2', 'test3'],
               onSelect: (String value) {
-                print(value);
+                log(value);
               },
             ),
           ],
@@ -178,7 +180,7 @@ class ContractModelSelectWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BodyText(
-            title,
+            text: title,
             fontSize: 15.0,
           ),
           Row(

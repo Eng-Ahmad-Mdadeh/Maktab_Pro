@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/domain/contracts/contract/add/contract_state.dart';
 
 import '../../../../../../../../../../domain/contracts/contract/add/contract_cubit.dart';
 import '../../../../../../../../../resources/app_colors.dart';
-import '../../../../../../../../../widgets/text/section_title.dart';
+import '../../../../../../../../../widgets/body_text.dart';
+import '../../../../../../../../../widgets/section_title.dart';
 import '../contract_input_widget.dart';
 import '../contract_select_widget.dart';
 
@@ -23,8 +23,8 @@ class LessorInfoWidget extends StatelessWidget {
         collapsedBackgroundColor: AppColors.deepBlue,
         collapsedTextColor: AppColors.white,
         textColor: AppColors.black,
-        title: const Text(
-          "معلومات المؤجر",
+        title: const BodyText(
+          text: "معلومات المؤجر",
           // textColor: AppColors.white,
           // fontSize: 15.0,
         ),

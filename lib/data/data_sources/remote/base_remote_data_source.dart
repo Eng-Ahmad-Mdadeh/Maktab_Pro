@@ -61,7 +61,7 @@ class BaseRemoteDataSource<T> {
   }
 
   Future<Either<ApiException, r.Response>> postData({String endpoint = '', data, List<Map<String, dynamic>>? files}) async {
-    print(baseEndpoint + endpoint);
+    log(baseEndpoint + endpoint);
     try {
       final Either response = await _networkHelper.post(baseEndpoint + endpoint, data: data, files: files);
       return response.fold(
@@ -77,7 +77,7 @@ class BaseRemoteDataSource<T> {
 
   Future<Either<AppException, r.Response>> deleteData({String endpoint = '', data}) async {
     try {
-      print(baseEndpoint + endpoint);
+      log(baseEndpoint + endpoint);
       final Either response = await _networkHelper.delete(baseEndpoint + endpoint, data: data);
       return response.fold(
         (error) => Left(error),

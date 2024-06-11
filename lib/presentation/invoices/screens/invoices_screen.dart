@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -5,7 +7,7 @@ import '../../../../../../../../core/helpers/size_helper.dart';
 import '../../../domain/invoice/invoice_bloc.dart';
 import '../../widgets/loading_widget.dart';
 import '../../widgets/maktab_app_bar.dart';
-import '../../widgets/text/body_text.dart';
+import '../../widgets/body_text.dart';
 import '../widgets/invoice_item_card.dart';
 
 class InvoicesScreen extends StatefulWidget {
@@ -28,7 +30,7 @@ class _InvoicesScreenState extends State<InvoicesScreen> {
 
   void _scrollListener() {
     if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-      print('Reached the end of the list');
+      log('Reached the end of the list');
       context.read<InvoiceBloc>().add(GetMoreInvoicesEvent());
     }
   }
@@ -52,7 +54,7 @@ class _InvoicesScreenState extends State<InvoicesScreen> {
           }
           if (state is FailureInvoiceState) {
             return Center(
-              child: BodyText(state.message),
+              child: BodyText(text:state.message),
             );
           }
           if (state is SuccessInvoiceState) {
@@ -66,7 +68,7 @@ class _InvoicesScreenState extends State<InvoicesScreen> {
             );
           }
           return const Center(
-            child: BodyText('لا يوجد فواتير'),
+            child: BodyText(text: 'لا يوجد فواتير'),
           );
         }),
       ),

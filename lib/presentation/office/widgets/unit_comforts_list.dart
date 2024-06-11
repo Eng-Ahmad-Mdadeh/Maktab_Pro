@@ -18,7 +18,7 @@ class UnitComfortsList extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const PageTitle(title: 'وسائل الراحة', hint: 'اختياري'),
+        const PageTitle(title: 'وسائل الراحة (اختياري)'),
         SizedBox(height: 10.v),
         SizedBox(
           height: 130.v,

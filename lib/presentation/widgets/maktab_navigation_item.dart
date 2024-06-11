@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 
+import 'section_title.dart';
+
 class MaktabNavigationItemItem extends StatelessWidget {
   const MaktabNavigationItemItem({
     super.key,
@@ -19,9 +21,9 @@ class MaktabNavigationItemItem extends StatelessWidget {
       onTap: onTap,
       child: ListTile(
         contentPadding: EdgeInsets.zero,
-        title: Text(
+        title: SectionTitle(
+          title:
           title,
-          style: Theme.of(context).textTheme.titleMedium,
         ),
         trailing: const Icon(
           Icons.arrow_forward_ios,

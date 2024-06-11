@@ -23,7 +23,7 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
         super(CouponState(
           startDate: DateFormatterHelper.getCurrentDate(),
           endDate: DateFormatterHelper.getCurrentDate(),
-          prices: {},
+          prices: const {},
         )) {
     on<InitialCouponEvent>((event, emit) async {
       if (event.coupon != null) {
@@ -200,7 +200,7 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
         }
       }
     }
-    print(offersWithTypes);
+    log(offersWithTypes.toString());
     if (offersWithTypes.isNotEmpty) {
       for (Coupon offer in offersWithTypes) {
         if (range.isRangeOutRange(offer.startDate, offer.endDate)) {

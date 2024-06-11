@@ -5,6 +5,7 @@ import 'package:maktab/core/helpers/size_helper.dart';
 import '../../../../../../../../../../domain/contracts/contract/add/contract_cubit.dart';
 import '../../../../../../../../../../domain/contracts/contract/add/contract_state.dart';
 import '../../../../../../../../../resources/app_colors.dart';
+import '../../../../../../../../../widgets/body_text.dart';
 import '../contract_image_widget.dart';
 import '../contract_input_widget.dart';
 import '../contract_select_widget.dart';
@@ -22,8 +23,8 @@ class TenantInfoWidget extends StatelessWidget {
         collapsedBackgroundColor: AppColors.deepBlue,
         collapsedTextColor: AppColors.white,
         textColor: AppColors.black,
-        title: const Text(
-          "معلومات المستأجر",
+        title: const BodyText(
+          text: "معلومات المستأجر",
           // textColor: AppColors.white,
           // fontSize: 15.0,
         ),

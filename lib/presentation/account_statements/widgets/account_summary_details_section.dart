@@ -6,8 +6,8 @@ import 'package:maktab/core/helpers/size_helper.dart';
 
 import '../../../data/models/account_summary/account_summary_model.dart';
 import '../../../domain/account_summary/account_summary_bloc.dart';
-import '../../widgets/text/section_title.dart';
-import '../../widgets/text/body_text.dart';
+import '../../widgets/section_title.dart';
+import '../../widgets/body_text.dart';
 import '../../resources/app_colors.dart';
 
 class AccountSummaryDetailsSection extends StatelessWidget {
@@ -35,7 +35,7 @@ class AccountSummaryDetailsSection extends StatelessWidget {
             },
           );
         }
-        return const Center(child: BodyText('لا يوجد بيانات حاليا'));
+        return const Center(child: BodyText(text: 'لا يوجد بيانات حاليا'));
       },
     );
   }
@@ -66,7 +66,7 @@ class SummaryCard extends StatelessWidget {
             title: data.updatedAt!.dayFormatWithLocale('ar'),
             fontSize: 16,
           ),
-          const BodyText("ريال")
+          const BodyText(text: "ريال")
         ],
       ),
       leading: const Icon(FontAwesomeIcons.circleDot),
@@ -103,7 +103,7 @@ class SummaryRow extends StatelessWidget {
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              BodyText(title),
+              BodyText(text: title),
               SectionTitle(
                 title: text,
                 textColor: textColor,
@@ -115,7 +115,7 @@ class SummaryRow extends StatelessWidget {
         : Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              BodyText(title),
+              BodyText(text: title),
               SectionTitle(
                 title: text,
                 textColor: textColor,

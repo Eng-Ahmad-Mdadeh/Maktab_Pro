@@ -5,14 +5,11 @@ import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/core/services/service_locator.dart';
 import 'package:maktab/domain/national_access/national_access_bloc.dart';
 import 'package:maktab/presentation/resources/app_assets.dart';
-import 'package:maktab/presentation/verify_national_access/widgets/account_type_number_form.dart';
-import 'package:maktab/presentation/verify_national_access/widgets/account_type_options.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/loading_dialog.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab/presentation/widgets/maktab_image_view.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
 
 class VerifyNationalAccessScreen extends StatefulWidget {
   const VerifyNationalAccessScreen({super.key});

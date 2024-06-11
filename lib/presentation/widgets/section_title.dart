@@ -1,7 +1,8 @@
-// ignore_for_file: depend_on_referenced_packages
-
 import 'package:flutter/material.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
+
+import '../../core/helpers/size_helper.dart';
+import '../resources/app_colors.dart';
+import '../resources/app_text_styles.dart';
 
 class SectionTitle extends StatelessWidget {
   const SectionTitle({
@@ -9,24 +10,42 @@ class SectionTitle extends StatelessWidget {
     required this.title,
     this.textAlign,
     this.textColor,
+    this.fontSize,
+    this.overflow,
+    this.decoration,
+    this.decorationStyle,
+    this.decorationColor,
+    this.decorationThickness,
     this.textFontWeight,
   });
 
   final String title;
   final TextAlign? textAlign;
   final Color? textColor;
+  final double? fontSize;
+  final TextOverflow? overflow;
+  final TextDecoration? decoration;
+  final TextDecorationStyle? decorationStyle;
+  final Color? decorationColor;
+  final double? decorationThickness;
   final FontWeight? textFontWeight;
 
   @override
   Widget build(BuildContext context) {
     return Text(
       title,
-      textAlign: textAlign ?? TextAlign.center,
+      textAlign: textAlign,
       softWrap: true,
-      style: Theme.of(context).textTheme.titleMedium!.copyWith(
-            color: textColor ?? AppColors.black,
-            fontWeight: textFontWeight ?? FontWeight.bold,
-          ),
+      overflow: overflow ?? TextOverflow.visible,
+      style: AppTextStyles.titleMedium.copyWith(
+        color: textColor ?? AppColors.black,
+        fontWeight: textFontWeight ?? FontWeight.bold,
+        fontSize: fontSize?.fSize ?? 18.0.fSize,
+        decoration: decoration,
+        decorationStyle: decorationStyle,
+        decorationColor: decorationColor,
+        decorationThickness: decorationThickness,
+      ),
     );
   }
 }

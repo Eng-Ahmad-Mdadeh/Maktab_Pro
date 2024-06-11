@@ -11,7 +11,17 @@ import 'package:maktab/presentation/widgets/maktab_button.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
 
 class OfficesHeader extends StatelessWidget {
-  const OfficesHeader({super.key});
+  final Function(int) onIncompleteOfficeDelete;
+  final Function(int) onIncompleteUnitDelete;
+  final Function(int) onMyOfficeDelete;
+  final GlobalKey _dropDownKey;
+
+  const OfficesHeader(this._dropDownKey, {
+    super.key,
+    required this.onIncompleteOfficeDelete,
+    required this.onIncompleteUnitDelete,
+    required this.onMyOfficeDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +31,15 @@ class OfficesHeader extends StatelessWidget {
         Expanded(
           child: BlocListener<OfficesCubit, OfficesState>(
             listener: (context, state) {
-              if (state.marketingRequestsApiCallState ==
-                  OfficesApiCallState.loading) {
+              if (state.marketingRequestsApiCallState == OfficesApiCallState.loading) {
                 LoadingDialog.show(context);
               }
-              if (state.marketingRequestsApiCallState ==
-                  OfficesApiCallState.update) {
+              if (state.marketingRequestsApiCallState == OfficesApiCallState.update) {
                 LoadingDialog.hide(context);
-              } else if (state.marketingRequestsApiCallState ==
-                  OfficesApiCallState.success) {
+              } else if (state.marketingRequestsApiCallState == OfficesApiCallState.success) {
                 LoadingDialog.hide(context);
                 context.pushNamed(AppRoutes.marketingRequestsScreen);
-              } else if (state.marketingRequestsApiCallState ==
-                  OfficesApiCallState.failure) {
+              } else if (state.marketingRequestsApiCallState == OfficesApiCallState.failure) {
                 LoadingDialog.hide(context);
                 MaktabSnackbar.showError(context, 'حدث خطأ ما');
               }
@@ -42,18 +48,22 @@ class OfficesHeader extends StatelessWidget {
               padding: EdgeInsets.zero,
               backgroundColor: AppColors.lightCyan,
               text: 'طلبات التسويق',
-              textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                    color: AppColors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-              onPressed: () =>
-                  context.read<OfficesCubit>().getMarketingRequests(),
+              color: AppColors.white,
+              height: 60.0.v,
+              fontWeight: FontWeight.bold,
+              fontSize: 17.0,
+              onPressed: () => context.read<OfficesCubit>().getMarketingRequests(),
             ),
           ),
         ),
         SizedBox(width: 5.h),
         Expanded(
-          child: OfficeNavigationDropDownButton(),
+          child: OfficeNavigationDropDownButton(
+            _dropDownKey,
+            onIncompleteOfficeDelete: onIncompleteOfficeDelete,
+            onIncompleteUnitDelete: onIncompleteUnitDelete,
+            onMyOfficeDelete: onMyOfficeDelete,
+          ),
         ),
       ],
     );

@@ -15,6 +15,7 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.white,
     colorScheme: colorScheme,
     appBarTheme: appBarTheme,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
     bottomAppBarTheme: bottomAppBarTheme,
     textTheme: textTheme,
     inputDecorationTheme: inputDecorationTheme,
@@ -26,9 +27,9 @@ class AppTheme {
       //todayBorder: BorderSide(color: AppColors.royalPurple, width: 2),
     ),
     switchTheme: const SwitchThemeData(
-      trackOutlineColor: MaterialStatePropertyAll(AppColors.slateGray),
-      trackColor: MaterialStatePropertyAll(AppColors.white),
-      thumbColor: MaterialStatePropertyAll(AppColors.slateGray),
+      trackOutlineColor: WidgetStatePropertyAll(AppColors.slateGray),
+      trackColor: WidgetStatePropertyAll(AppColors.white),
+      thumbColor: WidgetStatePropertyAll(AppColors.slateGray),
     ),
     expansionTileTheme: const ExpansionTileThemeData(
       iconColor: AppColors.slateGray,

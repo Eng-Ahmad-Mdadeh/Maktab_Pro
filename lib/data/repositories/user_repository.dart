@@ -18,7 +18,7 @@ class UserRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if ((right.status??false)) {
+        if (right.status) {
           Statistics statistics = Statistics.fromJson(right.data);
           return Right(statistics);
         } else {
@@ -33,7 +33,7 @@ class UserRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if ((right.status??false)) {
+        if (right.status) {
           List<UserType> userTypes =
               List<UserType>.from(right.data.map((x) => UserType.fromJson(x)));
           return Right(userTypes);
@@ -50,7 +50,7 @@ class UserRepository {
       return result.fold(
             (error) => Left(error),
             (right) async {
-          if ((right.status??false)) {
+              if (right.status) {
             UserAgreement agreement = UserAgreement.fromJson(right.data['data']);
             return Right(agreement);
           } else {
@@ -91,7 +91,7 @@ class UserRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if ((right.status??false)) {
+        if (right.status) {
           UnitSettings settings = UnitSettings.fromJson(right.data);
           return Right(settings);
         } else {

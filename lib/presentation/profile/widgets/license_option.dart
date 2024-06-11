@@ -4,6 +4,8 @@ import 'package:maktab/presentation/profile/widgets/license_register_dialog.dart
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/maktab_button.dart';
 
+import '../../widgets/section_title.dart';
+
 class LicenseOption extends StatelessWidget {
   const LicenseOption({super.key});
 
@@ -11,9 +13,9 @@ class LicenseOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
+        const SectionTitle(
+          title:
           'هل لديك ترخيص لممارسة الوساطة والتسويق العقاري؟',
-          style: Theme.of(context).textTheme.titleSmall,
         ),
         SizedBox(height: 10.v),
         SizedBox(

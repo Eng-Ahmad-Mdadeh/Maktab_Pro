@@ -9,11 +9,9 @@ import 'package:maktab/presentation/widgets/loading_widget.dart';
 
 import '../../../../../domain/contract_models/contract_models_bloc.dart';
 import '../../../../widgets/confirm_alert_dialog.dart';
-import '../../../../widgets/loading_dialog.dart';
 import '../../../../widgets/maktab_app_bar.dart';
-import '../../../../widgets/maktab_snack_bar.dart';
-import '../../../../widgets/text/body_text.dart';
-import '../../../../widgets/text/section_title.dart';
+import '../../../../widgets/body_text.dart';
+import '../../../../widgets/section_title.dart';
 
 class ContractsModelsScreen extends StatelessWidget {
   const ContractsModelsScreen({super.key});
@@ -37,7 +35,7 @@ class ContractsModelsScreen extends StatelessWidget {
                     title: contractModel.name ?? '',
                     fontSize: 15.0,
                   ),
-                  subtitle: BodyText(contractModel.description ?? ''),
+                  subtitle: BodyText(text:contractModel.description ?? ''),
                   leading: Container(
                     padding: EdgeInsets.all(13.0.adaptSize),
                     decoration: BoxDecoration(
@@ -45,7 +43,7 @@ class ContractsModelsScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0.adaptSize),
                     ),
                     child: BodyText(
-                      contractModel.status == '1' ? 'Active' : 'Passive',
+                      text:contractModel.status == '1' ? 'Active' : 'Passive',
                       textColor: AppColors.white,
                     ),
                   ),

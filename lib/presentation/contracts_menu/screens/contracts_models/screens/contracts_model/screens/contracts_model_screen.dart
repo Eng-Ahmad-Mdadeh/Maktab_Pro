@@ -6,7 +6,7 @@ import 'package:maktab/presentation/widgets/loading_widget.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 
 import '../../../../../../../domain/contract_models/contract_model/contract_model_bloc.dart';
-import '../../../../../../widgets/text/body_text.dart';
+import '../../../../../../widgets/body_text.dart';
 
 class ContractsModelScreen extends StatelessWidget {
   const ContractsModelScreen({super.key});
@@ -32,14 +32,14 @@ class ContractsModelScreen extends StatelessWidget {
                   );
                 }
                 return const Center(
-                  child: BodyText("هنالك شيء لايعمل"),
+                  child: BodyText(text: "هنالك شيء لايعمل"),
                 );
               },
             ),
           );
         }
         return const Scaffold(
-          body: Center(child: BodyText("لا يوجد شيء لعرضه حاول مرة اخرى"),),
+          body: Center(child: BodyText(text: "لا يوجد شيء لعرضه حاول مرة اخرى"),),
         );
       },
     );

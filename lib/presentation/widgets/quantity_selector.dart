@@ -7,6 +7,8 @@ import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/maktab_button.dart';
 
+import 'section_title.dart';
+
 class QuantitySelector extends StatelessWidget {
   const QuantitySelector({
     super.key,
@@ -56,13 +58,11 @@ class QuantitySelector extends StatelessWidget {
                     flex: 2,
                     child: Padding(
                       padding: EdgeInsets.only(top: 10.v),
-                      child: Text(
+                      child: SectionTitle(
+                        title:
                         quantity,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleLarge!
-                            .copyWith(color: AppColors.lightBlack),
+                        textAlign: TextAlign.center,textColor: AppColors.lightBlack
+
                       ),
                     ),
                   ),

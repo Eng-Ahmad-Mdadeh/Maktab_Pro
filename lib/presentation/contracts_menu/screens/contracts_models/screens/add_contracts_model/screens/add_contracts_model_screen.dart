@@ -106,7 +106,6 @@ class AddContractsModelScreen extends StatelessWidget {
                     onPressed: () {
                       if (_key.currentState!.validate()) {
                         _htmlController.getText().then((value) {
-                          print(_statusController.text);
                           context.read<ContractModelBloc>().add(CreateContractModels(
                                 name: _nameController.text,
                                 description: _descriptionController.text,

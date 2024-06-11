@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab/domain/unit/unit_bloc.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/maktab_switch.dart';
 import 'package:maktab/presentation/widgets/quantity_selector.dart';
 import 'package:maktab/presentation/widgets/section_title.dart';
@@ -22,8 +21,8 @@ class UnitSharedWorkSpacesSection extends StatelessWidget {
                 value: state.sharedWorkSpacesSelectorState == ToggleStates.on
                     ? true
                     : false,
-                activeColor: AppColors.emeraldTeal,
-                activeTrackColor: AppColors.mintGreen,
+                // activeColor: AppColors.emeraldTeal,
+                // activeTrackColor: AppColors.mintGreen,
                 onChanged: (value) => context
                     .read<UnitBloc>()
                     .add(ToggleSharedWorkSpacesSelectorEvent()),

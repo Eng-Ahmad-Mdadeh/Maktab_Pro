@@ -34,7 +34,6 @@ class OrderInfoWidget extends StatelessWidget {
             if (state.isOrderOn ?? false)
               BlocBuilder<OrdersBloc, OrdersState>(
                 builder: (context, orderState) {
-                  print(orderState);
                   if (orderState is OrdersWithoutPaginationSuccess) {
                     return ContractOrderSelectWidget(
                       title: "الرجاء اختيار الطلب",

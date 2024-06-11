@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -16,15 +18,15 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     on<SetOfficeCalendarsEvent>((event, emit) async {
       emit(CalendarLoading());
       try{
-        print("event.calendars.first.startDate: ${event.calendars.first.startDate}");
-        print("event.calendars.first.endDate: ${event.calendars.first.endDate}");
+        log("event.calendars.first.startDate: ${event.calendars.first.startDate}");
+        log("event.calendars.first.endDate: ${event.calendars.first.endDate}");
         final result = await _repository.setOfficeCalendars(
           officeId: event.officeID,
           priceId: event.priceID,
           calendars: event.calendars,
         );
 
-        print(result);
+        log(result.toString());
 
         result.fold(
               (l) {
@@ -45,16 +47,16 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
     on<DeleteOfficeCalendarsEvent>((event, emit) async {
       emit(CalendarLoading());
       try{
-        print("event.officeID delete: ${event.officeID}");
-        print("event.calendars.first.id delete: ${event.calendars.first.id}");
-        print("event.calendars.first.startDate delete: ${event.calendars.first.startDate}");
-        print("event.calendars.first.endDate delete: ${event.calendars.first.endDate}");
+        log("event.officeID delete: ${event.officeID}");
+        log("event.calendars.first.id delete: ${event.calendars.first.id}");
+        log("event.calendars.first.startDate delete: ${event.calendars.first.startDate}");
+        log("event.calendars.first.endDate delete: ${event.calendars.first.endDate}");
         final result = await _repository.deleteCalendarFromOffice(
           officeId: event.officeID,
           calendars: event.calendars,
         );
 
-        print(result);
+        log(result.toString());
 
         result.fold(
               (l) {

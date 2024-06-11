@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 
 import '../../../../../../../../resources/app_colors.dart';
-import '../../../../../../../../widgets/text/body_text.dart';
+import '../../../../../../../../widgets/body_text.dart';
 
 class ContractStepDot extends StatelessWidget {
   final int step;
@@ -38,13 +38,13 @@ class ContractStepDot extends StatelessWidget {
               size: 18.0.adaptSize,
                   )
                 : BodyText(
-                    "$step",
+                 text: "$step",
                     textColor: AppColors.white,
                   ),
           ),
         ),
         BodyText(
-          title,
+          text: title,
           fontSize: 9,
         ),
       ],

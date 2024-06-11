@@ -144,9 +144,9 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                           width: SizeHelper.width,
                                           child: Align(
                                             alignment: Alignment.centerRight,
-                                            child: Text(
+                                            child: SectionTitle(
+                                              title:
                                               unit.title ?? '',
-                                              style: Theme.of(context).textTheme.titleSmall,
                                             ),
                                           ),
                                         ),
@@ -190,9 +190,8 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                           value: format['type'],
                                           child: Align(
                                             alignment: Alignment.centerRight,
-                                            child: Text(
-                                              format['title'],
-                                              style: Theme.of(context).textTheme.bodyLarge,
+                                            child: BodyText(
+                                              text: format['title'],
                                             ),
                                           ),
                                         );
@@ -256,11 +255,9 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                               BlocBuilder<OfferBloc, OfferState>(
                                 builder: (context, state) {
                                   return state.discountAmount == -1
-                                      ? Text(
-                                          'يجب ادخال قيمة الخصم',
-                                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                                color: AppColors.cherryRed,
-                                              ),
+                                      ? const BodyText(
+                                    text:  'يجب ادخال قيمة الخصم',textColor: AppColors.cherryRed,
+
                                         )
                                       : state.prices.values.isNotEmpty
                                           ? state.discountType == DiscountTypes.price &&
@@ -418,11 +415,10 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                               BlocBuilder<OfferBloc, OfferState>(
                                 builder: (context, state) {
                                   return state.pricesCount == 0
-                                      ? Text(
-                                          'يرجى اختيار سعر',
-                                          style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                                color: AppColors.cherryRed,
-                                              ),
+                                      ? const BodyText(
+                                    text:
+                                    'يرجى اختيار سعر',textColor: AppColors.cherryRed,
+
                                         )
                                       : const SizedBox.shrink();
                                 },

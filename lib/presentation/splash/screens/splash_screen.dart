@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -12,6 +13,7 @@ import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/maktab_button.dart';
 import 'package:maktab/presentation/widgets/maktab_image_view.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

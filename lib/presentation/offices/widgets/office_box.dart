@@ -16,8 +16,8 @@ import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/delete_alert_dialog.dart';
 import 'package:maktab/presentation/widgets/maktab_page_slider.dart';
 
-import '../../widgets/text/body_text.dart';
-import '../../widgets/text/section_title.dart';
+import '../../widgets/body_text.dart';
+import '../../widgets/section_title.dart';
 
 class OfficeBox extends StatelessWidget {
   OfficeBox({super.key, required this.office});
@@ -61,7 +61,7 @@ class OfficeBox extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: const BodyText(
-                      'تسويق',
+                      text: 'تسويق',
                       textColor: AppColors.mintGreen,
                     ),
                   ),
@@ -78,7 +78,7 @@ class OfficeBox extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: BodyText(
-                    office.units.where((unit) => unit.active).isNotEmpty
+                    text:office.units.where((unit) => unit.active).isNotEmpty
                         ? 'معروض'
                         : office.isMarketing
                         ? 'معلق'
@@ -203,7 +203,7 @@ class OfficeBox extends StatelessWidget {
                                   title: 'ترخيص العقار',
                                   valueWidget: InkWell(
                                     child: BodyText(
-                                      'تحميل',
+                                      text: 'تحميل',
                                       textAlign: TextAlign.left,
                                       textColor: AppColors.mintTeal,
                                     ),
@@ -213,7 +213,7 @@ class OfficeBox extends StatelessWidget {
                                   title: 'ترخيص المبنى',
                                   valueWidget: InkWell(
                                     child: BodyText(
-                                      'تحميل',
+                                      text: 'تحميل',
                                       textAlign: TextAlign.left,
                                       textColor: AppColors.mintTeal,
                                     ),
@@ -223,7 +223,7 @@ class OfficeBox extends StatelessWidget {
                                   title: 'الدفاع المدني',
                                   valueWidget: InkWell(
                                     child: BodyText(
-                                      'تحميل',
+                                      text: 'تحميل',
                                       textAlign: TextAlign.left,
                                       textColor: AppColors.mintTeal,
                                     ),
@@ -246,7 +246,7 @@ class OfficeBox extends StatelessWidget {
                       children: [
                         const SectionTitle(title: 'وحدات هذا المكتب: '),
                         BodyText(
-                          office.units.length.toString(),
+                          text:office.units.length.toString(),
                           textColor: AppColors.lightBlack,
                         ),
                       ],

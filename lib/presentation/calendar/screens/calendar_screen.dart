@@ -7,7 +7,6 @@ import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab/presentation/widgets/maktab_loading.dart';
 import 'package:maktab/presentation/widgets/shimmer_effect.dart';
 
-import '../../widgets/maktab_bottom_app_bar.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
@@ -28,7 +27,6 @@ class _CalendarScreenState extends State<CalendarScreen> {
     return Scaffold(
       appBar: const MaktabAppBar(
         title: 'التقويم',
-        leading: SizedBox(),
       ),
       body: SafeArea(
         child: Padding(
@@ -54,7 +52,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const MaktabBottomAppBar(),
+      // bottomNavigationBar: const MaktabBottomAppBar(),
     );
   }
 }

@@ -21,6 +21,14 @@ class ServiceBox extends StatelessWidget {
       title: service.arName??'',
       backgroundColor: isSelected ? AppColors.lightCyan : AppColors.white,
       textColor: isSelected ? AppColors.white : AppColors.smokeGray,
+      iconColor: isSelected ? AppColors.white : null,
+      borderColor: isSelected ? AppColors.lightCyan : AppColors.slateGray,
+      gradient: isSelected ? const LinearGradient(
+        colors: [
+          AppColors.mintGreen,
+          AppColors.royalPurple,
+        ],
+      ) : null,
       onTap: onTap,
     );
   }

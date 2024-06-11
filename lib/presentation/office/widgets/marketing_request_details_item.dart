@@ -40,10 +40,7 @@ class MarketingRequestDetailsItem extends StatelessWidget {
               padding: EdgeInsets.zero,
               onPressed: onTap,
               text: 'اختر ملف',
-              textStyle: Theme.of(context)
-                  .textTheme
-                  .titleSmall!
-                  .copyWith(color: AppColors.white),
+              color: AppColors.white,
             ),
             title: BodyText(
               text: fileName.isEmpty

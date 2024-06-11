@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../widgets/text/body_text.dart';
-import '../../../../../../widgets/text/section_title.dart';
+import '../../../../../../widgets/body_text.dart';
+import '../../../../../../widgets/section_title.dart';
 
 
 class ContractGridItem1 extends StatelessWidget {
@@ -21,7 +21,7 @@ class ContractGridItem1 extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         BodyText(
-          title,
+          text: title,
           fontSize: 15.0,
         ),
         SectionTitle(

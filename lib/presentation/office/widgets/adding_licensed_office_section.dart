@@ -41,8 +41,8 @@ class AddingLicensedOfficeSection extends StatelessWidget {
             builder: (context, state) {
               return MaktabSwitch(
                 value: state.licenseOfficeState == VisibilityStates.show,
-                activeColor: AppColors.emeraldTeal,
-                activeTrackColor: AppColors.mintGreen,
+                // activeColor: AppColors.mintGreen,
+                // activeTrackColor: AppColors.white,
                 onChanged: context.read<OfficeBloc>().state.createdOffice ==
                         null
                     ? (value) =>

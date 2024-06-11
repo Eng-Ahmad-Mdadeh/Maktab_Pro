@@ -15,15 +15,15 @@ class OfficeServicesAndFeaturesStep extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PageTitle(title: 'الخدمات والميزات', hint: '(اختياري)'),
+          const PageTitle(title: 'الخدمات والميزات(اختياري)'),
           SizedBox(height: 30.v),
-          OfficeFeaturesList(),
+          const OfficeFeaturesList(),
           SizedBox(height: 20.v),
-          OfficeServicesList(),
+          const OfficeServicesList(),
           SizedBox(height: 20.v),
           const OfficeAddtitionalServicesSection(),
           SizedBox(height: 20.v),
-          OfficeComfortsList(),
+          const OfficeComfortsList(),
         ],
       ),
     );

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab/domain/contracts/contract/add/contract_cubit.dart';
 
 import '../../../../../../../../../../../core/helpers/size_helper.dart';
-import '../../../../../../../../../../../data/models/contract/contract_model.dart';
 import 'base_info_widget.dart';
 import 'lessor_info_widget.dart';
 import 'tenant_info_widget.dart';

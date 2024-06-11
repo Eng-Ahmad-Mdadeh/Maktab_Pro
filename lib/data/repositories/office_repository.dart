@@ -600,7 +600,7 @@ class OfficeRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if ((right.status??false)) {
+        if (right.status) {
           return const Right(null);
         } else {
           return Left(AppException(right.message?? 'Unknown error'));
@@ -617,7 +617,7 @@ class OfficeRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if ((right.status??false)) {
+        if (right.status) {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
@@ -650,7 +650,7 @@ class OfficeRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if ((right.status??false)) {
+        if (right.status) {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
@@ -665,7 +665,7 @@ class OfficeRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if ((right.status??false)) {
+        if (right.status) {
           return const Right(null);
         } else {
           return Left(AppException(right.message?? 'Unknown error'));
@@ -679,7 +679,7 @@ class OfficeRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if ((right.status??false)) {
+        if (right.status) {
           return const Right(null);
         } else {
           return Left(AppException(right.message?? 'Unknown error'));
@@ -693,7 +693,7 @@ class OfficeRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if ((right.status??false)) {
+        if (right.status) {
           SearchData data = SearchData.fromJson(right.data);
           return Right(data);
         } else {
@@ -732,7 +732,7 @@ class OfficeRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if ((right.status??false)) {
+        if (right.status) {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
@@ -759,7 +759,7 @@ class OfficeRepository {
     return result.fold(
       (error) => Left(error),
       (right) async {
-        if ((right.status??false)) {
+        if (right.status) {
           return const Right(null);
         } else {
           return Left(AppException(right.message?? 'Unknown error'));

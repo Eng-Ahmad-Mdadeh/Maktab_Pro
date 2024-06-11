@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:maktab/core/classes/exception/app_exception.dart';
 import 'package:maktab/data/data_sources/remote/financial_transactions_data_source.dart';

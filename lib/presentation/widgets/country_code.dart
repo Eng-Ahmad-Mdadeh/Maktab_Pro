@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 
+import 'body_text.dart';
+import 'section_title.dart';
+
 class CountryCode extends StatelessWidget {
   const CountryCode({super.key});
 
@@ -14,15 +17,16 @@ class CountryCode extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text(
+          const SectionTitle(
+            title:
             '966+',
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleMedium,
+            fontSize: 26.0,
           ),
           SizedBox(width: 10.h),
-          Text(
-            '🇸🇦',
-            style: TextStyle(fontSize: 40.fSize),
+          BodyText(
+            text:
+            '🇸🇦',fontSize: 40.fSize
           ),
         ],
       ),

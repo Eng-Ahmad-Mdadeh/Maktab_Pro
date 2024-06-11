@@ -61,24 +61,22 @@ class UnitBox extends StatelessWidget {
                 children: [
                   SectionTitle(title: unit.title??''),
                   SizedBox(height: 10.v),
-                  Text(
+                  SectionTitle(
+                    title:
                     unit.reject
                         ? 'مرفوض'
                         : Office.getOfficeState(unit.status, unit.active),
-                    softWrap: true,
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          color: unit.reject
-                              ? AppColors.cherryRed
-                              : Office.getOfficeState(
-                                          unit.status, unit.active) ==
-                                      'معروض'
-                                  ? AppColors.mintTeal
-                                  : Office.getOfficeState(
-                                              unit.status, unit.active) ==
-                                          'معلق'
-                                      ? AppColors.orangeAccent
-                                      : AppColors.cherryRed,
-                        ),
+                    textColor: unit.reject
+                        ? AppColors.cherryRed
+                        : Office.getOfficeState(
+                        unit.status, unit.active) ==
+                        'معروض'
+                        ? AppColors.mintTeal
+                        : Office.getOfficeState(
+                        unit.status, unit.active) ==
+                        'معلق'
+                        ? AppColors.orangeAccent
+                        : AppColors.cherryRed,
                   ),
                 ],
               ),

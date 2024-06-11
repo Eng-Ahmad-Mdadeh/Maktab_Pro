@@ -23,6 +23,11 @@ class MoreItemsList extends StatelessWidget {
               context.pushNamed(AppRoutes.editProfileScreen, extra: false),
         ),
         MoreListTile(
+          title: 'التقويم',
+          icon: FontAwesomeIcons.calendar,
+          onTap: () => context.pushNamed(AppRoutes.calendarScreen),
+        ),
+        MoreListTile(
           title: 'المعاملات المالية',
           icon: FontAwesomeIcons.fileInvoiceDollar,
           onTap: () => context.pushNamed(AppRoutes.financialTransactionScreen),

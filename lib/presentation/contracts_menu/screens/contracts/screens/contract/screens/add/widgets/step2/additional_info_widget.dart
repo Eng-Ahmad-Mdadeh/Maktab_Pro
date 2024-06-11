@@ -5,6 +5,7 @@ import 'package:maktab/core/helpers/size_helper.dart';
 import '../../../../../../../../../../domain/contracts/contract/add/contract_cubit.dart';
 import '../../../../../../../../../../domain/contracts/contract/add/contract_state.dart';
 import '../../../../../../../../../resources/app_colors.dart';
+import '../../../../../../../../../widgets/body_text.dart';
 import '../contract_group_button.dart';
 import '../contract_input_widget.dart';
 import '../contract_switch_widget.dart';
@@ -19,7 +20,7 @@ class AdditionalInfoWidget extends StatelessWidget {
       child: BlocBuilder<ContractCubit, ContractEntity>(
         builder: (context, state) {
           return ExpansionTile(
-            title: const Text("معلومات إضافية"),
+            title: const BodyText(text: "معلومات إضافية"),
             initiallyExpanded: true,
             collapsedBackgroundColor: AppColors.deepBlue,
             textColor: AppColors.black,

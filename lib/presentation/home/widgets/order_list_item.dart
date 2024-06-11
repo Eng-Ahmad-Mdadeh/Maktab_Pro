@@ -4,6 +4,9 @@ import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/data/models/order/order_model.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
+import 'package:maktab/presentation/widgets/section_title.dart';
+
+import '../../widgets/maktab_rich_text.dart';
 
 class OrderListItem extends StatelessWidget {
   const OrderListItem({super.key, required this.order});
@@ -25,9 +28,25 @@ class OrderListItem extends StatelessWidget {
         title: Row(
           children: [
             Expanded(
-              child: BodyText(
-                text: order.tenant?.username?.toString() ?? '',
+              child: SectionTitle(
+                title: order.tenant?.username?.toString() ?? '',
                 textColor: AppColors.lightBlack,
+              ),
+            ),
+            Expanded(
+              child: MaktabRichText(
+                texts: [
+                  MaktabRichTextModel(
+                    text: order.totalPriceLessor.toString(),
+                    color: AppColors.mintGreen,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  MaktabRichTextModel(
+                    text: ' ريال',
+                    color: AppColors.lightBlack,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ],
               ),
             ),
             Expanded(

@@ -60,12 +60,11 @@ class _UnitDescriptionFormState extends State<UnitDescriptionForm> {
                   },
                 );
               },
-              child: Text(
-                'مثال',
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      color: AppColors.emeraldTeal,
-                      fontWeight: FontWeight.bold,
-                    ),
+              child: const SectionTitle(
+                title:
+                'مثال',textColor: AppColors.emeraldTeal,
+                textFontWeight: FontWeight.bold,
+
               ),
             ),
           ],
@@ -86,7 +85,7 @@ class _UnitDescriptionFormState extends State<UnitDescriptionForm> {
               return null;
             },
             onChanged: (value) {
-              context.read<UnitBloc>().add(SetDescriptionEvent(value!.trim()));
+              context.read<UnitBloc>().add(SetDescriptionEvent(value.trim()));
             },
           ),
         ),

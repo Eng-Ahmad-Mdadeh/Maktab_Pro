@@ -1,5 +1,7 @@
 // ignore_for_file: unused_local_variable
 
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
@@ -195,7 +197,7 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
         }
       }
     }
-    print(offersWithTypes);
+    log(offersWithTypes.toString());
     if (offersWithTypes.isNotEmpty) {
       for (Offer offer in offersWithTypes) {
         if (range.isRangeOutRange(offer.startDate, offer.endDate)) {

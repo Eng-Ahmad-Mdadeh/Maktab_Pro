@@ -10,7 +10,6 @@ import 'package:maktab/data/models/coupon/coupon_model.dart';
 import 'package:maktab/domain/coupon/coupon_bloc.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/loading_dialog.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab/presentation/widgets/maktab_button.dart';
 import 'package:maktab/presentation/widgets/maktab_text_form_field.dart';
@@ -196,9 +195,8 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                                           width: SizeHelper.width,
                                           child: Align(
                                             alignment: Alignment.centerRight,
-                                            child: Text(
-                                              unit.title ?? '',
-                                              style: Theme.of(context).textTheme.titleSmall,
+                                            child: SectionTitle(
+                                              title: unit.title ?? '',
                                             ),
                                           ),
                                         ),
@@ -242,9 +240,8 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                                           value: format['type'],
                                           child: Align(
                                             alignment: Alignment.centerRight,
-                                            child: Text(
-                                              format['title'],
-                                              style: Theme.of(context).textTheme.bodyLarge,
+                                            child: BodyText(
+                                              text: format['title'],
                                             ),
                                           ),
                                         );
@@ -313,7 +310,7 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                                   return null;
                                 },
                                 onTap: () async {
-                                  range = await showDateRangePicker(
+                                  await showDateRangePicker(
                                     context: context,
                                     locale: const Locale('ar'),
                                     firstDate: DateTime.now(),
@@ -332,13 +329,15 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                                         child: child!,
                                       );
                                     },
-                                  );
-                                  if (range != null) {
-                                    context.read<CouponBloc>().add(SelectOfferDateRangeEvent(range!));
-                                    couponDateRangeController.value = TextEditingValue(
-                                        text:
-                                            '${DateFormatterHelper.getFormated(range!.start)} - ${DateFormatterHelper.getFormated(range!.end)}');
-                                  }
+                                  ).then((range) {
+                                    if (range != null) {
+                                      context.read<CouponBloc>().add(SelectOfferDateRangeEvent(range));
+                                      couponDateRangeController.value = TextEditingValue(
+                                          text:
+                                              '${DateFormatterHelper.getFormated(range.start)} - ${DateFormatterHelper.getFormated(range.end)}');
+                                    }
+                                    return range;
+                                  });
                                 },
                               ),
                             ],
@@ -436,11 +435,9 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                     BlocBuilder<CouponBloc, CouponState>(
                       builder: (context, state) {
                         return state.pricesCount == 0
-                            ? Text(
-                                'يرجى اختيار سعر',
-                                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      color: AppColors.cherryRed,
-                                    ),
+                            ? const BodyText(
+                                text: 'يرجى اختيار سعر',
+                                textColor: AppColors.cherryRed,
                               )
                             : const SizedBox.shrink();
                       },

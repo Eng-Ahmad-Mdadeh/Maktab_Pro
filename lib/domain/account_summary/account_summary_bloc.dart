@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -44,7 +46,7 @@ class AccountSummaryBloc extends Bloc<AccountSummaryEvent, AccountSummaryState> 
             .toList();
         final s = loadedState.accountSummaries.copyWith(accountStatement: loadedState.accountSummaries.accountStatement!.copyWith(data: filteredAccountSummaries));
 
-        print("s.accountStatement?.data.length: ${s.accountStatement?.data.length}");
+        log("s.accountStatement?.data.length: ${s.accountStatement?.data.length}");
         emit(loadedState.copyWith(filteredAccountSummaries: s));
       }
     });

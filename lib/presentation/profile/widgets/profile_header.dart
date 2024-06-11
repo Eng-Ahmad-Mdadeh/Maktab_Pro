@@ -7,6 +7,8 @@ import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/maktab_image_view.dart';
 import 'package:maktab/presentation/widgets/shimmer_effect.dart';
 
+import '../../widgets/section_title.dart';
+
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
 
@@ -40,37 +42,28 @@ class ProfileHeader extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 6.v),
-                    Text(
+                    SectionTitle(
+                      title:
                       state.profileState == ProfileStates.success
                           ? state.user!.userName.toString()
-                          : '',
-                      softWrap: true,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .copyWith(color: AppColors.white),
+                          : '',textColor: AppColors.white
+
                     ),
                     SizedBox(height: 15.v),
-                    Text(
+                    SectionTitle(
+                      title:
                       state.profileState == ProfileStates.success
                           ? state.user!.email.toString()
-                          : '',
-                      softWrap: true,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .copyWith(color: AppColors.white),
+                          : '',textColor: AppColors.white
+
                     ),
                     SizedBox(height: 5.v),
-                    Text(
+                    SectionTitle(
+                      title:
                       state.profileState == ProfileStates.success
                           ? state.user!.phone.toString()
-                          : '',
-                      softWrap: true,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .copyWith(color: AppColors.white),
+                          : '',textColor: AppColors.white
+
                     ),
                   ],
                 ),

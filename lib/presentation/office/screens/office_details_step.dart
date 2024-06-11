@@ -28,7 +28,7 @@ class _OfficeDetailsStepState extends State<OfficeDetailsStep> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const PageTitle(title: 'تفاصيل المكتب'),
+          const PageTitle(title: 'تفاصيل المكان/الخدمة'),
           SizedBox(height: 20.v),
           const OfficeFloorSection(),
           const OfficeAgeSection(),
@@ -39,14 +39,11 @@ class _OfficeDetailsStepState extends State<OfficeDetailsStep> {
           SizedBox(height: 10.v),
           BlocBuilder<OfficeBloc, OfficeState>(
             builder: (context, state) {
-              return state.officesCountSelectorState == ToggleStates.on &&
-                          state.officesCount == 0 ||
+              return state.officesCountSelectorState == ToggleStates.on && state.officesCount == 0 ||
                       state.meetingRoomsCountSelectorState == ToggleStates.on &&
                           state.meetingRoomsCount == 0 ||
-                      state.tablesCountSelectorState == ToggleStates.on &&
-                          state.tablesCount == 0 ||
-                      state.sharedWorkSpacesSelectorState == ToggleStates.on &&
-                          state.sharedWorkSpaces == 0
+                      state.tablesCountSelectorState == ToggleStates.on && state.tablesCount == 0 ||
+                      state.sharedWorkSpacesSelectorState == ToggleStates.on && state.sharedWorkSpaces == 0
                   ? const BodyText(
                       text: 'الرجاء اختيار قيمة للحقول الفعالة',
                       textColor: AppColors.cherryRed,
@@ -56,8 +53,8 @@ class _OfficeDetailsStepState extends State<OfficeDetailsStep> {
           ),
           SizedBox(height: 10.v),
           OfficeFacilitiesGridView(
-              facilities:
-                  context.read<OfficeBloc>().state.searchData!.facilities),
+            facilities: context.read<OfficeBloc>().state.searchData!.facilities,
+          ),
         ],
       ),
     );

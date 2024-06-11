@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 
+import '../../widgets/body_text.dart';
+
 class ErrorScreen extends StatelessWidget {
-  const ErrorScreen({Key? key, required this.error}) : super(key: key);
+  const ErrorScreen({super.key, required this.error});
 
   final GoException error;
 
@@ -17,20 +19,20 @@ class ErrorScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'An error occurred:',
-                style: TextStyle(fontSize: 18),
+              const BodyText(
+                text: 'An error occurred:',
+                fontSize: 18,
               ),
               SizedBox(height: 15.v),
-              Text(
-                error.toString(),
-                style: const TextStyle(fontSize: 16),
+              BodyText(
+                text: error.toString(),
+                fontSize: 16,
               ),
               ElevatedButton(
                 onPressed: () {
                   // Handle the error and navigate to a different screen or perform any other action
                 },
-                child: const Text('Retry'),
+                child: const BodyText(text: 'Retry'),
               ),
             ],
           ),

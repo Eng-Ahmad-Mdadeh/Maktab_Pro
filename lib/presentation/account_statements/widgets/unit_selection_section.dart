@@ -12,7 +12,7 @@ class UnitSelectionSection extends StatelessWidget {
     return MaktabTextFormField(
       title: 'ابحث بحسب رقم الجوال',
       onChanged: (value){
-        context.read<AccountSummaryBloc>().add(FilterAccountSummary(value??'', true));
+        context.read<AccountSummaryBloc>().add(FilterAccountSummary(value, true));
       },
     );
   }

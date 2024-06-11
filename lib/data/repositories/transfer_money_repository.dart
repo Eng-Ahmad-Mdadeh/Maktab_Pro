@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:maktab/core/classes/exception/app_exception.dart';
 import 'package:maktab/data/data_sources/remote/transfer_money_data_source.dart';
@@ -17,7 +16,7 @@ class TransferMoneyRepository {
     return result.fold(
       (error) => Left(error),
       (right) {
-        if ((right.status??false)) {
+        if (right.status) {
           // log(right.data.toString());
           final TransferPagination transferPagination =
               TransferPagination.fromJson(right.data);

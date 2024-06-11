@@ -38,7 +38,7 @@ class _OfficeSecondInfoStepState extends State<OfficeSecondInfoStep> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PageTitle(title: 'معلومات المكتب'),
+          const PageTitle(title: 'معلومات المكان/الخدمة'),
           SizedBox(height: 30.v),
           const OfficeAdvertiserRelationshipOptions(),
           SizedBox(height: 20.v),
@@ -59,7 +59,7 @@ class _OfficeSecondInfoStepState extends State<OfficeSecondInfoStep> {
                 const SectionTitle(title: 'التجهيز'),
                 SizedBox(height: 5.v),
                 MaktabDropDownFormField(
-                  initialValue: context.read<OfficeBloc>().state.equipment??'مؤثث',
+                  initialValue: context.read<OfficeBloc>().state.equipment,
                   items: const ['مؤثث', 'غير مؤثث'],
                   validator: (value) {
                     if (value == null) {
@@ -72,7 +72,7 @@ class _OfficeSecondInfoStepState extends State<OfficeSecondInfoStep> {
                   },
                 ),
                 SizedBox(height: 20.v),
-                const SectionTitle(title: 'نوع المكتب'),
+                const SectionTitle(title: 'نوع المكان/الخدمة'),
                 SizedBox(height: 5.v),
                 MaktabDropDownFormField(
                   initialValue: type != null ? type!.arName : '',

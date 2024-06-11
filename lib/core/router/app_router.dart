@@ -93,7 +93,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.loginScreen,
       name: AppRoutes.loginScreen,
-      builder: (context, state) => const LoginScreen(),
+      builder: (context, state) => LoginScreen(),
     ),
     GoRoute(
       path: AppRoutes.verifyCodeScreen,
@@ -130,7 +130,6 @@ final GoRouter appRouter = GoRouter(
       name: AppRoutes.calendarScreen,
       // builder: (context, state) => const CalendarScreen(),
       pageBuilder: (context, state) {
-        context.read<NavigationBloc>().add(CalendarNavigationEvent());
         return _pageBuilder(context, state, const CalendarScreen());
       },
       routes: <RouteBase>[
@@ -172,12 +171,13 @@ final GoRouter appRouter = GoRouter(
       pageBuilder: (context, state) {
         context.read<NavigationBloc>().add(OfficesNavigationEvent());
         return _pageBuilder(
-            context,
-            state,
-            BlocProvider(
-              create: (context) => locator.get<OfficeBloc>(),
-              child: const OfficesScreen(),
-            ));
+          context,
+          state,
+          BlocProvider(
+            create: (context) => locator.get<OfficeBloc>(),
+            child: const OfficesScreen(),
+          ),
+        );
       },
       routes: <RouteBase>[
         GoRoute(
@@ -409,7 +409,9 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: AppRoutes.contractScreen,
                   name: AppRoutes.contractScreen,
-                  builder: (context, state) => ContractScreen(cancelContract: (state.extra as bool?)??false,),
+                  builder: (context, state) => ContractScreen(
+                    cancelContract: (state.extra as bool?) ?? false,
+                  ),
                 ),
                 GoRoute(
                   path: AppRoutes.addContractScreen,

@@ -6,6 +6,7 @@ import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/core/router/app_routes.dart';
 import 'package:maktab/domain/notification/notification_bloc.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab/presentation/widgets/section_title.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({super.key});
@@ -35,20 +36,18 @@ class HomeHeader extends StatelessWidget {
                 Icons.headphones_outlined,
                 color: AppColors.white,
                 size: 30,
-              )*/,
+              )*/
+              ,
             ),
           ),
-          Expanded(
+          const Expanded(
             flex: 3,
             child: Padding(
-              padding: const EdgeInsets.only(top: 5.0),
-              child: Text(
-                'لوحة المعلومات',
+              padding: EdgeInsets.only(top: 5.0),
+              child: SectionTitle(
+                title: 'لوحة المعلومات',
                 textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(color: AppColors.white),
+                textColor: AppColors.white,
               ),
             ),
           ),
@@ -62,7 +61,7 @@ class HomeHeader extends StatelessWidget {
                 //   size: 25,
                 // ),
                 IconButton(
-                  onPressed: (){
+                  onPressed: () {
                     context.read<NotificationsBloc>().add(GetNotificationsEvent());
                     context.pushNamed(AppRoutes.notificationsScreen);
                   },

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class MapPlace {
   late String street;
   late String neighborhood;
@@ -21,10 +23,13 @@ class MapPlace {
           String longName = component["long_name"];
           if (componentTypes.contains("locality")) {
             city = longName;
-          } else if (componentTypes.contains("neighborhood")) {
+            log("CITY: $city");
+          } else if (componentTypes.contains('sublocality')) {
             neighborhood = longName;
+            log("NEIGHBORHOOD: $neighborhood");
           } else if (componentTypes.contains("route")) {
             street = longName;
+            log("STREET: $street");
           }
         }
       }

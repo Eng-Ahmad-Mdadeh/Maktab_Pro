@@ -27,13 +27,10 @@ class OfficeAdvertiserRelationshipOptions extends StatelessWidget {
                     Expanded(
                       child: MaktabButton(
                         text: 'مالك',
-                        textStyle:
-                            Theme.of(context).textTheme.titleSmall!.copyWith(
-                                  color: state.advertiserRelationshipOption ==
-                                          AdertiserRelationshipOptions.owner
-                                      ? AppColors.white
-                                      : AppColors.black,
-                                ),
+                        color: state.advertiserRelationshipOption ==
+                            AdertiserRelationshipOptions.owner
+                            ? AppColors.white
+                            : AppColors.black,
                         backgroundColor: state.advertiserRelationshipOption ==
                                 AdertiserRelationshipOptions.owner
                             ? AppColors.lightCyan
@@ -50,13 +47,10 @@ class OfficeAdvertiserRelationshipOptions extends StatelessWidget {
                     Expanded(
                       child: MaktabButton(
                         text: 'وكيل',
-                        textStyle:
-                            Theme.of(context).textTheme.titleSmall!.copyWith(
-                                  color: state.advertiserRelationshipOption ==
-                                          AdertiserRelationshipOptions.agent
-                                      ? AppColors.white
-                                      : AppColors.black,
-                                ),
+                        color: state.advertiserRelationshipOption ==
+                            AdertiserRelationshipOptions.agent
+                            ? AppColors.white
+                            : AppColors.black,
                         backgroundColor: state.advertiserRelationshipOption ==
                                 AdertiserRelationshipOptions.agent
                             ? AppColors.lightCyan
@@ -73,13 +67,10 @@ class OfficeAdvertiserRelationshipOptions extends StatelessWidget {
                     Expanded(
                       child: MaktabButton(
                         text: 'مسوق',
-                        textStyle:
-                            Theme.of(context).textTheme.titleSmall!.copyWith(
-                                  color: state.advertiserRelationshipOption ==
-                                          AdertiserRelationshipOptions.marketer
-                                      ? AppColors.white
-                                      : AppColors.black,
-                                ),
+                        color: state.advertiserRelationshipOption ==
+                            AdertiserRelationshipOptions.marketer
+                            ? AppColors.white
+                            : AppColors.black,
                         backgroundColor: state.advertiserRelationshipOption ==
                                 AdertiserRelationshipOptions.marketer
                             ? AppColors.lightCyan

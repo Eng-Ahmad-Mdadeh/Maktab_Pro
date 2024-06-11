@@ -4,7 +4,7 @@ import 'package:maktab/core/helpers/size_helper.dart';
 
 import '../../../../../../../../resources/app_colors.dart';
 import '../../../../../../../../widgets/maktab_text_form_field.dart';
-import '../../../../../../../../widgets/text/body_text.dart';
+import '../../../../../../../../widgets/body_text.dart';
 
 class ContractInputWidget extends StatelessWidget {
   final String title;
@@ -49,7 +49,7 @@ class ContractInputWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BodyText(
+          BodyText(text:
             title,
             fontSize: 15.0,
           ),

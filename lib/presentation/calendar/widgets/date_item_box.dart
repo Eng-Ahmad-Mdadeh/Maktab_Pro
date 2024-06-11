@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab/presentation/widgets/section_title.dart';
 
 class DateItemBox extends StatelessWidget {
   const DateItemBox({
@@ -27,12 +28,9 @@ class DateItemBox extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
-          child: Text(
-            title,
-            style: Theme.of(context)
-                .textTheme
-                .titleSmall!
-                .copyWith(color: textColor),
+          child: SectionTitle(
+            title: title,
+              textColor: textColor
           ),
         ),
       ),

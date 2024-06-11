@@ -60,8 +60,6 @@ class _MoneyTransfersScreenState extends State<MoneyTransfersScreen> {
           padding: EdgeInsets.all(15.0.fSize),
           child: BlocConsumer<TransferBloc, TransfersState>(
             listener: (context, state) {
-              print(state.fetchingDataState);
-              print(state.page);
               if (state.fetchingDataState == FetchingDataStates.loading) {
                 LoadingDialog.show(context);
               } else if (state.fetchingDataState == FetchingDataStates.failure && state.page == 2) {
