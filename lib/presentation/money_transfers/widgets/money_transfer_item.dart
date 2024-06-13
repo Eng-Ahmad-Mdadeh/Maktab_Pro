@@ -4,9 +4,12 @@ import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
 
 class MoneyTransferItem extends StatelessWidget {
-  const MoneyTransferItem(
-      {Key? key, required this.title, required this.text, this.amount = ''})
-      : super(key: key);
+  const MoneyTransferItem({
+    super.key,
+    required this.title,
+    required this.text,
+    this.amount = '',
+  });
 
   final String title;
   final String text;
@@ -14,12 +17,11 @@ class MoneyTransferItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         BodyText(text: title),
-        amount != ''
+        amount.isNotEmpty
             ? RichText(
                 text: TextSpan(
                   children: [
@@ -45,8 +47,7 @@ class MoneyTransferItem extends StatelessWidget {
                 text,
                 textAlign: TextAlign.center,
                 softWrap: true,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    fontWeight: FontWeight.w500, color: AppColors.lightBlack),
+                style: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w500, color: AppColors.lightBlack),
               ),
       ],
     );

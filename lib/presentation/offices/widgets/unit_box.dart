@@ -45,9 +45,9 @@ class UnitBox extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.v),
                 border: Border.all(color: AppColors.slateGray),
               ),
-              child: unit.mainImage!.isNotEmpty
+              child: (unit.mainImage??'').isNotEmpty
                   ? MaktabImageView(
-                      imagePath: unit.mainImage,
+                      imagePath: unit.mainImage!,
                       fit: BoxFit.cover,
                       radius: BorderRadius.circular(15.v),
                     )

@@ -7,6 +7,8 @@ import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/maktab_button.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
 
+import '../../../domain/offices/offices_cubit.dart';
+
 class CreateOfficeNavigationSection extends StatelessWidget {
   const CreateOfficeNavigationSection({
     super.key,
@@ -20,19 +22,16 @@ class CreateOfficeNavigationSection extends StatelessWidget {
     return BlocConsumer<OfficeBloc, OfficeState>(
       listener: (context, state) {
         if (state.stepNavigationState == StepNavigationState.next) {
-          pageController.nextPage(
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeIn);
+          pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
         } else if (state.stepNavigationState == StepNavigationState.previous) {
-          pageController.previousPage(
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeIn);
+          pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
         } else if (state.stepNavigationState == StepNavigationState.end) {
           pageController.dispose();
           context.pop();
           MaktabSnackbar.showWarning(context, 'جاري رفع الملفات ...');
         }
         if (state.imagesApiCallState == OfficeApiCallState.success) {
+          context.read<OfficesCubit>().getIncompleteUnits();
           MaktabSnackbar.showSuccess(context, 'تم رفع الملفات بنجاح');
         } else if (state.imagesApiCallState == OfficeApiCallState.failure) {
           MaktabSnackbar.showError(context, 'فشل رفع الملفات');
@@ -62,9 +61,7 @@ class CreateOfficeNavigationSection extends StatelessWidget {
                     isBordered: true,
                     onPressed: () {
                       if (pageController.page! > 0) {
-                        context.read<OfficeBloc>().add(
-                            NavigateToPreviousStepEvent(
-                                pageController.page!.toInt() - 1));
+                        context.read<OfficeBloc>().add(NavigateToPreviousStepEvent(pageController.page!.toInt() - 1));
                       }
                     },
                   ),
@@ -75,18 +72,13 @@ class CreateOfficeNavigationSection extends StatelessWidget {
                     builder: (context, state) {
                       return MaktabButton(
                         text: 'التالي',
-                        backgroundColor: !state.isStepCompleted ||
-                                state.officeApiCallState ==
-                                    OfficeApiCallState.loading
+                        backgroundColor: !state.isStepCompleted || state.officeApiCallState == OfficeApiCallState.loading
                             ? AppColors.mintTeal.withOpacity(0.2)
                             : AppColors.mintTeal,
                         isEnabled: state.isStepCompleted,
-                        isLoading: state.officeApiCallState ==
-                            OfficeApiCallState.loading,
+                        isLoading: state.officeApiCallState == OfficeApiCallState.loading,
                         onPressed: () {
-                          context.read<OfficeBloc>().add(
-                              NavigateToNextStepEvent(
-                                  pageController.page!.toInt()));
+                          context.read<OfficeBloc>().add(NavigateToNextStepEvent(pageController.page!.toInt()));
                         },
                       );
                     },

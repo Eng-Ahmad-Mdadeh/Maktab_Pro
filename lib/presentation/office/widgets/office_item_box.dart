@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab/core/network/api_endpoints.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab/presentation/widgets/maktab_image_view.dart';
 
 class OfficeItemBox extends StatelessWidget {
   const OfficeItemBox({
@@ -37,7 +39,7 @@ class OfficeItemBox extends StatelessWidget {
               Flexible(
                 child: Column(
                   children: [
-                    Flexible(child: Center(child: SvgPicture.network(icon!))),
+                    Flexible(child: Center(child: MaktabImageView(imagePath: icon!))),
                     SizedBox(height: 5.v),
                   ],
                 ),

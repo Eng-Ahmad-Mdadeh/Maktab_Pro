@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../core/network/api_endpoints.dart';
 import '../../../presentation/resources/app_assets.dart';
 
 class OfficeDetail extends Equatable{
@@ -42,7 +43,7 @@ class OfficeDetail extends Equatable{
       numberDetails: int.parse(json["number_details"].toString()),
       officeId: int.parse(json["ads_id"].toString()),
       // icon: map[json["en_name"]],
-      icon: json["icon"],
+      icon: ApiEndpoints.siteUrl + (json["icon"]??''),
     );
   }
 

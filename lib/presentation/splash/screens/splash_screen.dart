@@ -1,5 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages, use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -37,10 +35,20 @@ class _SplashScreenState extends State<SplashScreen> {
         } else if (state is NavigationToHomeScreenState) {
           context.read<ReceivingMethodBloc>().add(GetReceivingMoneyMethodEvent());
           context.read<OfficesCubit>().getIncompleteUnits();
-          await context.read<OfficesCubit>().stream.firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading);
-          context.read<HomeBloc>().add(GetStatisticsEvent());
-          await context.read<HomeBloc>().stream.firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading);
-          context.pushReplacement(AppRoutes.homeScreen);
+          await context
+              .read<OfficesCubit>()
+              .stream
+              .firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading)
+              .then((e) {
+            context.read<HomeBloc>().add(GetStatisticsEvent());
+            context
+                .read<HomeBloc>()
+                .stream
+                .firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading)
+                .then((e) {
+              context.pushReplacement(AppRoutes.homeScreen);
+            });
+          });
         } else if (state is NavigationToEditProfileScreen) {
           MaktabSnackbar.showWarning(context, "الرجاء اكمال الملف الشخصي");
           //context.pushReplacement(AppRoutes.homeScreen);

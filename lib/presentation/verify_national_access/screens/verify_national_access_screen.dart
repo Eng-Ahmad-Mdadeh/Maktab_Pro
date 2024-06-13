@@ -4,10 +4,13 @@ import 'package:go_router/go_router.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/core/services/service_locator.dart';
 import 'package:maktab/domain/national_access/national_access_bloc.dart';
+import 'package:maktab/presentation/resources/app_assets.dart';
 import 'package:maktab/presentation/verify_national_access/widgets/account_type_number_form.dart';
 import 'package:maktab/presentation/verify_national_access/widgets/account_type_options.dart';
+import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/loading_dialog.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab/presentation/widgets/maktab_image_view.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
 import 'package:maktab/presentation/widgets/section_title.dart';
 
@@ -15,12 +18,10 @@ class VerifyNationalAccessScreen extends StatefulWidget {
   const VerifyNationalAccessScreen({super.key});
 
   @override
-  State<VerifyNationalAccessScreen> createState() =>
-      _VerifyNationalAccessScreenState();
+  State<VerifyNationalAccessScreen> createState() => _VerifyNationalAccessScreenState();
 }
 
-class _VerifyNationalAccessScreenState
-    extends State<VerifyNationalAccessScreen> {
+class _VerifyNationalAccessScreenState extends State<VerifyNationalAccessScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -39,8 +40,24 @@ class _VerifyNationalAccessScreenState
           }
         },
         child: Scaffold(
-          appBar: const MaktabAppBar(title: 'توثيق الحساب بالنفاذ الوطني'),
-          body: SafeArea(
+            appBar: const MaktabAppBar(title: 'توثيق الحساب بالنفاذ الوطني'),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MaktabImageView(
+                    imagePath: AppAssets.soonJpg,
+                    width: 300.h,
+                    height: 300.v,
+                  ),
+                  const BodyText(
+                    text: "قريباً...",
+                  ),
+                ],
+              ),
+            )
+
+            /*SafeArea(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 20.v, vertical: 25.v),
               child: Column(
@@ -62,8 +79,8 @@ class _VerifyNationalAccessScreenState
                 ],
               ),
             ),
-          ),
-        ),
+          ),*/
+            ),
       ),
     );
   }

@@ -172,8 +172,8 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                             if (value!.isEmpty) {
                               return 'الرجاء اختيار قيمة';
                             }
-                            if (int.parse(value!) > 100 ||
-                                int.parse(value!) < 1) {
+                            if (int.parse(value) > 100 ||
+                                int.parse(value) < 1) {
                               return 'الرجاء اختيار قيمة بين 1 و 100';
                             }
                             return null;

@@ -42,7 +42,7 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
 
         for (OfficePrice price in event.unit!.prices) {
           if (state.priceTypes.contains(price.typeResId)) {
-            state.prices[price.id!] = price.price!;
+            state.prices[price.id] = price.price;
           }
         }
         state.pricesCount = event.coupon!.priceTypeIds.length;
@@ -109,7 +109,7 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
         } else {
           state.pricesCount++;
         }
-        prices[price.id!] = price.price!;
+        prices[price.id] = price.price;
         priceTypes.add(event.id);
       } else {
         if (state.pricesCount > 0) {
@@ -125,7 +125,7 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
       if (state.prices.length < state.unit!.prices.length) {
         Map<int, num> prices = {};
         for (OfficePrice price in state.unit!.prices) {
-          prices[price.id!] = price.price!;
+          prices[price.id] = price.price;
         }
         emit(state.copyWith(prices: prices, priceTypes: [1, 2, 3, 4], pricesCount: prices.length));
       } else {
@@ -159,7 +159,7 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
             discountType: state.discountType == DiscountTypes.percentage ? 'percent' : 'rial',
             startDate: state.startDate!,
             endDate: state.endDate!,
-            officeId: state.unit!.id!,
+            officeId: state.unit!.id,
             prices: state.priceTypes,
             mainPrices: state.prices.keys.toList());
       } else {
@@ -172,7 +172,7 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
           discountType: state.discountType == DiscountTypes.percentage ? 'percent' : 'rial',
           startDate: state.startDate!,
           endDate: state.endDate!,
-          officeId: state.unit!.id!,
+          officeId: state.unit!.id,
           prices: state.prices.keys.toList(),
         );
       }

@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 sealed class TransfersEvent extends Equatable {
   const TransfersEvent();
 
@@ -9,9 +8,8 @@ sealed class TransfersEvent extends Equatable {
   List<Object> get props => [];
 }
 
-
 final class GetTransfersEvent extends TransfersEvent {
-int page;
+  final int page;
 
-GetTransfersEvent({required this.page});
+  const GetTransfersEvent({required this.page});
 }

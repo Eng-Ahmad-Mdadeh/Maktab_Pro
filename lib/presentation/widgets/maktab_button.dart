@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 
+import 'text/body_text.dart';
+import 'text/section_title.dart';
+
 class MaktabButton extends StatelessWidget {
   MaktabButton({
     super.key,
@@ -19,14 +22,18 @@ class MaktabButton extends StatelessWidget {
     this.isBordered = false,
     this.borderRadius,
     this.borderColor,
+    this.fontSize,
+    this.shadow,
     required this.onPressed,
     this.isLoading = false,
     this.isEnabled = true,
+    this.bold = true,
   });
 
   final String? text;
   final double? width;
   final double? elevation;
+  final double? fontSize;
   final Icon? icon;
   final double? height;
   final EdgeInsetsGeometry? padding;
@@ -36,9 +43,11 @@ class MaktabButton extends StatelessWidget {
   final bool isBordered;
   final BorderRadiusGeometry? borderRadius;
   final Color? borderColor;
-  final Function()? onPressed;
+  final void Function()? onPressed;
+  final BoxShadow? shadow;
   bool isLoading;
   bool isEnabled;
+  bool bold;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +59,9 @@ class MaktabButton extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: borderRadius ?? BorderRadius.circular(15.0),
+        boxShadow: shadow != null ? [
+          shadow!
+        ] : null,
       ),
       child: ElevatedButton(
         onPressed: isLoading || !isEnabled ? () {} : onPressed,
@@ -60,17 +72,13 @@ class MaktabButton extends StatelessWidget {
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: borderRadius ?? BorderRadius.circular(15.0),
-                    side: isBordered
-                        ? BorderSide(
-                            color: borderColor ?? AppColors.softAsh, width: 1)
-                        : BorderSide.none),
+                    side: isBordered ? BorderSide(color: borderColor ?? AppColors.softAsh, width: 1) : BorderSide.none),
               ),
             ),
         child: isLoading
             ? const CircularProgressIndicator(color: AppColors.white)
             : Padding(
-                padding: padding ??
-                    EdgeInsets.symmetric(horizontal: 20.h, vertical: 15.v),
+                padding: padding ?? EdgeInsets.symmetric(horizontal: 20.h, vertical: 15.v),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -86,18 +94,19 @@ class MaktabButton extends StatelessWidget {
                     text != null
                         ? Expanded(
                             flex: 4,
-                            child: Text(
-                              text!,
-                              softWrap: true,
-                              textAlign: TextAlign.center,
-                              style: textStyle ??
-                                  Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(
-                                        color: color,
-                                      ),
-                            ),
+                            child: bold
+                                ? SectionTitle(
+                                    title: text!,
+                                    textAlign: TextAlign.center,
+                                    textColor: color,
+                                    fontSize: fontSize,
+                                  )
+                                : BodyText(
+                                    text!,
+                                    textAlign: TextAlign.center,
+                                    textColor: color,
+                                    fontSize: fontSize,
+                                  ),
                           )
                         : const SizedBox.shrink()
                   ],

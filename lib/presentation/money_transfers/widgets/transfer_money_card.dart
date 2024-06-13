@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maktab/core/extension/string_extention.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/data/models/transfers/transfer_pagination_model.dart';
 
@@ -58,22 +59,22 @@ class TransferMoneyCard extends StatelessWidget {
                     : '${model.transferFeesValue}ريال',
               ),
               SizedBox(height: 10.v),
-              const MoneyTransferItem(
+              MoneyTransferItem(
                 title: 'مبلغ الاستحقاق',
-                text: '15000000 ر.س',
-                amount: '300',
+                text: '${model.entitlementAmount} ر.س',
+                amount: model.entitlementAmount.toStringAsNumber(),
               ),
               SizedBox(height: 10.v),
-              const MoneyTransferItem(
+              MoneyTransferItem(
                 title: 'صافي المبلغ المحول',
                 text: '15000000 ر.س',
-                amount: '1200',
+                amount: model.netAmountTransferred.toStringAsNumber(),
               ),
               SizedBox(height: 10.v),
-              const MoneyTransferItem(
+              MoneyTransferItem(
                 title: 'المبلغ المتبقي',
                 text: '15000000 ر.س',
-                amount: '450',
+                amount: model.remainingAmount.toStringAsNumber(),
               ),
             ],
           ),

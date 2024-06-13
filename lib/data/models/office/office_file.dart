@@ -19,7 +19,7 @@ class OfficeFile extends Equatable {
   factory OfficeFile.fromJson(Map<String, dynamic> json) {
     return OfficeFile(
       id: json["id"],
-      path: json["path"],
+      path: json["path"] != null ? ApiEndpoints.siteUrl + json["path"] : json["path"],
       typeFile: json["type_file"],
       controller: json["type_file"] == 'video' ? VideoPlayerController.networkUrl(Uri.parse(ApiEndpoints.siteUrl + json["path"])) : null
     );

@@ -1,15 +1,14 @@
-// ignore_for_file: control_flow_in_finally
-
 import 'dart:developer';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:maktab/core/classes/exception/api_exceptions.dart';
-import 'package:maktab/core/classes/exception/app_exception.dart';
 import 'package:maktab/core/network/api_endpoints.dart';
 import 'package:maktab/core/services/service_locator.dart';
 import 'package:maktab/data/data_sources/local/user_local_data_source.dart';
+
+import '../classes/exception/app_exception.dart';
 
 class NetworkHelper {
   late Dio _dio;
@@ -102,9 +101,12 @@ class NetworkHelper {
         log(response.data.toString());
         return Right(response.data);
       } catch (e) {
-        print("eeeeeeeeee: $e");
-        rethrow;
-        // return Left(AppException('أعد المحاولة'));
+        // print("eeeeeeeeee: $e");
+        // rethrow;
+        if(e is DioException){
+          return Left(_handleError(e.response?.statusCode, e.message));
+        }
+        return Left(AppException('أعد المحاولة'));
       }
     } else {
       return Left(NoInternetConnectionException());
@@ -115,22 +117,22 @@ class NetworkHelper {
     return await locator<UserLocalDataSource>().getUserToken();
   }
 
-  // ApiException _handleError(statusCode, message) {
-  //   switch (statusCode) {
-  //     case "400":
-  //       return BadRequestException(message);
-  //     case "401":
-  //       return UnauthorizedException(message);
-  //     case "403":
-  //       return ForbiddenException(message);
-  //     case "404":
-  //       return NotFoundException(message);
-  //     case "500":
-  //       return InternalServerErrorException(message);
-  //     default:
-  //       return ApiException(message);
-  //   }
-  // }
+  ApiException _handleError(statusCode, message) {
+    switch (statusCode) {
+      case "400":
+        return BadRequestException(message);
+      case "401":
+        return UnauthorizedException(message);
+      case "403":
+        return ForbiddenException(message);
+      case "404":
+        return NotFoundException(message);
+      case "500":
+        return InternalServerErrorException(message);
+      default:
+        return ApiException(message);
+    }
+  }
 
   Future<List<MapEntry<String, MultipartFile>>> convertFiles(
       List<Map<String, dynamic>> files) async {

@@ -9,19 +9,19 @@ TransferPagination transferPaginationFromJson(String str) => TransferPagination.
 String transferPaginationToJson(TransferPagination data) => json.encode(data.toJson());
 
 class TransferPagination {
-  int currentPage;
+  int? currentPage;
   List<TransferModel> transfers;
-  String firstPageUrl;
-  int from;
-  int lastPage;
-  String lastPageUrl;
+  String? firstPageUrl;
+  int? from;
+  int? lastPage;
+  String? lastPageUrl;
   List<Link> links;
-  dynamic nextPageUrl;
-  String path;
-  String perPage;
-  dynamic prevPageUrl;
-  int to;
-  int total;
+  String? nextPageUrl;
+  String? path;
+  String? perPage;
+  String? prevPageUrl;
+  int? to;
+  int? total;
 
   TransferPagination({
     required this.currentPage,
@@ -104,7 +104,7 @@ class TransferModel {
   String transferMethod;
   String numOrder;
   String receiverMobile;
-  dynamic receiverIban;
+  String? receiverIban;
   String transferFeesRate;
   String transferFeesValue;
   String entitlementAmount;

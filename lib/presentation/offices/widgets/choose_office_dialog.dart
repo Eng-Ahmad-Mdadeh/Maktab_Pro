@@ -19,9 +19,10 @@ class ChooseOfficeDialog extends StatelessWidget {
     return AlertDialog(
       titlePadding: EdgeInsets.symmetric(vertical: 5.v, horizontal: 15.h),
       title: SizedBox(
-        height: 200,
+        // height: 200,
         width: 100,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
               children: [

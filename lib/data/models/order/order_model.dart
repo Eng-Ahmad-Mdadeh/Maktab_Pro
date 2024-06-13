@@ -48,6 +48,7 @@ class OrderModel extends Equatable {
     required this.coupons,
     required this.offers,
     required this.paymentTenants,
+    required this.lastPage,
   });
 
   final int? id;
@@ -90,6 +91,7 @@ class OrderModel extends Equatable {
   final List<Coupon> coupons;
   final List<Offer> offers;
   final List<PaymentTenant> paymentTenants;
+  final int lastPage;
 
   OrderModel copyWith({
     int? id,
@@ -132,6 +134,7 @@ class OrderModel extends Equatable {
     List<Coupon>? coupons,
     List<Offer>? offers,
     List<PaymentTenant>? paymentTenants,
+    int? lastPage
   }) {
     return OrderModel(
       id: id ?? this.id,
@@ -174,10 +177,11 @@ class OrderModel extends Equatable {
       coupons: coupons ?? this.coupons,
       offers: offers ?? this.offers,
       paymentTenants: paymentTenants ?? this.paymentTenants,
+      lastPage: lastPage?? this.lastPage
     );
   }
 
-  factory OrderModel.fromJson(Map<String, dynamic> json){
+  factory OrderModel.fromJson(Map<String, dynamic> json, [int? lastPage]){
     return OrderModel(
       id: json["id"],
       startDate: DateTime.tryParse(json["start_date"] ?? ""),
@@ -219,6 +223,7 @@ class OrderModel extends Equatable {
       coupons: json["coupons"] == null ? [] : List<Coupon>.from(json["coupons"]!.map((x) => Coupon.fromJson(x))),
       offers: json["offers"] == null ? [] : List<Offer>.from(json["offers"]!.map((x) => Offer.fromJson(x))),
       paymentTenants: json["payment_tenants"] == null ? [] : List<PaymentTenant>.from(json["payment_tenants"]!.map((x) => PaymentTenant.fromJson(x))),
+      lastPage: lastPage??1,
     );
   }
 
@@ -272,7 +277,7 @@ class OrderModel extends Equatable {
 
   @override
   List<Object?> get props => [
-    id, startDate, endDate, price, totalPriceTenant, totalPriceLessor, paymentMethod, typeReservation, reservation, durationRes, requiredServicesPrice, optionalServicesPrice, offerDiscount, offerDiscountValue, offerDiscountType, couponDiscount, couponDiscountValue, couponDiscountType, commissionRateTenant, commissionValueTenant, commissionRateLessor, commissionValueLessor, taxRate, taxValueLessor, taxValueTenant, status, tenantId, lessorId, adsId, adsPriceId, createdAt, updatedAt, lessor, tenant, office, adsPrice, services, coupons, offers, paymentTenants, ];
+    id, startDate, endDate,lastPage, price, totalPriceTenant, totalPriceLessor, paymentMethod, typeReservation, reservation, durationRes, requiredServicesPrice, optionalServicesPrice, offerDiscount, offerDiscountValue, offerDiscountType, couponDiscount, couponDiscountValue, couponDiscountType, commissionRateTenant, commissionValueTenant, commissionRateLessor, commissionValueLessor, taxRate, taxValueLessor, taxValueTenant, status, tenantId, lessorId, adsId, adsPriceId, createdAt, updatedAt, lessor, tenant, office, adsPrice, services, coupons, offers, paymentTenants, ];
 
   static String getCounterReservationType(String type) {
     switch (type) {

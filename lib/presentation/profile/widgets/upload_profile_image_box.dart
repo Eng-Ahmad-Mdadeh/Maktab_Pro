@@ -62,9 +62,7 @@ class _UploadProfileImageBoxState extends State<UploadProfileImageBox> {
                               radius: BorderRadius.circular(60),
                               height: 200.adaptSize,
                               width: 200.adaptSize,
-                              imagePath: state.pickedImage != ''
-                                  ? state.pickedImage
-                                  : state.user?.image!,
+                              imagePath: state.pickedImage != '' ? state.pickedImage : (state.user?.image??''),
                               fit: BoxFit.fill,
                             ),
                           ),

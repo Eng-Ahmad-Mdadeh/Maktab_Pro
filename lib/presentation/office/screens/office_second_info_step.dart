@@ -59,7 +59,7 @@ class _OfficeSecondInfoStepState extends State<OfficeSecondInfoStep> {
                 const SectionTitle(title: 'التجهيز'),
                 SizedBox(height: 5.v),
                 MaktabDropDownFormField(
-                  initialValue: context.read<OfficeBloc>().state.equipment,
+                  initialValue: context.read<OfficeBloc>().state.equipment??'مؤثث',
                   items: const ['مؤثث', 'غير مؤثث'],
                   validator: (value) {
                     if (value == null) {
@@ -68,7 +68,7 @@ class _OfficeSecondInfoStepState extends State<OfficeSecondInfoStep> {
                     return null;
                   },
                   onChanged: (value) {
-                    context.read<OfficeBloc>().add(SetEquipmentEvent(value!));
+                    context.read<OfficeBloc>().add(SetEquipmentEvent(value));
                   },
                 ),
                 SizedBox(height: 20.v),

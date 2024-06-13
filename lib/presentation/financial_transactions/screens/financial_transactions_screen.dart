@@ -14,25 +14,20 @@ class FinincialTransactionsScreen extends StatefulWidget {
   const FinincialTransactionsScreen({super.key});
 
   @override
-  State<FinincialTransactionsScreen> createState() =>
-      _FinincialTransactionsScreenState();
+  State<FinincialTransactionsScreen> createState() => _FinincialTransactionsScreenState();
 }
 
-class _FinincialTransactionsScreenState
-    extends State<FinincialTransactionsScreen> {
+class _FinincialTransactionsScreenState extends State<FinincialTransactionsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<ReceivingMethodBloc, ReceivingMethodState>(
       listener: (context, state) {
-        if (state.getReceivingMoneyMethodState ==
-            FinancialTransactionsApiState.loading) {
+        if (state.getReceivingMoneyMethodState == FinancialTransactionsApiState.loading) {
           LoadingDialog.show(context);
-        } else if (state.getReceivingMoneyMethodState ==
-            FinancialTransactionsApiState.success) {
+        } else if (state.getReceivingMoneyMethodState == FinancialTransactionsApiState.success) {
           LoadingDialog.hide(context);
           context.pushNamed(AppRoutes.receivingMethodScreen);
-        } else if (state.getReceivingMoneyMethodState ==
-            FinancialTransactionsApiState.failure) {
+        } else if (state.getReceivingMoneyMethodState == FinancialTransactionsApiState.failure) {
           LoadingDialog.hide(context);
           context.pushNamed(AppRoutes.receivingMethodScreen);
         }
@@ -48,14 +43,8 @@ class _FinincialTransactionsScreenState
                 MaktabNavigationItemItem(
                   title: 'طريقة استلام المبالغ',
                   onTap: () {
-                    if (context
-                            .read<ReceivingMethodBloc>()
-                            .state
-                            .receivingMethod ==
-                        null) {
-                      context
-                          .read<ReceivingMethodBloc>()
-                          .add(GetReceivingMoneyMethodEvent());
+                    if (context.read<ReceivingMethodBloc>().state.receivingMethod == null) {
+                      context.read<ReceivingMethodBloc>().add(GetReceivingMoneyMethodEvent());
                     } else {
                       context.pushNamed(AppRoutes.receivingMethodScreen);
                     }
@@ -63,24 +52,21 @@ class _FinincialTransactionsScreenState
                 ),
                 MaktabNavigationItemItem(
                   title: 'الحوالات المالية',
-                  onTap: () =>
-                      context.pushNamed(AppRoutes.moneyTransfersScreen),
+                  onTap: () => context.pushNamed(AppRoutes.moneyTransfersScreen),
                 ),
+                // MaktabNavigationItemItem(
+                //   title: 'كشوف الحساب',
+                //   onTap: () =>
+                //       context.pushNamed(AppRoutes.invoicesAndStatementsScreen),
+                // ),
                 MaktabNavigationItemItem(
                   title: 'كشوف الحساب',
-                  onTap: () =>
-                      context.pushNamed(AppRoutes.invoicesAndStatementsScreen),
-                ),
-                MaktabNavigationItemItem(
-                  title: 'ملخص الحسابات',
-                  onTap: () =>
-                      context.pushNamed(AppRoutes.accountSummaryScreen),
+                  onTap: () => context.pushNamed(AppRoutes.accountSummaryScreen),
                 ),
                 MaktabNavigationItemItem(
                   title: 'توثيق الحساب بالنفاذ الوطني',
-                  onTap: () => context
-                      .pushNamed(AppRoutes.verifyAccountWithNationalAccess),
-                )
+                  onTap: () => context.pushNamed(AppRoutes.verifyAccountWithNationalAccess),
+                ),
               ],
             ),
           ),

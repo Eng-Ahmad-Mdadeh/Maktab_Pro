@@ -12,4 +12,8 @@ class SettingsRemoteDataSource extends BaseRemoteDataSource<r.Response> {
       endpoint: ApiEndpoints.searchData,
     );
   }
+
+  Future<Either<AppException, r.Response>> getGeneralSettings() async {
+    return fetchData(endpoint:  ApiEndpoints.general);
+  }
 }

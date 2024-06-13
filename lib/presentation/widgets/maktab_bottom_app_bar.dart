@@ -1,137 +1,65 @@
-// ignore_for_file: depend_on_referenced_packages
-
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/router/app_routes.dart';
-import 'package:maktab/domain/navigation/navigation_cubit.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
 
-class MaktabBottomAppBar extends StatefulWidget {
-  const MaktabBottomAppBar({super.key});
+import '../../core/helpers/size_helper.dart';
+import '../../domain/navigation/navigation_bloc.dart';
+import '../../domain/navigation/navigation_state.dart';
+import '../resources/app_colors.dart';
+import 'nav_item.dart';
 
-  @override
-  State<MaktabBottomAppBar> createState() => _MaktabBottomAppBarState();
-}
-
-class _MaktabBottomAppBarState extends State<MaktabBottomAppBar> {
-  @override
-  Widget build(BuildContext context) {
-    return BottomAppBar(
-      shape: const CircularNotchedRectangle(),
-      color: AppColors.white,
-      child: SizedBox(
-        height: 80.0.v,
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            NavItem(
-              index: 0,
-              icon: FontAwesomeIcons.house,
-              label: 'الرئيسية',
-            ),
-            NavItem(
-              index: 1,
-              icon: FontAwesomeIcons.calendarDays,
-              label: 'التقويم',
-            ),
-            NavItem(
-              index: 2,
-              icon: FontAwesomeIcons.list,
-              label: 'الطلبات',
-            ),
-            NavItem(
-              index: 3,
-              icon: FontAwesomeIcons.building,
-              label: 'المكاتب',
-            ),
-            NavItem(
-              index: 4,
-              icon: FontAwesomeIcons.ellipsis,
-              label: 'المزيد',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class NavItem extends StatelessWidget {
-  const NavItem({
+class MaktabBottomAppBar extends StatelessWidget {
+  const MaktabBottomAppBar({
     super.key,
-    required this.index,
-    required this.icon,
-    required this.label,
   });
 
-  final int index;
-  final String label;
-  final IconData icon;
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NavigationCubit, NavigationState>(
-      builder: (_, state) {
-        return InkWell(
-          onTap: () {
-            log(state.currentIndexs.toString());
-            state.currentIndexs.add(index);
-            log(state.currentIndexs.toString());
-            _navItemNavigation(index, context);
-          },
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                icon,
-                size: 35.v,
-                color: context.read<NavigationCubit>().state.index == index
-                    ? AppColors.lightCyan
-                    : AppColors.softAsh,
-              ),
-              SizedBox(height: 4.v),
-              Text(
-                label,
-                style: TextStyle(
-                  fontFamily: 'Tajawal',
-                  fontWeight:
-                      context.read<NavigationCubit>().state.index == index
-                          ? FontWeight.bold
-                          : FontWeight.normal,
-                  color: context.read<NavigationCubit>().state.index == index
-                      ? AppColors.lightCyan
-                      : AppColors.softAsh,
+    return BlocBuilder<NavigationBloc, NavigationState>(
+      builder: (context, state) {
+        return BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          color: AppColors.white,
+          child: SizedBox(
+            height: 80.0.v,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                NavItem(
+                  navState: NavigationStates.home,
+                  icon: FontAwesomeIcons.house,
+                  label: 'الرئيسية',
+                  selected: state is HomeNavigationState,
                 ),
-              ),
-            ],
+                NavItem(
+                  navState: NavigationStates.calendar,
+                  icon: FontAwesomeIcons.calendarDays,
+                  label: 'التقويم',
+                  selected: state is CalendarNavigationState,
+                ),
+                NavItem(
+                  navState: NavigationStates.orders,
+                  icon: FontAwesomeIcons.list,
+                  label: 'الطلبات',
+                  selected: state is OrdersNavigationState,
+                ),
+                NavItem(
+                  navState: NavigationStates.offices,
+                  icon: FontAwesomeIcons.building,
+                  label: 'المكاتب',
+                  selected: state is OfficesNavigationState,
+                ),
+                NavItem(//05372328155 - 05365887427
+                  navState: NavigationStates.more,
+                  icon: FontAwesomeIcons.ellipsis,
+                  label: 'المزيد',
+                  selected: state is MoreNavigationState,
+                ),
+              ],
+            ),
           ),
         );
       },
     );
-  }
-
-  void _navItemNavigation(index, BuildContext context) {
-    context.read<NavigationCubit>().getNavBarItem(index);
-    switch (index) {
-      case 0:
-        context.pushReplacementNamed(AppRoutes.homeScreen);
-        break;
-      case 1:
-        context.pushReplacementNamed(AppRoutes.calendarScreen);
-        break;
-      case 2:
-        context.pushReplacementNamed(AppRoutes.ordersScreen);
-        break;
-      case 3:
-        context.pushReplacementNamed(AppRoutes.officesScreen);
-        break;
-      case 4:
-        context.pushReplacementNamed(AppRoutes.moreScreen);
-        break;
-    }
   }
 }

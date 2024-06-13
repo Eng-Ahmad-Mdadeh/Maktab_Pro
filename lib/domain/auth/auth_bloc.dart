@@ -38,7 +38,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         var result = await _authRepository.login(
             phone: event.phone, messageType: event.messageType);
-        await Future.delayed(const Duration(seconds: 4));
+        // await Future.delayed(const Duration(seconds: 4));
         result.fold(
           (failure) => emit(state.copyWith(
             loginState: LoginStates.failure,
@@ -100,7 +100,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       try {
         var result = await _authRepository.login(
             phone: event.phone, messageType: event.messageType);
-        await Future.delayed(const Duration(seconds: 4));
+        // await Future.delayed(const Duration(seconds: 4));
         result.fold(
           (failure) => emit(state.copyWith(
             loginState: LoginStates.reFailed,

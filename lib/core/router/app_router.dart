@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab/core/router/app_routes.dart';
@@ -9,15 +10,12 @@ import 'package:maktab/domain/coupon/coupon_bloc.dart';
 import 'package:maktab/domain/offer/offer_bloc.dart';
 import 'package:maktab/domain/office/office_bloc.dart';
 import 'package:maktab/domain/unit/unit_bloc.dart';
-import 'package:maktab/presentation/account_summary/screens/account_summary_screen.dart';
 import 'package:maktab/presentation/auth/screens/login_screen.dart';
 import 'package:maktab/presentation/auth/screens/verify_code_screen.dart';
 import 'package:maktab/presentation/calendar/screens/calendar_screen.dart';
 import 'package:maktab/presentation/calendar/screens/unit_calendar_screen.dart';
+import 'package:maktab/presentation/invoices/screens/invoices_screen.dart';
 import 'package:maktab/presentation/more/screens/contact_us_screen.dart';
-import 'package:maktab/presentation/contracts/screens/contracts_samples_screen.dart';
-import 'package:maktab/presentation/contracts/screens/contracts_screen.dart';
-import 'package:maktab/presentation/contracts/screens/specific_contracts_screen.dart';
 import 'package:maktab/presentation/coupon/screens/create_coupon_screen.dart';
 import 'package:maktab/presentation/error/screens/error_screen.dart';
 import 'package:maktab/presentation/money_transfers/screens/money_transfers_screen.dart';
@@ -49,7 +47,6 @@ import 'package:maktab/presentation/receiving_method/screens/receiving_method_sc
 import 'package:maktab/presentation/financial_transactions/screens/financial_transactions_screen.dart';
 import 'package:maktab/presentation/home/screens/home_screen.dart';
 import 'package:maktab/presentation/intro/screens/intro_screen.dart';
-import 'package:maktab/presentation/invoices_and_statements/screens/invoices_and_statements_screen.dart';
 import 'package:maktab/presentation/more/screens/more_screen.dart';
 import 'package:maktab/presentation/offices/screens/office_screen.dart';
 import 'package:maktab/presentation/offices/screens/offices_screen.dart';
@@ -65,6 +62,17 @@ import 'package:maktab/presentation/complaints/screens/complaints_screen.dart';
 import 'package:maktab/presentation/splash/screens/splash_screen.dart';
 import 'package:maktab/presentation/more/screens/user_agreement_screen.dart';
 import 'package:maktab/presentation/verify_national_access/screens/verify_national_access_screen.dart';
+import '../../domain/navigation/navigation_bloc.dart';
+import '../../domain/navigation/navigation_event.dart';
+import '../../presentation/account_statements/screens/account_statements_screen.dart';
+import '../../presentation/contracts_menu/contracts_menu_screen.dart';
+import '../../presentation/contracts_menu/screens/contracts/screens/contract/screens/add/screens/add_contract_screen.dart';
+import '../../presentation/contracts_menu/screens/contracts/screens/contract/screens/contract_screen.dart';
+import '../../presentation/contracts_menu/screens/contracts/screens/contracts_screen.dart';
+import '../../presentation/contracts_menu/screens/contracts_models/screens/add_contracts_model/screens/add_contracts_model_screen.dart';
+import '../../presentation/contracts_menu/screens/contracts_models/screens/contracts_model/screens/contracts_model_screen.dart';
+import '../../presentation/contracts_menu/screens/contracts_models/screens/contracts_models_screen.dart';
+import '../../presentation/contracts_menu/screens/contracts_models/screens/edit_contracts_model/screens/edit_contracts_model_screen.dart';
 import '../../presentation/more/screens/unit_settings_screen.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -101,14 +109,21 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const UnitSettingsScreen(),
     ),
     GoRoute(
-      path: AppRoutes.homeScreen,
-      name: AppRoutes.homeScreen,
-      builder: (context, state) => const HomeScreen(),
-    ),
+        path: AppRoutes.homeScreen,
+        name: AppRoutes.homeScreen,
+        // builder: (context, state) => const HomeScreen(),
+        pageBuilder: (context, state) {
+          context.read<NavigationBloc>().add(HomeNavigationEvent());
+          return _pageBuilder(context, state, const HomeScreen());
+        }),
     GoRoute(
       path: AppRoutes.calendarScreen,
       name: AppRoutes.calendarScreen,
-      builder: (context, state) => const CalendarScreen(),
+      // builder: (context, state) => const CalendarScreen(),
+      pageBuilder: (context, state) {
+        context.read<NavigationBloc>().add(CalendarNavigationEvent());
+        return _pageBuilder(context, state, const CalendarScreen());
+      },
       routes: <RouteBase>[
         GoRoute(
           path: AppRoutes.unitCalendarScreen,
@@ -116,7 +131,10 @@ final GoRouter appRouter = GoRouter(
           builder: (context, state) {
             int officeID = (state.extra as Map)['officeID'] as int;
             int unitID = (state.extra as Map)['unitID'] as int;
-            return UnitCalendarScreen(unitId: unitID, officeId: officeID,);
+            return UnitCalendarScreen(
+              unitId: unitID,
+              officeId: officeID,
+            );
           },
         ),
       ],
@@ -124,7 +142,11 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.ordersScreen,
       name: AppRoutes.ordersScreen,
-      builder: (context, state) => const OrdersScreen(),
+      // builder: (context, state) => const OrdersScreen(),
+      pageBuilder: (context, state) {
+        context.read<NavigationBloc>().add(OrdersNavigationEvent());
+        return _pageBuilder(context, state, const OrdersScreen());
+      },
     ),
     GoRoute(
       path: AppRoutes.orderScreen,
@@ -134,10 +156,20 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.officesScreen,
       name: AppRoutes.officesScreen,
-      builder: (context, state) => BlocProvider(
-        create: (context) => locator.get<OfficeBloc>(),
-        child: const OfficesScreen(),
-      ),
+      // builder: (context, state) => BlocProvider(
+      //   create: (context) => locator.get<OfficeBloc>(),
+      //   child: const OfficesScreen(),
+      // ),
+      pageBuilder: (context, state) {
+        context.read<NavigationBloc>().add(OfficesNavigationEvent());
+        return _pageBuilder(
+            context,
+            state,
+            BlocProvider(
+              create: (context) => locator.get<OfficeBloc>(),
+              child: const OfficesScreen(),
+            ));
+      },
       routes: <RouteBase>[
         GoRoute(
           path: AppRoutes.marketingRequestsScreen,
@@ -291,7 +323,11 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.moreScreen,
       name: AppRoutes.moreScreen,
-      builder: (context, state) => const MoreScreen(),
+      // builder: (context, state) => const MoreScreen(),
+      pageBuilder: (context, state) {
+        context.read<NavigationBloc>().add(MoreNavigationEvent());
+        return _pageBuilder(context, state, const MoreScreen());
+      },
     ),
     GoRoute(
       path: AppRoutes.editProfileScreen,
@@ -306,7 +342,8 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.invoicesAndStatementsScreen,
       name: AppRoutes.invoicesAndStatementsScreen,
-      builder: (context, state) => const InvoicesAndStatementsScreen(),
+      // builder: (context, state) => const InvoicesAndStatementsScreen(),
+      builder: (context, state) => const InvoicesScreen(),
     ),
     GoRoute(
       path: AppRoutes.monthlyAccountStatementScreen,
@@ -326,23 +363,51 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.accountSummaryScreen,
       name: AppRoutes.accountSummaryScreen,
-      builder: (context, state) => const AccountSummaryScreen(),
+      builder: (context, state) => const AccountStatementsScreen(),
     ),
     GoRoute(
-        path: AppRoutes.contractsScreen,
-        name: AppRoutes.contractsScreen,
-        builder: (context, state) => const ContractsScreen(),
+        path: AppRoutes.contractsMenuScreen,
+        name: AppRoutes.contractsMenuScreen,
+        builder: (context, state) => const ContractsMenuScreen(),
         routes: <RouteBase>[
           GoRoute(
-            path: AppRoutes.contractsSamplesScreen,
-            name: AppRoutes.contractsSamplesScreen,
-            builder: (context, state) => const ContractsSamplesScreen(),
+            path: AppRoutes.contractsModelsScreen,
+            name: AppRoutes.contractsModelsScreen,
+            builder: (context, state) => const ContractsModelsScreen(),
+            routes: [
+              GoRoute(
+                path: AppRoutes.contractsModelScreen,
+                name: AppRoutes.contractsModelScreen,
+                builder: (context, state) => const ContractsModelScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.editContractsModelScreen,
+                name: AppRoutes.editContractsModelScreen,
+                builder: (context, state) => const EditContractsModelScreen(),
+              ),
+              GoRoute(
+                path: AppRoutes.addContractsModelScreen,
+                name: AppRoutes.addContractsModelScreen,
+                builder: (context, state) => AddContractsModelScreen(),
+              ),
+            ],
           ),
           GoRoute(
-            path: AppRoutes.specificContractsScreen,
-            name: AppRoutes.specificContractsScreen,
-            builder: (context, state) => const SpecificContractsScreen(),
-          ),
+              path: AppRoutes.contractsScreen,
+              name: AppRoutes.contractsScreen,
+              builder: (context, state) => const ContractsScreen(),
+              routes: [
+                GoRoute(
+                  path: AppRoutes.contractScreen,
+                  name: AppRoutes.contractScreen,
+                  builder: (context, state) => const ContractScreen(),
+                ),
+                GoRoute(
+                  path: AppRoutes.addContractScreen,
+                  name: AppRoutes.addContractScreen,
+                  builder: (context, state) => const AddContractScreen(),
+                ),
+              ]),
         ]),
     GoRoute(
       path: AppRoutes.financialTransactionScreen,
@@ -413,13 +478,11 @@ final GoRouter appRouter = GoRouter(
               path: AppRoutes.createOfferScreen,
               name: AppRoutes.createOfferScreen,
               builder: (context, state) {
-                Map<String, dynamic>? data =
-                    state.extra as Map<String, dynamic>?;
+                Map<String, dynamic>? data = state.extra as Map<String, dynamic>?;
                 Offer? offer = data != null ? data['offer'] : null;
                 Office? unit = data != null ? data['unit'] : null;
                 return BlocProvider(
-                  create: (context) => locator.get<OfferBloc>()
-                    ..add(InitialOfferEvent(offer, unit)),
+                  create: (context) => locator.get<OfferBloc>()..add(InitialOfferEvent(offer, unit)),
                   child: CreateOfferScreen(offer: offer, unit: unit),
                 );
               },
@@ -460,16 +523,13 @@ final GoRouter appRouter = GoRouter(
               path: AppRoutes.createCouponScreen,
               name: AppRoutes.createCouponScreen,
               builder: (context, state) {
-                Map<String, dynamic>? data =
-                state.extra as Map<String, dynamic>?;
+                Map<String, dynamic>? data = state.extra as Map<String, dynamic>?;
                 Coupon? coupon = data != null ? data['coupon'] : null;
                 Office? unit = data != null ? data['unit'] : null;
                 return BlocProvider(
-                  create: (context) => locator.get<CouponBloc>()
-                    ..add(InitialCouponEvent(coupon, unit)),
+                  create: (context) => locator.get<CouponBloc>()..add(InitialCouponEvent(coupon, unit)),
                   child: CreateCouponScreen(coupon: coupon, unit: unit),
                 );
-
               },
             ),
           ],
@@ -508,3 +568,23 @@ final GoRouter appRouter = GoRouter(
   ],
   errorBuilder: (context, state) => ErrorScreen(error: state.error!),
 );
+
+CustomTransitionPage _pageBuilder(context, state, page) {
+  return CustomTransitionPage(
+    child: page,
+    transitionDuration: const Duration(milliseconds: 300),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = const Offset(0.0, 1.0);
+      var end = Offset.zero;
+      var curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+      var offsetAnimation = animation.drive(tween);
+
+      return SlideTransition(
+        position: offsetAnimation,
+        child: child,
+      );
+    },
+  );
+}

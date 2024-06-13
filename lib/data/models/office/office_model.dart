@@ -155,10 +155,10 @@ class Office extends Equatable{
       isReservation: json["is_reservation"].toString(),
       title: json["title"],
       refNumber: json["ref_number"],
-      licenseNumber: json["license_number"],
+      licenseNumber: json["license_number"].toString(),
       viewerName: json["viewer_name"],
       viewerPhone: json["viewer_phone"],
-      mainImage: json["main_image"] != null ? ApiEndpoints.siteUrl + json["main_image"] : null,
+      mainImage: json["main_image"] != null ? ApiEndpoints.siteUrl + json["main_image"] : json["main_image"],
       furnisher: json["furnisher"],
       views: json["views"].toString(),
       isSpecial: json["is_special"],
@@ -487,7 +487,7 @@ class Office extends Equatable{
     if (unit.details.isNotEmpty && unit.space != null && (unit.furnisher??'').isNotEmpty && unit.interfaceId != null && unit.typeAqarId != null) {
       count = count + 2;
     }
-    if (unit.description!.isNotEmpty) {
+    if ((unit.description??'').isNotEmpty) {
       count++;
     }
     if (unit.prices.isNotEmpty && (unit.viewerName??'').isNotEmpty && (unit.viewerPhone??'').isNotEmpty) {

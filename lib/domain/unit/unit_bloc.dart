@@ -142,7 +142,7 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
           state.viewerName = state.createdUnit!.viewerName!;
           state.viewerPhone = state.createdUnit!.viewerPhone!;
         }
-        if (state.createdUnit!.mainImage!.isNotEmpty) {
+        if ((state.createdUnit!.mainImage??'').isNotEmpty) {
           state.mainImage = state.createdUnit!.mainImage!;
         }
         if (state.createdUnit!.files

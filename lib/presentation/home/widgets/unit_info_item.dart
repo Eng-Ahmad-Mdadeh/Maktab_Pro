@@ -58,6 +58,7 @@ class UnitInfoItem extends StatelessWidget {
           child: MaktabButton(
             height: 45.v,
             text: 'استكمال',
+            color: AppColors.black,
             padding: EdgeInsets.zero,
             backgroundColor: AppColors.white,
             isBordered: true,
