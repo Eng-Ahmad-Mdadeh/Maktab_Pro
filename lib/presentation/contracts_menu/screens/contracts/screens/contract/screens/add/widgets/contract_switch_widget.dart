@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../../../../../resources/app_colors.dart';
 import '../../../../../../../../widgets/maktab_switch.dart';
-import '../../../../../../../../widgets/text/body_text.dart';
+import '../../../../../../../../widgets/body_text.dart';
 
 class ContractSwitchWidget extends StatelessWidget {
   final String title;
@@ -21,10 +20,10 @@ class ContractSwitchWidget extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        BodyText(title),
+        BodyText(text: title),
         MaktabSwitch(
           value: value,
-          activeColor: AppColors.mintGreen,
+          // activeColor: AppColors.mintGreen,
           onChanged: onSwitch,
         ),
       ],

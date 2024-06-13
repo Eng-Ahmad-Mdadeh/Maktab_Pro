@@ -4,8 +4,8 @@ import 'package:maktab/core/extension/date_time_extension.dart';
 import '../../../../../../../../../core/helpers/size_helper.dart';
 import '../../../../../../../../data/models/contract/contract_model.dart';
 import '../../../../../../../resources/app_colors.dart';
-import '../../../../../../../widgets/text/body_text.dart';
-import '../../../../../../../widgets/text/section_title.dart';
+import '../../../../../../../widgets/body_text.dart';
+import '../../../../../../../widgets/section_title.dart';
 import '../contract_grid_item1.dart';
 
 class ContractStep3 extends StatelessWidget {
@@ -43,7 +43,7 @@ class ContractStep3 extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 22.0.h, right: 22.0.h, top: 6.0.v),
                   child: const BodyText(
-                    "معلومات عامة عن المؤجر",
+                    text: "معلومات عامة عن المؤجر",
                     fontSize: 14.0,
                   ),
                 ),
@@ -103,7 +103,7 @@ class ContractStep3 extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 22.0.h, right: 22.0.h, top: 6.0.v),
                   child: const BodyText(
-                    "معلومات عامة عن المستأجر",
+                    text: "معلومات عامة عن المستأجر",
                     fontSize: 14.0,
                   ),
                 ),

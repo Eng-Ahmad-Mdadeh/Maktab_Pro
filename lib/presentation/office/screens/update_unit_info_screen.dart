@@ -44,7 +44,7 @@ class _UpdateUnitInfoScreenState extends State<UpdateUnitInfoScreen> {
         .state
         .searchData!
         .officeTypes
-        .firstWhereOrNull((type) => type.id == widget.unit.typeAqarId);
+        .firstWhereOrNull((type) => type.id.toString() == widget.unit.typeAqarId);
     _formKey = GlobalKey<FormState>();
     super.initState();
   }
@@ -104,7 +104,7 @@ class _UpdateUnitInfoScreenState extends State<UpdateUnitInfoScreen> {
                                     onChanged: (value) {
                                       context
                                           .read<UnitBloc>()
-                                          .add(SetUnitNameEvent(value!.trim()));
+                                          .add(SetUnitNameEvent(value.trim()));
                                     },
                                   ),
                                   SizedBox(height: 20.v),

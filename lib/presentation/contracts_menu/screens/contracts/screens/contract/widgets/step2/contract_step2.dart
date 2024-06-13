@@ -7,8 +7,8 @@ import '../../../../../../../../data/models/contract/contract_model.dart';
 import '../../../../../../../../domain/settings/settings_bloc.dart';
 import '../../../../../../../resources/app_colors.dart';
 import '../../../../../../../widgets/maktab_image_view.dart';
-import '../../../../../../../widgets/text/body_text.dart';
-import '../../../../../../../widgets/text/section_title.dart';
+import '../../../../../../../widgets/body_text.dart';
+import '../../../../../../../widgets/section_title.dart';
 import '../contract_grid_item1.dart';
 import '../contract_grid_item2.dart';
 import '../contract_grid_item3.dart';
@@ -51,7 +51,7 @@ class ContractStep2 extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(left: 22.0.h, right: 22.0.h, top: 6.0.v),
                   child: const BodyText(
-                    "معلومات عن العقارات المختارة",
+                    text: "معلومات عن العقارات المختارة",
                     fontSize: 14.0,
                   ),
                 ),
@@ -216,7 +216,7 @@ class ContractStep2 extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(top: 23.0.v),
-                    child: const BodyText("السجل التجاري  أو الوكالة"),
+                    child: const BodyText(text: "السجل التجاري  أو الوكالة"),
                   ),
                   BlocBuilder<GeneralSettingBloc, SettingsState>(
                     builder: (context, state) {

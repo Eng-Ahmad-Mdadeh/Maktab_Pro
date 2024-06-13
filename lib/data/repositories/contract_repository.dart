@@ -117,7 +117,7 @@ class ContractRepository {
       (error) => Left(error),
       (right) {
         try {
-          return Right(right.status??false);
+          return Right(right.status);
         } catch (e) {
           return Left(ConversionException(e.toString()));
         }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 
 import '../../../../../../../../resources/app_colors.dart';
-import '../../../../../../../../widgets/text/body_text.dart';
+import '../../../../../../../../widgets/body_text.dart';
 
 class ContractSelectWidget<T> extends StatelessWidget {
   final String title;
@@ -32,7 +32,7 @@ class ContractSelectWidget<T> extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BodyText(
-            title,
+            text: title,
             fontSize: 15.0,
           ),
           DropdownButtonFormField2<T>(
@@ -58,9 +58,8 @@ class ContractSelectWidget<T> extends StatelessWidget {
                 value: item,
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: Text(
-                    children[i],
-                    style: Theme.of(context).textTheme.bodyLarge,
+                  child: BodyText(
+                    text: children[i],
                   ),
                 ),
               ),

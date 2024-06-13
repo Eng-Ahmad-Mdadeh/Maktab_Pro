@@ -509,7 +509,7 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
             }
             if (state.createdUnit!.space != num.parse(state.space) ||
                 state.createdUnit!.furnisher != state.equipment ||
-                state.createdUnit!.typeAqarId! != state.type) {
+                state.createdUnit!.typeAqarId! != state.type.toString()) {
               temp2 = await updateInfo(emit);
             } else if (state.createdUnit!.interfaceId != state.interfaceId) {
               temp4 = await updateInterface(emit);
@@ -615,7 +615,7 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
       }
       if (state.createdUnit!.space != num.parse(state.space) ||
           state.createdUnit!.furnisher != state.equipment ||
-          state.createdUnit!.typeAqarId! != state.type ||
+          state.createdUnit!.typeAqarId! != state.type.toString() ||
           state.advertiserRelationshipOption !=
               getAdvertiserRelationship(
                   state.createdUnit!.advertiserRelationship!) ||
@@ -896,7 +896,7 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
       title: state.name,
       categoryId: state.categoryId,
       licenseNumber: '',
-      isMarketing: state.office!.isMarketing??false,
+      isMarketing: state.office!.isMarketing,
       isCentral: false,
     );
     return result.fold(
@@ -1336,7 +1336,7 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
     var result = await _officeRepository.updateDownPayment(
       officeId: state.createdUnit!.id,
       downPayment: state.depositAmount,
-      downPaymentType: state.depositType?? DepositTypes.price,
+      downPaymentType: state.depositType,
     );
     return result.fold(
       (failure) {

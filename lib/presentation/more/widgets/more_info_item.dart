@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 
+import '../../widgets/section_title.dart';
+
 class MoreInfoItem extends StatelessWidget {
   const MoreInfoItem({
     super.key,
@@ -33,19 +35,15 @@ class MoreInfoItem extends StatelessWidget {
               size: 30,
             ),
             SizedBox(height: 8.v),
-            Expanded(
-              child: Text(
-                '0/2',
-                softWrap: true,
-                style: Theme.of(context).textTheme.titleSmall,
+            const Expanded(
+              child: SectionTitle(
+                title: '0/2',
               ),
             ),
             SizedBox(height: 10.v),
             Expanded(
-              child: Text(
-                title,
-                softWrap: true,
-                style: Theme.of(context).textTheme.titleSmall,
+              child: SectionTitle(
+                title: title,
               ),
             ),
           ],

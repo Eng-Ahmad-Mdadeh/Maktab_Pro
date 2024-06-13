@@ -12,8 +12,10 @@ import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/loading_dialog.dart';
 import 'package:maktab/presentation/widgets/maktab_loading.dart';
 
+
 class MyOfficesItemsList extends StatelessWidget {
-  MyOfficesItemsList({super.key});
+  final Function(int) onMyOfficeDelete;
+  MyOfficesItemsList({super.key, required this.onMyOfficeDelete});
 
   List<Office>? myOffices;
 
@@ -53,6 +55,7 @@ class MyOfficesItemsList extends StatelessWidget {
                     onTap: () async => await context
                         .read<OfficesCubit>()
                         .getUnitById(myOffices![index].id),
+                    onDelete: ()=> onMyOfficeDelete(state.myOffices[index].id),
                   );
                 },
                 separatorBuilder: (context, index) => SizedBox(height: 20.v),

@@ -17,7 +17,7 @@ import '../../../../../../../domain/contracts/contract/contract_bloc.dart';
 import '../../../../../../../domain/contracts/contracts_step_cubit.dart';
 import '../../../../../../../domain/settings/settings_bloc.dart';
 import '../../../../../../widgets/maktab_image_view.dart';
-import '../../../../../../widgets/text/body_text.dart';
+import '../../../../../../widgets/body_text.dart';
 import '../../../../../../resources/app_assets.dart';
 import '../../../../../../resources/app_colors.dart';
 import '../widgets/step1/contract_button.dart';
@@ -107,9 +107,9 @@ class _ContractScreenState extends State<ContractScreen> {
           builder: (context, state) {
             if (state is ContractFailure) {
               if(state.message.contains('غير موجود')){
-                return const Center(child: BodyText("هذا العقد غير موجود ربما يكون قد تم حذفه"));
+                return const Center(child: BodyText(text: "هذا العقد غير موجود ربما يكون قد تم حذفه"));
               }
-              return Center(child: BodyText(state.message));
+              return Center(child: BodyText(text:state.message));
             }
             if(state is ContractLoading){
               return const LoadingWidget(1);
@@ -244,7 +244,7 @@ class _ContractScreenState extends State<ContractScreen> {
               );
             }
             return const Center(
-              child: BodyText("محتوى العقد غير متوفر"),
+              child: BodyText(text: "محتوى العقد غير متوفر"),
             );
           },
         ),

@@ -13,9 +13,11 @@ class CreateOfficeNavigationSection extends StatelessWidget {
   const CreateOfficeNavigationSection({
     super.key,
     required this.pageController,
+    required this.onCreateSuccess,
   });
 
   final PageController pageController;
+  final void Function() onCreateSuccess;
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +33,11 @@ class CreateOfficeNavigationSection extends StatelessWidget {
           MaktabSnackbar.showWarning(context, 'جاري رفع الملفات ...');
         }
         if (state.imagesApiCallState == OfficeApiCallState.success) {
-          context.read<OfficesCubit>().getIncompleteUnits();
+          onCreateSuccess();
           MaktabSnackbar.showSuccess(context, 'تم رفع الملفات بنجاح');
+          context.read<OfficesCubit>().getIncompleteUnits();
+          context.read<OfficesCubit>().getMyOffices();
+          context.read<OfficesCubit>().getIncompleteOffices();
         } else if (state.imagesApiCallState == OfficeApiCallState.failure) {
           MaktabSnackbar.showError(context, 'فشل رفع الملفات');
         }
@@ -42,7 +47,7 @@ class CreateOfficeNavigationSection extends StatelessWidget {
           LinearProgressIndicator(
             minHeight: 10.v,
             borderRadius: BorderRadius.circular(20),
-            backgroundColor: AppColors.mintGreen,
+            backgroundColor: AppColors.softAsh,
             valueColor: const AlwaysStoppedAnimation<Color>(
               AppColors.emeraldTeal,
             ),

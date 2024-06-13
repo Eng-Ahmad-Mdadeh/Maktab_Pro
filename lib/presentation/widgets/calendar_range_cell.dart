@@ -72,12 +72,10 @@ class CalendarRangeCell extends StatelessWidget {
                           ],
                         )
                       : Center(
-                          child: Text(
-                            date.day.toString(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: AppColors.white),
+                          child: BodyText(
+                            text:
+                            date.day.toString(),textColor: AppColors.white
+
                           ),
                         ),
                 ),

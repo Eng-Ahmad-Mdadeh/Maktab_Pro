@@ -5,8 +5,8 @@ import '../../../../../data/models/contract/contract_model.dart';
 import '../../../../resources/app_assets.dart';
 import '../../../../resources/app_colors.dart';
 import '../../../../widgets/maktab_image_view.dart';
-import '../../../../widgets/text/body_text.dart';
-import '../../../../widgets/text/section_title.dart';
+import '../../../../widgets/body_text.dart';
+import '../../../../widgets/section_title.dart';
 
 class ContractsWidget extends StatelessWidget {
   final Function(ContractModel) onPressed;
@@ -84,12 +84,12 @@ class ContractsWidget extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   const BodyText(
-                                    "المؤجر",
+                                    text: "المؤجر",
                                     fontSize: 10,
                                   ),
                                   SizedBox(height: 7.0.v),
                                   const BodyText(
-                                    "المستأجر",
+                                    text: "المستأجر",
                                     fontSize: 10,
                                   ),
                                 ],
@@ -121,7 +121,7 @@ class ContractsWidget extends StatelessWidget {
                         children: [
                           MaktabImageView(imagePath: AppAssets.viewListDetails),
                           const BodyText(
-                            "تفاصيل",
+                            text: "تفاصيل",
                             fontSize: 12,
                           ),
                         ],

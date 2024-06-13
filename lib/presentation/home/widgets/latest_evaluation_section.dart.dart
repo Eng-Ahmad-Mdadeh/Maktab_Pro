@@ -8,6 +8,7 @@ import 'package:maktab/domain/home/home_bloc.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/maktab_ratingbar.dart';
+import 'package:maktab/presentation/widgets/maktab_rich_text.dart';
 import 'package:maktab/presentation/widgets/section_title.dart';
 
 class LatestEvaluationsSection extends StatelessWidget {
@@ -44,12 +45,7 @@ class LatestEvaluationsSection extends StatelessWidget {
             ),
             SizedBox(height: 10.v),
             context.read<HomeBloc>().state.statistics != null &&
-                    context
-                        .read<HomeBloc>()
-                        .state
-                        .statistics!
-                        .evaluations
-                        .isNotEmpty
+                    context.read<HomeBloc>().state.statistics!.evaluations.isNotEmpty
                 ? ConstrainedBox(
                     constraints: BoxConstraints(maxHeight: 200.v),
                     child: ListView.separated(
@@ -57,31 +53,56 @@ class LatestEvaluationsSection extends StatelessWidget {
                       shrinkWrap: true,
                       padding: EdgeInsets.symmetric(vertical: 10.v),
                       itemBuilder: (context, index) {
-                        evaluation = context
-                            .read<HomeBloc>()
-                            .state
-                            .statistics!
-                            .evaluations[index];
+                        evaluation = context.read<HomeBloc>().state.statistics!.evaluations[index];
                         return Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            MaktabRatingBar(rate: evaluation!.rate.toDouble()),
                             SizedBox(width: 8.h),
                             Expanded(
-                              flex: 2,
-                              child: BodyText(text: evaluation!.comment),
+                              child: SectionTitle(
+                                title: evaluation!.userOrdinary?.userName ?? '',
+                                textColor: AppColors.lightBlack,
+                              ),
                             ),
+                            if (evaluation!.comment.length > 10)
+                              Expanded(
+                                child: MaktabRichText(
+                                  texts: [
+                                    MaktabRichTextModel(
+                                        text: evaluation!.comment.substring(0, 10),
+                                        fontWeight: FontWeight.normal),
+                                    MaktabRichTextModel(text: "...", fontWeight: FontWeight.normal),
+                                    MaktabRichTextModel(
+                                        text: "المزيد",
+                                        color: AppColors.mintGreen,
+                                        fontWeight: FontWeight.normal,
+                                        onTap: () {
+                                          showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10.0.adaptSize)
+                                                ),
+                                                content: BodyText(
+                                                  text: evaluation!.comment,
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              );
+                                            },
+                                          );
+                                        }),
+                                  ],
+                                ),
+                              )
+                            else
+                              Expanded(child: BodyText(text: evaluation!.comment)),
+                            MaktabRatingBar(rate: evaluation!.rate.toDouble()),
                           ],
                         );
                       },
-                      separatorBuilder: (context, index) =>
-                          SizedBox(height: 5.v),
-                      itemCount: context
-                          .read<HomeBloc>()
-                          .state
-                          .statistics!
-                          .evaluations
-                          .length,
+                      separatorBuilder: (context, index) => SizedBox(height: 5.v),
+                      itemCount: context.read<HomeBloc>().state.statistics!.evaluations.length,
                     ))
                 : Center(
                     child: Padding(

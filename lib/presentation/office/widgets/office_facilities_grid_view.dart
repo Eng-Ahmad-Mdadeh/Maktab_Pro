@@ -16,31 +16,22 @@ class OfficeFacilitiesGridView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SectionTitle(title: 'مرافق مكتبك الرئيسية'),
+        const SectionTitle(title: 'المرافق الرئيسية للمكان والخدمة'),
         SizedBox(height: 10.v),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            mainAxisSpacing: 10.v,
-            crossAxisSpacing: 7.h,
-            childAspectRatio: 0.8,
-          ),
-          itemCount: facilities.length,
-          itemBuilder: (_, index) {
-            return BlocBuilder<OfficeBloc, OfficeState>(
+        Center(
+          child: Wrap(
+            children: facilities.map((e) => BlocBuilder<OfficeBloc, OfficeState>(
               builder: (context, state) {
                 return FacilityBox(
-                  facility: facilities[index],
-                  isSelected: state.facilities.contains(facilities[index].id),
+                  facility: e,
+                  isSelected: state.facilities.contains(e.id),
                   onTap: () => context
                       .read<OfficeBloc>()
-                      .add(SelectFacilityEvent(facilities[index].id)),
+                      .add(SelectFacilityEvent(e.id)),
                 );
               },
-            );
-          },
+            )).toList(),
+          ),
         ),
       ],
     );

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:maktab/core/extension/num_extension.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab/presentation/widgets/section_title.dart';
 
 class MaktabRatingBar extends StatelessWidget {
   const MaktabRatingBar({super.key, required this.rate});
@@ -10,7 +11,23 @@ class MaktabRatingBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(top: 3.0.v),
+          child: SectionTitle(title: "(${rate.toStringAsFixedWithCheck(1)})"),
+        ),
+        const Icon(
+          Icons.star,
+          color: AppColors.yellow,
+        ),
+      ],
+    );
+  }
+}
+/*
+Column(
       children: [
         RatingBar(
           initialRating: rate,
@@ -35,6 +52,5 @@ class MaktabRatingBar extends StatelessWidget {
           onRatingUpdate: (rating) {},
         ),
       ],
-    );
-  }
-}
+    )
+ */

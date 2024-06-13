@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../../../../../core/helpers/size_helper.dart';
 import '../../../../../../../resources/app_colors.dart';
 import '../../../../../../../widgets/maktab_image_view.dart';
-import '../../../../../../../widgets/text/body_text.dart';
+import '../../../../../../../widgets/body_text.dart';
 
 class ContractButton extends StatelessWidget {
   final Function()? onPressed;
@@ -31,7 +31,7 @@ class ContractButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               BodyText(
-                text,
+                text: text,
                 fontSize: 14.0,
                 textColor: AppColors.white,
               ),

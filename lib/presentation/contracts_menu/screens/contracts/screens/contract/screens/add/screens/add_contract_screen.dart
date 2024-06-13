@@ -25,7 +25,9 @@ import '../widgets/contracts_buttons.dart';
 import '../widgets/steps_widget.dart';
 
 class AddContractScreen extends StatefulWidget {
-  const AddContractScreen({super.key});
+  final int? orderID;
+
+  const AddContractScreen({super.key, this.orderID});
 
   @override
   State<AddContractScreen> createState() => _ContractScreenState();
@@ -34,6 +36,7 @@ class AddContractScreen extends StatefulWidget {
 class _ContractScreenState extends State<AddContractScreen> {
   late ContractStepCubit _contractStepCubit;
   late ContractCubit _contractCubit;
+
   // late ContractModelBloc _contractModelBloc;
   late SearchDataBloc _searchDataBloc;
 
@@ -43,7 +46,7 @@ class _ContractScreenState extends State<AddContractScreen> {
     context.read<ContractModelsBloc>().add(GetContractsModels());
     // _contractModelBloc = ContractModelBloc(locator<ContractModelRepository>());
     _contractStepCubit = ContractStepCubit();
-    _contractCubit = ContractCubit(_contractStepCubit);
+    _contractCubit = ContractCubit(_contractStepCubit, widget.orderID);
     _searchDataBloc = SearchDataBloc(locator<OfficeRepository>())..add(GetSearchDataEvent());
     super.initState();
   }
@@ -57,16 +60,21 @@ class _ContractScreenState extends State<AddContractScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     log("GetOrdersWithoutPaginationEvent");
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => _contractStepCubit,),
-        BlocProvider(create: (_) => _contractCubit,),
+        BlocProvider(
+          create: (_) => _contractStepCubit,
+        ),
+        BlocProvider(
+          create: (_) => _contractCubit,
+        ),
         // BlocProvider(create: (_) => _contractModelBloc,),
-        BlocProvider(create: (_) => _searchDataBloc,),
+        BlocProvider(
+          create: (_) => _searchDataBloc,
+        ),
       ],
       child: Scaffold(
         appBar: AppBar(
@@ -89,15 +97,15 @@ class _ContractScreenState extends State<AddContractScreen> {
         ),
         body: BlocListener<ContractBloc, ContractState>(
           listener: (context, state) {
-            if(state is ContractLoading){
+            if (state is ContractLoading) {
               MaktabSnackbar.showWarning(context, "جار احفظ العقد");
             }
-            if(state is ContractSuccess){
+            if (state is ContractSuccess) {
               MaktabSnackbar.showSuccess(context, "تم الحفظ بنجاح");
               context.read<ContractsBloc>().add(GetContractsEvent());
               context.pop();
             }
-            if(state is ContractFailure){
+            if (state is ContractFailure) {
               MaktabSnackbar.showError(context, state.message);
             }
           },

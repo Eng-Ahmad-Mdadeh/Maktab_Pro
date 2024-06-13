@@ -5,7 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 
-import '../../core/themes/text_theme.dart';
+import 'section_title.dart';
 
 class RetryButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -24,16 +24,15 @@ class RetryButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(
-                  'حدث شيء ما بشكل خاطئ',
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(color: AppColors.cherryRed),
+                const SectionTitle(
+                  title:
+                  'حدث شيء ما بشكل خاطئ',textColor: AppColors.cherryRed
                 ),
-                Text(
-                  'اعادة المحاولة',
-                  style: textTheme.titleSmall?.copyWith(
-                        fontSize: 13,
-                        decoration: TextDecoration.underline,
-                      ),
+                const SectionTitle(
+                  title:
+                  'اعادة المحاولة',fontSize: 13,
+                  decoration: TextDecoration.underline,
+
                 ),
                 Icon(
                   FontAwesomeIcons.repeat,

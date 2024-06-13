@@ -1,6 +1,5 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:maktab/core/extension/image_type_extension.dart';
 import 'package:maktab/presentation/widgets/maktab_image_view.dart';
 
 import '../../../../../../../../../core/helpers/size_helper.dart';

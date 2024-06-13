@@ -124,8 +124,8 @@ class UnitCouponDetailsBox extends StatelessWidget {
                     children: [
                       MaktabSwitch(
                         value: coupon.status,
-                        activeColor: AppColors.emeraldTeal,
-                        activeTrackColor: AppColors.mintGreen,
+                        // activeColor: AppColors.emeraldTeal,
+                        // activeTrackColor: AppColors.mintGreen,
                         onChanged: (value) {
                           showDialog(
                             context: context,

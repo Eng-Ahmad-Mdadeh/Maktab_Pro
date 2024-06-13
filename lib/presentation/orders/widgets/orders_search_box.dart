@@ -48,7 +48,7 @@ class OrdersSearchBox extends StatelessWidget {
                       hintText: 'البحث باسم العميل أو رقم الطلب',
                       prefix: const Icon(Icons.search, color: AppColors.slateGray),
                       onChanged: (value) {
-                        context.read<OrdersBloc>().add(FilterOrders(value ?? ''));
+                        context.read<OrdersBloc>().add(FilterOrders(value));
                       },
                     ),
                   ),

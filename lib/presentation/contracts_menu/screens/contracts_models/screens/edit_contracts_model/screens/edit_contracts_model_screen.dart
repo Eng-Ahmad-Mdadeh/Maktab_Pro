@@ -1,8 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:go_router/go_router.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab/presentation/widgets/loading_widget.dart';
 
 import '../../../../../../../domain/contract_models/contract_model/contract_model_bloc.dart';
 import '../../../../../../../domain/contract_models/contract_models_bloc.dart';
@@ -29,6 +33,7 @@ class _EditContractsModelScreenState extends State<EditContractsModelScreen> {
   final TextEditingController _statusController = TextEditingController();
 
   final HtmlEditorController _htmlController = HtmlEditorController();
+  late final QuillController _quillController;
 
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
@@ -59,7 +64,14 @@ class _EditContractsModelScreenState extends State<EditContractsModelScreen> {
               if (state is ContractModelSuccess) {
                 _nameController.text = state.contractModel.name ?? '';
                 _descriptionController.text = state.contractModel.description ?? '';
-                _htmlController.setText(state.contractModel.contentContractModel ?? '');
+                log("LOADING TEXT INTO HTML");
+                // _htmlController.setText(state.contractModel.contentContractModel ?? '');
+                _quillController = QuillController(
+                  document: Document.fromHtml(state.contractModel.contentContractModel??'<p></p>'),
+                  selection: TextSelection.fromPosition(
+                    const TextPosition(offset: 1),
+                  ),
+                );
                 if (canShowMessages) {
                   LoadingDialog.hide(context);
                   MaktabSnackbar.showSuccess(context, "تم الحفظ بنجاح");
@@ -110,18 +122,22 @@ class _EditContractsModelScreenState extends State<EditContractsModelScreen> {
                       title: 'اختر الحالة',
                       items: const ['1', '0'],
                       value: state is ContractModelSuccess ? state.contractModel.status ?? '1' : '1',
-                      children: const ['Active', 'Deactive'],
+                      children: const ['فعال', 'غير فعال'],
                       onChanged: (value) {
                         _statusController.text = value ?? '';
                       },
                     ),
-                    ContractHtmlEditorWidget(
-                      _htmlController,
-                      title: "محتوى النموذج",
-                      hint: "محتوى النموذج",
-                      toolbarType: ToolbarType.nativeExpandable,
-                      height: 600,
-                    ),
+                    if (state is ContractModelSuccess)
+                      ContractHtmlEditorWidget(
+                        _htmlController,
+                        _quillController,
+                        initText: state.contractModel.contentContractModel,
+                        title: "محتوى النموذج",
+                        hint: "محتوى النموذج",
+                        toolbarType: ToolbarType.nativeExpandable,
+                        height: 600,
+                      )else
+                        const LoadingWidget(0),
                     MaktabButton(
                       text: "حفظ",
                       isLoading: state is ContractModelLoading,

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/network/api_endpoints.dart';
 import 'package:maktab/core/router/app_routes.dart';
 import 'package:maktab/domain/profile/profile_bloc.dart';
 import 'package:maktab/presentation/resources/app_assets.dart';

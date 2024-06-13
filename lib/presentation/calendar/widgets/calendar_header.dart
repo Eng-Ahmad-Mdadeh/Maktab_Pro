@@ -9,7 +9,6 @@ import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/section_title.dart';
 
-import '../../../core/themes/text_theme.dart';
 import '../../../data/models/aqar_filter/type_res.dart';
 import '../../../domain/calendar/calendar_select_cubit.dart';
 
@@ -25,7 +24,6 @@ class CalendarHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(unit.prices);
     if (unit.prices.isEmpty) {
       return const Center(
         child: SectionTitle(
@@ -49,7 +47,6 @@ class CalendarHeader extends StatelessWidget {
         SizedBox(height: 10.v),
         BlocBuilder<CalendarSelectCubit, CalendarFormatOptions?>(
           builder: (context, state) {
-            print(state);
             if (unit.prices.length == 1) {
               return Container(
                 decoration: BoxDecoration(
@@ -98,9 +95,8 @@ class CalendarHeader extends StatelessWidget {
                   value: format['format'],
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                      format['title'],
-                      style: textTheme.bodyLarge,
+                    child: BodyText(
+                      text: format['title'],
                     ),
                   ),
                 );

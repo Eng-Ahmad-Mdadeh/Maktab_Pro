@@ -3,8 +3,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 
 import '../../../../../../resources/app_colors.dart';
-import '../../../../../../widgets/text/body_text.dart';
-import '../../../../../../widgets/text/section_title.dart';
+import '../../../../../../widgets/body_text.dart';
+import '../../../../../../widgets/section_title.dart';
 
 class ContractGridItem2 extends StatelessWidget {
   final String title;
@@ -38,7 +38,7 @@ class ContractGridItem2 extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               BodyText(
-                title,
+               text: title,
                 fontSize: 15.0,
               ),
               SectionTitle(

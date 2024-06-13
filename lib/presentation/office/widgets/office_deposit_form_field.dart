@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutables, body_might_complete_normally_nullable
-import 'package:collection/collection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -69,20 +68,17 @@ class _OfficeDepositFormFieldState extends State<OfficeDepositFormField> {
                         value: format['type'],
                         child: Align(
                           alignment: Alignment.centerRight,
-                          child: Text(
-                            format['title'],
-                            style: Theme.of(context).textTheme.bodyLarge,
+                          child: BodyText(
+                            text: format['title'],
                           ),
                         ),
                       );
                     }).toList(),
-                    decoration: (const InputDecoration())
-                        .applyDefaults(Theme.of(context).inputDecorationTheme),
+                    decoration:
+                        (const InputDecoration()).applyDefaults(Theme.of(context).inputDecorationTheme),
                     onChanged: (value) {
                       _depositController.clear();
-                      context
-                          .read<OfficeBloc>()
-                          .add(SelectDepositTypeEvent(value!));
+                      context.read<OfficeBloc>().add(SelectDepositTypeEvent(value!));
                     },
                   );
                 },
@@ -104,28 +100,22 @@ class _OfficeDepositFormFieldState extends State<OfficeDepositFormField> {
                         child: Align(
                           alignment: Alignment.center,
                           child: BodyText(
-                              text: state.depositType == DepositTypes.price
-                                  ? 'ريال'
-                                  : '%'),
+                            text: state.depositType == DepositTypes.price ? 'ريال' : '%',
+                          ),
                         ),
                       ),
                       inputFormatters: [
                         FilteringTextInputFormatter.digitsOnly,
                         state.depositType == DepositTypes.percentage
                             ? NumericalRangeFormatter(min: 0, max: 100)
-                            : NumericalRangeFormatter(
-                                min: 0, max: double.infinity)
+                            : NumericalRangeFormatter(min: 0, max: double.infinity)
                       ],
                       validator: (value) {
                         if (value!.trim().isEmpty) {
-                          context
-                              .read<OfficeBloc>()
-                              .add(ChangeDepositAmountEvent(''));
+                          context.read<OfficeBloc>().add(ChangeDepositAmountEvent(''));
                           return '';
                         } else {
-                          context
-                              .read<OfficeBloc>()
-                              .add(ChangeDepositAmountEvent(value.trim()));
+                          context.read<OfficeBloc>().add(ChangeDepositAmountEvent(value.trim()));
                         }
                         return null;
                       },
@@ -144,16 +134,15 @@ class _OfficeDepositFormFieldState extends State<OfficeDepositFormField> {
                     text: 'يجب ادخال العربون',
                     textColor: AppColors.cherryRed,
                   )
-                : state.selectedUnitPrices.values.isNotEmpty
+                /*: state.selectedUnitPrices.values.isNotEmpty
                     ? state.depositType == DepositTypes.price &&
-                            state.selectedUnitPrices.values.min <
-                                state.depositAmount
+                            state.selectedUnitPrices.values.min < state.depositAmount
                         ? BodyText(
                             text:
                                 'يجب أن يكون العربون أقل من أصغر سعر ${state.selectedUnitPrices.values.min}',
                             textColor: AppColors.cherryRed,
                           )
-                        : const SizedBox.shrink()
+                        : const SizedBox.shrink()*/
                     : const SizedBox.shrink();
           },
         ),

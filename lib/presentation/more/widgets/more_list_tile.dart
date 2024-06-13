@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 
+import '../../widgets/section_title.dart';
+
 class MoreListTile extends StatelessWidget {
   const MoreListTile({
     super.key,
@@ -22,10 +24,9 @@ class MoreListTile extends StatelessWidget {
         color: AppColors.softAsh,
         size: 25,
       ),
-      title: Text(
+      title: SectionTitle(
+        title:
         title,
-        softWrap: true,
-        style: Theme.of(context).textTheme.titleMedium,
       ),
       trailing: const Icon(
         Icons.arrow_forward_ios,

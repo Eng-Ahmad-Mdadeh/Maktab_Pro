@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab/presentation/widgets/maktab_rich_text.dart';
+import 'package:maktab/presentation/widgets/section_title.dart';
 
 class PeriodBalanceItem extends StatelessWidget {
   const PeriodBalanceItem({
@@ -18,34 +20,24 @@ class PeriodBalanceItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          title,
-          softWrap: true,
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                color: AppColors.slateGray,
-              ),
+        SectionTitle(
+          title: title,
+          textColor: AppColors.slateGray,
         ),
         SizedBox(height: 5.v),
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: balance,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.emeraldTeal,
-                    ),
-              ),
-              WidgetSpan(child: SizedBox(width: 5.h)),
-              TextSpan(
-                text: 'ريال',
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.black,
-                    ),
-              ),
-            ],
-          ),
+        MaktabRichText(
+          texts: [
+            MaktabRichTextModel(
+              text: balance,
+              color: AppColors.emeraldTeal,
+              fontWeight: FontWeight.w500,
+            ),
+            MaktabRichTextModel(
+              text: "ريال",
+              fontWeight: FontWeight.w500,
+              color: AppColors.black,
+            ),
+          ],
         ),
       ],
     );

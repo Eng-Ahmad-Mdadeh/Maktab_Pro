@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/core/router/app_routes.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab/presentation/widgets/maktab_rich_text.dart';
 
 import '../../../data/models/order/order_model.dart';
 import '../../../domain/orders/order/order_bloc.dart';
@@ -42,25 +41,23 @@ class OrderInfoBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  order.tenant?.username ?? '',
-                  softWrap: true,
-                  style: Theme.of(context).textTheme.titleSmall!,
+                SectionTitle(
+                  title: order.tenant?.username ?? '',
                 ),
-                RichText(
-                  text: TextSpan(
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                MaktabRichText(
+                  texts: [
+                    MaktabRichTextModel(
+                      text: order.totalPriceLessor?.toString() ?? '',
+                      color: AppColors.emeraldTeal,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 19.0
+                    ),
+                    MaktabRichTextModel(
+                      text: ' ريال',
+                      color: AppColors.black,
                       fontWeight: FontWeight.w500,
                     ),
-                    children: [
-                      TextSpan(
-                        text: order.totalPriceLessor?.toString() ?? '',
-                        style: Theme.of(context).textTheme.titleSmall!.copyWith(color: AppColors.emeraldTeal),
-                      ),
-                      WidgetSpan(child: SizedBox(width: 6.h)),
-                      const TextSpan(text: 'ريال')
-                    ],
-                  ),
+                  ],
                 ),
               ],
             ),
@@ -68,26 +65,20 @@ class OrderInfoBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  order.office?.title??'',
-                  softWrap: true,
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.slateGray,
-                  ),
+                SectionTitle(
+                  title: order.office?.title ?? '',
+                  textFontWeight: FontWeight.w500,
+                  textColor: AppColors.slateGray,
                 ),
                 SectionTitle(title: '#${order.id}'),
-
               ],
             ),
-            Text(
-              // 'من الجمعة 12 نوفمبر الى السبت 13 نوفمبر',
-              order.startDate?.toIso8601String().split('T').firstOrNull??'',
-              softWrap: true,
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                fontWeight: FontWeight.w500,
-                color: AppColors.slateGray,
-              ),
+            SectionTitle(
+              title:
+                  // 'من الجمعة 12 نوفمبر الى السبت 13 نوفمبر',
+                  order.startDate?.toIso8601String().split('T').firstOrNull ?? '',
+              textFontWeight: FontWeight.w500,
+              textColor: AppColors.slateGray,
             ),
           ],
         ),

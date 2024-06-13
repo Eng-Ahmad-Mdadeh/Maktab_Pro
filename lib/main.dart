@@ -23,7 +23,6 @@ import 'package:maktab/domain/unit/unit_bloc.dart';
 import 'package:maktab/domain/user/user_bloc.dart';
 import 'package:maktab/domain/video/video_bloc.dart';
 
-import 'core/services/notification_services.dart';
 import 'domain/account_summary/account_summary_bloc.dart';
 import 'domain/contract_models/contract_model/contract_model_bloc.dart';
 import 'domain/contract_models/contract_models_bloc.dart';

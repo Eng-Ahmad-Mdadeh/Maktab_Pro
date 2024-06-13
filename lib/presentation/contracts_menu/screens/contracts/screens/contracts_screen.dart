@@ -13,8 +13,8 @@ import '../../../../../domain/contracts/contracts_event.dart';
 import '../../../../../domain/contracts/contracts_state.dart';
 import '../../../../widgets/maktab_app_bar.dart';
 import '../../../../widgets/shimmer_effect.dart';
-import '../../../../widgets/text/body_text.dart';
-import '../../../../widgets/text/section_title.dart';
+import '../../../../widgets/body_text.dart';
+import '../../../../widgets/section_title.dart';
 import '../widgets/contract_type_menu_widget.dart';
 import '../widgets/contracts_widget.dart';
 
@@ -90,7 +90,7 @@ class ContractsScreen extends StatelessWidget {
                 );
               }
               return const Center(
-                child: BodyText("لا يوجد عقود بعد"),
+                child: BodyText(text: "لا يوجد عقود بعد"),
               );
             },
           ),

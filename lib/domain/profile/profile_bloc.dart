@@ -16,6 +16,7 @@ import 'package:maktab/data/repositories/user_repository.dart';
 import '../../core/services/notification_services.dart';
 
 part 'profile_event.dart';
+
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
@@ -66,7 +67,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
               ));
             }
             await NotificationService.init(user.id);
-
           },
         );
       } catch (e) {
@@ -129,9 +129,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           (user) {
             // log(" success message:${user.companyName}");
             emit(state.copyWith(
-                profileState: ProfileStates.updated,
-                user: user,
-                message: "تم تحديث الملف الشخصي بنجاح"));
+                profileState: ProfileStates.updated, user: user, message: "تم تحديث الملف الشخصي بنجاح"));
           },
         );
       } catch (e) {
@@ -146,8 +144,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(state.copyWith(imageErrorMessage: ''));
       String? selectedImage = await locator<FilePickerHelper>().pickImage();
       if (selectedImage != null && selectedImage.isNotEmpty) {
-        String? croppedImage =
-            await ImageCropperHelper.cropImage(selectedImage: selectedImage);
+        String? croppedImage = await ImageCropperHelper.cropImage(selectedImage: selectedImage);
         if (croppedImage != null) {
           emit(state.copyWith(
             pickedImage: croppedImage,
@@ -155,8 +152,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           ));
         }
       } else {
-        emit(state.copyWith(
-            imageErrorMessage: 'يجب أن يكون حجم الصورة أصغر من 2 ميغا بايت'));
+        emit(state.copyWith(imageErrorMessage: 'يجب أن يكون حجم الصورة أصغر من 2 ميغا بايت'));
       }
     });
     on<SelectAccountTypeEvent>((event, emit) async {

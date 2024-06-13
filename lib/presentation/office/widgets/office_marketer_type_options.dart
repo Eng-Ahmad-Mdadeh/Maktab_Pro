@@ -25,13 +25,10 @@ class OfficeMarketerTypeOptions extends StatelessWidget {
                   Expanded(
                     child: MaktabButton(
                       text: 'حصري',
-                      textStyle:
-                          Theme.of(context).textTheme.titleSmall!.copyWith(
-                                color: state.marketerTypeOption ==
-                                        MarketerTypes.exclusive
-                                    ? AppColors.white
-                                    : AppColors.black,
-                              ),
+                      color: state.marketerTypeOption ==
+                          MarketerTypes.exclusive
+                          ? AppColors.white
+                          : AppColors.black,
                       backgroundColor:
                           state.marketerTypeOption == MarketerTypes.exclusive
                               ? AppColors.lightCyan
@@ -49,13 +46,10 @@ class OfficeMarketerTypeOptions extends StatelessWidget {
                   Expanded(
                     child: MaktabButton(
                       text: 'غير حصري',
-                      textStyle:
-                          Theme.of(context).textTheme.titleSmall!.copyWith(
-                                color: state.marketerTypeOption ==
-                                        MarketerTypes.notExclusive
-                                    ? AppColors.white
-                                    : AppColors.black,
-                              ),
+                      color: state.marketerTypeOption ==
+                          MarketerTypes.notExclusive
+                          ? AppColors.white
+                          : AppColors.black,
                       backgroundColor:
                           state.marketerTypeOption == MarketerTypes.notExclusive
                               ? AppColors.lightCyan

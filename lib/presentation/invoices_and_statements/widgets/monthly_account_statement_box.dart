@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 
+import '../../widgets/section_title.dart';
+
 class MonthlyAccountStatementBox extends StatelessWidget {
   const MonthlyAccountStatementBox({
     super.key,
@@ -27,9 +29,8 @@ class MonthlyAccountStatementBox extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
-                child: Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleSmall!,
+                child: SectionTitle(
+                  title: title,
                 ),
               ),
               const Icon(

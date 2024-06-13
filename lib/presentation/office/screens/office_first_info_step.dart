@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
@@ -14,6 +13,8 @@ import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
 import 'package:maktab/presentation/widgets/maktab_text_form_field.dart';
 import 'package:maktab/presentation/widgets/page_title.dart';
 import 'package:maktab/presentation/widgets/section_title.dart';
+
+import '../../widgets/maktab_rich_text.dart';
 
 class OfficeFirstInfoStep extends StatefulWidget {
   const OfficeFirstInfoStep({super.key});
@@ -40,18 +41,18 @@ class _OfficeFirstInfoStepState extends State<OfficeFirstInfoStep> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PageTitle(title: 'معلومات المكتب'),
+          const PageTitle(title: 'معلومات المكان/الخدمة'),
           SizedBox(height: 30.v),
           Form(
             key: _officeNameFormKey,
             child: MaktabTextFormField(
               controller: _officeNameController,
-              title: 'اسم مكتبك',
-              hintText: 'أدخل اسم مكتبك الذي سيظهر للضيوف',
+              title: 'أضف عنواناً لإعلانك',
+              hintText: 'أدخل اسم المكان/الخدمة الذي سيظهر للضيوف',
               textInputType: TextInputType.name,
               validator: (value) {
                 if (value!.trim().isEmpty) {
-                  return 'الرجاء ادخال اسم المكتب';
+                  return 'الرجاء ادخال اسم المكان/الخدمة';
                 } else if (value.trim().length < 4) {
                   return 'الاسم يجب على الاقل ان يكون مؤلف من 4 محارف';
                 }
@@ -60,23 +61,25 @@ class _OfficeFirstInfoStepState extends State<OfficeFirstInfoStep> {
               onChanged: (value) {
                 context
                     .read<OfficeBloc>()
-                    .add(SetOfficeNameEvent(value!.trim()));
+                    .add(SetOfficeNameEvent(value.trim()));
               },
             ),
           ),
           SizedBox(height: 20.v),
-          const SectionTitle(title: 'تصنيف مكتبك'),
+          const SectionTitle(title: 'تصنيف المكان/الخدمة'),
           SizedBox(height: 10.v),
-          const BodyText(text: 'حدد التصميم المناسب'),
+          const BodyText(text: 'حدد التصنيف المناسب'),
           SizedBox(height: 15.v),
           BlocBuilder<OfficeBloc, OfficeState>(
             builder: (context, state) {
               return GridView.builder(
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
+                  crossAxisCount: 3,
                   mainAxisSpacing: 10.v,
                   crossAxisSpacing: 8.h,
+                  childAspectRatio: 5/4
                 ),
                 itemCount: state.searchData!.officeCategories.length,
                 itemBuilder: (context, index) {
@@ -105,6 +108,9 @@ class _OfficeFirstInfoStepState extends State<OfficeFirstInfoStep> {
                         value: state.acceptingUserAgreement,
                         activeColor: AppColors.mintTeal,
                         checkColor: AppColors.white,
+                        side: const BorderSide(
+                            color: AppColors.gray
+                        ),
                         onChanged: (value) => context
                             .read<OfficeBloc>()
                             .add(ToggleAccepingUserAgreementEvent()),
@@ -125,35 +131,22 @@ class _OfficeFirstInfoStepState extends State<OfficeFirstInfoStep> {
                               MaktabSnackbar.showError(context, state.message);
                             }
                           },
-                          child: RichText(
-                            text: TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: 'هل انت موافق على ',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                        color: AppColors.slateGray,
-                                      ),
-                                ),
-                                TextSpan(
-                                  text: 'إتفاقية الاستخدام',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall!
-                                      .copyWith(
-                                        color: AppColors.mintTeal,
-                                      ),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      context
-                                          .read<UserBloc>()
-                                          .add(GetUserAgreementEvent());
-                                    },
-                                ),
-                              ],
-                            ),
+                          child: MaktabRichText(
+                            texts: [
+                              MaktabRichTextModel(
+                                text: 'هل انت موافق على ',
+                                color: AppColors.slateGray,
+                              ),
+                              MaktabRichTextModel(
+                                text: 'إتفاقية الاستخدام',
+                                color: AppColors.mintTeal,
+                                onTap: () {
+                                  context
+                                      .read<UserBloc>()
+                                      .add(GetUserAgreementEvent());
+                                }
+                              ),
+                            ],
                           ),
                         ),
                       ),

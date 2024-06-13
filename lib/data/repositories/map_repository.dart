@@ -1,3 +1,4 @@
+
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
@@ -21,6 +22,9 @@ class MapRepository {
       'key': AppConstants.GOOGLE_MAP_API_KEY,
       'language': 'ar',
     });
+
+    log("RESULT getAddressDetails");
+    log(result.toString());
     return result.fold(
       (error) => Left(error),
       (right) async {

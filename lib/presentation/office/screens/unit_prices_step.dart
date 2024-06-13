@@ -118,7 +118,7 @@ class _UnitPricesStepState extends State<UnitPricesStep> {
                   onChanged: (value) {
                     context
                         .read<UnitBloc>()
-                        .add(SetViewerNameEvent(value!.trim()));
+                        .add(SetViewerNameEvent(value.trim()));
                   },
                 ),
                 SizedBox(height: 20.v),
@@ -127,7 +127,7 @@ class _UnitPricesStepState extends State<UnitPricesStep> {
                   onChanged: (value) {
                     context
                         .read<UnitBloc>()
-                        .add(SetViewerPhoneEvent(value!.trim()));
+                        .add(SetViewerPhoneEvent(value.trim()));
                   },
                 ),
               ],

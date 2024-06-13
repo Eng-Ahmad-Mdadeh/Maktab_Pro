@@ -107,7 +107,7 @@ class ContractPrintThirdPageScreen extends StatelessWidget {
         ),
         SizedBox(height: 20.v),
         if(contractModel.contractContent!=''&&contractModel.contractContent!=null)
-        PdfText(contractModel.contractContent.toString().replaceAll('<p>', '')??"",
+        PdfText(contractModel.contractContent.toString().replaceAll('<p>', ''),
             font: font, color: AppColors.black.value, size: 15),
 
 

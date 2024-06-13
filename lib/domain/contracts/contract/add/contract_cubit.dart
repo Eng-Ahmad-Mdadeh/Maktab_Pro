@@ -1,27 +1,29 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
+import 'package:maktab/core/services/service_locator.dart';
+import 'package:maktab/data/repositories/order_repository.dart';
+import 'package:maktab/domain/orders/orders_bloc.dart';
 
 import '../../../../presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/step2/additional_info_widget.dart';
 import '../../../../presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/step2/order_info_widget.dart';
 import '../../../../presentation/widgets/maktab_snack_bar.dart';
 import "../../../../core/extension/date_time_extension.dart";
-import '../../../../core/services/service_locator.dart';
 import '../../../../data/models/contract/contract_model_model.dart';
 import '../../../../data/models/order/order_model.dart';
-import '../../../orders/orders_bloc.dart';
 import '../../contracts_step_cubit.dart';
-import '../contract_bloc.dart';
 import 'contract_state.dart';
 
 class ContractCubit extends Cubit<ContractEntity> {
   late final PageController _controller;
 
-  ContractCubit(ContractStepCubit contractStepCubit) : super(ContractEntity.empty()) {
+  ContractCubit(ContractStepCubit contractStepCubit, this._orderIdFromOrders)
+      : super(ContractEntity.empty()) {
     _controller = PageController(initialPage: 0)
       ..addListener(() {
         final i = _controller.page?.round() ?? 0;
@@ -38,8 +40,11 @@ class ContractCubit extends Cubit<ContractEntity> {
   final GlobalKey<FormState> step3Key = GlobalKey<FormState>();
   final GlobalKey<FormState> step4Key = GlobalKey<FormState>();
 
-  late GoogleMapController _mapController;
   late LatLng _position;
+
+  final int? _orderIdFromOrders;
+
+  int? get orderIdFromOrders => _orderIdFromOrders;
 
   PageController get pageController => _controller;
   bool _step1Completed = false;
@@ -213,7 +218,6 @@ class ContractCubit extends Cubit<ContractEntity> {
 
   void onContractMapCreated(GoogleMapController controller) {
     _position = const LatLng(24.7113719, 46.6744867);
-    _mapController = controller;
   }
 
   void onContractCameraMove(CameraPosition position) {
@@ -295,17 +299,28 @@ class ContractCubit extends Cubit<ContractEntity> {
 
   /// ContractStep2
   /// OrderInfoWidget
-  void setisOrderOn(bool? value) {
+  Future<void> setisOrderOn(bool? value, [int? orderId]) async {
     officeCity.clear();
     officeNeighborhood.clear();
     officeStreet.clear();
-    emit(state.copyWith(
-      isOrderOn: value,
-    ).setNull(
-      officeLatitude: true,
-      officeLongitude: true,
-      orderId: true,
-    ));
+    if (orderId != null) {
+      if((value??false)) {
+        final result = await locator<OrderRepository>().getOrdersWithoutPage();
+        result.fold((l) {}, (orders) {
+          final order = orders.firstWhereOrNull((e) => e.id == orderId);
+          setorder(order);
+        });
+      }
+    }
+    emit(state
+        .copyWith(
+          isOrderOn: value,
+        )
+        .setNull(
+          officeLatitude: true,
+          officeLongitude: true,
+          orderId: true,
+        ));
   }
 
   void setorder(OrderModel? value) {

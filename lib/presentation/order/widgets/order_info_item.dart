@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab/presentation/widgets/maktab_rich_text.dart';
+
+import '../../widgets/section_title.dart';
 
 class OrderInfoItem extends StatelessWidget {
   const OrderInfoItem({
@@ -19,38 +21,28 @@ class OrderInfoItem extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          title,
+        SectionTitle(
+          title: title,
           textAlign: TextAlign.center,
-          softWrap: true,
-          style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                fontWeight: FontWeight.w500,
-                color: AppColors.slateGray,
-              ),
+          textFontWeight: FontWeight.w500,
+          textColor: AppColors.slateGray,
         ),
-        RichText(
-          text: TextSpan(
-            children: [
-              amount != null
-                  ? TextSpan(
-                      text: amount,
-                      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.emeraldTeal,
-                          ),
-                    )
-                  : const WidgetSpan(child: SizedBox.shrink()),
-              WidgetSpan(child: SizedBox(width: 5.h)),
-              TextSpan(
-                text: text,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.black,
-                    ),
+        MaktabRichText(
+          texts: [
+            if (amount != null)
+              MaktabRichTextModel(
+                text: amount!,
+                fontWeight: FontWeight.w500,
+                color: AppColors.emeraldTeal,
               ),
-            ],
-          ),
-        )
+
+            MaktabRichTextModel(
+              text: text,
+              fontWeight: FontWeight.w500,
+              color: AppColors.black,
+            ),
+          ],
+        ),
       ],
     );
   }

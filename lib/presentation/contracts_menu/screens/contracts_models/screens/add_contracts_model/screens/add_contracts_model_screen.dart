@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:go_router/go_router.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
@@ -89,13 +90,17 @@ class AddContractsModelScreen extends StatelessWidget {
                     title: 'اختر الحالة',
                     items: const ['1', '0'],
                     value: '1',
-                    children: const ['Active', 'Deactive'],
+                    children: const ['فعال', 'غير فعال'],
                     onChanged: (value) {
                       _statusController.text = value ?? '';
                     },
                   ),
                   ContractHtmlEditorWidget(
                     _htmlController,
+                    QuillController(
+                      selection: TextSelection.fromPosition(const TextPosition(offset: 1)),
+                      document: Document(),
+                    ),
                     title: "محتوى النموذج",
                     hint: "محتوى النموذج",
                     toolbarType: ToolbarType.nativeExpandable,
@@ -106,7 +111,6 @@ class AddContractsModelScreen extends StatelessWidget {
                     onPressed: () {
                       if (_key.currentState!.validate()) {
                         _htmlController.getText().then((value) {
-                          print(_statusController.text);
                           context.read<ContractModelBloc>().add(CreateContractModels(
                                 name: _nameController.text,
                                 description: _descriptionController.text,

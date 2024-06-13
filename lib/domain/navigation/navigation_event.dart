@@ -8,7 +8,7 @@ sealed class NavigationEvent extends Equatable {
 }
 
 class HomeNavigationEvent extends NavigationEvent{}
-class CalendarNavigationEvent extends NavigationEvent{}
+class AddOfficeNavigationEvent extends NavigationEvent{}
 class OrdersNavigationEvent extends NavigationEvent{}
 class OfficesNavigationEvent extends NavigationEvent{}
 class MoreNavigationEvent extends NavigationEvent{}

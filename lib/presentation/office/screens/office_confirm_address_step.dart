@@ -62,7 +62,7 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                   onChanged: (value) {
                     context
                         .read<OfficeBloc>()
-                        .add(SetCityNameEvent(value!.trim()));
+                        .add(SetCityNameEvent(value.trim()));
                   },
                 ),
                 SizedBox(height: 20.v),
@@ -78,7 +78,7 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                   onChanged: (value) {
                     context
                         .read<OfficeBloc>()
-                        .add(SetNeighborhoodNameEvent(value!.trim()));
+                        .add(SetNeighborhoodNameEvent(value.trim()));
                   },
                 ),
                 SizedBox(height: 20.v),
@@ -94,7 +94,7 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                   onChanged: (value) {
                     context
                         .read<OfficeBloc>()
-                        .add(SetStreetNameEvent(value!.trim()));
+                        .add(SetStreetNameEvent(value.trim()));
                   },
                 ),
                 SizedBox(height: 20.v),
@@ -111,6 +111,7 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                       .officeInterfaces
                       .map((interface) => interface.arName!)
                       .toList(),
+                  fontSize: 17.0,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'الرجاء ادخال الاتجاه';

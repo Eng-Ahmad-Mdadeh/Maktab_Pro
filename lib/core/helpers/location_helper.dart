@@ -24,7 +24,7 @@ class LocationHelper {
       //       'Location permissions are permanently denied, we cannot request permissions.');
       // }
 
-      if (await Connectivity().checkConnectivity() != ConnectivityResult.none) {
+      if (!(await Connectivity().checkConnectivity()).contains(ConnectivityResult.none)) {
         return await Geolocator.getCurrentPosition();
       }
       return null;

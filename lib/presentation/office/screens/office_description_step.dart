@@ -18,10 +18,10 @@ class _OfficeDescriptionStepState extends State<OfficeDescriptionStep> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PageTitle(title: 'وصف المكتب'),
+          const PageTitle(title: 'وصف المكان والخدمة'),
           SizedBox(height: 30.v),
           const BodyText(
-              text: 'أضف وصف مميز لمكتبك و ايش يتوقع الضيف أن يجد فيه'),
+              text: 'أضف وصف مميز للمكان والخدمه و ايش يتوقع الضيف أن يجد فيه'),
           SizedBox(height: 10.v),
           const BodyText(
               text:

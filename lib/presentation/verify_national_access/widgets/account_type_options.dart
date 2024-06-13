@@ -19,9 +19,7 @@ class AccountTypeOptions extends StatelessWidget {
         Expanded(
           child: MaktabButton(
             text: 'هوية وطنية',
-            textStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: AppColors.white,
-                ),
+            color: AppColors.white,
             backgroundColor: type == AccountTypes.identity
                 ? AppColors.mintTeal
                 : AppColors.mintGreen,
@@ -37,9 +35,7 @@ class AccountTypeOptions extends StatelessWidget {
         Expanded(
           child: MaktabButton(
             text: 'إقامة',
-            textStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: AppColors.white,
-                ),
+            color: AppColors.white,
             backgroundColor: type == AccountTypes.residence
                 ? AppColors.mintTeal
                 : AppColors.mintGreen,

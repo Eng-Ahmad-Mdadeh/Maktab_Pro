@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 
+import '../../widgets/body_text.dart';
 import '../../widgets/get_data_cell.dart';
 
 class StatementsTable extends StatelessWidget {
@@ -38,22 +39,22 @@ class StatementsTable extends StatelessWidget {
         columns: const <DataColumn>[
           DataColumn(
             label: Expanded(
-              child: Text(
-                'البيان والتاريخ',
+              child: BodyText(
+                text: 'البيان والتاريخ',
               ),
             ),
           ),
           DataColumn(
             label: Expanded(
-              child: Text(
-                'المبلغ',
+              child: BodyText(
+                text: 'المبلغ',
               ),
             ),
           ),
           DataColumn(
             label: Expanded(
-              child: Text(
-                'الرصيد',
+              child: BodyText(
+                text: 'الرصيد',
               ),
             ),
           ),

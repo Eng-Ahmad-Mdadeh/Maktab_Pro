@@ -60,7 +60,7 @@ class OfficeSubImagesSection extends StatelessWidget {
                             },
                           ),
                         )
-                        .toList(),
+                        ,
                   ],
                 ),
               ],

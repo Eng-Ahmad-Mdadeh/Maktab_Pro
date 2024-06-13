@@ -1,5 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages, must_be_immutable
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
@@ -45,29 +47,13 @@ class LatestOrdersCard extends StatelessWidget {
             SizedBox(height: 10.v),
             context.read<HomeBloc>().state.statistics != null &&
                     context.read<HomeBloc>().state.statistics!.orders.isNotEmpty
-                ? ConstrainedBox(
-                    constraints: BoxConstraints(maxHeight: 350.v),
-                    child: ListView.separated(
-                      primary: false,
-                      shrinkWrap: true,
-                      padding: EdgeInsets.symmetric(vertical: 10.v),
-                      itemBuilder: (context, index) {
-                        order = context
-                            .read<HomeBloc>()
-                            .state
-                            .statistics!
-                            .orders[index];
-                        return OrderListItem(order: order!);
-                      },
-                      separatorBuilder: (context, index) =>
-                          SizedBox(height: 5.v),
-                      itemCount: context
-                          .read<HomeBloc>()
-                          .state
-                          .statistics!
-                          .orders
-                          .length,
-                    ))
+                ? Column(
+                  children:
+                  List.generate(min(5, context.read<HomeBloc>().state.statistics!.orders.length), (index) {
+                    order = context.read<HomeBloc>().state.statistics!.orders[index];
+                    return OrderListItem(order: order!);
+                  },)
+                )
                 : Center(
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 10.v),

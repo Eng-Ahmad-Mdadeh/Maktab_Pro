@@ -22,7 +22,7 @@ class _AccountTypeOptionsState extends State<AccountTypeOptions> {
         const SectionTitle(title: 'نوع الحساب'),
         SizedBox(height: 25.v),
         SizedBox(
-            height: 140.v,
+            height: 100.v,
             child: BlocBuilder<ProfileBloc, ProfileState>(
               builder: (context, state) {
                 if (state.fetchingUserTypes == FetchUserTypes.loading) {
@@ -41,22 +41,21 @@ class _AccountTypeOptionsState extends State<AccountTypeOptions> {
                 }
                 return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 10.h,
-                        mainAxisSpacing: 10.v,
-                        childAspectRatio: 2.3),
-                    itemCount:
-                        state.userTypes != null ? state.userTypes!.length : 0,
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 10.h,
+                      mainAxisSpacing: 10.v,
+                      childAspectRatio: 2.8,
+                    ),
+                    itemCount: state.userTypes != null ? state.userTypes!.length : 0,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return AccountTypeOption(
                         title: state.userTypes![index].arName,
-                        isSelected: state.selectedAccountTypeIndex ==
-                            state.userTypes![index].id,
+                        isSelected: state.selectedAccountTypeIndex == state.userTypes![index].id,
                         onTap: () {
-                          context.read<ProfileBloc>().add(
-                              SelectAccountTypeEvent(
-                                  index: state.userTypes![index].id));
+                          context
+                              .read<ProfileBloc>()
+                              .add(SelectAccountTypeEvent(index: state.userTypes![index].id));
                         },
                       );
                     });

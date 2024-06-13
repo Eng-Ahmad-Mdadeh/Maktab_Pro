@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../../../../../../../core/helpers/size_helper.dart';
-import '../../../../../../../../../../data/models/contract/contract_model.dart';
 import '../../../../../../../../../../domain/contracts/contract/add/contract_cubit.dart';
 import 'additional_info_widget.dart';
 import 'order_info_widget.dart';

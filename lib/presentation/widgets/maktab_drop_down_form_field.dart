@@ -5,6 +5,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 
+import 'body_text.dart';
+
 class MaktabDropDownFormField extends StatelessWidget {
   const MaktabDropDownFormField({
     super.key,
@@ -18,6 +20,7 @@ class MaktabDropDownFormField extends StatelessWidget {
     this.validator,
     this.onChanged,
     this.onSaved,
+    this.fontSize,
   });
 
   final List<String>? idItems;
@@ -27,6 +30,7 @@ class MaktabDropDownFormField extends StatelessWidget {
   final Widget? hint;
   final Color? fillColor;
   final Widget? icon;
+  final double? fontSize;
   final FormFieldValidator<String>? validator;
   final void Function(String?)? onChanged;
   final Function(String?)? onSaved;
@@ -34,7 +38,7 @@ class MaktabDropDownFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField2(
-      value: (initialValue??'').isNotEmpty ? initialValue : null,
+      value: (initialValue ?? '').isNotEmpty ? initialValue : null,
       isDense: true,
       isExpanded: true,
       hint: hint,
@@ -58,17 +62,15 @@ class MaktabDropDownFormField extends StatelessWidget {
               value: idItems != null ? idItems![i] : item,
               child: Align(
                 alignment: Alignment.centerRight,
-                child: Text(
-                  item,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                child: BodyText(
+                  text: item,
+                  fontSize: fontSize,
                 ),
               ),
             ),
           )
           .toList(),
-      decoration: (const InputDecoration())
-          .applyDefaults(Theme.of(context).inputDecorationTheme)
-          .copyWith(
+      decoration: (const InputDecoration()).applyDefaults(Theme.of(context).inputDecorationTheme).copyWith(
             fillColor: fillColor,
           ),
       validator: validator,

@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,17 @@ class OrderInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ContractCubit, ContractEntity>(
+    return BlocConsumer<ContractCubit, ContractEntity>(
+      listener: (context, state) {
+        print("orderrrrrrrrrrrrrrrrrrrr -1");
+        final orderID = context.read<ContractCubit>().orderIdFromOrders;
+        if (orderID != null) {
+          if(!(state.isOrderOn??false)) {
+            print("orderrrrrrrrrrrrrrrrrrrr -2");
+            context.read<ContractCubit>().setisOrderOn(true, orderID);
+          }
+        }
+      },
       builder: (context, state) {
         return Column(
           children: [
@@ -32,21 +43,30 @@ class OrderInfoWidget extends StatelessWidget {
               value: state.isOrderOn ?? false,
             ),
             if (state.isOrderOn ?? false)
-              BlocBuilder<OrdersBloc, OrdersState>(
-                builder: (context, orderState) {
-                  print(orderState);
+              BlocConsumer<OrdersBloc, OrdersState>(
+                listener: (context, orderState) {
+                    print("orderrrrrrrrrrrrrrrrrrrr");
                   if (orderState is OrdersWithoutPaginationSuccess) {
+                    final orderID = context.read<ContractCubit>().orderIdFromOrders;
+
+                  }
+                },
+                builder: (context, orderState) {
+                  print("orderrrrrrrrrrrrrrrrrrrr 2");
+                  if (orderState is OrdersWithoutPaginationSuccess) {
+                    print("orderrrrrrrrrrrrrrrrrrrr 3");
                     return ContractOrderSelectWidget(
                       title: "الرجاء اختيار الطلب",
                       items: orderState.orders,
-                      initialValue: state.orderId,
+                      initialValue:
+                          context.read<ContractCubit>().orderIdFromOrders?.toString() ?? state.orderId,
                       onChanged: context.read<ContractCubit>().setorder,
                     );
                   }
-                  if(orderState is OrdersLoading) {
+                  if (orderState is OrdersLoading) {
                     return const LinearProgressIndicator();
                   }
-                  if(orderState is OrdersFailure) {
+                  if (orderState is OrdersFailure) {
                     return BodyText(text: "لا يمكن التحميل هنالك خطأ: ${orderState.message}");
                   }
                   return const BodyText(text: "لا يمكن التحميل هنالك خطأ");
@@ -66,14 +86,14 @@ class OrderInfoWidget extends StatelessWidget {
                 if (searchDataState is SearchDataSuccess) {
                   return ContractSelectWidget<String>(
                     title: "تجهيز العقار",
-                    value: (state.officeCategoryAqar??'').isEmpty ? null : state.officeCategoryAqar,
+                    value: (state.officeCategoryAqar ?? '').isEmpty ? null : state.officeCategoryAqar,
                     onChanged: context.read<ContractCubit>().setofficeCategoryAqar,
                     // items: const ["المالك", "الوكيل"],
                     children: searchDataState.searchData.officeCategories.map((e) => e.arName).toList(),
                     items: searchDataState.searchData.officeCategories.map((e) => e.enName).toList(),
                   );
                 }
-                if(searchDataState is SearchDataLoading) {
+                if (searchDataState is SearchDataLoading) {
                   return const LinearProgressIndicator();
                 }
                 return const BodyText(text: "لا يمكن التحميل هنالك خطأ");
@@ -85,14 +105,14 @@ class OrderInfoWidget extends StatelessWidget {
                 if (searchDataState is SearchDataSuccess) {
                   return ContractSelectWidget<String>(
                     title: "نوع العقار",
-                    value: (state.officeTypeAqar??'').isEmpty ? null : state.officeTypeAqar,
+                    value: (state.officeTypeAqar ?? '').isEmpty ? null : state.officeTypeAqar,
                     // value: state.officeTypeAqar,
                     onChanged: context.read<ContractCubit>().setofficeTypeAqar,
                     children: searchDataState.searchData.officeTypes.map((e) => e.arName).toList(),
                     items: searchDataState.searchData.officeTypes.map((e) => e.enName).toList(),
                   );
                 }
-                if(searchDataState is SearchDataLoading) {
+                if (searchDataState is SearchDataLoading) {
                   return const LinearProgressIndicator();
                 }
                 return const BodyText(text: "لا يمكن التحميل هنالك خطأ");

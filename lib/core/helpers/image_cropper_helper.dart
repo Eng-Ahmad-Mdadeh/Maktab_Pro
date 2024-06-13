@@ -11,11 +11,10 @@ class ImageCropperHelper {
     try {
       CroppedFile? croppedFile = await imageCropper.cropImage(
         sourcePath: selectedImage,
-        aspectRatioPresets: [
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio3x2,
-          CropAspectRatioPreset.original,
-        ],
+        aspectRatio: const CropAspectRatio(
+          ratioX: 3,
+          ratioY: 2
+        ),
         uiSettings: [
           AndroidUiSettings(
             toolbarTitle: 'قص وحفظ المحدد',

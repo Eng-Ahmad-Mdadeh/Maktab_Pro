@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../core/helpers/size_helper.dart';
 import '../../../../resources/app_colors.dart';
-import '../../../../widgets/text/body_text.dart';
+import '../../../../widgets/body_text.dart';
 
 class ContractTypeMenuWidget extends StatelessWidget {
   final List<String> contractTypesValue;
@@ -46,7 +46,7 @@ class ContractTypeMenuWidget extends StatelessWidget {
           items: List.generate(contractTypesValue.length, (i) {
             return DropdownMenuItem<String>(
               value: contractTypesValue[i],
-              child: BodyText(contractTypesTitle[i]),
+              child: BodyText(text:contractTypesTitle[i]),
             );
           }),
           onChanged: onSelected,

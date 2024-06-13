@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/maktab_button.dart';
+
+import '../../widgets/section_title.dart';
 
 class LicenseRegisterDialog extends StatelessWidget {
   const LicenseRegisterDialog({super.key});
@@ -8,30 +12,35 @@ class LicenseRegisterDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: Text(
+      content: const SectionTitle(
+        title:
         'هل ترغب في التسجيل لدى الهيئة العامة للعقارات للحصول على ترخيص للوساطة العقارية والتسويق',
         textAlign: TextAlign.center,
-        softWrap: true,
-        style: Theme.of(context).textTheme.titleSmall,
       ),
       actionsAlignment: MainAxisAlignment.center,
-      actionsPadding: const EdgeInsets.only(bottom: 20),
+      // actionsPadding: const EdgeInsets.only(bottom: 20),
       actions: [
-        MaktabButton(
-          text: 'أوافق',
-          color: AppColors.emeraldGreen,
-          backgroundColor: AppColors.white,
-          isBordered: true,
-          borderColor: AppColors.emeraldGreen,
-          onPressed: () {},
+        Center(
+          child: MaktabButton(
+            text: 'أوافق',
+            color: AppColors.emeraldGreen,
+            backgroundColor: AppColors.white,
+            isBordered: true,
+            borderColor: AppColors.emeraldGreen,
+            // todo: make sure what the action will be if agree
+            onPressed: context.pop,
+          ),
         ),
-        MaktabButton(
-          text: 'لاحقا',
-          color: AppColors.cherryRed,
-          backgroundColor: AppColors.white,
-          isBordered: true,
-          borderColor: AppColors.cherryRed,
-          onPressed: () {},
+        SizedBox(height: 10.0.v,),
+        Center(
+          child: MaktabButton(
+            text: 'لاحقا',
+            color: AppColors.cherryRed,
+            backgroundColor: AppColors.white,
+            isBordered: true,
+            borderColor: AppColors.cherryRed,
+            onPressed: context.pop,
+          ),
         ),
       ],
     );

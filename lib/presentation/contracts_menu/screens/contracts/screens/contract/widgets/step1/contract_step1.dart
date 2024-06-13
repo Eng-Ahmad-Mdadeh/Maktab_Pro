@@ -4,8 +4,8 @@ import 'package:maktab/core/extension/date_time_extension.dart';
 import '../../../../../../../../../core/helpers/size_helper.dart';
 import '../../../../../../../../../data/models/contract/contract_model.dart';
 import '../../../../../../../resources/app_colors.dart';
-import '../../../../../../../widgets/text/body_text.dart';
-import '../../../../../../../widgets/text/section_title.dart';
+import '../../../../../../../widgets/body_text.dart';
+import '../../../../../../../widgets/section_title.dart';
 
 class ContractStep1 extends StatelessWidget {
   final ContractModel contract;
@@ -39,7 +39,7 @@ class ContractStep1 extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 22.0.h, right: 22.0.h, top: 6.0.v),
             child: const BodyText(
-              "معلومات عامة والحالة الفعلية للعقد",
+              text: "معلومات عامة والحالة الفعلية للعقد",
               fontSize: 14.0,
             ),
           ),
@@ -49,7 +49,7 @@ class ContractStep1 extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 21.0.h, right: 21.0.h, top: 20.0.v),
             child: const BodyText(
-              "تاريخ البدء",
+              text: "تاريخ البدء",
               fontSize: 15.0,
             ),
           ),
@@ -63,7 +63,7 @@ class ContractStep1 extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(left: 21.0.h, right: 21.0.h, top: 28.0.v),
             child: const BodyText(
-              "تاريخ الانتهاء",
+              text: "تاريخ الانتهاء",
               fontSize: 15.0,
             ),
           ),
@@ -90,7 +90,7 @@ class ContractStep1 extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const BodyText(
-                      "مدة العقد",
+                      text: "مدة العقد",
                       fontSize: 15.0,
                     ),
                     SectionTitle(
@@ -104,7 +104,7 @@ class ContractStep1 extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const BodyText(
-                      "دورة سداد الإيجار",
+                      text: "دورة سداد الإيجار",
                       fontSize: 15.0,
                     ),
                     // 'Monthly','Quarterly Yearly','Mid Yearly','Yearly'
@@ -119,7 +119,7 @@ class ContractStep1 extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const BodyText(
-                      "نوع الإيجار",
+                      text: "نوع الإيجار",
                       fontSize: 15.0,
                     ),
                     SectionTitle(
@@ -133,7 +133,7 @@ class ContractStep1 extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const BodyText(
-                      "إجمالي قيمة  العقد",
+                      text: "إجمالي قيمة  العقد",
                       fontSize: 15.0,
                     ),
                     SectionTitle(

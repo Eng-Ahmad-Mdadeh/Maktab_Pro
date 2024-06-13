@@ -6,6 +6,8 @@ import 'package:maktab/domain/profile/profile_bloc.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/maktab_image_view.dart';
 
+import '../../widgets/section_title.dart';
+
 class UploadProfileImageBox extends StatefulWidget {
   const UploadProfileImageBox({super.key});
 
@@ -40,18 +42,14 @@ class _UploadProfileImageBoxState extends State<UploadProfileImageBox> {
                     child: (state.user?.image == null ||
                                 state.user?.image == '') &&
                             state.pickedImage == ''
-                        ? CircleAvatar(
+                        ? const CircleAvatar(
                             radius: 60,
                             backgroundColor: AppColors.white,
                             child: Center(
-                              child: Text(
-                                'إضافة صورة',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall!
-                                    .copyWith(
-                                      color: AppColors.slateGray,
-                                    ),
+                              child: SectionTitle(
+                                title:
+                                'إضافة صورة',textColor: AppColors.slateGray,
+
                               ),
                             ),
                           )
@@ -70,18 +68,16 @@ class _UploadProfileImageBoxState extends State<UploadProfileImageBox> {
                 ),
               ),
               SizedBox(height: 20.v),
-              Text(
-                'رفع صورة الشعار',
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: AppColors.slateGray,
-                    ),
+              const SectionTitle(
+                title:
+                'رفع صورة الشعار',textColor: AppColors.slateGray,
+
               ),
               SizedBox(height: 10.v),
-              Text(
-                'صورة الشعار لا تتجاوز 1MB',
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: AppColors.cherryRed,
-                    ),
+              const SectionTitle(
+                title:
+                'صورة الشعار لا تتجاوز 1MB',textColor: AppColors.cherryRed,
+
               ),
             ],
           ),

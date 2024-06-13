@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,8 +10,8 @@ import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 
 import '../../../domain/contracts/contract/contract_bloc.dart';
 import '../../../domain/notification/notification_bloc.dart';
-import '../../widgets/text/body_text.dart';
-import '../../widgets/text/section_title.dart';
+import '../../widgets/body_text.dart';
+import '../../widgets/section_title.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -23,7 +25,7 @@ class NotificationsScreen extends StatelessWidget {
       body: BlocBuilder<NotificationsBloc, NotificationsState>(
         builder: (context, state) {
           if (state is NotificationsLoading) return const LoadingWidget(1);
-          if (state is NotificationsFailure) return const BodyText("حدث خطأ ما حاول مجدداً");
+          if (state is NotificationsFailure) return const BodyText(text: "حدث خطأ ما حاول مجدداً");
           if (state is NotificationsSuccess) {
             return ListView.separated(
               separatorBuilder: (context, i) {
@@ -47,10 +49,10 @@ class NotificationsScreen extends StatelessWidget {
                       late final int? id;
                       if (url.contains('delete')) {
                         id = int.tryParse(url.split('-').last);
-                        print(id);
+                        log(id.toString());
                       } else {
                         id = int.tryParse(url.split('/').last);
-                        print(url.split('/').last);
+                        log(url.split('/').last);
                       }
                       context.read<ContractBloc>().add(GetContractEvent(id));
                       context.pushNamed(AppRoutes.contractScreen, extra: true);
@@ -59,7 +61,7 @@ class NotificationsScreen extends StatelessWidget {
                   title: SectionTitle(
                     title: notification.arTitle ?? '',
                   ),
-                  subtitle: BodyText(notification.arBody ?? ''),
+                  subtitle: BodyText(text:notification.arBody ?? ''),
                   trailing: IconButton(
                     onPressed: () {},
                     color: AppColors.cherryRed,
@@ -70,7 +72,7 @@ class NotificationsScreen extends StatelessWidget {
               },
             );
           }
-          return const BodyText("لا يوجد شيء لعرضه");
+          return const BodyText(text: "لا يوجد شيء لعرضه");
         },
       ),
     );

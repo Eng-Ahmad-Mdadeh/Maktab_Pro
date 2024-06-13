@@ -15,8 +15,8 @@ import '../../../../../../core/helpers/size_helper.dart';
 import '../../../core/network/api_endpoints.dart';
 import '../../../data/repositories/invoice_repository.dart';
 import '../../resources/app_colors.dart';
-import '../../widgets/text/body_text.dart';
-import '../../widgets/text/section_title.dart';
+import '../../widgets/body_text.dart';
+import '../../widgets/section_title.dart';
 import '../screens/invoice_print_screen.dart';
 
 class InvoiceItemCard extends StatelessWidget {
@@ -45,7 +45,7 @@ class InvoiceItemCard extends StatelessWidget {
             subtitle: Padding(
               padding: const EdgeInsets.only(bottom: 15.0, right: 5),
               child: BodyText(
-                '${"الباقي"}: ${invoice.remainingAmount?.toStringAsNumber('ar')}',
+                text:'${"الباقي"}: ${invoice.remainingAmount?.toStringAsNumber('ar')}',
                 textColor: invoice.remainingAmount == '0' ? AppColors.rustOrange : AppColors.black,
               ),
             ),
@@ -72,7 +72,7 @@ class InvoiceItemCard extends StatelessWidget {
                   height: 3.0,
                 ),
                 BodyText(
-                  invoice.createdAt!.dayFormatWithLocale('ar'),
+                 text: invoice.createdAt!.dayFormatWithLocale('ar'),
                   textColor: AppColors.black,
                   fontSize: 13.0,
                 ),

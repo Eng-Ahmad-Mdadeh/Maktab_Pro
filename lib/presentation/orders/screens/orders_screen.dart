@@ -1,15 +1,16 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/shimmer/shimmer_bloc.dart';
 import 'package:maktab/presentation/orders/widgets/orders_search_box.dart';
 import 'package:maktab/presentation/orders/widgets/orders_list.dart';
 import 'package:maktab/presentation/orders/widgets/orders_states.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/loading_dialog.dart';
+import 'package:maktab/presentation/widgets/loading_widget.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
-import 'package:maktab/presentation/widgets/shimmer_effect.dart';
 
 import '../../../domain/orders/orders_bloc.dart';
 import '../../widgets/maktab_bottom_app_bar.dart';
@@ -30,15 +31,23 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   void initState() {
+    // context.read<OrdersBloc>().add(const GetOrdersEvent(1));
+    // _orderReservationCubit = OrderReservationCubit();
+    // _scrollController.addListener(_scrollListener);
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
     context.read<OrdersBloc>().add(const GetOrdersEvent(1));
     _orderReservationCubit = OrderReservationCubit();
     _scrollController.addListener(_scrollListener);
-    super.initState();
+    super.didChangeDependencies();
   }
 
   void _scrollListener() {
     if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
-      print('Reached the end of the list');
+      log('Reached the end of the list');
       if (!listEndTriggered) {
         context.read<OrdersBloc>().add(GetMoreOrdersEvent(currentPage, lastPage));
         listEndTriggered = true;
@@ -79,16 +88,16 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     }
                   },
                   builder: (context, state) {
-                    if (state is OrdersLoading)
-                      return const Center(
-                        child: LoadingDialog(),
-                      );
-                    if (state is OrdersFailure)
+                    if (state is OrdersLoading) {
+                      return const LoadingWidget(0);
+                    }
+                    if (state is OrdersFailure) {
                       return const Center(
                         child: BodyText(
                           text: "Error",
                         ),
                       );
+                    }
                     if (state is OrdersSuccess) {
                       lastPage = state.orders.firstOrNull?.lastPage ?? 1;
                       currentPage = state.currentPage;

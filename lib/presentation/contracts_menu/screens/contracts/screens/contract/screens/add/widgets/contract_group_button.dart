@@ -4,7 +4,7 @@ import 'package:maktab/core/helpers/size_helper.dart';
 
 import '../../../../../../../../resources/app_colors.dart';
 import '../../../../../../../../widgets/maktab_button.dart';
-import '../../../../../../../../widgets/text/body_text.dart';
+import '../../../../../../../../widgets/body_text.dart';
 import 'contract_input_widget.dart';
 
 class ContractGroupButton<T extends Enum> extends StatelessWidget {
@@ -34,7 +34,7 @@ class ContractGroupButton<T extends Enum> extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          BodyText(title),
+          BodyText(text: title),
           SizedBox(
             height: 7.0.v,
           ),
@@ -49,7 +49,7 @@ class ContractGroupButton<T extends Enum> extends StatelessWidget {
                       backgroundColor: value == e ? AppColors.mintGreen : AppColors.white,
                       color: value == e ? AppColors.white : AppColors.black,
                       bold: false,
-                      fontSize: 19.0,
+                      fontSize: 15.0,
                       shadow: BoxShadow(
                         color: AppColors.black.withOpacity(0.1),
                         spreadRadius: 3,

@@ -34,12 +34,10 @@ class OfficePriceBox extends StatelessWidget {
             ),
             SizedBox(width: 10.h),
             Expanded(
-              child: Text(
-                DateFormatterHelper.getFormated(office.createdAt),
-                softWrap: true,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: AppColors.slateGray,
-                    ),
+              child: SectionTitle(
+                title:
+                DateFormatterHelper.getFormated(office.createdAt),textColor: AppColors.slateGray,
+
               ),
             ),
           ],

@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 
+import 'section_title.dart';
+
 class MaktabSnackbar {
   static void showSuccess(BuildContext context, String message) {
     _showSnackbar(context, message, AppColors.emeraldTeal);
@@ -24,13 +26,11 @@ class MaktabSnackbar {
         duration: const Duration(seconds: 3),
         content: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Text(
+          child: SectionTitle(
+            title:
             message,
-            textAlign: TextAlign.center,
-            style: Theme.of(context)
-                .textTheme
-                .titleSmall!
-                .copyWith(color: AppColors.white),
+            textAlign: TextAlign.center,textColor: AppColors.white
+
           ),
         ),
       ),

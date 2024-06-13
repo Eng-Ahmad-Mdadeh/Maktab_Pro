@@ -4,6 +4,8 @@ import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/data/models/financial_transactions/financial_transfer.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
+import 'package:maktab/presentation/widgets/maktab_rich_text.dart';
+import 'package:maktab/presentation/widgets/section_title.dart';
 
 class FinancialTransferListItem extends StatelessWidget {
   const FinancialTransferListItem({super.key, required this.transfer});
@@ -25,9 +27,25 @@ class FinancialTransferListItem extends StatelessWidget {
         title: Row(
           children: [
             Expanded(
-              child: BodyText(
-                text: '#${transfer.id}',
+              child: SectionTitle(
+                title: '#${transfer.id}',
                 textColor: AppColors.lightBlack,
+              ),
+            ),
+            Expanded(
+              child: MaktabRichText(
+                texts: [
+                  MaktabRichTextModel(
+                    text: transfer.netAmountTransferred,
+                    color: AppColors.mintGreen,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  MaktabRichTextModel(
+                    text: ' ريال',
+                    color: AppColors.lightBlack,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ],
               ),
             ),
             Expanded(

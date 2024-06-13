@@ -8,7 +8,6 @@ import 'package:maktab/core/network/api_endpoints.dart';
 import 'package:maktab/core/services/service_locator.dart';
 import 'package:maktab/data/data_sources/local/user_local_data_source.dart';
 
-import '../classes/exception/app_exception.dart';
 
 class NetworkHelper {
   late Dio _dio;
@@ -36,9 +35,9 @@ class NetworkHelper {
 
   Dio get dio => _dio;
 
-  Future<dynamic> get(String url, {Map<String, dynamic>? queryParams}) async {
+  Future<dynamic> get(String url, {Map<String, dynamic>? queryParams, bool googleApi = false}) async {
     String? token = await getToken();
-    return _performRequest(() => _dio.get(
+    return _performRequest(googleApi: googleApi,() => _dio.get(
           url,
           queryParameters: queryParams,
           options: Options(headers: {'Authorization': 'Bearer $token'}),
@@ -92,17 +91,17 @@ class NetworkHelper {
         ));
   }
 
-  Future<Either<Exception, dynamic>> _performRequest(
-      Future<Response> Function() request) async {
+  Future<Either<Exception, dynamic>> _performRequest(Future<Response> Function() request, {bool googleApi = false}) async {
     if (!(await Connectivity().checkConnectivity()).contains(ConnectivityResult.none)) {
       try {
         Response response = await request();
         log("RESPONSE RESULT");
         log(response.data.toString());
-        if(response.data['status']) {
+        if(googleApi) return Right(response.data);
+        if((bool.tryParse(response.data['status'].toString())??false)) {
           return Right(response.data);
         }else{
-          return Left(_handleError(response.data['errNum'], response.data['message']));
+          return Left(_handleError(response.data['errNum']??0, response.data['message']??''));
         }
       } catch (e) {
         // print("eeeeeeeeee: $e");
@@ -110,7 +109,8 @@ class NetworkHelper {
         if(e is DioException){
           return Left(_handleError(e.response?.statusCode, e.message));
         }
-        return Left(ApiException('أعد المحاولة'));
+        rethrow;
+        // return Left(ApiException('أعد المحاولة'));
       }
     } else {
       return Left(NoInternetConnectionException());

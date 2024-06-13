@@ -4,7 +4,7 @@ import 'package:maktab/core/helpers/size_helper.dart';
 
 import '../../../../../../../../../data/models/order/order_model.dart';
 import '../../../../../../../../widgets/maktab_drop_down_form_field.dart';
-import '../../../../../../../../widgets/text/body_text.dart';
+import '../../../../../../../../widgets/body_text.dart';
 
 class ContractOrderSelectWidget extends StatelessWidget {
   final String title;
@@ -33,7 +33,7 @@ class ContractOrderSelectWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           BodyText(
-            title,
+            text: title,
             fontSize: 15.0,
           ),
           MaktabDropDownFormField(
