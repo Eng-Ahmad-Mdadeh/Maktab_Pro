@@ -36,7 +36,7 @@ class UnitServicesServicesList extends StatelessWidget {
                     onTap: () {
                       context
                           .read<UnitBloc>()
-                          .add(SelectServiceEvent(service!.id));
+                          .add(SelectServiceEvent(service!.id!));
                     },
                   );
                 },

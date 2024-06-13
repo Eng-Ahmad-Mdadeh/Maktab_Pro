@@ -1,7 +1,5 @@
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:maktab/core/classes/exception/app_exception.dart';
 import 'package:maktab/core/classes/exception/data_exceptions.dart';
 import 'package:maktab/data/data_sources/remote/coupon_remote_data_source.dart';
@@ -21,8 +19,7 @@ class CouponRepository {
       (error) => Left(error),
       (right) {
         try {
-          final List<Office> coupons = List<Office>.from(
-              right.data.map((coupon) => Office.fromJson(coupon)));
+          final List<Office> coupons = List<Office>.from(right.data.map((coupon) => Office.fromJson(coupon)));
           return Right(coupons);
         } catch (e) {
           return Left(ConversionException(e.toString()));
@@ -70,18 +67,16 @@ class CouponRepository {
           status: status,
           officeId: officeId,
           prices: prices);
-      log(offerModelData.toString());
+      // log(offerModelData.toString());
       final result = await _remoteDataSource.createCoupon(offerModelData);
       return result.fold(
         (error) => Left(error),
         (right) {
-
-            if (right.status) {
-              return const Right('تمت اضافة الكوبون بنجاح');
-            } else {
-              return Left(AppException(right.message));
-            }
-
+          if (right.status) {
+            return const Right('تمت اضافة الكوبون بنجاح');
+          } else {
+            return Left(AppException(right.message ?? 'Unknown error'));
+          }
         },
       );
     } catch (e) {
@@ -105,32 +100,28 @@ class CouponRepository {
   }) async {
     try {
       final offerModelData = _createCouponDataMap(
-          name: name,
-          isUpdate: true,
-          code: code,
-          numberUsed: numberUsed,
-          discount: discount,
-          discountType: discountType,
-          startDate: startDate,
-          endDate: endDate,
-          status: status,
-          mainPrices: mainPrices,
-          officeId: officeId,
-          prices: prices,
+        name: name,
+        isUpdate: true,
+        code: code,
+        numberUsed: numberUsed,
+        discount: discount,
+        discountType: discountType,
+        startDate: startDate,
+        endDate: endDate,
+        status: status,
+        mainPrices: mainPrices,
+        officeId: officeId,
+        prices: prices,
       );
-      final result =
-          await _remoteDataSource.updateCoupon(couponId, offerModelData);
+      final result = await _remoteDataSource.updateCoupon(couponId, offerModelData);
       return result.fold(
         (error) => Left(error),
         (right) {
-
-          if(right.status){
+          if (right.status) {
             return const Right('تم اضافة كود الخصم بنجاج');
-          }else{
-            return Left(AppException(right.message));
+          } else {
+            return Left(AppException(right.message ?? 'Unknown error'));
           }
-
-
         },
       );
     } catch (e) {
@@ -144,10 +135,8 @@ class CouponRepository {
     required List<OfficePrice> prices,
   }) async {
     try {
-      final couponData =
-          _createOfficePricesDataMap(officeId: officeId, prices: prices);
-      final result =
-          await _remoteDataSource.setOfficePrices(couponId, couponData);
+      final couponData = _createOfficePricesDataMap(officeId: officeId, prices: prices);
+      final result = await _remoteDataSource.setOfficePrices(couponId, couponData);
       return result.fold(
         (error) => Left(error),
         (right) {
@@ -180,7 +169,7 @@ class CouponRepository {
   }
 
   Future<Either<AppException, void>> deleteCoupon(couponId) async {
-    log(couponId.toString());
+    // log(couponId.toString());
     final result = await _remoteDataSource.deleteCoupon(couponId);
     return result.fold(
       (error) => Left(error),
@@ -194,10 +183,9 @@ class CouponRepository {
     );
   }
 
-  Future<Either<AppException, void>> deleteCouponByOfficePrice(
-      couponId, officeId, priceId) async {
-    final result = await _remoteDataSource.deleteByOfficePrice(
-        couponId, {"ads_price_id": priceId, "ads_id": officeId});
+  Future<Either<AppException, void>> deleteCouponByOfficePrice(couponId, officeId, priceId) async {
+    final result =
+        await _remoteDataSource.deleteByOfficePrice(couponId, {"ads_price_id": priceId, "ads_id": officeId});
     return result.fold(
       (error) => Left(error),
       (right) {
@@ -220,9 +208,9 @@ class CouponRepository {
     required DateTime endDate,
     required String status,
     required int officeId,
-     bool isUpdate=false,
+    bool isUpdate = false,
     required List<int> prices,
-    List<int> mainPrices=const[],
+    List<int> mainPrices = const [],
   }) {
     Map<String, dynamic> offerMap = {};
     offerMap.addAll({
@@ -237,18 +225,16 @@ class CouponRepository {
       'ads_id': officeId,
     });
     for (int i = 0; i < prices.length; i++) {
-      if(isUpdate){
+      if (isUpdate) {
         offerMap.addAll({
           'ads_prices[$i][id]': prices[i],
         });
       }
-        offerMap.addAll({
-          'ads_prices[$i][ads_price_id]':isUpdate?mainPrices[i]: prices[i],
-        });
-
-
+      offerMap.addAll({
+        'ads_prices[$i][ads_price_id]': isUpdate ? mainPrices[i] : prices[i],
+      });
     }
-    log(offerMap.toString());
+    // log(offerMap.toString());
     return offerMap;
   }
 
@@ -261,9 +247,7 @@ class CouponRepository {
       'ads_id': officeId,
     });
     for (int i = 0; i < prices.length; i++) {
-      offerMap.addAll({
-        'prices[$i][ads_price_id]': 52
-      });
+      offerMap.addAll({'prices[$i][ads_price_id]': 52});
     }
     return offerMap;
   }

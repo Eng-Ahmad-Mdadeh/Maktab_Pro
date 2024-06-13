@@ -8,10 +8,12 @@ class OrderSelectionButton extends StatelessWidget {
     super.key,
     required this.title,
     required this.isSelected,
+    required this.onSelected,
   });
 
   final String title;
   final bool isSelected;
+  final void Function() onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +21,12 @@ class OrderSelectionButton extends StatelessWidget {
       text: title,
       width: 100.h,
       padding: EdgeInsets.zero,
-      textStyle: Theme.of(context)
-          .textTheme
-          .bodyLarge!
-          .copyWith(fontWeight: FontWeight.w700, color: AppColors.steelBlue),
+      fontWeight: FontWeight.w700,
+      color: AppColors.steelBlue,
       backgroundColor: AppColors.softAsh,
       isBordered: isSelected ? true : false,
       borderColor: isSelected ? AppColors.skyBlue : AppColors.black,
-      onPressed: () {},
+      onPressed: onSelected,
     );
   }
 }

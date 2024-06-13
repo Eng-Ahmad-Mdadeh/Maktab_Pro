@@ -1,15 +1,15 @@
-class OfficeLocation {
-  int id;
-  num lat;
-  num lng;
-  num zoom;
-  String address;
-  String city;
-  String neighborhood;
-  String street;
+import 'package:equatable/equatable.dart';
 
-  OfficeLocation({
-    required this.id,
+class OfficeLocation extends Equatable{
+   final double lat;
+   final double lng;
+   final double zoom;
+   final String address;
+   final String city;
+   final String neighborhood;
+   final String street;
+
+  const OfficeLocation({
     required this.lat,
     required this.lng,
     required this.zoom,
@@ -19,16 +19,17 @@ class OfficeLocation {
     required this.street,
   });
 
-  factory OfficeLocation.fromJson(Map<String, dynamic> json) => OfficeLocation(
-        id: json["id"],
-        lat: num.parse(json["lat"].toString()),
-        lng: num.parse(json["lng"].toString()),
-        zoom: num.parse(json["zoom"].toString()),
+  factory OfficeLocation.fromJson(Map<String, dynamic> json) {
+    return OfficeLocation(
+        lat: double.parse(json["lat"].toString()),
+        lng: double.parse(json["lng"].toString()),
+        zoom: double.parse(json["zoom"].toString()),
         address: json["address"] ?? '',
         city: json["city"] ?? '',
         neighborhood: json["neighborhood"] ?? '',
         street: json["street"] ?? '',
       );
+  }
 
   Map<String, dynamic> toJson() => {
         "lat": lat,
@@ -39,4 +40,15 @@ class OfficeLocation {
         "neighborhood": neighborhood,
         "street": street,
       };
+
+  @override
+  List<Object?> get props => [
+    lat,
+    lng,
+    zoom,
+    address,
+    city,
+    neighborhood,
+    street,
+  ];
 }

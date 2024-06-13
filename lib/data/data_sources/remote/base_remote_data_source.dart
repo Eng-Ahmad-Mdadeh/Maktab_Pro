@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:maktab/core/classes/exception/app_exception.dart';
 import 'package:maktab/core/network/network_helper.dart';
+import '../../../core/classes/exception/api_exceptions.dart';
 import '../../models/response/response_model.dart' as r;
 
 class BaseRemoteDataSource<T> {
@@ -11,23 +12,22 @@ class BaseRemoteDataSource<T> {
 
   BaseRemoteDataSource(this.baseEndpoint);
 
-  Future<Either<AppException, r.Response>> fetchAllData() async {
+  Future<Either<ApiException, r.Response>> fetchAllData([int? page]) async {
     try {
-      final Either response = await _networkHelper.get(baseEndpoint);
+      final Either response = await _networkHelper.get('$baseEndpoint${page != null ? '?page=$page' : ''}');
       return response.fold(
         (error) => Left(error),
         (right) {
           return Right(r.Response.fromJson(right));
         },
       );
-    } on AppException catch (e) {
+    } on ApiException catch (e) {
       return Left(e);
     }
   }
 
-  Future<Either<AppException, r.Response>> fetchData(
-      {required String endpoint, Map<String, dynamic>? data}) async {
-    log(baseEndpoint+endpoint);
+  Future<Either<AppException, r.Response>> fetchData({required String endpoint, Map<String, dynamic>? data}) async {
+    log(baseEndpoint + endpoint);
     try {
       final Either response = await _networkHelper.get(
         baseEndpoint + endpoint,
@@ -41,10 +41,12 @@ class BaseRemoteDataSource<T> {
       );
     } on AppException catch (e) {
       return Left(e);
+    }catch(e){
+      rethrow;
     }
   }
 
-  Future<Either<AppException, r.Response>> fetchDataWithId(id) async {
+  Future<Either<ApiException, r.Response>> fetchDataWithId(id) async {
     try {
       final Either response = await _networkHelper.get('$baseEndpoint/$id');
       return response.fold(
@@ -53,34 +55,30 @@ class BaseRemoteDataSource<T> {
           return Right(r.Response.fromJson(right));
         },
       );
-    } on AppException catch (e) {
+    } on ApiException catch (e) {
       return Left(e);
     }
   }
 
-  Future<Either<AppException, r.Response>> postData(
-      {String endpoint = '', data, files}) async {
-    print(baseEndpoint + endpoint);
+  Future<Either<ApiException, r.Response>> postData({String endpoint = '', data, List<Map<String, dynamic>>? files}) async {
+    log(baseEndpoint + endpoint);
     try {
-      final Either response = await _networkHelper.post(baseEndpoint + endpoint,
-          data: data, files: files);
+      final Either response = await _networkHelper.post(baseEndpoint + endpoint, data: data, files: files);
       return response.fold(
         (error) => Left(error),
         (right) {
           return Right(r.Response.fromJson(right));
         },
       );
-    } on AppException catch (e) {
+    } on ApiException catch (e) {
       return Left(e);
     }
   }
 
-  Future<Either<AppException, r.Response>> deleteData(
-      {String endpoint = '', data}) async {
+  Future<Either<AppException, r.Response>> deleteData({String endpoint = '', data}) async {
     try {
-      print(baseEndpoint + endpoint);
-      final Either response =
-          await _networkHelper.delete(baseEndpoint + endpoint, data: data);
+      log(baseEndpoint + endpoint);
+      final Either response = await _networkHelper.delete(baseEndpoint + endpoint, data: data);
       return response.fold(
         (error) => Left(error),
         (right) {

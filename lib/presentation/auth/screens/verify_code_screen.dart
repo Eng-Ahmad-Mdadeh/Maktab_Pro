@@ -1,5 +1,7 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member, depend_on_referenced_packages, use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -12,14 +14,14 @@ import 'package:maktab/domain/offices/offices_cubit.dart';
 import 'package:maktab/domain/receiving_method/receiving_method_bloc.dart';
 import 'package:maktab/presentation/auth/widgets/code_text_field.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/loading_dialog.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
-import 'package:maktab/presentation/widgets/page_title.dart';
 
 import '../../../domain/profile/profile_bloc.dart';
+import '../../widgets/loading_widget.dart';
+import '../../widgets/retry_widget.dart';
+import '../../widgets/section_title.dart';
 
 class VerifyCodeScreen extends StatefulWidget {
   const VerifyCodeScreen({super.key});
@@ -31,20 +33,38 @@ class VerifyCodeScreen extends StatefulWidget {
 class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   final TextEditingController _codeController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  //Timer? timer;
-  int remainingSeconds = 120;
+
+  late Timer _resendCodeTimer;
+  int _timerDurationInSeconds = 120; // 2 minutes
+  late StreamController<int> _timerController;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<AuthBloc>().startTimer();
-    });
-
+    startResendCodeTimer();
     super.initState();
+  }
+
+  String _formatTime(int time) {
+    return time < 10 ? '0$time' : '$time';
+  }
+
+  void startResendCodeTimer() {
+    _timerController = StreamController<int>();
+    _resendCodeTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_timerDurationInSeconds > 0) {
+        _timerDurationInSeconds--;
+        _timerController.add(_timerDurationInSeconds);
+      } else {
+        timer.cancel();
+        _timerDurationInSeconds = 120;
+      }
+    });
   }
 
   @override
   void dispose() {
+    _resendCodeTimer.cancel();
+    _timerController.close();
     super.dispose();
   }
 
@@ -52,7 +72,6 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) async {
-        print(state);
         if (state.loginState == LoginStates.failure) {
           MaktabSnackbar.showError(context, state.message);
         } else if (state.loginState == LoginStates.reLoading) {
@@ -70,6 +89,24 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           LoadingDialog.hide(context);
           MaktabSnackbar.showSuccess(context, state.message);
           context.read<AuthBloc>().add(CheckProfileEvent());
+
+          context.read<ReceivingMethodBloc>().add(GetReceivingMoneyMethodEvent());
+          context.read<OfficesCubit>().getIncompleteOffices();
+          await context
+              .read<OfficesCubit>()
+              .stream
+              .firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading)
+              .then((e) {
+            context.read<HomeBloc>().add(GetStatisticsEvent());
+            context
+                .read<HomeBloc>()
+                .stream
+                .firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading)
+                .then((e) {
+              // context.pushReplacement(AppRoutes.homeScreen);
+            });
+          });
+
         } else if (state.codeState == CodeStates.failure) {
           LoadingDialog.hide(context);
           MaktabSnackbar.showError(context, state.message);
@@ -80,18 +117,23 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           locator<ProfileBloc>().add(GetUserTypes());
           context.pushNamed(AppRoutes.editProfileScreen, extra: true);
         } else if (state.profileCompleteness == ProfileCompleteness.complete) {
-          Navigator.popUntil(context, (route) => route.isFirst);
-          context.pushReplacementNamed(AppRoutes.homeScreen);
-          context
-              .read<ReceivingMethodBloc>()
-              .add(GetReceivingMoneyMethodEvent());
+          context.read<ReceivingMethodBloc>().add(GetReceivingMoneyMethodEvent());
           context.read<OfficesCubit>().getIncompleteUnits();
-          await context.read<OfficesCubit>().stream.firstWhere((state) =>
-              state.incompleteUnitsApiCallState != OfficesApiCallState.loading);
-          context.read<HomeBloc>().add(GetStatisticsEvent());
-          await context.read<HomeBloc>().stream.firstWhere(
-              (state) => state.homeApiCallState != HomeApiCallState.loading);
-
+          context
+              .read<OfficesCubit>()
+              .stream
+              .firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading)
+              .then((e) {
+            context.read<HomeBloc>().add(GetStatisticsEvent());
+            context
+                .read<HomeBloc>()
+                .stream
+                .firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading)
+                .then((e) {
+              Navigator.popUntil(context, (route) => route.isFirst);
+              context.pushReplacementNamed(AppRoutes.homeScreen);
+            });
+          });
         } else if (state.profileCompleteness == ProfileCompleteness.unknown) {
           Navigator.popUntil(context, (route) => route.isFirst);
           context.pushReplacementNamed(AppRoutes.splashScreen);
@@ -99,50 +141,113 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       },
       builder: (context, state) {
         return Scaffold(
-          appBar: const MaktabAppBar(title: 'التحقق من رقم الموبايل'),
+          appBar: const MaktabAppBar(
+            title: 'التحقق من رقم الموبايل',
+          ),
           body: SafeArea(
             child: SingleChildScrollView(
               child: Container(
                 width: SizeHelper.width,
                 padding: EdgeInsets.symmetric(horizontal: 25.h),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: 30.v),
-                    const PageTitle(title: 'أدخل رقم رمز التحقق'),
-                    SizedBox(height: 20.v),
-                    const BodyText(
-                      text:
-                          'الرجاء إدخال رمز التحقق المكون من 4 أرقام المرسل إليك.',
+                    SizedBox(height: 100.v),
+                    SectionTitle(
+                      title: "يرجى ادخال رمز التحقق المرسل على هاتفك",
+                      textColor: AppColors.black.withOpacity(.5),
+                      overflow: TextOverflow.visible,
+                      fontSize: 19,
+                    ),
+                    SectionTitle(
+                      title: '0${state.phone}',
+                      fontSize: 26,
                     ),
                     SizedBox(height: 40.v),
                     Form(
                       key: _formKey,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CodeTextField(controller: _codeController),
-                          SizedBox(height: 40.v),
-                          MaktabButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                context.read<AuthBloc>().add(
-                                      CheckCodeEvent(
-                                        _codeController.text,
-                                        context.read<AuthBloc>().state.phone,
-                                      ),
-                                    );
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 10.0.h),
+                            child: CodeTextField(
+                              controller: _codeController,
+
+                              onCompleted: (value) {
+                                if (_formKey.currentState!.validate()) {
+                                  context.read<AuthBloc>().add(
+                                        CheckCodeEvent(
+                                          _codeController.text,
+                                          state.phone,
+                                        ),
+                                      );
+                                }
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: 40.v,
+                          ),
+                          StreamBuilder<int>(
+                            stream: _timerController.stream,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                int minutes = snapshot.data! ~/ 60;
+                                int seconds = snapshot.data! % 60;
+                                bool isYellow = snapshot.data! < 60;
+
+                                return state.codeState == CodeStates.loading
+                                    ? const LoadingWidget(0)
+                                    : Column(
+                                        children: [
+                                          if ((snapshot.data ?? 0) <= 0)
+                                            RetryWidget(
+                                              showText: false,
+                                              iconColor: AppColors.black,
+                                              onReload: () {
+                                                if (_timerDurationInSeconds == 120) {
+                                                  context.read<AuthBloc>().add(LoginEvent(
+                                                        state.phone,
+                                                      ));
+                                                  startResendCodeTimer();
+                                                }
+                                              },
+                                            )
+                                          else
+                                            SectionTitle(
+                                              title: isYellow
+                                                  ? '${_formatTime(minutes)}:${_formatTime(seconds)}'
+                                                  : '${_formatTime(minutes)}:${_formatTime(seconds)}',
+                                              textColor: isYellow ? AppColors.cherryRed : AppColors.mintGreen,
+                                              fontSize: 26.0,
+                                            ),
+                                          InkWell(
+                                            onTap: snapshot.data == 0
+                                                ? () {
+                                                    if (_timerDurationInSeconds == 120) {
+                                                      context.read<AuthBloc>().add(LoginEvent(
+                                                            state.phone,
+                                                          ));
+                                                      startResendCodeTimer();
+                                                    }
+                                                  }
+                                                : null,
+                                            child: SectionTitle(
+                                              title: "ارسال رمز جديد",
+                                              textAlign: TextAlign.right,
+                                              textColor:
+                                                  snapshot.data == 0 ? AppColors.black : AppColors.softAsh,
+                                              fontSize: 19.0,
+                                            ),
+                                          ),
+                                        ],
+                                      );
+                              } else {
+                                return const SizedBox();
                               }
                             },
-                            backgroundColor: AppColors.lightCyan,
-                            color: AppColors.white,
-                            text: 'التحقق',
-                          ),
-                          SizedBox(height: 30.v),
-                          BodyText(
-                            text: state.duration ~/ 60 > 0
-                                ? "سيتم اعادة ارسال الكود بعد \n${state.duration ~/ 60}:${state.duration % 60} دقيقة"
-                                : "سيتم اعادة ارسال الكود بعد \n${state.duration ~/ 60}:${state.duration % 60} ثانية",
-                            textAlign: TextAlign.center,
                           ),
                         ],
                       ),

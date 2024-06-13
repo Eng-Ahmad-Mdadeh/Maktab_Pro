@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab/presentation/widgets/maktab_rich_text.dart';
+
+import '../../widgets/section_title.dart';
 
 class StatementTotalSection extends StatelessWidget {
   const StatementTotalSection({super.key, required this.total});
@@ -16,33 +19,23 @@ class StatementTotalSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            'اجمالي كشوف الحساب',
-            softWrap: true,
-            style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                  color: AppColors.slateGray,
-                ),
+          const SectionTitle(
+            title: 'اجمالي كشوف الحساب',
+            textColor: AppColors.slateGray,
           ),
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: total,
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.emeraldTeal,
-                      ),
-                ),
-                WidgetSpan(child: SizedBox(width: 5.h)),
-                TextSpan(
-                  text: 'ريال',
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.black,
-                      ),
-                ),
-              ],
-            ),
+          MaktabRichText(
+            texts: [
+              MaktabRichTextModel(
+                text: total,
+                fontWeight: FontWeight.w500,
+                color: AppColors.emeraldTeal,
+              ),
+              MaktabRichTextModel(
+                text: 'ريال',
+                fontWeight: FontWeight.w500,
+                color: AppColors.black,
+              ),
+            ],
           ),
         ],
       ),

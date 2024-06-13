@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/data/models/office/office_model.dart';
-import 'package:maktab/data/models/office/office_type_model.dart';
+import 'package:maktab/data/models/type_aquar/type_aquar_model.dart';
 import 'package:maktab/domain/offices/offices_cubit.dart';
 import 'package:maktab/domain/unit/unit_bloc.dart';
 import 'package:maktab/presentation/office/widgets/space_text_field.dart';
@@ -31,7 +31,7 @@ class UpdateUnitInfoScreen extends StatefulWidget {
 class _UpdateUnitInfoScreenState extends State<UpdateUnitInfoScreen> {
   late TextEditingController _unitNameController;
   late TextEditingController _unitSpaceController;
-  late OfficeType? type;
+  late TypeAquar? type;
   late GlobalKey<FormState> _formKey;
 
   @override
@@ -44,7 +44,7 @@ class _UpdateUnitInfoScreenState extends State<UpdateUnitInfoScreen> {
         .state
         .searchData!
         .officeTypes
-        .firstWhereOrNull((type) => type.id == widget.unit.typeAqarId);
+        .firstWhereOrNull((type) => type.id.toString() == widget.unit.typeAqarId);
     _formKey = GlobalKey<FormState>();
     super.initState();
   }
@@ -104,7 +104,7 @@ class _UpdateUnitInfoScreenState extends State<UpdateUnitInfoScreen> {
                                     onChanged: (value) {
                                       context
                                           .read<UnitBloc>()
-                                          .add(SetUnitNameEvent(value!.trim()));
+                                          .add(SetUnitNameEvent(value.trim()));
                                     },
                                   ),
                                   SizedBox(height: 20.v),

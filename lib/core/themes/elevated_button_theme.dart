@@ -6,12 +6,12 @@ import 'package:maktab/presentation/resources/app_colors.dart';
 
 ElevatedButtonThemeData elevatedButtonTheme = ElevatedButtonThemeData(
   style: ButtonStyle(
-    elevation: const MaterialStatePropertyAll(0),
-    backgroundColor: const MaterialStatePropertyAll<Color>(AppColors.mintTeal),
-    shape: const MaterialStatePropertyAll<RoundedRectangleBorder>(
+    elevation: const WidgetStatePropertyAll(0),
+    backgroundColor: const WidgetStatePropertyAll<Color>(AppColors.mintTeal),
+    shape: const WidgetStatePropertyAll<RoundedRectangleBorder>(
       RoundedRectangleBorder(),
     ),
-    minimumSize: MaterialStatePropertyAll<Size>(
+    minimumSize: WidgetStatePropertyAll<Size>(
       Size(double.infinity, 60.v),
     ),
   ),

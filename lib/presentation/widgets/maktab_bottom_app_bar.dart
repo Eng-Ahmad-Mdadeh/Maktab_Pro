@@ -1,137 +1,160 @@
-// ignore_for_file: depend_on_referenced_packages
-
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/router/app_routes.dart';
-import 'package:maktab/domain/navigation/navigation_cubit.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
 
-class MaktabBottomAppBar extends StatefulWidget {
-  const MaktabBottomAppBar({super.key});
+import '../../core/helpers/size_helper.dart';
+import '../../core/router/app_routes.dart';
+import '../../domain/navigation/navigation_bloc.dart';
+import '../../domain/navigation/navigation_state.dart';
+import '../resources/app_colors.dart';
+import 'body_text.dart';
+import 'maktab_button.dart';
+import 'nav_item.dart';
 
-  @override
-  State<MaktabBottomAppBar> createState() => _MaktabBottomAppBarState();
-}
-
-class _MaktabBottomAppBarState extends State<MaktabBottomAppBar> {
-  @override
-  Widget build(BuildContext context) {
-    return BottomAppBar(
-      shape: const CircularNotchedRectangle(),
-      color: AppColors.white,
-      child: SizedBox(
-        height: 80.0.v,
-        child: const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            NavItem(
-              index: 0,
-              icon: FontAwesomeIcons.house,
-              label: 'الرئيسية',
-            ),
-            NavItem(
-              index: 1,
-              icon: FontAwesomeIcons.calendarDays,
-              label: 'التقويم',
-            ),
-            NavItem(
-              index: 2,
-              icon: FontAwesomeIcons.list,
-              label: 'الطلبات',
-            ),
-            NavItem(
-              index: 3,
-              icon: FontAwesomeIcons.building,
-              label: 'المكاتب',
-            ),
-            NavItem(
-              index: 4,
-              icon: FontAwesomeIcons.ellipsis,
-              label: 'المزيد',
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class NavItem extends StatelessWidget {
-  const NavItem({
+class MaktabBottomAppBar extends StatelessWidget {
+  const MaktabBottomAppBar({
     super.key,
-    required this.index,
-    required this.icon,
-    required this.label,
   });
 
-  final int index;
-  final String label;
-  final IconData icon;
-
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NavigationCubit, NavigationState>(
-      builder: (_, state) {
-        return InkWell(
-          onTap: () {
-            log(state.currentIndexs.toString());
-            state.currentIndexs.add(index);
-            log(state.currentIndexs.toString());
-            _navItemNavigation(index, context);
-          },
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+    print(SizeHelper.width);
+    print(SizeHelper.height);
+    return BlocBuilder<NavigationBloc, NavigationState>(
+      builder: (context, state) {
+        return BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          height: 90.0.v,
+          padding: EdgeInsets.zero,
+          color: AppColors.white,
+          child: Stack(
             children: [
-              Icon(
-                icon,
-                size: 35.v,
-                color: context.read<NavigationCubit>().state.index == index
-                    ? AppColors.lightCyan
-                    : AppColors.softAsh,
-              ),
-              SizedBox(height: 4.v),
-              Text(
-                label,
-                style: TextStyle(
-                  fontFamily: 'Tajawal',
-                  fontWeight:
-                      context.read<NavigationCubit>().state.index == index
-                          ? FontWeight.bold
-                          : FontWeight.normal,
-                  color: context.read<NavigationCubit>().state.index == index
-                      ? AppColors.lightCyan
-                      : AppColors.softAsh,
+              SizedBox(
+                height: 90.0.v,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          NavItem(
+                            navState: NavigationStates.home,
+                            icon: FontAwesomeIcons.house,
+                            label: 'الرئيسية',
+                            selected: state is HomeNavigationState,
+                          ),
+                          NavItem(
+                            navState: NavigationStates.orders,
+                            icon: FontAwesomeIcons.list,
+                            label: 'الطلبات',
+                            selected: state is OrdersNavigationState,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      width: 50.0.h,
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          NavItem(
+                            navState: NavigationStates.offices,
+                            icon: FontAwesomeIcons.building,
+                            label: 'مكاتبي',
+                            selected: state is OfficesNavigationState,
+                          ),
+                          NavItem(
+                            navState: NavigationStates.more,
+                            icon: FontAwesomeIcons.ellipsis,
+                            label: 'المزيد',
+                            selected: state is MoreNavigationState,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
+              // if (SizeHelper.width > 400)
+                Align(
+                  alignment: Alignment(0.0, SizeHelper.width < 420 ? -1.1 : -1.5),
+                  child: FloatingActionButton(
+                    backgroundColor: AppColors.lushGreen,
+                    shape: const CircleBorder(side: BorderSide(color: AppColors.lushGreen)),
+                    mini: SizeHelper.width < 420,
+                    foregroundColor: AppColors.white,
+                    elevation: 0,
+                    onPressed: () {
+                      context.pushNamed(AppRoutes.createOfficeScreen);
+                    },
+                    child: Icon(
+                      Icons.add,
+                      size: 25.0.adaptSize,
+                    ),
+                  ),
+                ),
+              // if (SizeHelper.width > 400)
+                const Align(
+                  alignment: Alignment(0.0, 0.4),
+                  child: BodyText(
+                    text: "اضف مكتبك",
+                    textColor: AppColors.lushGreen,
+                    fontSize: 13.0,
+                  ),
+                ),
+              // Align(
+              //   alignment: Alignment(0, SizeHelper.height > 600 ? -2 : -5),
+              //   child: const AddOfficeButton(),
+              // ),
             ],
           ),
         );
       },
     );
   }
-
-  void _navItemNavigation(index, BuildContext context) {
-    context.read<NavigationCubit>().getNavBarItem(index);
-    switch (index) {
-      case 0:
-        context.pushNamed(AppRoutes.homeScreen);
-        break;
-      case 1:
-        context.pushNamed(AppRoutes.calendarScreen);
-        break;
-      case 2:
-        context.pushNamed(AppRoutes.ordersScreen);
-        break;
-      case 3:
-        context.pushNamed(AppRoutes.officesScreen);
-        break;
-      case 4:
-        context.pushNamed(AppRoutes.moreScreen);
-        break;
-    }
-  }
 }
+//
+// class AddOfficeButton extends StatelessWidget {
+//   const AddOfficeButton({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     if (SizeHelper.width < 400) {
+//       return Column(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           MaktabButton(
+//             backgroundColor: AppColors.lushGreen,
+//             color: AppColors.white,
+//             isCircle: true,
+//             borderRadius: BorderRadius.circular(50.0.adaptSize),
+//             elevation: 0,
+//             icon: Icon(
+//               Icons.add,
+//               size: 30.0.adaptSize,
+//               color: AppColors.white,
+//             ),
+//             height: 50.0.h,
+//             width: 50.0.h,
+//             onPressed: () {
+//               context.pushNamed(AppRoutes.createOfficeScreen);
+//             },
+//           ),
+//           SizedBox(
+//             height: 3.0.v,
+//           ),
+//           const BodyText(
+//             text: "اضف مكتبك",
+//             textColor: AppColors.lushGreen,
+//           ),
+//         ],
+//       );
+//     } else {
+//       return const SizedBox();
+//     }
+//   }
+// }

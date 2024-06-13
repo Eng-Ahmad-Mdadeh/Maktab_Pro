@@ -46,7 +46,7 @@ class UnitCouponBox extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SectionTitle(title: unit.title),
+            SectionTitle(title: unit.title??''),
             SizedBox(height: 20.v),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -59,9 +59,9 @@ class UnitCouponBox extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15.v),
                     border: Border.all(color: AppColors.slateGray),
                   ),
-                  child: unit.mainImage.isNotEmpty
+                  child: (unit.mainImage??'').isNotEmpty
                       ? MaktabImageView(
-                          imagePath: unit.mainImage,
+                          imagePath: unit.mainImage!,
                           fit: BoxFit.cover,
                           radius: BorderRadius.circular(15.v),
                         )

@@ -5,6 +5,8 @@ import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/colored_circle.dart';
 
+import 'section_title.dart';
+
 class CalendarCell extends StatelessWidget {
   const CalendarCell({
     super.key,
@@ -60,19 +62,18 @@ class CalendarCell extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Center(
-                  child: Text(
+                  child: SectionTitle(
+                    title:
                     isHour
                         ? date.hour < 10
                             ? '0${date.hour}:00'
                             : '${date.hour}:00'
-                        : date.day.toString(),
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          color: textColor,
-                          fontFamily: 'Roboto',
-                          decoration:
-                              lineThrough ? TextDecoration.lineThrough : null,
-                          decorationColor: AppColors.black,
-                        ),
+                        : date.day.toString(),textColor: textColor,
+                    // fontFamily: 'Roboto',
+                    decoration:
+                    lineThrough ? TextDecoration.lineThrough : null,
+                    decorationColor: AppColors.black,
+
                   ),
                 ),
                 if (isHour)

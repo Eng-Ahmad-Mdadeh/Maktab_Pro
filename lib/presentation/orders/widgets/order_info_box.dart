@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/core/router/app_routes.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab/presentation/widgets/maktab_rich_text.dart';
+
+import '../../../data/models/order/order_model.dart';
+import '../../../domain/orders/order/order_bloc.dart';
+import '../../widgets/section_title.dart';
 
 class OrderInfoBox extends StatelessWidget {
-  const OrderInfoBox({super.key, required this.status});
+  const OrderInfoBox({super.key, required this.order});
 
-  final int status;
+  final OrderModel order;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        context.read<OrderBloc>().add(GetOrderEvent(order.id));
         context.pushNamed(AppRoutes.orderScreen);
       },
       child: Container(
@@ -23,7 +30,7 @@ class OrderInfoBox extends StatelessWidget {
             begin: Alignment.centerRight,
             end: Alignment.centerLeft,
             stops: const [0.03, 0.03],
-            colors: [getColorFromStatus(status), Colors.white],
+            colors: [getColorFromStatus(order.reservation), Colors.white],
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -34,47 +41,44 @@ class OrderInfoBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'علي',
-                  softWrap: true,
-                  style: Theme.of(context).textTheme.titleSmall!,
+                SectionTitle(
+                  title: order.tenant?.username ?? '',
                 ),
-                RichText(
-                  text: TextSpan(
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          fontWeight: FontWeight.w500,
-                        ),
-                    children: [
-                      TextSpan(
-                        text: '3000',
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(color: AppColors.emeraldTeal),
-                      ),
-                      WidgetSpan(child: SizedBox(width: 6.h)),
-                      const TextSpan(text: 'ريال')
-                    ],
-                  ),
+                MaktabRichText(
+                  texts: [
+                    MaktabRichTextModel(
+                      text: order.totalPriceLessor?.toString() ?? '',
+                      color: AppColors.emeraldTeal,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 19.0
+                    ),
+                    MaktabRichTextModel(
+                      text: ' ريال',
+                      color: AppColors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ],
                 ),
               ],
             ),
             SizedBox(height: 10.v),
-            Text(
-              'مكتب 1 (وحدة1)',
-              softWrap: true,
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.slateGray,
-                  ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SectionTitle(
+                  title: order.office?.title ?? '',
+                  textFontWeight: FontWeight.w500,
+                  textColor: AppColors.slateGray,
+                ),
+                SectionTitle(title: '#${order.id}'),
+              ],
             ),
-            Text(
-              'من الجمعة 12 نوفمبر الى السبت 13 نوفمبر',
-              softWrap: true,
-              style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.slateGray,
-                  ),
+            SectionTitle(
+              title:
+                  // 'من الجمعة 12 نوفمبر الى السبت 13 نوفمبر',
+                  order.startDate?.toIso8601String().split('T').firstOrNull ?? '',
+              textFontWeight: FontWeight.w500,
+              textColor: AppColors.slateGray,
             ),
           ],
         ),
@@ -82,16 +86,18 @@ class OrderInfoBox extends StatelessWidget {
     );
   }
 
-  Color getColorFromStatus(int status) {
+  Color getColorFromStatus(String? status) {
     switch (status) {
-      case 0:
+      case 'acceptably':
         return AppColors.emeraldGreen;
-      case 1:
+      case 'canceled':
         return AppColors.cherryRed;
-      case 2:
+      case 'new':
         return AppColors.rustOrange;
-      case 3:
+      case 'pending':
         return AppColors.yellow;
+      case 'complete':
+        return AppColors.skyBlue;
       default:
         return AppColors.black;
     }

@@ -28,18 +28,16 @@ class OfficeOfferBox extends StatelessWidget {
             Expanded(
               flex: 2,
               child: SectionTitle(
-                title: office.title,
+                title: office.title ?? '',
                 textAlign: TextAlign.right,
               ),
             ),
             SizedBox(width: 10.h),
             Expanded(
-              child: Text(
-                DateFormatterHelper.getFormated(office.createdAt),
-                softWrap: true,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: AppColors.slateGray,
-                    ),
+              child: SectionTitle(
+                title:
+                DateFormatterHelper.getFormated(office.createdAt),textColor: AppColors.slateGray,
+
               ),
             ),
           ],
@@ -49,8 +47,7 @@ class OfficeOfferBox extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 15.v),
             child: MaktabPageSlider(
               height: 180.v,
-              widgets:
-                  office.units.map((unit) => UnitOfferBox(unit: unit)).toList(),
+              widgets: office.units.map((unit) => UnitOfferBox(unit: unit)).toList(),
             ),
           ),
         ],

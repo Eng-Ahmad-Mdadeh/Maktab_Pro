@@ -38,15 +38,15 @@ class OfficePriceFormField extends StatelessWidget {
                 onChanged: (value) {
                   context
                       .read<OfficeBloc>()
-                      .add(ChangeUnitPriceEvent(option, value!.trim()));
+                      .add(ChangeUnitPriceEvent(option, value.trim()));
                 },
               ),
             ),
             Expanded(
               child: MaktabSwitch(
                 value: state.selectedUnitPriceOptions.contains(option),
-                activeColor: AppColors.emeraldTeal,
-                activeTrackColor: AppColors.mintGreen,
+                // activeColor: AppColors.emeraldTeal,
+                // activeTrackColor: AppColors.mintGreen,
                 onChanged: (value) {
                   context.read<OfficeBloc>()
                     ..add(ToggleUnitPriceOptionEvent(option))

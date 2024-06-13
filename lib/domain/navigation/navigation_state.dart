@@ -1,16 +1,16 @@
-// ignore_for_file: must_be_immutable
+import 'package:equatable/equatable.dart';
 
-part of 'navigation_cubit.dart';
-
-enum NavbarItem { home, calendar, orders, offices, more }
+enum NavigationStates { home, addOffice, orders, offices, more }
 
 class NavigationState extends Equatable {
-  final NavbarItem navbarItem;
-  final int index;
-  List<int> currentIndexs;
-
-  NavigationState(this.navbarItem, this.index, this.currentIndexs);
+  const NavigationState();
 
   @override
-  List<Object> get props => [navbarItem, index, currentIndexs];
+  List<Object> get props => [];
 }
+
+final class HomeNavigationState extends NavigationState{}
+final class OrdersNavigationState extends NavigationState{}
+final class AddOfficeNavigationState extends NavigationState{}
+final class OfficesNavigationState extends NavigationState{}
+final class MoreNavigationState extends NavigationState{}

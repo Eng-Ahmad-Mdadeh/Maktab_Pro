@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/office/office_type_model.dart';
+import 'package:maktab/data/models/type_aquar/type_aquar_model.dart';
 import 'package:maktab/domain/office/office_bloc.dart';
 import 'package:maktab/presentation/office/widgets/office_advertiser_relationship_options.dart';
 import 'package:maktab/presentation/office/widgets/space_text_field.dart';
@@ -20,7 +20,7 @@ class OfficeSecondInfoStep extends StatefulWidget {
 class _OfficeSecondInfoStepState extends State<OfficeSecondInfoStep> {
   late TextEditingController _officeSpaceController;
   late GlobalKey<FormState> _officeInfoFormKey;
-  late OfficeType? type;
+  late TypeAquar? type;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _OfficeSecondInfoStepState extends State<OfficeSecondInfoStep> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const PageTitle(title: 'معلومات المكتب'),
+          const PageTitle(title: 'معلومات المكان/الخدمة'),
           SizedBox(height: 30.v),
           const OfficeAdvertiserRelationshipOptions(),
           SizedBox(height: 20.v),
@@ -68,11 +68,11 @@ class _OfficeSecondInfoStepState extends State<OfficeSecondInfoStep> {
                     return null;
                   },
                   onChanged: (value) {
-                    context.read<OfficeBloc>().add(SetEquipmentEvent(value!));
+                    context.read<OfficeBloc>().add(SetEquipmentEvent(value));
                   },
                 ),
                 SizedBox(height: 20.v),
-                const SectionTitle(title: 'نوع المكتب'),
+                const SectionTitle(title: 'نوع المكان/الخدمة'),
                 SizedBox(height: 5.v),
                 MaktabDropDownFormField(
                   initialValue: type != null ? type!.arName : '',

@@ -4,7 +4,7 @@ import 'package:maktab/presentation/receiving_method/widgets/bank_form.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 
 class BankPaymentScreen extends StatefulWidget {
-  const BankPaymentScreen({Key? key}) : super(key: key);
+  const BankPaymentScreen({super.key});
 
   @override
   State<BankPaymentScreen> createState() => _BankPaymentScreenState();

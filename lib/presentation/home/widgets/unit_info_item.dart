@@ -25,7 +25,7 @@ class UnitInfoItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SectionTitle(title: unit.title),
+              SectionTitle(title: unit.title??''),
               SizedBox(height: 6.v),
               const BodyText(text: 'الاجراءات المكتملة'),
               SizedBox(height: 6.v),
@@ -35,8 +35,7 @@ class UnitInfoItem extends StatelessWidget {
                   Expanded(
                     flex: 4,
                     child: LinearProgressIndicator(
-                      value:
-                          Office.getUnitCompleteStepsCount(unit).toDouble() / 6,
+                      value: Office.getUnitCompleteStepsCount(unit).toDouble() / 6,
                       minHeight: 12.v,
                       borderRadius: BorderRadius.circular(10.adaptSize),
                       valueColor: const AlwaysStoppedAnimation<Color>(
@@ -55,20 +54,17 @@ class UnitInfoItem extends StatelessWidget {
             ],
           ),
         ),
-        Expanded(
-          child: MaktabButton(
-            height: 45.v,
-            text: 'استكمال',
-            padding: EdgeInsets.zero,
-            backgroundColor: AppColors.white,
-            isBordered: true,
-            borderColor: AppColors.emeraldTeal,
-            textStyle: Theme.of(context)
-                .textTheme
-                .bodyMedium!
-                .copyWith(color: AppColors.emeraldTeal),
-            onPressed: onPressed,
-          ),
+        MaktabButton(
+          height: 35.v,
+          width: 90.0.h,
+          text: 'استكمال',
+          fontSize: 13.0,
+          color: AppColors.emeraldTeal,
+          padding: EdgeInsets.zero,
+          backgroundColor: AppColors.white,
+          isBordered: true,
+          borderColor: AppColors.emeraldTeal,
+          onPressed: onPressed,
         ),
       ],
     );

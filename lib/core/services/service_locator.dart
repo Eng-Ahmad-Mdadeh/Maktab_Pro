@@ -40,7 +40,6 @@ import 'package:maktab/domain/offer/offer_bloc.dart';
 import 'package:maktab/domain/offices/offices_cubit.dart';
 import 'package:maktab/domain/receiving_method/receiving_method_bloc.dart';
 import 'package:maktab/domain/location/location_bloc.dart';
-import 'package:maktab/domain/navigation/navigation_cubit.dart';
 import 'package:maktab/domain/office/office_bloc.dart';
 import 'package:maktab/domain/profile/profile_bloc.dart';
 import 'package:maktab/domain/shimmer/shimmer_bloc.dart';
@@ -49,6 +48,30 @@ import 'package:maktab/domain/transfers/transdfers_bloc.dart';
 import 'package:maktab/domain/unit/unit_bloc.dart';
 import 'package:maktab/domain/user/user_bloc.dart';
 import 'package:maktab/domain/video/video_bloc.dart';
+
+import '../../data/data_sources/remote/account_summary_data_source.dart';
+import '../../data/data_sources/remote/contract_model_remote_data_source.dart';
+import '../../data/data_sources/remote/contract_remote_data_source.dart';
+import '../../data/data_sources/remote/invoice_remote_data_source.dart';
+import '../../data/data_sources/remote/notification_remote_data_source.dart';
+import '../../data/data_sources/remote/order_remote_data_source.dart';
+import '../../data/repositories/account_summary_repository.dart';
+import '../../data/repositories/contract_model_repository.dart';
+import '../../data/repositories/contract_repository.dart';
+import '../../data/repositories/invoice_repository.dart';
+import '../../data/repositories/notification_repository.dart';
+import '../../data/repositories/order_repository.dart';
+import '../../data/repositories/settings_repository.dart';
+import '../../domain/account_summary/account_summary_bloc.dart';
+import '../../domain/contract_models/contract_model/contract_model_bloc.dart';
+import '../../domain/contract_models/contract_models_bloc.dart';
+import '../../domain/contracts/contract/contract_bloc.dart';
+import '../../domain/contracts/contracts_bloc.dart';
+import '../../domain/invoice/invoice_bloc.dart';
+import '../../domain/notification/notification_bloc.dart';
+import '../../domain/orders/order/order_bloc.dart';
+import '../../domain/orders/orders_bloc.dart';
+import '../../domain/settings/settings_bloc.dart';
 
 final locator = GetIt.I;
 
@@ -68,16 +91,13 @@ Future<void> setup() async {
       authRepository: locator<AuthRepository>(),
     ),
   );
-  locator.registerFactory<NavigationCubit>(
-    () => NavigationCubit(),
-  );
   locator.registerFactory<HomeBloc>(
     () => HomeBloc(
       userRepository: locator<UserRepository>(),
     ),
   );
   locator.registerFactory<CalendarBloc>(
-    () => CalendarBloc(),
+    () => CalendarBloc(locator<CalendarRepository>()),
   );
   locator.registerFactory<OfficeBloc>(
     () => OfficeBloc(
@@ -149,6 +169,72 @@ Future<void> setup() async {
     ),
   );
 
+  locator.registerFactory<OrdersBloc>(
+        () => OrdersBloc(
+      locator<OrderRepository>(),
+    ),
+  );
+
+  locator.registerFactory<OrderBloc>(
+        () => OrderBloc(
+      locator<OrderRepository>(),
+    ),
+  );
+
+  locator.registerFactory<AccountSummaryBloc>(
+        () => AccountSummaryBloc(
+      locator<AccountSummaryRepository>(),
+    ),
+  );
+
+  locator.registerFactory<InvoiceBloc>(
+        () => InvoiceBloc(
+      locator<InvoiceRepository>(),
+    ),
+  );
+
+  locator.registerFactory<ContractsBloc>(
+        () => ContractsBloc(
+      locator<ContractRepository>(),
+    ),
+  );
+
+  locator.registerFactory<ContractBloc>(
+        () => ContractBloc(
+      locator<ContractRepository>(),
+    ),
+  );
+
+  locator.registerFactory<GeneralSettingBloc>(
+        () => GeneralSettingBloc(
+      locator<SettingsRepository>(),
+    ),
+  );
+  locator.registerFactory<SearchDataBloc>(
+        () => SearchDataBloc(
+      locator<OfficeRepository>(),
+    ),
+  );
+
+  locator.registerFactory<ContractModelsBloc>(
+        () => ContractModelsBloc(
+      locator<ContractModelRepository>(),
+    ),
+  );
+
+  locator.registerFactory<ContractModelBloc>(
+        () => ContractModelBloc(
+      locator<ContractModelRepository>(),
+    ),
+  );
+
+  locator.registerFactory<NotificationsBloc>(
+        () => NotificationsBloc(
+      locator<NotificationRepository>(),
+    ),
+  );
+
+
   //Repositories
   locator.registerLazySingleton<AuthRepository>(
     () => AuthRepository(
@@ -214,6 +300,48 @@ Future<void> setup() async {
     ),
   );
 
+  locator.registerLazySingleton<OrderRepository>(
+        () => OrderRepository(
+     locator<OrderRemoteDataSource>(),
+    ),
+  );
+
+  locator.registerLazySingleton<AccountSummaryRepository>(
+        () => AccountSummaryRepository(
+      locator<AccountSummaryDataSource>(),
+    ),
+  );
+
+  locator.registerLazySingleton<SettingsRepository>(
+        () => SettingsRepository(
+      locator<SettingsRemoteDataSource>(),
+    ),
+  );
+
+  locator.registerLazySingleton<InvoiceRepository>(
+        () => InvoiceRepository(
+      locator<InvoiceRemoteDataSource>(),
+    ),
+  );
+
+  locator.registerLazySingleton<ContractRepository>(
+        () => ContractRepository(
+      locator<ContractRemoteDataSource>(),
+    ),
+  );
+
+  locator.registerLazySingleton<ContractModelRepository>(
+        () => ContractModelRepository(
+      locator<ContractModelRemoteDataSource>(),
+    ),
+  );
+
+  locator.registerLazySingleton<NotificationRepository>(
+        () => NotificationRepository(
+      locator<NotificationRemoteDataSource>(),
+    ),
+  );
+
   //Data Sources
   locator.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSource(),
@@ -259,6 +387,30 @@ Future<void> setup() async {
   );
   locator.registerLazySingleton<CalendarRemoteDataSource>(
     () => CalendarRemoteDataSource(),
+  );
+
+  locator.registerLazySingleton<OrderRemoteDataSource>(
+        () => OrderRemoteDataSource(),
+  );
+
+  locator.registerLazySingleton<AccountSummaryDataSource>(
+        () => AccountSummaryDataSource(),
+  );
+
+  locator.registerLazySingleton<InvoiceRemoteDataSource>(
+        () => InvoiceRemoteDataSource(),
+  );
+
+  locator.registerLazySingleton<ContractRemoteDataSource>(
+        () => ContractRemoteDataSource(),
+  );
+
+  locator.registerLazySingleton<ContractModelRemoteDataSource>(
+        () => ContractModelRemoteDataSource(),
+  );
+
+  locator.registerLazySingleton<NotificationRemoteDataSource>(
+        () => NotificationRemoteDataSource(),
   );
 
   //External

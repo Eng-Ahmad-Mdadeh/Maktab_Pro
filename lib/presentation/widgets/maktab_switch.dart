@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 
+import '../resources/app_colors.dart';
+
 class MaktabSwitch extends StatelessWidget {
   const MaktabSwitch({
     super.key,
@@ -28,12 +30,12 @@ class MaktabSwitch extends StatelessWidget {
       data: theme != null ? theme! : Theme.of(context),
       child: Switch.adaptive(
         value: value,
-        activeColor: activeColor,
-        activeTrackColor: activeTrackColor,
-        trackColor: MaterialStatePropertyAll(trackColor),
+        activeColor: activeColor ?? AppColors.emeraldGreen,
+        activeTrackColor: activeTrackColor ?? AppColors.white,
+        trackColor: WidgetStatePropertyAll(trackColor),
         inactiveThumbColor: inActiveThumbColor,
-        trackOutlineColor: MaterialStatePropertyAll(trackColor),
-        trackOutlineWidth: const MaterialStatePropertyAll(0),
+        trackOutlineColor: WidgetStatePropertyAll(trackColor),
+        trackOutlineWidth: const WidgetStatePropertyAll(0),
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
         onChanged: onChanged,
       ),

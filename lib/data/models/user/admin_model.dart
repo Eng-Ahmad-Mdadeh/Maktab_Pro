@@ -1,17 +1,17 @@
 class Admin {
-  String firstName;
-  String lastName;
-  String email;
-  String mobileNumber;
-  String registerNumber;
-  String specialNumber;
-  String taxNumber;
-  String city;
-  String neighborhood;
-  String street;
-  String buildingNumber;
-  String postalCode;
-  String marginalNumber;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? mobileNumber;
+  String? registerNumber;
+  String? specialNumber;
+  String? taxNumber;
+  String? city;
+  String? neighborhood;
+  String? street;
+  String? buildingNumber;
+  String? postalCode;
+  String? marginalNumber;
 
   Admin({
     required this.firstName,

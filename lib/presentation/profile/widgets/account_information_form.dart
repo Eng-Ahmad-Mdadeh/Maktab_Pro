@@ -49,23 +49,17 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
   void initState() {
     User? user = BlocProvider.of<ProfileBloc>(context).state.user;
     userNameController = TextEditingController(text: user?.userName ?? '');
-    companyNameController =
-        TextEditingController(text: user?.companyName ?? '');
+    companyNameController = TextEditingController(text: user?.companyName ?? '');
     officeNameController = TextEditingController(text: user?.officeName ?? '');
     emailController = TextEditingController(text: user?.email ?? '');
     cityController = TextEditingController(text: user?.city ?? '');
-    neighborhoodController =
-        TextEditingController(text: user?.neighborhood ?? '');
-    identityNumberController =
-        TextEditingController(text: user?.idNumber ?? '');
-    commercialRecordController =
-        TextEditingController(text: user?.commercialRecord ?? '');
+    neighborhoodController = TextEditingController(text: user?.neighborhood ?? '');
+    identityNumberController = TextEditingController(text: user?.idNumber ?? '');
+    commercialRecordController = TextEditingController(text: user?.commercialRecord ?? '');
     phoneController = TextEditingController(text: user?.phone ?? '');
     aboutController = TextEditingController(text: user?.about ?? '');
-    licenseLinkController =
-        TextEditingController(text: user?.licenseLink ?? '');
-    licenseNumberController =
-        TextEditingController(text: user?.licenseNumber ?? '');
+    licenseLinkController = TextEditingController(text: user?.licenseLink ?? '');
+    licenseNumberController = TextEditingController(text: user?.licenseNumber ?? '');
     super.initState();
   }
 
@@ -76,7 +70,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
         return Form(
           key: _formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               MaktabTextFormField(
                 title: 'اسم المستخدم',
@@ -207,7 +201,13 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
                 },
               ),
               SizedBox(height: 20.v),
-              PhoneTextfield(controller: phoneController),
+              PhoneTextfield(
+                controller: phoneController,
+                textFieldFontSize: 15,
+                titleSize: 17.0,
+                hintSize: 15,
+                countryCodeSize: 35,
+              ),
               SizedBox(height: 20.v),
               MaktabTextFormField(
                 title: 'نبذة',
@@ -225,7 +225,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
               SizedBox(height: 25.v),
               MaktabButton(
                 text: 'حفظ واستمرار',
-                width: SizeHelper.width,
+                // width: SizeHelper.width,
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
                     log("selected:${aboutController.text}");

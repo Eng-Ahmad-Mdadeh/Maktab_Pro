@@ -26,7 +26,7 @@ class MaktabRadioListTile<T> extends StatelessWidget {
           child: Radio<T>(
             value: value,
             fillColor:
-                MaterialStateColor.resolveWith((states) => AppColors.mintTeal),
+                WidgetStateColor.resolveWith((states) => AppColors.mintTeal),
             activeColor: AppColors.mintTeal,
             groupValue: groupValue,
             onChanged: onChanged,

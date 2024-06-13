@@ -63,7 +63,7 @@ class OfferRepository {
     );
   }
 
-  Future<Either<AppException, void>> createOffer({
+  Future<Either<AppException, Office?>> createOffer({
     required String name,
     required num discount,
     required String discountType,

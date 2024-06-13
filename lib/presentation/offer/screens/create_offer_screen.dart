@@ -53,8 +53,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
           (office) => office.units,
         ));
     offerNameController = TextEditingController(text: widget.offer?.name);
-    offerDepositController =
-        TextEditingController(text: widget.offer?.discount.toString());
+    offerDepositController = TextEditingController(text: widget.offer?.discount.toString());
     offerDateRangeController = TextEditingController(
         text: widget.offer != null
             ? '${DateFormatterHelper.getFormated(widget.offer!.startDate)} - ${DateFormatterHelper.getFormated(widget.offer!.endDate)}'
@@ -83,24 +82,23 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
         if (state.offerApiCallState == OfferApiCallState.success) {
           context.read<OfficesCubit>().getAllOffers(isUpdate: true);
           context.pop();
-          if(widget.offer!=null){
-            context.read<OfficesCubit>().getOfficeById(widget.unit!.id,isUpdate: true);
+          if (widget.offer != null) {
+            context.read<OfficesCubit>().getOfficeById(widget.unit!.id, isUpdate: true);
           }
         } else if (state.offerApiCallState == OfferApiCallState.failure) {
-          MaktabSnackbar.showError(context, 'حدث خطأ ما');
+          MaktabSnackbar.showError(context, 'حدث خطأ ${state.name}');
         }
       },
       builder: (context, state) => state.isInitialized
           ? Scaffold(
-              appBar:  MaktabAppBar(title:widget.offer!=null?'تعديل العرض': 'إنشاء عرض'),
+              appBar: MaktabAppBar(title: widget.offer != null ? 'تعديل العرض' : 'إنشاء عرض'),
               body: SafeArea(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
                       child: SingleChildScrollView(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 20.h, vertical: 25.v),
+                        padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 25.v),
                         child: Form(
                           key: _formKey,
                           child: Column(
@@ -120,22 +118,17 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                   return null;
                                 },
                                 onSaved: (value) {
-                                  context
-                                      .read<OfferBloc>()
-                                      .add(SetOfferNameEvent(value!));
+                                  context.read<OfferBloc>().add(SetOfferNameEvent(value!));
                                 },
                               ),
                               SizedBox(height: 20.v),
-                              const SectionTitle(
-                                  title:
-                                      'الوحدات التي تريد أن يطبق عليها العرض:'),
+                              const SectionTitle(title: 'الوحدات التي تريد أن يطبق عليها العرض:'),
                               SizedBox(height: 5.v),
                               DropdownButtonFormField2(
                                 value: context.read<OfferBloc>().state.unit?.id,
                                 isDense: true,
                                 isExpanded: true,
-                                autovalidateMode:
-                                    AutovalidateMode.onUserInteraction,
+                                autovalidateMode: AutovalidateMode.onUserInteraction,
                                 iconStyleData: IconStyleData(
                                   icon: Icon(
                                     Icons.keyboard_arrow_down_sharp,
@@ -151,11 +144,9 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                           width: SizeHelper.width,
                                           child: Align(
                                             alignment: Alignment.centerRight,
-                                            child: Text(
-                                              unit.title,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .titleSmall,
+                                            child: SectionTitle(
+                                              title:
+                                              unit.title ?? '',
                                             ),
                                           ),
                                         ),
@@ -169,9 +160,8 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                   return null;
                                 },
                                 onChanged: (value) {
-                                  context.read<OfferBloc>().add(SelectUnitEvent(
-                                      units.firstWhereOrNull(
-                                          (unit) => unit.id == value)!));
+                                  context.read<OfferBloc>().add(
+                                      SelectUnitEvent(units.firstWhereOrNull((unit) => unit.id == value)!));
                                 },
                               ),
                               SizedBox(height: 20.v),
@@ -182,7 +172,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                   Expanded(
                                     flex: 3,
                                     child: DropdownButtonFormField2(
-                                      value:state.discountType,
+                                      value: state.discountType,
                                       iconStyleData: const IconStyleData(
                                         icon: Icon(
                                           Icons.keyboard_arrow_down_sharp,
@@ -200,22 +190,17 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                           value: format['type'],
                                           child: Align(
                                             alignment: Alignment.centerRight,
-                                            child: Text(
-                                              format['title'],
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge,
+                                            child: BodyText(
+                                              text: format['title'],
                                             ),
                                           ),
                                         );
                                       }).toList(),
                                       decoration: (const InputDecoration())
-                                          .applyDefaults(Theme.of(context)
-                                              .inputDecorationTheme),
+                                          .applyDefaults(Theme.of(context).inputDecorationTheme),
                                       onChanged: (value) {
                                         offerDepositController.clear();
-                                        context.read<OfferBloc>().add(
-                                            SelectDiscountTypeEvent(value!));
+                                        context.read<OfferBloc>().add(SelectDiscountTypeEvent(value!));
                                       },
                                     ),
                                   ),
@@ -226,8 +211,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                       builder: (context, state) {
                                         return MaktabTextFormField(
                                           controller: offerDepositController,
-                                          hintText: state.discountType ==
-                                                  DiscountTypes.percentage
+                                          hintText: state.discountType == DiscountTypes.percentage
                                               ? 'نسبة الخصم'
                                               : 'قيمة الخصم',
                                           textInputType: TextInputType.number,
@@ -237,34 +221,27 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                             child: Align(
                                               alignment: Alignment.center,
                                               child: BodyText(
-                                                  text: state.discountType ==
-                                                          DiscountTypes
-                                                              .percentage
+                                                  text: state.discountType == DiscountTypes.percentage
                                                       ? '%'
                                                       : 'ريال'),
                                             ),
                                           ),
                                           inputFormatters: [
-                                            FilteringTextInputFormatter
-                                                .digitsOnly,
-                                            state.discountType ==
-                                                    DiscountTypes.percentage
-                                                ? NumericalRangeFormatter(
-                                                    min: 0, max: 100)
-                                                : NumericalRangeFormatter(
-                                                    min: 0,
-                                                    max: double.infinity)
+                                            FilteringTextInputFormatter.digitsOnly,
+                                            state.discountType == DiscountTypes.percentage
+                                                ? NumericalRangeFormatter(min: 0, max: 100)
+                                                : NumericalRangeFormatter(min: 0, max: double.infinity)
                                           ],
                                           validator: (value) {
                                             if (value!.trim().isEmpty) {
-                                              context.read<OfferBloc>().add(
-                                                  const ChangeDiscountAmountEvent(
-                                                      ''));
+                                              context
+                                                  .read<OfferBloc>()
+                                                  .add(const ChangeDiscountAmountEvent(''));
                                               return '';
                                             } else {
-                                              context.read<OfferBloc>().add(
-                                                  ChangeDiscountAmountEvent(
-                                                      value.trim()));
+                                              context
+                                                  .read<OfferBloc>()
+                                                  .add(ChangeDiscountAmountEvent(value.trim()));
                                             }
                                             return null;
                                           },
@@ -278,25 +255,17 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                               BlocBuilder<OfferBloc, OfferState>(
                                 builder: (context, state) {
                                   return state.discountAmount == -1
-                                      ? Text(
-                                          'يجب ادخال قيمة الخصم',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge!
-                                              .copyWith(
-                                                color: AppColors.cherryRed,
-                                              ),
+                                      ? const BodyText(
+                                    text:  'يجب ادخال قيمة الخصم',textColor: AppColors.cherryRed,
+
                                         )
                                       : state.prices.values.isNotEmpty
-                                          ? state.discountType ==
-                                                      DiscountTypes.price &&
-                                                  state.prices.values.min <
-                                                      state.discountAmount
+                                          ? state.discountType == DiscountTypes.price &&
+                                                  state.prices.values.min < state.discountAmount
                                               ? BodyText(
                                                   text:
                                                       'يجب أن يكون الخصم أقل من  ${state.prices.values.min}',
-                                                  textColor:
-                                                      AppColors.cherryRed,
+                                                  textColor: AppColors.cherryRed,
                                                 )
                                               : const SizedBox.shrink()
                                           : const SizedBox.shrink();
@@ -305,9 +274,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                               SizedBox(height: 20.v),
                               const SectionTitle(title: 'تاريخ تطبيق العرض:'),
                               SizedBox(height: 5.v),
-                              const BodyText(
-                                  text:
-                                      'العرض سيطبق على تاريخ الوصول وليس تاريخ الحجز'),
+                              const BodyText(text: 'العرض سيطبق على تاريخ الوصول وليس تاريخ الحجز'),
                               SizedBox(height: 5.v),
                               BlocBuilder<OfferBloc, OfferState>(
                                 builder: (context, state) {
@@ -329,19 +296,16 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                         context: context,
                                         locale: const Locale('ar'),
                                         firstDate: DateTime.now(),
-                                        lastDate:
-                                            DateTime(DateTime.now().year + 1),
+                                        lastDate: DateTime(DateTime.now().year + 1),
                                         builder: (context, child) {
                                           return Theme(
                                             data: Theme.of(context).copyWith(
-                                              colorScheme:
-                                                  const ColorScheme.light(
+                                              colorScheme: const ColorScheme.light(
                                                 primary: AppColors.lightCyan,
                                                 onPrimary: AppColors.white,
                                                 surface: AppColors.white,
                                                 onSurface: AppColors.lightBlack,
-                                                primaryContainer:
-                                                    AppColors.lightCyan,
+                                                primaryContainer: AppColors.lightCyan,
                                               ),
                                             ),
                                             child: child!,
@@ -349,12 +313,10 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                         },
                                       );
                                       if (range != null) {
-                                        context.read<OfferBloc>().add(
-                                            SelectOfferDateRangeEvent(range!));
-                                        offerDateRangeController.value =
-                                            TextEditingValue(
-                                                text:
-                                                    '${DateFormatterHelper.getFormated(range!.start)} - ${DateFormatterHelper.getFormated(range!.end)}');
+                                        context.read<OfferBloc>().add(SelectOfferDateRangeEvent(range!));
+                                        offerDateRangeController.value = TextEditingValue(
+                                            text:
+                                                '${DateFormatterHelper.getFormated(range!.start)} - ${DateFormatterHelper.getFormated(range!.end)}');
                                       }
                                     },
                                   );
@@ -366,124 +328,77 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                   return state.unit != null
                                       ? Column(
                                           children: [
-                                            const SectionTitle(
-                                                title:
-                                                    'أنواع الاسعار التي يطبق العرض عليها:'),
+                                            const SectionTitle(title: 'أنواع الاسعار التي يطبق العرض عليها:'),
                                             SizedBox(height: 20.v),
                                             SizedBox(
                                               height: 60.v,
-                                              child: BlocBuilder<OfferBloc,
-                                                  OfferState>(
+                                              child: BlocBuilder<OfferBloc, OfferState>(
                                                 builder: (context, state) {
                                                   return ListView(
                                                     shrinkWrap: true,
-                                                    scrollDirection:
-                                                        Axis.horizontal,
+                                                    scrollDirection: Axis.horizontal,
                                                     children: [
-                                                      if (state.unit != null &&
-                                                          state.unit!.prices
-                                                              .isNotEmpty)
+                                                      if (state.unit != null && state.unit!.prices.isNotEmpty)
                                                         PriceSelectBox(
                                                           title: 'الكل',
-                                                          isSelected: state
-                                                                  .prices
-                                                                  .length ==
-                                                              state.unit!.prices
-                                                                  .length,
+                                                          isSelected: state.prices.length ==
+                                                              state.unit!.prices.length,
                                                           onTap: () {
                                                             context
-                                                                .read<
-                                                                    OfferBloc>()
-                                                                .add(
-                                                                    SelectAllUnitPricesEvent());
+                                                                .read<OfferBloc>()
+                                                                .add(SelectAllUnitPricesEvent());
                                                           },
                                                         ),
                                                       if (state.unit != null &&
-                                                          state.unit!.prices
-                                                                  .firstWhereOrNull(
-                                                                      (price) =>
-                                                                          price
-                                                                              .typeResId ==
-                                                                          4) !=
+                                                          state.unit!.prices.firstWhereOrNull(
+                                                                  (price) => price.typeResId == 4) !=
                                                               null)
                                                         PriceSelectBox(
                                                           title: 'سنوي',
-                                                          isSelected: state
-                                                              .priceTypes
-                                                              .contains(4),
+                                                          isSelected: state.priceTypes.contains(4),
                                                           onTap: () {
                                                             context
-                                                                .read<
-                                                                    OfferBloc>()
-                                                                .add(
-                                                                    const SelectUnitPriceEvent(
-                                                                        4));
+                                                                .read<OfferBloc>()
+                                                                .add(const SelectUnitPriceEvent(4));
                                                           },
                                                         ),
                                                       if (state.unit != null &&
-                                                          state.unit!.prices
-                                                                  .firstWhereOrNull(
-                                                                      (price) =>
-                                                                          price
-                                                                              .typeResId ==
-                                                                          3) !=
+                                                          state.unit!.prices.firstWhereOrNull(
+                                                                  (price) => price.typeResId == 3) !=
                                                               null)
                                                         PriceSelectBox(
                                                           title: 'شهري',
-                                                          isSelected: state
-                                                              .priceTypes
-                                                              .contains(3),
+                                                          isSelected: state.priceTypes.contains(3),
                                                           onTap: () {
                                                             context
-                                                                .read<
-                                                                    OfferBloc>()
-                                                                .add(
-                                                                    const SelectUnitPriceEvent(
-                                                                        3));
+                                                                .read<OfferBloc>()
+                                                                .add(const SelectUnitPriceEvent(3));
                                                           },
                                                         ),
                                                       if (state.unit != null &&
-                                                          state.unit!.prices
-                                                                  .firstWhereOrNull(
-                                                                      (price) =>
-                                                                          price
-                                                                              .typeResId ==
-                                                                          2) !=
+                                                          state.unit!.prices.firstWhereOrNull(
+                                                                  (price) => price.typeResId == 2) !=
                                                               null)
                                                         PriceSelectBox(
                                                           title: 'يومي',
-                                                          isSelected: state
-                                                              .priceTypes
-                                                              .contains(2),
+                                                          isSelected: state.priceTypes.contains(2),
                                                           onTap: () {
                                                             context
-                                                                .read<
-                                                                    OfferBloc>()
-                                                                .add(
-                                                                    const SelectUnitPriceEvent(
-                                                                        2));
+                                                                .read<OfferBloc>()
+                                                                .add(const SelectUnitPriceEvent(2));
                                                           },
                                                         ),
                                                       if (state.unit != null &&
-                                                          state.unit!.prices
-                                                                  .firstWhereOrNull(
-                                                                      (price) =>
-                                                                          price
-                                                                              .typeResId ==
-                                                                          1) !=
+                                                          state.unit!.prices.firstWhereOrNull(
+                                                                  (price) => price.typeResId == 1) !=
                                                               null)
                                                         PriceSelectBox(
                                                           title: 'ساعة',
-                                                          isSelected: state
-                                                              .priceTypes
-                                                              .contains(1),
+                                                          isSelected: state.priceTypes.contains(1),
                                                           onTap: () {
                                                             context
-                                                                .read<
-                                                                    OfferBloc>()
-                                                                .add(
-                                                                    const SelectUnitPriceEvent(
-                                                                        1));
+                                                                .read<OfferBloc>()
+                                                                .add(const SelectUnitPriceEvent(1));
                                                           },
                                                         ),
                                                     ],
@@ -500,14 +415,10 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                               BlocBuilder<OfferBloc, OfferState>(
                                 builder: (context, state) {
                                   return state.pricesCount == 0
-                                      ? Text(
-                                          'يرجى اختيار سعر',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge!
-                                              .copyWith(
-                                                color: AppColors.cherryRed,
-                                              ),
+                                      ? const BodyText(
+                                    text:
+                                    'يرجى اختيار سعر',textColor: AppColors.cherryRed,
+
                                         )
                                       : const SizedBox.shrink();
                                 },
@@ -518,38 +429,26 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.h, vertical: 15.v),
+                      padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 15.v),
                       child: BlocBuilder<OfferBloc, OfferState>(
                         builder: (context, state) {
                           return MaktabButton(
                             height: 70.v,
-                            text: widget.offer != null?'تحديث': 'إضافة',
+                            text: widget.offer != null ? 'تحديث' : 'إضافة',
                             isBordered: true,
-                            isLoading: state.offerApiCallState ==
-                                OfferApiCallState.loading,
+                            isLoading: state.offerApiCallState == OfferApiCallState.loading,
                             onPressed: () {
                               if (_formKey.currentState!.validate() &&
                                   state.pricesCount > 0 &&
                                   state.isValidOfferDateRange) {
                                 _formKey.currentState!.save();
-                                context
-                                    .read<OfferBloc>()
-                                    .add(CreateOfferEvent(
-                                    isUpdate:
-                                    widget.offer != null ? true : false,
-                                    offerId: widget.offer != null
-                                        ? widget.offer!.id
-                                        : null
-                                ));
+                                context.read<OfferBloc>().add(CreateOfferEvent(
+                                    isUpdate: widget.offer != null ? true : false,
+                                    offerId: widget.offer?.id));
                               } else if (state.pricesCount == -1) {
-                                context
-                                    .read<OfferBloc>()
-                                    .add(ClearPriceCountEvent());
+                                context.read<OfferBloc>().add(ClearPriceCountEvent());
                               } else if (!state.isValidOfferDateRange) {
-                                context
-                                    .read<OfferBloc>()
-                                    .add(SelectOfferDateRangeEvent(range!));
+                                context.read<OfferBloc>().add(SelectOfferDateRangeEvent(range!));
                               }
                             },
                           );

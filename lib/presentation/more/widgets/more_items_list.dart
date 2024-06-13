@@ -19,8 +19,12 @@ class MoreItemsList extends StatelessWidget {
         MoreListTile(
           title: 'الملف الشخصي',
           icon: FontAwesomeIcons.user,
-          onTap: () =>
-              context.pushNamed(AppRoutes.editProfileScreen, extra: false),
+          onTap: () => context.pushNamed(AppRoutes.editProfileScreen, extra: false),
+        ),
+        MoreListTile(
+          title: 'التقويم',
+          icon: FontAwesomeIcons.calendar,
+          onTap: () => context.pushNamed(AppRoutes.calendarScreen),
         ),
         MoreListTile(
           title: 'المعاملات المالية',
@@ -30,10 +34,10 @@ class MoreItemsList extends StatelessWidget {
         MoreListTile(
           title: 'العقود',
           icon: FontAwesomeIcons.fileInvoiceDollar,
-          onTap: () => context.pushNamed(AppRoutes.contractsScreen),
+          onTap: () => context.pushNamed(AppRoutes.contractsMenuScreen),
         ),
         MoreListTile(
-          title: 'الفواتير وكشوف الحساب',
+          title: 'الفواتير',
           icon: FontAwesomeIcons.fileInvoice,
           onTap: () => context.pushNamed(AppRoutes.invoicesAndStatementsScreen),
         ),
@@ -42,36 +46,19 @@ class MoreItemsList extends StatelessWidget {
           icon: FontAwesomeIcons.sackDollar,
           onTap: () => context.pushNamed(AppRoutes.pricesScreen),
         ),
-        BlocListener<UserBloc, UserState>(
-          listener: (context, state) {
-            if (state.getUnitSettingsApiCallState == UserApiCallState.loading) {
-              LoadingDialog.show(context);
-            } else if (state.getUnitSettingsApiCallState ==
-                UserApiCallState.success) {
-              LoadingDialog.hide(context);
-              context.pushNamed(AppRoutes.unitSettingsScreen);
-            } else if (state.getUnitSettingsApiCallState ==
-                UserApiCallState.failure) {
-              LoadingDialog.hide(context);
-              MaktabSnackbar.showError(context, state.message);
-            }
-          },
-          child: MoreListTile(
-            title: 'إعدادات الوحدة',
-            icon: FontAwesomeIcons.gear,
-            onTap: () => context.read<UserBloc>().add(GetUnitSettingsEvent()),
-          ),
+        MoreListTile(
+          title: 'إعدادات الوحدة',
+          icon: FontAwesomeIcons.gear,
+          onTap: () => context.pushNamed(AppRoutes.unitSettingsScreen),
         ),
         BlocListener<UserBloc, UserState>(
           listener: (context, state) {
             if (state.userAgreementApiCallState == UserApiCallState.loading) {
               LoadingDialog.show(context);
-            } else if (state.userAgreementApiCallState ==
-                UserApiCallState.success) {
+            } else if (state.userAgreementApiCallState == UserApiCallState.success) {
               LoadingDialog.hide(context);
               context.pushNamed(AppRoutes.userAgreementScreen);
-            } else if (state.userAgreementApiCallState ==
-                UserApiCallState.failure) {
+            } else if (state.userAgreementApiCallState == UserApiCallState.failure) {
               LoadingDialog.hide(context);
               MaktabSnackbar.showError(context, state.message);
             }
@@ -87,15 +74,12 @@ class MoreItemsList extends StatelessWidget {
           listener: (context, state) {
             if (state.complaintsApiCallState == OfficesApiCallState.loading) {
               LoadingDialog.show(context);
-            } else if (state.complaintsApiCallState ==
-                OfficesApiCallState.update) {
+            } else if (state.complaintsApiCallState == OfficesApiCallState.update) {
               LoadingDialog.hide(context);
-            } else if (state.complaintsApiCallState ==
-                OfficesApiCallState.success) {
+            } else if (state.complaintsApiCallState == OfficesApiCallState.success) {
               LoadingDialog.hide(context);
               context.pushNamed(AppRoutes.complaintsScreen);
-            } else if (state.complaintsApiCallState ==
-                OfficesApiCallState.failure) {
+            } else if (state.complaintsApiCallState == OfficesApiCallState.failure) {
               LoadingDialog.hide(context);
               MaktabSnackbar.showError(context, 'حدث خطأ ما');
             }

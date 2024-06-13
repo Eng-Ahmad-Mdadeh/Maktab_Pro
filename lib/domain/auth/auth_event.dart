@@ -19,9 +19,9 @@ class TimerCompleted extends AuthEvent {
 
 class LoginEvent extends AuthEvent {
   final String phone;
-  final String messageType;
+  final String? messageType;
 
-  const LoginEvent(this.phone, this.messageType);
+  const LoginEvent(this.phone, [this.messageType]);
 }
 
 class CheckCodeEvent extends AuthEvent {

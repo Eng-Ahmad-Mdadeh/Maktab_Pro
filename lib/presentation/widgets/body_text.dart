@@ -1,7 +1,7 @@
-// ignore_for_file: depend_on_referenced_packages
-
 import 'package:flutter/material.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
+
+import '../../core/helpers/size_helper.dart';
+import '../resources/app_text_styles.dart';
 
 class BodyText extends StatelessWidget {
   const BodyText({
@@ -9,13 +9,27 @@ class BodyText extends StatelessWidget {
     required this.text,
     this.textAlign,
     this.textColor,
-    this.fontFamily,
+    this.fontSize,
+    this.overflow,
+    this.fontWeight,
+    this.decoration,
+    this.decorationStyle,
+    this.decorationColor,
+    this.decorationThickness,
+    this.maxLines,
   });
 
   final String text;
   final TextAlign? textAlign;
   final Color? textColor;
-  final String? fontFamily;
+  final double? fontSize;
+  final TextOverflow? overflow;
+  final FontWeight? fontWeight;
+  final TextDecoration? decoration;
+  final TextDecorationStyle? decorationStyle;
+  final Color? decorationColor;
+  final double? decorationThickness;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +37,16 @@ class BodyText extends StatelessWidget {
       text,
       softWrap: true,
       textAlign: textAlign,
-      style: Theme.of(context).textTheme.titleSmall!.copyWith(
-            color: textColor ?? AppColors.slateGray,
-            fontFamily: fontFamily,
+      overflow: overflow ?? TextOverflow.visible,
+      maxLines: maxLines,
+      style: AppTextStyles.bodyLarge.copyWith(
+            color: textColor,
+            fontSize: fontSize?.fSize ?? 15.0.fSize,
+            fontWeight: fontWeight,
+            decoration: decoration,
+            decorationStyle: decorationStyle,
+            decorationColor: decorationColor,
+            decorationThickness: decorationThickness,
           ),
     );
   }

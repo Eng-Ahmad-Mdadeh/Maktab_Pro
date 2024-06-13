@@ -36,7 +36,7 @@ class StcPolicySection extends StatelessWidget {
               leading: BlocBuilder<ReceivingMethodBloc, ReceivingMethodState>(
                 builder: (context, state) {
                   return Checkbox(
-                    fillColor: const MaterialStatePropertyAll(AppColors.gray),
+                    fillColor: const WidgetStatePropertyAll(AppColors.gray),
                     value: state.acceptStcPayPolicy,
                     onChanged: (bool? value) {
                       context

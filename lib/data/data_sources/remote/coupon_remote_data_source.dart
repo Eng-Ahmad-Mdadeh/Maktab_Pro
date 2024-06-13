@@ -4,6 +4,8 @@ import 'package:maktab/core/network/api_endpoints.dart';
 import 'package:maktab/data/data_sources/remote/base_remote_data_source.dart';
 import 'package:maktab/data/models/response/response_model.dart' as r;
 
+import '../../../core/classes/exception/api_exceptions.dart';
+
 class CouponRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   CouponRemoteDataSource() : super(ApiEndpoints.coupons);
 
@@ -15,7 +17,7 @@ class CouponRemoteDataSource extends BaseRemoteDataSource<r.Response> {
     return fetchDataWithId(id);
   }
 
-  Future<Either<AppException, r.Response>> createCoupon(data) async {
+  Future<Either<ApiException, r.Response>> createCoupon(data) async {
     return postData(endpoint: ApiEndpoints.create, data: data);
   }
 

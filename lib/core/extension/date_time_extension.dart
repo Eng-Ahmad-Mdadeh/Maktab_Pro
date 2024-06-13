@@ -14,12 +14,36 @@ extension DateTimeExtension on DateTime {
         isSameDay(this, endDate!);
   }
 
+  bool isInRangeWithSameMomentR(Map<String, DateTime> range) {
+    return isAfter(range['start']!) && isBefore(range['end']!) ||
+        isAtSameMomentAs(range['start']!) ||
+        isAtSameMomentAs(range['end']!);
+  }
+
+  bool isInRangeWithSameDayR(Map<String, DateTime?> range) {
+    if(range['start'] == null) return false;
+    if(range['end'] == null) return false;
+    return isAfter(range['start']!) && isBefore(range['end']!) ||
+        isAtSameMomentAs(range['start']!) ||
+        isAtSameMomentAs(range['end']!);
+  }
+
+
+
   bool isAtSameHourAsNow() {
     return isAtSameMomentAs(DateTime(
       DateTime.now().year,
       DateTime.now().month,
       DateTime.now().day,
       DateTime.now().hour,
+    ).toLocal());
+  }
+
+  bool isAtSameDayAsNow() {
+    return isAtSameMomentAs(DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
     ).toLocal());
   }
 
@@ -43,5 +67,9 @@ extension DateTimeExtension on DateTime {
     } else {
       return [];
     }
+  }
+
+  DateTime addHours(int hour){
+    return DateTime(year, month, day, hour, 0);
   }
 }

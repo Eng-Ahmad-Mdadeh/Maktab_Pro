@@ -12,9 +12,10 @@ import 'package:maktab/presentation/widgets/maktab_calendar.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class UnitCalendarBox extends StatelessWidget {
-  const UnitCalendarBox({super.key, required this.unit});
+  const UnitCalendarBox({super.key, required this.unit, required this.officeId});
 
   final Office unit;
+  final int officeId;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class UnitCalendarBox extends StatelessWidget {
       width: 150.h,
       child: InkWell(
         onTap: () =>
-            context.pushNamed(AppRoutes.unitCalendarScreen, extra: unit),
+            context.pushNamed(AppRoutes.unitCalendarScreen, extra: {'unitID': unit.id, 'officeID': officeId}),
         child: Column(
           children: [
             MaktabCalendar(
@@ -54,7 +55,7 @@ class UnitCalendarBox extends StatelessWidget {
             ),
             SizedBox(height: 15.v),
             Flexible(
-              child: BodyText(text: unit.title),
+              child: BodyText(text: unit.title??''),
             ),
           ],
         ),

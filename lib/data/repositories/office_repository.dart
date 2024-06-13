@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:maktab/core/classes/exception/api_exceptions.dart';
 import 'package:maktab/core/classes/exception/app_exception.dart';
@@ -6,6 +8,9 @@ import 'package:maktab/data/data_sources/remote/settings_remote_data_source.dart
 import 'package:maktab/data/models/office/office_model.dart';
 import 'package:maktab/data/models/office/office_unit_model.dart';
 import 'package:maktab/data/models/office/search_data_model.dart';
+
+import '../../domain/unit/unit_bloc.dart';
+
 
 class OfficeRepository {
   final OfficeRemoteDataSource _officeRemoteDataSource;
@@ -26,7 +31,7 @@ class OfficeRepository {
           final Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -42,7 +47,7 @@ class OfficeRepository {
               right.data.map((data) => Office.fromJson(data)));
           return Right(offices);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -58,7 +63,7 @@ class OfficeRepository {
               right.data.map((data) => OfficeUnit.fromJson(data)));
           return Right(units);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -74,7 +79,7 @@ class OfficeRepository {
               right.data.map((data) => Office.fromJson(data)));
           return Right(offices);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -90,7 +95,7 @@ class OfficeRepository {
               right.data.map((data) => Office.fromJson(data)));
           return Right(offices);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -106,7 +111,7 @@ class OfficeRepository {
               right.data.map((data) => Office.fromJson(data)));
           return Right(offices);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -133,7 +138,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -172,7 +177,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -218,7 +223,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -234,22 +239,22 @@ class OfficeRepository {
     newDetails.forEach((key, value) {
       if (key == 'floor') {
         officeData['details[$index][ar_name]'] = 'الدور';
-        officeData['details[$index][en_name]'] = 'floor';
+        officeData['details[$index][en_name]'] = 'floors';
       } else if (key == 'age') {
         officeData['details[$index][ar_name]'] = 'عمر المكتب';
-        officeData['details[$index][en_name]'] = 'age';
+        officeData['details[$index][en_name]'] = 'office Age';
       } else if (key == 'officescount') {
         officeData['details[$index][ar_name]'] = 'عدد المكاتب';
-        officeData['details[$index][en_name]'] = 'officescount';
+        officeData['details[$index][en_name]'] = 'offices numbers';
       } else if (key == 'meetingroomscount') {
         officeData['details[$index][ar_name]'] = 'غرف الاجتماعات';
-        officeData['details[$index][en_name]'] = 'meetingroomscount';
+        officeData['details[$index][en_name]'] = 'Meeting Rooms';
       } else if (key == 'tablescount') {
         officeData['details[$index][ar_name]'] = 'عدد الطاولات';
-        officeData['details[$index][en_name]'] = 'tablescount';
-      } else if (key == 'sharedworkspaces') {
+        officeData['details[$index][en_name]'] = 'Number of Tables';
+      } else if (key == 'sharedworkspacescount') {
         officeData['details[$index][ar_name]'] = 'مساحات عمل مشتركة';
-        officeData['details[$index][en_name]'] = 'sharedworkspaces';
+        officeData['details[$index][en_name]'] = 'Shared Workspaces';
       }
       officeData['details[$index][id]'] = 0;
       officeData['details[$index][status]'] = 1;
@@ -259,22 +264,22 @@ class OfficeRepository {
     updatedDetails.forEach((key, value) {
       if (key == 'floor') {
         officeData['details[$index][ar_name]'] = 'الدور';
-        officeData['details[$index][en_name]'] = 'floor';
+        officeData['details[$index][en_name]'] = 'floors';
       } else if (key == 'age') {
         officeData['details[$index][ar_name]'] = 'عمر المكتب';
-        officeData['details[$index][en_name]'] = 'age';
+        officeData['details[$index][en_name]'] = 'office Age';
       } else if (key == 'officescount') {
         officeData['details[$index][ar_name]'] = 'عدد المكاتب';
-        officeData['details[$index][en_name]'] = 'officescount';
+        officeData['details[$index][en_name]'] = 'offices numbers';
       } else if (key == 'meetingroomscount') {
         officeData['details[$index][ar_name]'] = 'غرف الاجتماعات';
-        officeData['details[$index][en_name]'] = 'meetingroomscount';
+        officeData['details[$index][en_name]'] = 'Meeting Rooms';
       } else if (key == 'tablescount') {
         officeData['details[$index][ar_name]'] = 'عدد الطاولات';
-        officeData['details[$index][en_name]'] = 'tablescount';
-      } else if (key == 'sharedworkspaces') {
+        officeData['details[$index][en_name]'] = 'Number of Tables';
+      } else if (key == 'sharedworkspacescount') {
         officeData['details[$index][ar_name]'] = 'مساحات عمل مشتركة';
-        officeData['details[$index][en_name]'] = 'sharedworkspaces';
+        officeData['details[$index][en_name]'] = 'Shared Workspaces';
       }
       officeData['details[$index][id]'] = value.keys.first;
       officeData['details[$index][status]'] = 1;
@@ -285,6 +290,9 @@ class OfficeRepository {
       officeData['delete_ids[$index]'] = detailId;
       index++;
     }
+
+    log("OFFICE DATA");
+    log(officeData.toString());
     final result =
         await _officeRemoteDataSource.updateDetails(officeId, officeData);
     return result.fold(
@@ -294,7 +302,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -315,7 +323,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -336,7 +344,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -357,7 +365,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -378,19 +386,23 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
   }
 
   Future<Either<AppException, Office>> updateDownPayment(
-      {officeId, downPayment, downPaymentType}) async {
+      {officeId, downPayment, DepositTypes? downPaymentType}) async {
     var downPaymentData = {
       "id": officeId,
       "down_payment": downPayment,
-      "type_down_payment": downPaymentType == 'سعر' ? 'rial' : 'percent',
+      "type_down_payment": downPaymentType == DepositTypes.price ? 'rial' : downPaymentType == DepositTypes.percentage ? 'percent' : 'unknown',
     };
+    log("************************************************");
+    log(downPaymentData.toString());
+    log(downPaymentType.toString());
+    log("************************************************");
     final result = await _officeRemoteDataSource.downPayment(downPaymentData);
     return result.fold(
       (error) => Left(error),
@@ -399,7 +411,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -430,7 +442,7 @@ class OfficeRepository {
           Office unit = Office.fromJson(right.data);
           return Right(unit);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -461,7 +473,7 @@ class OfficeRepository {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -507,7 +519,7 @@ class OfficeRepository {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -522,7 +534,7 @@ class OfficeRepository {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -540,7 +552,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -558,7 +570,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -576,7 +588,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -591,7 +603,7 @@ class OfficeRepository {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -609,7 +621,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -642,7 +654,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -656,7 +668,7 @@ class OfficeRepository {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -670,7 +682,7 @@ class OfficeRepository {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -685,7 +697,7 @@ class OfficeRepository {
           SearchData data = SearchData.fromJson(right.data);
           return Right(data);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -724,7 +736,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -750,7 +762,7 @@ class OfficeRepository {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );

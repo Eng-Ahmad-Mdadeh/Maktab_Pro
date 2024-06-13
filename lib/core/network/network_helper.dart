@@ -1,15 +1,13 @@
-// ignore_for_file: control_flow_in_finally
-
 import 'dart:developer';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:maktab/core/classes/exception/api_exceptions.dart';
-import 'package:maktab/core/classes/exception/app_exception.dart';
 import 'package:maktab/core/network/api_endpoints.dart';
 import 'package:maktab/core/services/service_locator.dart';
 import 'package:maktab/data/data_sources/local/user_local_data_source.dart';
+
 
 class NetworkHelper {
   late Dio _dio;
@@ -37,9 +35,9 @@ class NetworkHelper {
 
   Dio get dio => _dio;
 
-  Future<dynamic> get(String url, {Map<String, dynamic>? queryParams}) async {
+  Future<dynamic> get(String url, {Map<String, dynamic>? queryParams, bool googleApi = false}) async {
     String? token = await getToken();
-    return _performRequest(() => _dio.get(
+    return _performRequest(googleApi: googleApi,() => _dio.get(
           url,
           queryParameters: queryParams,
           options: Options(headers: {'Authorization': 'Bearer $token'}),
@@ -77,6 +75,10 @@ class NetworkHelper {
 
   Future<dynamic> delete(String url, {dynamic data}) async {
     String? token = await getToken();
+    log("REQUEST DATA");
+    log(data.toString());
+    log("REQUEST URL");
+    log(url.toString());
     return _performRequest(() => _dio.delete(
           url,
           options: Options(
@@ -89,16 +91,26 @@ class NetworkHelper {
         ));
   }
 
-  Future<Either<Exception, dynamic>> _performRequest(
-      Future<Response> Function() request) async {
-    if (await Connectivity().checkConnectivity() != ConnectivityResult.none) {
+  Future<Either<Exception, dynamic>> _performRequest(Future<Response> Function() request, {bool googleApi = false}) async {
+    if (!(await Connectivity().checkConnectivity()).contains(ConnectivityResult.none)) {
       try {
         Response response = await request();
-        log("RESULT");
+        log("RESPONSE RESULT");
         log(response.data.toString());
-        return Right(response.data);
+        if(googleApi) return Right(response.data);
+        if((bool.tryParse(response.data['status'].toString())??false)) {
+          return Right(response.data);
+        }else{
+          return Left(_handleError(response.data['errNum']??0, response.data['message']??''));
+        }
       } catch (e) {
-        return Left(AppException('أعد المحاولة'));
+        // print("eeeeeeeeee: $e");
+        // rethrow;
+        if(e is DioException){
+          return Left(_handleError(e.response?.statusCode, e.message));
+        }
+        rethrow;
+        // return Left(ApiException('أعد المحاولة'));
       }
     } else {
       return Left(NoInternetConnectionException());
@@ -109,22 +121,22 @@ class NetworkHelper {
     return await locator<UserLocalDataSource>().getUserToken();
   }
 
-  // ApiException _handleError(statusCode, message) {
-  //   switch (statusCode) {
-  //     case "400":
-  //       return BadRequestException(message);
-  //     case "401":
-  //       return UnauthorizedException(message);
-  //     case "403":
-  //       return ForbiddenException(message);
-  //     case "404":
-  //       return NotFoundException(message);
-  //     case "500":
-  //       return InternalServerErrorException(message);
-  //     default:
-  //       return ApiException(message);
-  //   }
-  // }
+  ApiException _handleError(statusCode, message) {
+    switch (statusCode) {
+      case "400":
+        return BadRequestException(message);
+      case "401":
+        return UnauthorizedException(message);
+      case "403":
+        return ForbiddenException(message);
+      case "404":
+        return NotFoundException(message);
+      case "500":
+        return InternalServerErrorException(message);
+      default:
+        return ApiException(message);
+    }
+  }
 
   Future<List<MapEntry<String, MultipartFile>>> convertFiles(
       List<Map<String, dynamic>> files) async {

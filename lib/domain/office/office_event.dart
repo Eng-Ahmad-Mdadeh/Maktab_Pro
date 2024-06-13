@@ -72,7 +72,7 @@ final class SetSpaceEvent extends OfficeEvent {
 }
 
 final class SetEquipmentEvent extends OfficeEvent {
-  final String equipment;
+  final String? equipment;
 
   const SetEquipmentEvent(this.equipment);
 }

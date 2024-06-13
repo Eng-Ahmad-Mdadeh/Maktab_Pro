@@ -1,59 +1,61 @@
-// ignore_for_file: depend_on_referenced_packages
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:pinput/pinput.dart';
+
+import '../../../../core/helpers/size_helper.dart';
+import '../../resources/app_colors.dart';
+import '../../resources/app_text_styles.dart';
 
 class CodeTextField extends StatelessWidget {
-  const CodeTextField({super.key, required this.controller});
+  final Function(String) onCompleted;
+
+  const CodeTextField({
+    super.key,
+    required this.controller,
+    required this.onCompleted,
+  });
 
   final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 15.v),
       child: Directionality(
         textDirection: TextDirection.ltr,
-        child: PinCodeTextField(
+        child: Pinput(
           length: 4,
-          appContext: context,
           controller: controller,
-          enableActiveFill: true,
-          animationType: AnimationType.fade,
+          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // scrollPadding: EdgeInsets.symmetric(horizontal: 20.0.h),
           animationDuration: const Duration(milliseconds: 300),
-          pinTheme: PinTheme(
-            fieldWidth: 50,
-            borderRadius: BorderRadius.circular(15),
-            shape: PinCodeFieldShape.box,
-            activeFillColor: AppColors.softAsh,
-            inactiveFillColor: AppColors.softAsh,
-            selectedFillColor: AppColors.softAsh,
-            selectedColor: AppColors.softAsh,
-            activeColor: AppColors.softAsh,
-            errorBorderColor: AppColors.softAsh,
-            inactiveBorderWidth: 0,
-            errorBorderWidth: 0,
-            disabledBorderWidth: 0,
-          ),
-          boxShadows: const [
-            BoxShadow(
-              color: AppColors.softAsh,
-              blurRadius: 1.0,
-              spreadRadius: 1.0,
+          onCompleted: onCompleted,
+          keyboardType: TextInputType.number,
+          androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
+          defaultPinTheme: PinTheme(
+            width: 70.0.h,
+            height: 70.0.v,
+            textStyle: AppTextStyles.titleLarge.copyWith(fontSize: 21.0.fSize),
+            decoration: BoxDecoration(
+              // color: AppColors.mintGreen,
+              borderRadius: BorderRadius.circular(15.0),
+              border: Border.all(
+                width: 1,
+                color: AppColors.softAsh,
+
+              ),
             ),
-          ],
+          ),
           inputFormatters: [
             FilteringTextInputFormatter.allow(RegExp(r'^\d+')),
           ],
           validator: (value) {
             if (value!.isEmpty) {
-              return 'الرجاء ادخال الكود المرسل';
+              return "الرجاء ادخال الكود المرسل";
             }
             if (value.length < 4) {
-              return 'الرجاء ادخال كود صحيح';
+              return "الرجاء ادخال كود صحيح";
             }
             return null;
           },

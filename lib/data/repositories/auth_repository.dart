@@ -4,21 +4,22 @@ import 'package:dartz/dartz.dart';
 import 'package:maktab/core/classes/exception/api_exceptions.dart';
 import 'package:maktab/core/classes/exception/app_exception.dart';
 import 'package:maktab/core/classes/exception/data_exceptions.dart';
+import 'package:maktab/core/services/service_locator.dart';
 import 'package:maktab/data/data_sources/local/user_local_data_source.dart';
 import 'package:maktab/data/data_sources/remote/auth_remote_data_source.dart';
+
+import 'profile_repository.dart';
 
 class AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
   final UserLocalDataSource _localDataSource;
 
   AuthRepository(
-      {required AuthRemoteDataSource authRemoteDataSource,
-      required UserLocalDataSource userLocalDataSource})
+      {required AuthRemoteDataSource authRemoteDataSource, required UserLocalDataSource userLocalDataSource})
       : _remoteDataSource = authRemoteDataSource,
         _localDataSource = userLocalDataSource;
 
-  Future<Either<AppException, String>> login(
-      {required String phone, required String messageType}) async {
+  Future<Either<AppException, String>> login({required String phone, required String messageType}) async {
     log("phone: $phone");
     var loginData = {"phone": "0$phone", "type_message": messageType};
     final result = await _remoteDataSource.login(loginData);
@@ -26,8 +27,8 @@ class AuthRepository {
       (error) => Left(error),
       (right) {
         try {
-          log(right.message);
-          return Right(right.message);
+          // log(right.message);
+          return Right(right.message?? 'Unknown error');
         } on ApiException catch (e) {
           return Left(e);
         }
@@ -35,18 +36,17 @@ class AuthRepository {
     );
   }
 
-  Future<Either<AppException, String>> checkCode(
-      {required String phone, required String code}) async {
-    var loginData = {"phone":"0$phone", "code": code};
+  Future<Either<AppException, String>> checkCode({required String phone, required String code}) async {
+    var loginData = {"phone": "0$phone", "code": code};
 
     final result = await _remoteDataSource.checkCode(loginData);
     return result.fold(
       (error) => Left(error),
       (right) async {
         try {
-          log(right.message);
+          log(right.message?? 'Unknown error');
           await _localDataSource.setUserToken(right.data['access_token']);
-          return Right(right.message);
+          return Right(right.message?? 'Unknown error');
         } catch (e) {
           return Left(ConversionException(e.toString()));
         }
@@ -76,7 +76,7 @@ class AuthRepository {
       (error) => Left(error),
       (right) async {
         try {
-          log(right.message);
+          log(right.message?? 'Unknown error');
           await _localDataSource.removeUserToken();
           return const Right(null);
         } on ApiException catch (e) {
@@ -87,8 +87,18 @@ class AuthRepository {
   }
 
   Future<bool> checkAuthentication() async {
-    String? token = await _localDataSource.getUserToken();
-    log("USER_TOKEN: $token");
-    return token != null ? true : false;
+    try {
+      bool logged = false;
+      final result = await locator<ProfileRepository>().getProfile();
+      logged = result.fold(
+        (l) => false,
+        (r) => true,
+      );
+      String? token = await _localDataSource.getUserToken();
+      log("USER_TOKEN: $token");
+      return logged ? token != null ? true : false : false;
+    } catch (e) {
+      return false;
+    }
   }
 }

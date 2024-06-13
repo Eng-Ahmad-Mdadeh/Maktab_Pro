@@ -18,10 +18,11 @@ class AccountTypeOption extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaktabButton(
       onPressed: onTap,
-      backgroundColor: isSelected ? AppColors.black : AppColors.softAsh,
-      color: AppColors.slateGray,
+      backgroundColor: isSelected ? AppColors.mintGreen : AppColors.softAsh,
+      color: isSelected ? AppColors.white : AppColors.black,
       padding: const EdgeInsets.all(4),
       text: title,
+      fontSize: 17.0,
     );
   }
 }

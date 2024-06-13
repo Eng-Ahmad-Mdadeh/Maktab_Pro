@@ -45,10 +45,7 @@ class OfficesCubit extends Cubit<OfficesState> {
       complaintsApiCallState: OfficesApiCallState.initial,
     ));
     var result = await _officeRepository.getMyOffices();
-    result.fold(
-        (failure) => emit(
-            state.copyWith(myOfficesApiCallState: OfficesApiCallState.failure)),
-        (offices) async {
+    result.fold((failure) => emit(state.copyWith(myOfficesApiCallState: OfficesApiCallState.failure)), (offices) async {
       if (state.searchData == null) {
         var result = await _officeRepository.getSearchData();
         return result.fold(
@@ -87,8 +84,7 @@ class OfficesCubit extends Cubit<OfficesState> {
     ));
     var result = await _officeRepository.getIncompleteOffices();
     result.fold(
-      (failure) => emit(state.copyWith(
-          incompleteOfficesApiCallState: OfficesApiCallState.failure)),
+      (failure) => emit(state.copyWith(incompleteOfficesApiCallState: OfficesApiCallState.failure)),
       (offices) => emit(state.copyWith(
         incompleteOffices: offices,
         incompleteOfficesApiCallState: OfficesApiCallState.success,
@@ -107,10 +103,7 @@ class OfficesCubit extends Cubit<OfficesState> {
       complaintsApiCallState: OfficesApiCallState.initial,
     ));
     var result = await _officeRepository.getIncompleteUnits();
-    result.fold(
-        (failure) => emit(state.copyWith(
-            incompleteUnitsApiCallState: OfficesApiCallState.failure)),
-        (units) async {
+    result.fold((failure) => emit(state.copyWith(incompleteUnitsApiCallState: OfficesApiCallState.failure)), (units) async {
       if (state.searchData == null) {
         var result = await _officeRepository.getSearchData();
         return result.fold(
@@ -177,10 +170,7 @@ class OfficesCubit extends Cubit<OfficesState> {
       complaintsApiCallState: OfficesApiCallState.initial,
     ));
     var result = await _priceRepository.getPrices();
-    result.fold(
-        (failure) => emit(
-            state.copyWith(pricesApiCallState: OfficesApiCallState.failure)),
-        (offices) {
+    result.fold((failure) => emit(state.copyWith(pricesApiCallState: OfficesApiCallState.failure)), (offices) {
       if (isUpdate) {
         emit(state.copyWith(
           prices: offices,
@@ -228,10 +218,7 @@ class OfficesCubit extends Cubit<OfficesState> {
       complaintsApiCallState: OfficesApiCallState.initial,
     ));
     var result = await _offerRepository.getAllOffers();
-    result.fold(
-        (failure) => emit(
-            state.copyWith(pricesApiCallState: OfficesApiCallState.failure)),
-        (offers) {
+    result.fold((failure) => emit(state.copyWith(pricesApiCallState: OfficesApiCallState.failure)), (offers) {
       if (isUpdate) {
         emit(state.copyWith(
           offers: offers,
@@ -256,10 +243,7 @@ class OfficesCubit extends Cubit<OfficesState> {
       complaintsApiCallState: OfficesApiCallState.initial,
     ));
     var result = await _couponRepository.getAllCoupons();
-    result.fold(
-        (failure) => emit(
-            state.copyWith(pricesApiCallState: OfficesApiCallState.failure)),
-        (coupons) {
+    result.fold((failure) => emit(state.copyWith(pricesApiCallState: OfficesApiCallState.failure)), (coupons) {
       if (isUpdate) {
         emit(state.copyWith(
           coupons: coupons,
@@ -284,10 +268,7 @@ class OfficesCubit extends Cubit<OfficesState> {
       complaintsApiCallState: OfficesApiCallState.initial,
     ));
     var result = await _officeRepository.getMarketingRequests();
-    result.fold(
-        (failure) => emit(state.copyWith(
-            marketingRequestsApiCallState: OfficesApiCallState.failure)),
-        (marketingRequests) {
+    result.fold((failure) => emit(state.copyWith(marketingRequestsApiCallState: OfficesApiCallState.failure)), (marketingRequests) {
       if (isUpdate) {
         emit(state.copyWith(
           marketingRequests: marketingRequests,
@@ -311,10 +292,7 @@ class OfficesCubit extends Cubit<OfficesState> {
       offersApiCallState: OfficesApiCallState.initial,
     ));
     var result = await _complaintRepository.getComplaints();
-    result.fold(
-        (failure) => emit(state.copyWith(
-            complaintsApiCallState: OfficesApiCallState.failure)),
-        (complaints) {
+    result.fold((failure) => emit(state.copyWith(complaintsApiCallState: OfficesApiCallState.failure)), (complaints) {
       if (isUpdate) {
         emit(state.copyWith(
           complaints: complaints,
@@ -341,8 +319,8 @@ class OfficesCubit extends Cubit<OfficesState> {
     var result = await _calendarRepository.getAllCalendars();
     result.fold(
         (failure) => emit(
-            state.copyWith(calendarsApiCallState: OfficesApiCallState.failure)),
-        (calendars) {
+              state.copyWith(calendarsApiCallState: OfficesApiCallState.failure),
+            ), (calendars) {
       if (isUpdate) {
         emit(state.copyWith(
           calendars: calendars,

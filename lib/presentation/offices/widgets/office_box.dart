@@ -13,10 +13,11 @@ import 'package:maktab/presentation/offices/widgets/office_info_box.dart';
 import 'package:maktab/presentation/offices/widgets/office_info_item.dart';
 import 'package:maktab/presentation/offices/widgets/unit_box.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/delete_alert_dialog.dart';
 import 'package:maktab/presentation/widgets/maktab_page_slider.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+
+import '../../widgets/body_text.dart';
+import '../../widgets/section_title.dart';
 
 class OfficeBox extends StatelessWidget {
   OfficeBox({super.key, required this.office});
@@ -39,59 +40,57 @@ class OfficeBox extends StatelessWidget {
           children: [
             Expanded(
               child: SectionTitle(
-                title: office.title,
+                title: office.title??'',
                 textAlign: TextAlign.right,
+                overflow: TextOverflow.visible,
+                fontSize: 17.0,
               ),
             ),
-            if (office.isMarketing)
-              Tooltip(
-                message: 'يتم النشر من قبل مكتب',
-                triggerMode: TooltipTriggerMode.tap,
-                textStyle: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(color: AppColors.white),
-                decoration: BoxDecoration(
-                  color: AppColors.smokeGray,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Text(
-                  'تسويق',
-                  softWrap: true,
-                  style: Theme.of(context)
+            Column(
+              children: [
+                if (office.isMarketing)
+                  Tooltip(
+                    message: 'يتم النشر من قبل مكتب',
+                    triggerMode: TooltipTriggerMode.tap,
+                    textStyle: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(color: AppColors.white),
+                    decoration: BoxDecoration(
+                      color: AppColors.smokeGray,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: const BodyText(
+                      text: 'تسويق',
+                      textColor: AppColors.mintGreen,
+                    ),
+                  ),
+                SizedBox(height: 5.h),
+                Tooltip(
+                  message: office.isMarketing ? 'قيد المعالجة من قبل مكتب' : '',
+                  triggerMode: TooltipTriggerMode.tap,
+                  textStyle: Theme.of(context)
                       .textTheme
-                      .titleSmall!
-                      .copyWith(color: AppColors.emeraldGreen),
-                ),
-              ),
-            SizedBox(width: 12.h),
-            Tooltip(
-              message: office.isMarketing ? 'قيد المعالجة من قبل مكتب' : '',
-              triggerMode: TooltipTriggerMode.tap,
-              textStyle: Theme.of(context)
-                  .textTheme
-                  .bodyLarge!
-                  .copyWith(color: AppColors.white),
-              decoration: BoxDecoration(
-                color: AppColors.smokeGray,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Text(
-                office.units.where((unit) => unit.active).isNotEmpty
-                    ? 'معروض'
-                    : office.isMarketing
+                      .bodyLarge!
+                      .copyWith(color: AppColors.white),
+                  decoration: BoxDecoration(
+                    color: AppColors.smokeGray,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: BodyText(
+                    text:office.units.where((unit) => unit.active).isNotEmpty
+                        ? 'معروض'
+                        : office.isMarketing
                         ? 'معلق'
                         : 'غير معروض',
-                softWrap: true,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color:
-                          office.units.where((unit) => unit.active).isNotEmpty
-                              ? AppColors.emeraldGreen
-                              : office.isMarketing
-                                  ? AppColors.orangeAccent
-                                  : AppColors.cherryRed,
-                    ),
-              ),
+                    textColor: office.units.where((unit) => unit.active).isNotEmpty
+                        ? AppColors.emeraldGreen
+                        : office.isMarketing
+                        ? AppColors.orangeAccent
+                        : AppColors.cherryRed,
+                  ),
+                ),
+              ],
             ),
             SizedBox(width: 10.h),
             InkWell(
@@ -247,7 +246,7 @@ class OfficeBox extends StatelessWidget {
                       children: [
                         const SectionTitle(title: 'وحدات هذا المكتب: '),
                         BodyText(
-                          text: office.units.length.toString(),
+                          text:office.units.length.toString(),
                           textColor: AppColors.lightBlack,
                         ),
                       ],

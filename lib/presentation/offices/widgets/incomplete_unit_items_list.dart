@@ -10,12 +10,13 @@ import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/loading_dialog.dart';
 import 'package:maktab/presentation/widgets/maktab_loading.dart';
 
+
 class IncompleteUnitItemsList extends StatefulWidget {
-  const IncompleteUnitItemsList({super.key});
+  final Function(int) onIncompleteUnitDelete;
+  const IncompleteUnitItemsList({super.key, required this.onIncompleteUnitDelete});
 
   @override
-  State<IncompleteUnitItemsList> createState() =>
-      _IncompleteUnitItemsListState();
+  State<IncompleteUnitItemsList> createState() => _IncompleteUnitItemsListState();
 }
 
 class _IncompleteUnitItemsListState extends State<IncompleteUnitItemsList> {
@@ -23,10 +24,6 @@ class _IncompleteUnitItemsListState extends State<IncompleteUnitItemsList> {
 
   @override
   void initState() {
-    if (context.read<OfficesCubit>().state.incompleteUnitsApiCallState !=
-        OfficesApiCallState.success) {
-      context.read<OfficesCubit>().getIncompleteUnits();
-    }
     super.initState();
   }
 
@@ -35,8 +32,7 @@ class _IncompleteUnitItemsListState extends State<IncompleteUnitItemsList> {
     return SizedBox(
       height: 350.v,
       child: RefreshIndicator(
-        onRefresh: () async =>
-            context.read<OfficesCubit>().getIncompleteUnits(),
+        onRefresh: () async => context.read<OfficesCubit>().getIncompleteUnits(),
         child: BlocConsumer<OfficesCubit, OfficesState>(
           listener: (context, state) {
             if (state.unitApiCallState == OfficesApiCallState.loading) {
@@ -55,28 +51,25 @@ class _IncompleteUnitItemsListState extends State<IncompleteUnitItemsList> {
             }
           },
           builder: (context, state) {
-            if (state.incompleteUnitsApiCallState ==
-                OfficesApiCallState.loading) {
+            if (state.incompleteUnitsApiCallState == OfficesApiCallState.loading) {
               return Center(child: loadingItem());
-            } else if (state.incompleteUnitsApiCallState ==
-                OfficesApiCallState.success) {
+            } else if (state.incompleteUnitsApiCallState == OfficesApiCallState.success) {
               return ListView.separated(
                 itemBuilder: (context, index) {
                   return OfficeItem(
-                      office: state.incompleteUnits[index],
-                      mode: 'complete',
-                      onTap: () async {
-                        await context
-                            .read<OfficesCubit>()
-                            .getUnitById(state.myOffices[index].id);
-                        selectedUnit = state.incompleteUnits[index];
-                      });
+                    office: state.incompleteUnits[index],
+                    mode: 'complete',
+                    onTap: () async {
+                      await context.read<OfficesCubit>().getUnitById(state.myOffices[index].id);
+                      selectedUnit = state.incompleteUnits[index];
+                    },
+                    onDelete: () => widget.onIncompleteUnitDelete(state.incompleteUnits[index].id),
+                  );
                 },
                 separatorBuilder: (context, index) => SizedBox(height: 20.v),
                 itemCount: state.incompleteUnits.length,
               );
-            } else if (state.incompleteUnitsApiCallState ==
-                OfficesApiCallState.failure) {
+            } else if (state.incompleteUnitsApiCallState == OfficesApiCallState.failure) {
               return const Center(child: BodyText(text: 'حدث خطأ ما'));
             }
             return const SizedBox.shrink();

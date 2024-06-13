@@ -120,8 +120,8 @@ class UnitOfferDetailsBox extends StatelessWidget {
                     children: [
                       MaktabSwitch(
                         value: offer.status,
-                        activeColor: AppColors.emeraldTeal,
-                        activeTrackColor: AppColors.mintGreen,
+                        // activeColor: AppColors.emeraldTeal,
+                        // activeTrackColor: AppColors.mintGreen,
                         onChanged: (value) {
                           showDialog(
                             context: context,

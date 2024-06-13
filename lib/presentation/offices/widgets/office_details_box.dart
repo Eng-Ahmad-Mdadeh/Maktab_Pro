@@ -66,13 +66,10 @@ class OfficeDetailsBox extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(
-                'مرفوض',
-                softWrap: true,
-                style: Theme.of(context)
-                    .textTheme
-                    .titleSmall!
-                    .copyWith(color: AppColors.cherryRed),
+              const SectionTitle(
+                title:
+                'مرفوض',textColor: AppColors.cherryRed
+
               )
             ],
           ),

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 
+import '../../widgets/section_title.dart';
+
 class OfficeInfoCard extends StatelessWidget {
   const OfficeInfoCard({super.key});
 
@@ -35,18 +37,15 @@ class OfficeInfoCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const SectionTitle(
+                    title:
                     "111111",
-                    softWrap: true,
-                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                   SizedBox(height: 6.v),
-                  Text(
-                    'الاجراءات المكتملة',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(color: AppColors.slateGray),
+                  const SectionTitle(
+                    title:
+                    'الاجراءات المكتملة',textColor: AppColors.slateGray
+
                   ),
                   SizedBox(height: 6.v),
                   Row(
@@ -59,12 +58,10 @@ class OfficeInfoCard extends StatelessWidget {
                         ),
                       ),
                       SizedBox(width: 8.h),
-                      Text(
-                        "6/3",
-                        style: Theme.of(context)
-                            .textTheme
-                            .titleSmall!
-                            .copyWith(color: AppColors.cherryRed),
+                      const SectionTitle(
+                        title:
+                        "6/3",textColor: AppColors.cherryRed
+
                       ),
                     ],
                   ),

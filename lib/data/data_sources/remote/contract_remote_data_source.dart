@@ -4,6 +4,8 @@ import 'package:maktab/core/network/api_endpoints.dart';
 import 'package:maktab/data/data_sources/remote/base_remote_data_source.dart';
 import 'package:maktab/data/models/response/response_model.dart' as r;
 
+import '../../../core/classes/exception/api_exceptions.dart';
+
 class ContractRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   ContractRemoteDataSource() : super(ApiEndpoints.contracts);
 
@@ -11,12 +13,12 @@ class ContractRemoteDataSource extends BaseRemoteDataSource<r.Response> {
     return fetchAllData();
   }
 
-  Future<Either<AppException, r.Response>> getContractById(id) async {
+  Future<Either<ApiException, r.Response>> getContractById(id) async {
     return fetchDataWithId(id);
   }
 
-  Future<Either<AppException, r.Response>> createContract(data) async {
-    return postData(endpoint: ApiEndpoints.create, data: data);
+  Future<Either<AppException, r.Response>> createContract(data, ) async {
+    return postData(endpoint: ApiEndpoints.create, data: data, files: [{'field_name': 'record_file', 'path': data['record_file']}]);
   }
 
   Future<Either<AppException, r.Response>> updateContract(id, data) async {
@@ -27,6 +29,6 @@ class ContractRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   }
 
   Future<Either<AppException, r.Response>> deleteContract(id) async {
-    return deleteData(endpoint: '/$id');
+    return deleteData(endpoint: '${ApiEndpoints.approveDelete}/$id');
   }
 }

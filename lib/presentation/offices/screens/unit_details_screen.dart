@@ -42,7 +42,7 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SectionTitle(title: state.selectedOffice!.title),
+                      SectionTitle(title: state.selectedOffice!.title ?? ''),
                       IconButton(
                         padding: EdgeInsets.zero,
                         onPressed: () {
@@ -54,22 +54,17 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                                 value: context.read<UnitBloc>(),
                                 child: BlocConsumer<UnitBloc, UnitState>(
                                   listener: (ctx, unitState) {
-                                    if (unitState.unitApiCallState ==
-                                        UnitApiCallState.success) {
+                                    if (unitState.unitApiCallState == UnitApiCallState.success) {
                                       ctx.pop();
                                       ctx.pop();
                                       ctx.read<OfficesCubit>().getMyOffices();
                                     }
                                   },
-                                  builder: (context, unitState) =>
-                                      DeleteAlertDialog(
+                                  builder: (context, unitState) => DeleteAlertDialog(
                                     alertText: 'لايمكنك التراجع بعد التأكيد',
-                                    isLoading: unitState.unitApiCallState ==
-                                        UnitApiCallState.loading,
+                                    isLoading: unitState.unitApiCallState == UnitApiCallState.loading,
                                     confirmOnPressed: () {
-                                      context.read<UnitBloc>().add(
-                                          DeleteUnitEvent(
-                                              state.selectedOffice!.id));
+                                      context.read<UnitBloc>().add(DeleteUnitEvent(state.selectedOffice!.id));
                                     },
                                     cancelOnPressed: () => context.pop(),
                                   ),
@@ -89,11 +84,8 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   OfficeInfoBox(
                     title: 'معلومات الوحدة',
                     enableEdit: !widget.office.isMarketing,
-                    editOnTap: () => context
-                        .pushNamed(AppRoutes.updateUnitInfoScreen, extra: {
-                      'office': widget.office,
-                      'unit': state.selectedOffice
-                    }),
+                    editOnTap: () =>
+                        context.pushNamed(AppRoutes.updateUnitInfoScreen, extra: {'office': widget.office, 'unit': state.selectedOffice}),
                     infoWidget: Column(
                       children: [
                         OfficeInfoItem(
@@ -106,30 +98,22 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                         ),
                         OfficeInfoItem(
                           title: 'المساحة',
-                          value: state.selectedOffice!.space != null
-                              ? state.selectedOffice!.space.toString()
-                              : 'غير محدد',
+                          value: state.selectedOffice?.space != null ? state.selectedOffice!.space.toString() : 'غير محدد',
                         ),
                         OfficeInfoItem(
                           title: 'التجهيز',
-                          value: state.selectedOffice!.furnisher.isNotEmpty
-                              ? state.selectedOffice!.furnisher.toString()
-                              : 'غير محدد',
+                          value: (state.selectedOffice?.furnisher??'').isNotEmpty ? state.selectedOffice!.furnisher.toString() : 'غير محدد',
                         ),
                         OfficeInfoItem(
                           title: 'علاقة المعلن',
-                          value: state.selectedOffice!.advertiserRelationship
-                                  .isNotEmpty
-                              ? state.selectedOffice!.advertiserRelationship
-                                  .toString()
+                          value: (state.selectedOffice?.advertiserRelationship??'').isNotEmpty
+                              ? state.selectedOffice!.advertiserRelationship.toString()
                               : 'غير محدد',
                         ),
                         OfficeInfoItem(
                           title: 'نوع علاقة المعلن',
-                          value: state.selectedOffice!
-                                  .advertiserRelationshipType.isNotEmpty
-                              ? state.selectedOffice!.advertiserRelationshipType
-                                  .toString()
+                          value: (state.selectedOffice!.advertiserRelationshipType??'').isNotEmpty
+                              ? state.selectedOffice!.advertiserRelationshipType.toString()
                               : 'غير محدد',
                         ),
                       ],
@@ -147,23 +131,16 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                             value: context.read<UnitBloc>(),
                             child: BlocConsumer<UnitBloc, UnitState>(
                               listener: (ctx, unitState) {
-                                if (unitState.unitApiCallState ==
-                                    UnitApiCallState.success) {
-                                  ctx.read<OfficesCubit>().getOfficeById(
-                                      state.selectedOffice!.id,
-                                      isUpdate: true);
+                                if (unitState.unitApiCallState == UnitApiCallState.success) {
+                                  ctx.read<OfficesCubit>().getOfficeById(state.selectedOffice!.id, isUpdate: true);
                                   ctx.pop();
                                 }
                               },
-                              builder: (context, unitState) =>
-                                  ConfirmAlertDialog(
+                              builder: (context, unitState) => ConfirmAlertDialog(
                                 alertText: 'أنت على وشك عرض / اخفاء وحدتك',
-                                isLoading: unitState.unitApiCallState ==
-                                    UnitApiCallState.loading,
+                                isLoading: unitState.unitApiCallState == UnitApiCallState.loading,
                                 confirmOnPressed: () {
-                                  context.read<UnitBloc>().add(
-                                      UpdateUnitStatusEvent(
-                                          state.selectedOffice!.id));
+                                  context.read<UnitBloc>().add(UpdateUnitStatusEvent(state.selectedOffice!.id));
                                 },
                                 cancelOnPressed: () => context.pop(),
                               ),
@@ -176,18 +153,10 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                       children: [
                         OfficeInfoItem(
                           title: 'الحالة',
-                          value: Office.getOfficeState(
-                              state.selectedOffice!.status,
-                              state.selectedOffice!.active),
-                          valueColor: Office.getOfficeState(
-                                      state.selectedOffice!.status,
-                                      state.selectedOffice!.active) ==
-                                  'معروض'
+                          value: Office.getOfficeState(state.selectedOffice!.status, state.selectedOffice!.active),
+                          valueColor: Office.getOfficeState(state.selectedOffice!.status, state.selectedOffice!.active) == 'معروض'
                               ? AppColors.mintTeal
-                              : Office.getOfficeState(
-                                          state.selectedOffice!.status,
-                                          state.selectedOffice!.active) ==
-                                      'معلق'
+                              : Office.getOfficeState(state.selectedOffice!.status, state.selectedOffice!.active) == 'معلق'
                                   ? AppColors.orangeAccent
                                   : AppColors.cherryRed,
                         ),
@@ -198,19 +167,15 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   OfficeInfoBox(
                     title: 'تصنيف المكتب',
                     enableEdit: !widget.office.isMarketing,
-                    editOnTap: () => context
-                        .pushNamed(AppRoutes.updateUnitCategoryScreen, extra: {
-                      'office': widget.office,
-                      'unit': state.selectedOffice
-                    }),
+                    editOnTap: () =>
+                        context.pushNamed(AppRoutes.updateUnitCategoryScreen, extra: {'office': widget.office, 'unit': state.selectedOffice}),
                     infoWidget: BodyText(
                       text: context
                           .read<OfficesCubit>()
                           .state
                           .searchData!
                           .officeCategories
-                          .firstWhere((category) =>
-                              category.id == state.selectedOffice!.categoryId)
+                          .firstWhere((category) => category.id == state.selectedOffice!.categoryId)
                           .arName,
                     ),
                   ),
@@ -218,70 +183,39 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   OfficeInfoBox(
                     title: 'تفاصيل المكتب',
                     enableEdit: !widget.office.isMarketing,
-                    editOnTap: () => context.pushNamed(
-                        AppRoutes.updateUnitDetailsScreen,
-                        extra: state.selectedOffice),
+                    editOnTap: () => context.pushNamed(AppRoutes.updateUnitDetailsScreen, extra: state.selectedOffice),
                     infoWidget: Column(
                       children: [
-
                         OfficeInfoItem(
                           title: 'الدور',
-                          value: state.selectedOffice!.details
-                              .firstWhere((detail) => detail.arName == 'الدور')
-                              .numberDetails
-                              .toString(),
+                          value: state.selectedOffice!.details.firstWhere((detail) => detail.arName == 'الدور').numberDetails.toString(),
                         ),
                         OfficeInfoItem(
                           title: 'عمر المكتب',
-                          value: state.selectedOffice!.details
-                              .firstWhere(
-                                  (detail) => detail.arName == 'عمر المكتب')
-                              .numberDetails
-                              .toString(),
+                          value: state.selectedOffice!.details.firstWhere((detail) => detail.arName == 'عمر المكتب').numberDetails.toString(),
                         ),
-                        if (state.selectedOffice!.details.firstWhereOrNull(
-                                (detail) => detail.arName == 'عدد المكاتب') !=
-                            null)
+                        if (state.selectedOffice!.details.firstWhereOrNull((detail) => detail.arName == 'عدد المكاتب') != null)
                           OfficeInfoItem(
                             title: 'عدد المكاتب',
-                            value: state.selectedOffice!.details
-                                .firstWhereOrNull(
-                                    (detail) => detail.arName == 'عدد المكاتب')!
-                                .numberDetails
-                                .toString(),
+                            value:
+                                state.selectedOffice!.details.firstWhereOrNull((detail) => detail.arName == 'عدد المكاتب')!.numberDetails.toString(),
                           ),
-                        if (state.selectedOffice!.details.firstWhereOrNull(
-                                (detail) =>
-                                    detail.arName == 'غرف الاجتماعات') !=
-                            null)
+                        if (state.selectedOffice!.details.firstWhereOrNull((detail) => detail.arName == 'غرف الاجتماعات') != null)
                           OfficeInfoItem(
                             title: 'غرف الاجتماعات',
-                            value: state.selectedOffice!.details
-                                .firstWhere((detail) =>
-                                    detail.arName == 'غرف الاجتماعات')
-                                .numberDetails
-                                .toString(),
+                            value: state.selectedOffice!.details.firstWhere((detail) => detail.arName == 'غرف الاجتماعات').numberDetails.toString(),
                           ),
-                        if (state.selectedOffice!.details.firstWhereOrNull(
-                                (detail) => detail.arName == 'عدد الطاولات') !=
-                            null)
+                        if (state.selectedOffice!.details.firstWhereOrNull((detail) => detail.arName == 'عدد الطاولات') != null)
                           OfficeInfoItem(
                             title: 'عدد الطاولات',
-                            value: state.selectedOffice!.details
-                                .firstWhereOrNull((detail) =>
-                                    detail.arName == 'عدد الطاولات')!
-                                .numberDetails
-                                .toString(),
+                            value:
+                                state.selectedOffice!.details.firstWhereOrNull((detail) => detail.arName == 'عدد الطاولات')!.numberDetails.toString(),
                           ),
-                        if (state.selectedOffice!.details.firstWhereOrNull(
-                                (detail) =>
-                                    detail.arName == 'مساحات عمل مشتركة') !=
-                            null)
+                        if (state.selectedOffice!.details.firstWhereOrNull((detail) => detail.arName == 'مساحات عمل مشتركة') != null)
                           OfficeInfoItem(
                             title: 'مساحات عمل مشتركة',
                             value: state.selectedOffice!.details
-                                .firstWhereOrNull((detail) =>
-                                    detail.arName == 'مساحات عمل مشتركة')!
+                                .firstWhereOrNull((detail) => detail.arName == 'مساحات عمل مشتركة')!
                                 .numberDetails
                                 .toString(),
                           ),
@@ -292,25 +226,17 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   OfficeInfoBox(
                     title: 'وصف وحدتك',
                     enableEdit: !widget.office.isMarketing,
-                    editOnTap: () => context.pushNamed(
-                        AppRoutes.updateUnitDescriptionScreen,
-                        extra: state.selectedOffice),
-                    infoWidget:
-                        BodyText(text: state.selectedOffice!.description),
+                    editOnTap: () => context.pushNamed(AppRoutes.updateUnitDescriptionScreen, extra: state.selectedOffice),
+                    infoWidget: BodyText(text: state.selectedOffice!.description ?? ''),
                   ),
                   SizedBox(height: 20.h),
                   OfficeInfoBox(
                     title: 'المرافق',
                     enableEdit: !widget.office.isMarketing,
-                    editOnTap: () => context.pushNamed(
-                        AppRoutes.updateUnitFacilitiesScreen,
-                        extra: state.selectedOffice),
+                    editOnTap: () => context.pushNamed(AppRoutes.updateUnitFacilitiesScreen, extra: state.selectedOffice),
                     infoWidget: BodyText(
                       text: state.selectedOffice!.facilities.isNotEmpty
-                          ? state.selectedOffice!.facilities
-                              .map((facility) => facility.arName)
-                              .toList()
-                              .join(' , ')
+                          ? state.selectedOffice!.facilities.map((facility) => facility.arName).toList().join(' , ')
                           : 'غير محدد',
                     ),
                   ),
@@ -318,15 +244,10 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   OfficeInfoBox(
                     title: 'المميزات',
                     enableEdit: !widget.office.isMarketing,
-                    editOnTap: () => context.pushNamed(
-                        AppRoutes.updateUnitFeaturesScreen,
-                        extra: state.selectedOffice),
+                    editOnTap: () => context.pushNamed(AppRoutes.updateUnitFeaturesScreen, extra: state.selectedOffice),
                     infoWidget: BodyText(
                       text: state.selectedOffice!.features.isNotEmpty
-                          ? state.selectedOffice!.features
-                              .map((feature) => feature.arName)
-                              .toList()
-                              .join(' , ')
+                          ? state.selectedOffice!.features.map((feature) => feature.arName).toList().join(' , ')
                           : 'غير محدد',
                     ),
                   ),
@@ -334,15 +255,10 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   OfficeInfoBox(
                     title: 'الخدمات',
                     enableEdit: !widget.office.isMarketing,
-                    editOnTap: () => context.pushNamed(
-                        AppRoutes.updateUnitServicesScreen,
-                        extra: state.selectedOffice),
+                    editOnTap: () => context.pushNamed(AppRoutes.updateUnitServicesScreen, extra: state.selectedOffice),
                     infoWidget: BodyText(
                       text: state.selectedOffice!.services.isNotEmpty
-                          ? state.selectedOffice!.services
-                              .map((service) => service.arName)
-                              .toList()
-                              .join(' , ')
+                          ? state.selectedOffice!.services.map((service) => service.arName).toList().join(' , ')
                           : 'غير محدد',
                     ),
                   ),
@@ -350,15 +266,10 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   OfficeInfoBox(
                     title: 'وسائل الراحة',
                     enableEdit: !widget.office.isMarketing,
-                    editOnTap: () => context.pushNamed(
-                        AppRoutes.updateUnitComfortsScreen,
-                        extra: state.selectedOffice),
+                    editOnTap: () => context.pushNamed(AppRoutes.updateUnitComfortsScreen, extra: state.selectedOffice),
                     infoWidget: BodyText(
                       text: state.selectedOffice!.comforts.isNotEmpty
-                          ? state.selectedOffice!.comforts
-                              .map((comfort) => comfort.arName)
-                              .toList()
-                              .join(' , ')
+                          ? state.selectedOffice!.comforts.map((comfort) => comfort.arName).toList().join(' , ')
                           : 'غير محدد',
                     ),
                   ),
@@ -366,15 +277,13 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   OfficeInfoBox(
                     title: 'جميع الملفات',
                     enableEdit: !widget.office.isMarketing,
-                    editOnTap: () => context.pushNamed(
-                        AppRoutes.updateUnitFilesScreen,
-                        extra: state.selectedOffice),
+                    editOnTap: () => context.pushNamed(AppRoutes.updateUnitFilesScreen, extra: state.selectedOffice),
                     infoWidget: Column(
                       children: [
-                        if (state.selectedOffice!.mainImage.isNotEmpty)
+                        if ((state.selectedOffice?.mainImage ?? '').isNotEmpty)
                           MaktabImageView(
                             width: SizeHelper.width,
-                            imagePath: state.selectedOffice!.mainImage,
+                            imagePath: state.selectedOffice!.mainImage!,
                             radius: BorderRadius.circular(15.adaptSize),
                           ),
                         SizedBox(height: 15.h),
@@ -396,16 +305,11 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                                 .toList(),
                           ),
                         SizedBox(height: 15.h),
-                        if (state.selectedOffice!.files.firstWhereOrNull(
-                                (file) => file.typeFile == 'video') !=
-                            null)
+                        if (state.selectedOffice!.files.firstWhereOrNull((file) => file.typeFile == 'video') != null)
                           ClipRRect(
                             borderRadius: BorderRadius.circular(15.adaptSize),
                             child: MaktabVideoPlayer(
-                              videoLink: state.selectedOffice!.files
-                                  .firstWhereOrNull(
-                                      (file) => file.typeFile == 'video')!
-                                  .path,
+                              videoLink: state.selectedOffice!.files.firstWhereOrNull((file) => file.typeFile == 'video')!.path,
                             ),
                           ),
                       ],

@@ -42,7 +42,7 @@ class OfficeState extends Equatable {
   List<UnitPriceOptions> selectedUnitPriceOptions;
   Map<UnitPriceOptions, num> selectedUnitPrices;
   int selectedUnitPricesCount;
-  DepositTypes depositType;
+  DepositTypes? depositType;
   num depositAmount;
   String viewerName;
   String viewerPhone;
@@ -166,7 +166,7 @@ class OfficeState extends Equatable {
         services,
         comforts,
         additionalServiceKeys,
-        additionalServices,
+        additionalServices.values,
         addressPosition,
         currentMapZoom,
         city,

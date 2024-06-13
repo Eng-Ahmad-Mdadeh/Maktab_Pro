@@ -13,7 +13,10 @@ import 'package:maktab/data/repositories/auth_repository.dart';
 import 'package:maktab/data/repositories/profile_repository.dart';
 import 'package:maktab/data/repositories/user_repository.dart';
 
+import '../../core/services/notification_services.dart';
+
 part 'profile_event.dart';
+
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
@@ -41,7 +44,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             imageErrorMessage: '')) {
     on<GetProfileEvent>((event, emit) async {
       emit(state.copyWith(profileState: ProfileStates.loading));
-      log(state.toString());
+      // log(state.toString());
       try {
         var result = await _profileRepository.getProfile();
         result.fold(
@@ -49,7 +52,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             profileState: ProfileStates.failure,
             message: failure.message,
           )),
-          (user) {
+          (user) async {
             if (user.type?.arName != '') {
               int ind = getUserTypeAccountInd(user);
               emit(state.copyWith(
@@ -63,6 +66,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
                 user: user,
               ));
             }
+            await NotificationService.init(user.id);
           },
         );
       } catch (e) {
@@ -116,18 +120,16 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             licenseLink: event.licenseLink);
         result.fold(
           (failure) {
-            log("error message:${failure.message}");
+            // log("error message:${failure.message}");
             emit(state.copyWith(
               profileState: ProfileStates.failToUpdate,
               message: failure.message,
             ));
           },
           (user) {
-            log(" success message:${user.companyName}");
+            // log(" success message:${user.companyName}");
             emit(state.copyWith(
-                profileState: ProfileStates.updated,
-                user: user,
-                message: "تم تحديث الملف الشخصي بنجاح"));
+                profileState: ProfileStates.updated, user: user, message: "تم تحديث الملف الشخصي بنجاح"));
           },
         );
       } catch (e) {
@@ -142,8 +144,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(state.copyWith(imageErrorMessage: ''));
       String? selectedImage = await locator<FilePickerHelper>().pickImage();
       if (selectedImage != null && selectedImage.isNotEmpty) {
-        String? croppedImage =
-            await ImageCropperHelper.cropImage(selectedImage: selectedImage);
+        String? croppedImage = await ImageCropperHelper.cropImage(selectedImage: selectedImage);
         if (croppedImage != null) {
           emit(state.copyWith(
             pickedImage: croppedImage,
@@ -151,8 +152,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           ));
         }
       } else {
-        emit(state.copyWith(
-            imageErrorMessage: 'يجب أن يكون حجم الصورة أصغر من 2 ميغا بايت'));
+        emit(state.copyWith(imageErrorMessage: 'يجب أن يكون حجم الصورة أصغر من 2 ميغا بايت'));
       }
     });
     on<SelectAccountTypeEvent>((event, emit) async {

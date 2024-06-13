@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 import 'package:maktab/presentation/resources/app_colors.dart';
 
+import 'section_title.dart';
+
 class DropDownButton extends StatefulWidget {
-  const DropDownButton({Key? key}) : super(key: key);
+  const DropDownButton({super.key});
 
   @override
   State<DropDownButton> createState() => _DropDownButtonState();
@@ -31,9 +33,9 @@ class _DropDownButtonState extends State<DropDownButton> {
           ].map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(
+              child: SectionTitle(
+                title:
                 value,
-                style: Theme.of(context).textTheme.titleSmall,
               ),
             );
           }).toList(),

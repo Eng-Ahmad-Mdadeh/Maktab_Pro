@@ -9,12 +9,31 @@ import 'package:maktab/data/models/response/response_model.dart' as r;
 class MapRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   MapRemoteDataSource() : super('');
 
-  Future<Either<AppException, Map<String, dynamic>>> getAddressDetails(
-      data) async {
+  Future<Either<AppException, Map<String, dynamic>>> getAddressDetails(data) async {
     try {
       final Either response = await locator<NetworkHelper>().get(
-          ApiEndpoints.googleMapsApi + ApiEndpoints.geocoding,
-          queryParams: data);
+        ApiEndpoints.googleMapsApi + ApiEndpoints.geocoding,
+        queryParams: data,
+        googleApi: true
+      );
+      return response.fold(
+        (error) => Left(error),
+        (right) {
+          return Right(right);
+        },
+      );
+    } on AppException catch (e) {
+      // rethrow;
+      return Left(e);
+    }catch(e){
+      return Left(AppException("خطأ غير معروف G-A-D-1"));
+    }
+  }
+
+  Future<Either<AppException, Map<String, dynamic>>> getPlaceSearchSuggesions(data) async {
+    try {
+      final Either response = await locator<NetworkHelper>()
+          .get(ApiEndpoints.googleMapsApi + ApiEndpoints.placeAutocomplete, queryParams: data);
       return response.fold(
         (error) => Left(error),
         (right) {
@@ -26,29 +45,10 @@ class MapRemoteDataSource extends BaseRemoteDataSource<r.Response> {
     }
   }
 
-  Future<Either<AppException, Map<String, dynamic>>> getPlaceSearchSuggesions(
-      data) async {
+  Future<Either<AppException, Map<String, dynamic>>> getPlaceDetails(data) async {
     try {
-      final Either response = await locator<NetworkHelper>().get(
-          ApiEndpoints.googleMapsApi + ApiEndpoints.placeAutocomplete,
-          queryParams: data);
-      return response.fold(
-        (error) => Left(error),
-        (right) {
-          return Right(right);
-        },
-      );
-    } on AppException catch (e) {
-      return Left(e);
-    }
-  }
-
-  Future<Either<AppException, Map<String, dynamic>>> getPlaceDetails(
-      data) async {
-    try {
-      final Either response = await locator<NetworkHelper>().get(
-          ApiEndpoints.googleMapsApi + ApiEndpoints.placeDetails,
-          queryParams: data);
+      final Either response = await locator<NetworkHelper>()
+          .get(ApiEndpoints.googleMapsApi + ApiEndpoints.placeDetails, queryParams: data);
       return response.fold(
         (error) => Left(error),
         (right) {

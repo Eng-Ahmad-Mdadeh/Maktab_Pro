@@ -36,13 +36,17 @@ class ContactUsScreen extends StatelessWidget {
               SizedBox(height: 30.v),
               const BodyText(
                 text:
-                    'من هذي الصفحة بامكانك التواصل مع مدير حسابك طوال أيام الاسبوع من الساعة 9:30 حسابك طوال أيام الاسبوع من الساعة 9:30 صباحا وحتى الساعة 9 مساء',
+                    'من هذي الصفحة بامكانك التواصل مع مدير حسابك طوال أيام الاسبوع من الساعة 09:30 صباحا وحتى الساعة 09:00 مساء',
+                fontSize: 17.0,
               ),
               SizedBox(height: 25.v),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SectionTitle(title: 'تواصل عن طريق'),
+                  const SectionTitle(
+                    title: 'تواصل عن طريق',
+                    fontSize: 17.0,
+                  ),
                   SizedBox(height: 15.v),
                   SizedBox(
                     height: 50.v,
@@ -54,10 +58,10 @@ class ContactUsScreen extends StatelessWidget {
                           backgroundColor: AppColors.lightCyan,
                           color: AppColors.white,
                           padding: EdgeInsets.zero,
+                          fontSize: 17.0,
                           text: 'الايميل',
                           onPressed: () async {
-                            await launchUrl(
-                                Uri.parse('mailto:info@Aqartik.sa'));
+                            await launchUrl(Uri.parse('mailto:info@Aqartik.sa'));
                           },
                         ),
                         MaktabButton(
@@ -65,6 +69,7 @@ class ContactUsScreen extends StatelessWidget {
                           padding: EdgeInsets.zero,
                           backgroundColor: AppColors.lightCyan,
                           color: AppColors.white,
+                          fontSize: 17.0,
                           text: 'مركز الاتصال',
                           onPressed: () async {
                             await launchUrl(Uri.parse('tel://+966512345678'));

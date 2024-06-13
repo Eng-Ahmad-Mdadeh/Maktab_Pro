@@ -69,9 +69,8 @@ class _UnitDepositFormFieldState extends State<UnitDepositFormField> {
                         value: format['type'],
                         child: Align(
                           alignment: Alignment.centerRight,
-                          child: Text(
-                            format['title'],
-                            style: Theme.of(context).textTheme.bodyLarge,
+                          child: BodyText(
+                            text:  format['title'],
                           ),
                         ),
                       );

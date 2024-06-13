@@ -39,11 +39,10 @@ class AddingMarketingRequestSection extends StatelessWidget {
         builder: (context, state) {
           return MaktabSwitch(
             value: state.marketingRequestState == VisibilityStates.show,
-            activeColor: AppColors.emeraldTeal,
-            activeTrackColor: AppColors.mintGreen,
+            // activeColor: AppColors.emeraldTeal,
+            // activeTrackColor: AppColors.mintGreen,
             onChanged: context.read<OfficeBloc>().state.createdOffice == null
-                ? (value) =>
-                    context.read<OfficeBloc>().add(AddMarketingRequestEvent())
+                ? (value) => context.read<OfficeBloc>().add(AddMarketingRequestEvent())
                 : (value) {},
           );
         },

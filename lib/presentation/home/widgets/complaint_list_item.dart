@@ -5,6 +5,7 @@ import 'package:maktab/data/models/complaint/complaint_model.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
 
+
 class ComplaintListItem extends StatelessWidget {
   const ComplaintListItem({super.key, required this.complaint});
 
@@ -30,6 +31,7 @@ class ComplaintListItem extends StatelessWidget {
                 textColor: AppColors.lightBlack,
               ),
             ),
+            Expanded(child: BodyText(text: complaint.reason)),
             Expanded(
               child: BodyText(
                 text: DateFormatterHelper.getFormated(complaint.createdAt),

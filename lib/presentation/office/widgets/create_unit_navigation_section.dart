@@ -29,8 +29,9 @@ class CreateUnitNavigationSection extends StatelessWidget {
               curve: Curves.easeIn);
         } else if (state.stepNavigationState == StepNavigationState.end) {
           pageController.dispose();
-          context.pop();
-          context.pop();
+          while(context.canPop()){
+            context.pop();
+          }
           MaktabSnackbar.showWarning(context, 'جاري رفع الملفات ...');
         }
         // if (state.imagesApiCallState == OfficeApiCallState.success) {

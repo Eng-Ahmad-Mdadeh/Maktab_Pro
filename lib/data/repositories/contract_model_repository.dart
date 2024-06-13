@@ -9,14 +9,14 @@ class ContractModelRepository {
 
   ContractModelRepository(this._remoteDataSource);
 
-  Future<Either<AppException, List<ContractModel>>> getContractModels() async {
+  Future<Either<AppException, List<ContractModelModel>>> getContractModels() async {
     final result = await _remoteDataSource.getContractModels();
     return result.fold(
       (error) => Left(error),
       (right) {
         try {
-          final List<ContractModel> contracts = List<ContractModel>.from(
-            right.data.map((dynamic data) => ContractModel.fromJson(data)),
+          final List<ContractModelModel> contracts = List<ContractModelModel>.from(
+            right.data.map((dynamic data) => ContractModelModel.fromJson(data)),
           );
           return Right(contracts);
         } catch (e) {
@@ -26,15 +26,15 @@ class ContractModelRepository {
     );
   }
 
-  Future<Either<AppException, List<ContractModel>>>
+  Future<Either<AppException, List<ContractModelModel>>>
       getReadyContractModels() async {
     final result = await _remoteDataSource.getReadyContractModels();
     return result.fold(
       (error) => Left(error),
       (right) {
         try {
-          final List<ContractModel> contracts = List<ContractModel>.from(
-            right.data.map((dynamic data) => ContractModel.fromJson(data)),
+          final List<ContractModelModel> contracts = List<ContractModelModel>.from(
+            right.data.map((dynamic data) => ContractModelModel.fromJson(data)),
           );
           return Right(contracts);
         } catch (e) {
@@ -44,13 +44,13 @@ class ContractModelRepository {
     );
   }
 
-  Future<Either<AppException, ContractModel>> getContractModelById(id) async {
+  Future<Either<AppException, ContractModelModel>> getContractModelById(id) async {
     final result = await _remoteDataSource.getContractModelById(id);
     return result.fold(
       (error) => Left(error),
       (right) {
         try {
-          final ContractModel contract = ContractModel.fromJson(right.data);
+          final ContractModelModel contract = ContractModelModel.fromJson(right.data);
           return Right(contract);
         } catch (e) {
           return Left(ConversionException(e.toString()));
@@ -59,7 +59,7 @@ class ContractModelRepository {
     );
   }
 
-  Future<Either<AppException, ContractModel>> createContractModel({
+  Future<Either<AppException, ContractModelModel>> createContractModel({
     required String name,
     required String description,
     required String content,
@@ -77,7 +77,7 @@ class ContractModelRepository {
         (error) => Left(error),
         (right) {
           try {
-            final ContractModel contract = ContractModel.fromJson(right.data);
+            final ContractModelModel contract = ContractModelModel.fromJson(right.data);
             return Right(contract);
           } catch (e) {
             return Left(ConversionException(e.toString()));
@@ -89,7 +89,7 @@ class ContractModelRepository {
     }
   }
 
-  Future<Either<AppException, ContractModel>> updateContractModel({
+  Future<Either<AppException, ContractModelModel>> updateContractModel({
     required int id,
     required String name,
     required String description,
@@ -108,7 +108,7 @@ class ContractModelRepository {
         (error) => Left(error),
         (right) {
           try {
-            final ContractModel contract = ContractModel.fromJson(right.data);
+            final ContractModelModel contract = ContractModelModel.fromJson(right.data);
             return Right(contract);
           } catch (e) {
             return Left(ConversionException(e.toString()));
@@ -134,13 +134,13 @@ class ContractModelRepository {
     );
   }
 
-  Future<Either<AppException, ContractModel>> setContractModelStatus(id) async {
+  Future<Either<AppException, ContractModelModel>> setContractModelStatus(id) async {
     final result = await _remoteDataSource.setContractModelStatus(id);
     return result.fold(
       (error) => Left(error),
       (right) {
         try {
-          final ContractModel contract = ContractModel.fromJson(right.data);
+          final ContractModelModel contract = ContractModelModel.fromJson(right.data);
           return Right(contract);
         } catch (e) {
           return Left(ConversionException(e.toString()));

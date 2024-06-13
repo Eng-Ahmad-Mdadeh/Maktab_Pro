@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab/data/models/transfers/transfer_pagination_model.dart';
-import '../../data/models/notification/notification_model.dart';
 import '../../data/repositories/transfer_money_repository.dart';
 import 'transfers_event.dart';
 import 'transfers_state.dart';
@@ -9,23 +8,24 @@ import 'transfers_state.dart';
 class TransferBloc extends Bloc<TransfersEvent, TransfersState> {
   final TransferMoneyRepository _transferMoneyRepository;
 
-
   TransferBloc({
     required TransferMoneyRepository transferMoneyRepository,
   })  : _transferMoneyRepository = transferMoneyRepository,
-        super(TransfersState()) {
+        super(const TransfersState()) {
     on<GetTransfersEvent>((event, emit) async {
-      emit(state.copyWith(
-          fetchingDataState: event.page == 1
-              ? FetchingDataStates.loading
-              : FetchingDataStates.paginate));
+      emit(
+        state.copyWith(
+          fetchingDataState: event.page == 1 ? FetchingDataStates.loading : FetchingDataStates.paginate,
+        ),
+      );
       try {
-        var result =
-            await _transferMoneyRepository.getAllTransfers(page: event.page);
+        var result = await _transferMoneyRepository.getAllTransfers(page: event.page);
         result.fold(
           (failure) {
             log(failure.message);
-            emit(state.copyWith(fetchingDataState: FetchingDataStates.failure, ));
+            emit(state.copyWith(
+              fetchingDataState: FetchingDataStates.failure,
+            ));
           },
           (transferPagination) {
             List<TransferModel> transfers = state.transfers.toList();
@@ -35,17 +35,20 @@ class TransferBloc extends Bloc<TransfersEvent, TransfersState> {
             }
             transfers.addAll(transferPagination.transfers);
             emit(state.copyWith(
-                fetchingDataState: FetchingDataStates.success,
-                page: state.page++,
-                total: transferPagination.total,
-                transfers: transfers));
+              fetchingDataState: FetchingDataStates.success,
+              page: state.page + 1,
+              total: transferPagination.total,
+              transfers: transfers,
+            ));
           },
         );
       } catch (e) {
         log(e.toString());
         log(e.toString());
-
-        emit(state.copyWith(fetchingDataState: FetchingDataStates.failure,));
+        // rethrow;
+        emit(state.copyWith(
+          fetchingDataState: FetchingDataStates.failure,
+        ));
       }
     });
   }

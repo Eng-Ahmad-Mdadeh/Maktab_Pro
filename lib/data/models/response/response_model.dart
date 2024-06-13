@@ -1,7 +1,7 @@
 class Response {
   bool status;
-  String errNum;
-  String message;
+  String? errNum;
+  String? message;
   dynamic data;
 
   Response({
@@ -12,7 +12,7 @@ class Response {
   });
 
   factory Response.fromJson(Map<String, dynamic> json) => Response(
-        status: json["status"],
+        status: json["status"] ?? false,
         errNum: json["errNum"].toString(),
         message: json["message"],
         data: json["data"],

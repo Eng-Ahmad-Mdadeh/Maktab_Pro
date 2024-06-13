@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:maktab/core/classes/exception/app_exception.dart';
 import 'package:maktab/data/data_sources/remote/financial_transactions_data_source.dart';
@@ -23,7 +22,7 @@ class FinancialTransactionsRepository {
               ReceivingMethod.fromJson(right.data);
           return Right(receivingMethod);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -46,7 +45,7 @@ class FinancialTransactionsRepository {
               ReceivingMethod.fromJson(right.data);
           return Right(receivingMethod);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -64,7 +63,7 @@ class FinancialTransactionsRepository {
               ReceivingMethod.fromJson(right.data);
           return Right(receivingMethod);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -76,10 +75,10 @@ class FinancialTransactionsRepository {
       (error) => Left(error),
       (right) {
         if (right.status) {
-          log(right.message);
+          // log(right.message);
           return const Right(null);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -96,7 +95,7 @@ class FinancialTransactionsRepository {
           );
           return Right(bankAccounts);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -111,12 +110,12 @@ class FinancialTransactionsRepository {
       (right) {
         try {
           if (right.data == null) {
-            return Left(AppException(right.message));
+            return Left(AppException(right.message?? 'Unknown error'));
           }
           final User user = User.fromJson(right.data);
           return Right(user);
         } catch (e) {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -130,7 +129,7 @@ class FinancialTransactionsRepository {
       (error) => Left(error),
       (right) {
         if (right.data == null) {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
         final User user = User.fromJson(right.data);
 

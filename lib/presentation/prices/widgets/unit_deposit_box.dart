@@ -23,7 +23,7 @@ class UnitDepositBox extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SectionTitle(title: unit.title),
+            SectionTitle(title: unit.title??''),
             InkWell(
               onTap: () => context.pushNamed(AppRoutes.updateUnitDepositScreen,
                   extra: unit),
@@ -46,9 +46,9 @@ class UnitDepositBox extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.v),
                 border: Border.all(color: AppColors.slateGray),
               ),
-              child: unit.mainImage.isNotEmpty
+              child: (unit.mainImage??'').isNotEmpty
                   ? MaktabImageView(
-                      imagePath: unit.mainImage,
+                      imagePath: unit.mainImage!,
                       fit: BoxFit.cover,
                       radius: BorderRadius.circular(15.v),
                     )
@@ -67,9 +67,10 @@ class UnitDepositBox extends StatelessWidget {
                   if (unit.prices
                           .firstWhereOrNull((price) => price.typeResId == 4) !=
                       null)
-                    unit.typeDownPayment == 'سعر'
+                    unit.typeDownPayment == 'rial'
                         ? UnitPriceText(title: '', price: unit.downPayment!)
-                        : BodyText(text: '${unit.downPayment}%')
+                        : unit.typeDownPayment == 'percent' ? BodyText(text: '${unit.downPayment}%')
+                        : BodyText(text: '${unit.downPayment}')
                 ],
               ),
             ),

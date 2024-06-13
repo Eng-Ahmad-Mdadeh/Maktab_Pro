@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab/presentation/widgets/maktab_image_view.dart';
+
+import '../../widgets/section_title.dart';
 
 class OfficeItemBox extends StatelessWidget {
   const OfficeItemBox({
@@ -11,50 +13,51 @@ class OfficeItemBox extends StatelessWidget {
     required this.backgroundColor,
     required this.textColor,
     required this.onTap,
+    this.borderColor,
+    required this.iconColor,
+    this.gradient,
   });
 
   final String title;
   final String? icon;
   final Color backgroundColor;
   final Color textColor;
+  final Color? borderColor;
+  final Color? iconColor;
   final Function() onTap;
+  final Gradient? gradient;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Container(
-        width: 120.h,
-        padding: EdgeInsets.symmetric(vertical: 15.v, horizontal: 15.h),
+        width: (SizeHelper.width * .3) - 20.h,
+        height: (SizeHelper.width * .3) - 20.h,
+        padding: EdgeInsets.symmetric(vertical: 14.v, horizontal: 7.h),
+        margin: EdgeInsets.only(left: 10.0.h, bottom: 10.0.v),
         decoration: BoxDecoration(
-          color: backgroundColor,
-          borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: AppColors.slateGray),
+          // color: backgroundColor,
+          borderRadius: BorderRadius.circular(7.0.adaptSize),
+          border: Border.all(color: borderColor??AppColors.slateGray),
+          gradient: gradient,
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             if (icon != null)
-              Flexible(
-                child: Column(
-                  children: [
-                    Flexible(child: Center(child: SvgPicture.network(icon!))),
-                    SizedBox(height: 5.v),
-                  ],
-                ),
+              MaktabImageView(
+                imagePath: icon!,
+                width: 30.0.h,
+                height: 30.0.v,
+                color: iconColor,
               ),
-            Flexible(
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  title,
-                  softWrap: true,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        color: textColor,
-                        fontWeight: FontWeight.w500,
-                      ),
-                ),
-              ),
+            SectionTitle(
+              title: title,
+              textAlign: TextAlign.center,
+              textColor: textColor,
+              textFontWeight: FontWeight.w500,
+              fontSize: 13,
             ),
           ],
         ),

@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/domain/user/user_bloc.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab/presentation/widgets/section_title.dart';
+
+import '../../resources/app_text_styles.dart';
 
 class UserAgreementScreen extends StatefulWidget {
   const UserAgreementScreen({super.key});
@@ -16,11 +18,9 @@ class UserAgreementScreen extends StatefulWidget {
 }
 
 class _UserAgreementScreenState extends State<UserAgreementScreen> {
-  late UserBloc userBloc;
-
   @override
   void initState() {
-    userBloc = context.read<UserBloc>();
+    // context.read<UserBloc>().add(GetUserAgreementEvent());
     super.initState();
   }
 
@@ -37,15 +37,22 @@ class _UserAgreementScreenState extends State<UserAgreementScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 25.v),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SectionTitle(title: userBloc.state.agreement!.titleAr),
-              SizedBox(height: 30.v),
-              Html(
-                data: userBloc.state.agreement!.contentAr,
-              ),
-            ],
+          child: BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SectionTitle(title: state.agreement!.titleAr ?? ''),
+                  SizedBox(height: 30.v),
+                  HtmlWidget(
+                    state.agreement?.contentAr ?? '',
+                    textStyle: AppTextStyles.bodyLarge.copyWith(
+                        fontSize: 17.0.fSize
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

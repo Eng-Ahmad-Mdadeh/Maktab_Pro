@@ -3,6 +3,8 @@ import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
 
+import '../../widgets/section_title.dart';
+
 class RequiredInfoItem extends StatelessWidget {
   const RequiredInfoItem({super.key, required this.title, required this.onTap});
 
@@ -30,14 +32,12 @@ class RequiredInfoItem extends StatelessWidget {
           ),
           InkWell(
             onTap: onTap,
-            child: Text(
-              'هنا',
-              style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: AppColors.mintTeal,
-                    fontFamily: 'Roboto',
-                    decoration: TextDecoration.underline,
-                    decorationColor: AppColors.mintTeal,
-                  ),
+            child: const SectionTitle(
+              title:
+              'هنا',textColor: AppColors.mintTeal,
+              decoration: TextDecoration.underline,
+              decorationColor: AppColors.mintTeal,
+
             ),
           ),
         ],

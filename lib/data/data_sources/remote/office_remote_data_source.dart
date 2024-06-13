@@ -71,7 +71,7 @@ class OfficeRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   }
 
   Future<Either<AppException, r.Response>> getOfficeById(id) async {
-    return fetchData(endpoint: '/$id');
+    return fetchData(endpoint: '$id');
   }
 
   Future<Either<AppException, r.Response>> getSpecialOffices() async {

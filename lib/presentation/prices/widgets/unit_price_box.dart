@@ -23,7 +23,7 @@ class UnitPriceBox extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SectionTitle(title: unit.title),
+            SectionTitle(title: unit.title??''),
             InkWell(
               onTap: () => context.pushNamed(AppRoutes.updateUnitPricesScreen,
                   extra: unit),
@@ -46,9 +46,9 @@ class UnitPriceBox extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.v),
                 border: Border.all(color: AppColors.slateGray),
               ),
-              child: unit.mainImage.isNotEmpty
+              child: (unit.mainImage??'').isNotEmpty
                   ? MaktabImageView(
-                      imagePath: unit.mainImage,
+                      imagePath: unit.mainImage!,
                       fit: BoxFit.cover,
                       radius: BorderRadius.circular(15.v),
                     )

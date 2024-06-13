@@ -45,9 +45,9 @@ class UnitBox extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.v),
                 border: Border.all(color: AppColors.slateGray),
               ),
-              child: unit.mainImage.isNotEmpty
+              child: (unit.mainImage??'').isNotEmpty
                   ? MaktabImageView(
-                      imagePath: unit.mainImage,
+                      imagePath: unit.mainImage!,
                       fit: BoxFit.cover,
                       radius: BorderRadius.circular(15.v),
                     )
@@ -59,26 +59,24 @@ class UnitBox extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SectionTitle(title: unit.title),
+                  SectionTitle(title: unit.title??''),
                   SizedBox(height: 10.v),
-                  Text(
+                  SectionTitle(
+                    title:
                     unit.reject
                         ? 'مرفوض'
                         : Office.getOfficeState(unit.status, unit.active),
-                    softWrap: true,
-                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                          color: unit.reject
-                              ? AppColors.cherryRed
-                              : Office.getOfficeState(
-                                          unit.status, unit.active) ==
-                                      'معروض'
-                                  ? AppColors.mintTeal
-                                  : Office.getOfficeState(
-                                              unit.status, unit.active) ==
-                                          'معلق'
-                                      ? AppColors.orangeAccent
-                                      : AppColors.cherryRed,
-                        ),
+                    textColor: unit.reject
+                        ? AppColors.cherryRed
+                        : Office.getOfficeState(
+                        unit.status, unit.active) ==
+                        'معروض'
+                        ? AppColors.mintTeal
+                        : Office.getOfficeState(
+                        unit.status, unit.active) ==
+                        'معلق'
+                        ? AppColors.orangeAccent
+                        : AppColors.cherryRed,
                   ),
                 ],
               ),

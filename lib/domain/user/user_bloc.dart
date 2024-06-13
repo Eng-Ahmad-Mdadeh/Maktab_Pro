@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:maktab/data/models/office/unit_settings.dart';
@@ -5,10 +7,12 @@ import 'package:maktab/data/models/user/user_agreement_model.dart';
 import 'package:maktab/data/repositories/user_repository.dart';
 
 part 'user_event.dart';
+
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository _repository;
+
   UserBloc({required UserRepository userRepository})
       : _repository = userRepository,
         super(const UserState()) {
@@ -18,18 +22,28 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         getUnitSettingsApiCallState: UserApiCallState.initial,
         updateUnitSettingsApiCallState: UserApiCallState.initial,
       ));
-      final result = await _repository.getUserAgreement();
-      result.fold(
-        (failure) => emit(state.copyWith(
+      try {
+        final result = await _repository.getUserAgreement();
+        result.fold(
+          (failure) => emit(state.copyWith(
             userAgreementApiCallState: UserApiCallState.failure,
-            message: failure.message)),
-        (agreement) {
-          emit(state.copyWith(
-            userAgreementApiCallState: UserApiCallState.success,
-            agreement: agreement,
-          ));
-        },
-      );
+            message: failure.message,
+          )),
+          (agreement) {
+            emit(state.copyWith(
+              userAgreementApiCallState: UserApiCallState.success,
+              agreement: agreement,
+            ));
+          },
+        );
+      } catch (e) {
+        // rethrow;
+        emit(state.copyWith(
+          userAgreementApiCallState: UserApiCallState.failure,
+          message: e.toString(),
+        ));
+        rethrow;
+      }
     });
     on<ToggleAssuranceRequiredEvent>((event, emit) async {
       emit(state.copyWith(isInsuranceRequired: event.value));
@@ -55,22 +69,26 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         (unitSettings) {
           emit(state.copyWith(
             getUnitSettingsApiCallState: UserApiCallState.success,
-            isInsuranceRequired:
-                unitSettings != null ? unitSettings.isInsuranceRequired : false,
+            isInsuranceRequired: unitSettings != null ? unitSettings.isInsuranceRequired : false,
             unitSettings: unitSettings,
           ));
         },
       );
     });
     on<SetUnitSettingsEvent>((event, emit) async {
-      if (state.isInsuranceRequired !=
-              state.unitSettings!.isInsuranceRequired ||
+      log("state.isInsuranceRequired: ${state.isInsuranceRequired}");
+      log("state.unitSettings!.isInsuranceRequired: ${state.unitSettings!.isInsuranceRequired}");
+      log("state.insurancePrice: ${state.insurancePrice}");
+      log("state.unitSettings!.price: ${state.unitSettings!.price}");
+      log("state.conditions: ${state.conditions}");
+      log("state.unitSettings!.text: ${state.unitSettings!.text}");
+      emit(state.copyWith(
+        updateUnitSettingsApiCallState: UserApiCallState.loading,
+        getUnitSettingsApiCallState: UserApiCallState.initial,
+      ));
+      if (state.isInsuranceRequired != state.unitSettings!.isInsuranceRequired ||
           state.insurancePrice != state.unitSettings!.price.toString() ||
           state.conditions != state.unitSettings!.text) {
-        emit(state.copyWith(
-          updateUnitSettingsApiCallState: UserApiCallState.loading,
-          getUnitSettingsApiCallState: UserApiCallState.initial,
-        ));
         final result = await _repository.setUnitSettings(
           isInsuranceRequired: state.isInsuranceRequired,
           insurancePrice: state.insurancePrice,

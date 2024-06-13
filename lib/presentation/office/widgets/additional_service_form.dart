@@ -154,8 +154,8 @@ class _AdditionalServiceFormState extends State<AdditionalServiceForm> {
                                 state.additionalServices[widget.key]!['status'],
                             theme:
                                 ThemeData(switchTheme: const SwitchThemeData()),
-                            activeColor: AppColors.emeraldTeal,
-                            activeTrackColor: AppColors.mintGreen,
+                            // activeColor: AppColors.emeraldTeal,
+                            // activeTrackColor: AppColors.mintGreen,
                             onChanged: (value) => context
                                 .read<OfficeBloc>()
                                 .add(ToggleServiceStateEvent(widget.key!)),
