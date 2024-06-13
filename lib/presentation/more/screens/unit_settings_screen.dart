@@ -8,12 +8,14 @@ import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/domain/user/user_bloc.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
+import 'package:maktab/presentation/widgets/loading_widget.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab/presentation/widgets/maktab_button.dart';
 import 'package:maktab/presentation/widgets/maktab_radio_list_tile.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
 import 'package:maktab/presentation/widgets/maktab_text_form_field.dart';
 import 'package:maktab/presentation/widgets/section_title.dart';
+
 
 class UnitSettingsScreen extends StatefulWidget {
   const UnitSettingsScreen({super.key});
@@ -23,18 +25,24 @@ class UnitSettingsScreen extends StatefulWidget {
 }
 
 class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
-  late TextEditingController insurancePriceController;
-  late TextEditingController conditionController;
+  // late TextEditingController insurancePriceController;
+  // late TextEditingController conditionController;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
-    UserBloc userBloc = context.read<UserBloc>();
-    insurancePriceController = TextEditingController(
-        text: userBloc.state.unitSettings != null ? userBloc.state.unitSettings!.price.toString() : '');
-    conditionController = TextEditingController(
-        text: userBloc.state.unitSettings != null ? userBloc.state.unitSettings!.text : '');
+    // UserBloc userBloc = context.read<UserBloc>();
+    // insurancePriceController = TextEditingController(
+    //     text: userBloc.state.unitSettings != null ? userBloc.state.unitSettings!.price.toString() : '');
+    // conditionController = TextEditingController(
+    //     text: userBloc.state.unitSettings != null ? userBloc.state.unitSettings!.text : '');
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    context.read<UserBloc>().add(GetUnitSettingsEvent());
+    super.didChangeDependencies();
   }
 
   @override
@@ -51,18 +59,32 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
                   padding: EdgeInsets.symmetric(vertical: 20.v),
                   child: Form(
                     key: _formKey,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SectionTitle(
-                          title: 'هل تطلب تأمين مسترد من المستأجرين عند الوصول؟',
-                          textAlign: TextAlign.start,
-                          textColor: AppColors.lightBlack,
-                        ),
-                        SizedBox(height: 10.v),
-                        BlocBuilder<UserBloc, UserState>(
-                          builder: (context, state) {
-                            return Column(
+                    child: BlocConsumer<UserBloc, UserState>(
+                      listener: (context, state) {
+                        // if (state.getUnitSettingsApiCallState == UserApiCallState.loading) {
+                        //   LoadingDialog.show(context);
+                        // } else if (state.getUnitSettingsApiCallState == UserApiCallState.success) {
+                        //   LoadingDialog.hide(context);
+                        // } else if (state.getUnitSettingsApiCallState == UserApiCallState.failure) {
+                        //   LoadingDialog.hide(context);
+                        //   MaktabSnackbar.showError(context, state.message);
+                        // } else if (state.getUnitSettingsApiCallState == UserApiCallState.noCall) {
+                        //   MaktabSnackbar.showWarning(context, 'لا يوجد اي تغيير');
+                        // }
+                      },
+                      builder: (context, state) {
+                        if (state.getUnitSettingsApiCallState == UserApiCallState.loading)
+                          return const LoadingWidget(0);
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SectionTitle(
+                              title: 'هل تطلب تأمين مسترد من المستأجرين عند الوصول؟',
+                              textAlign: TextAlign.start,
+                              textColor: AppColors.lightBlack,
+                            ),
+                            SizedBox(height: 10.v),
+                            Column(
                               children: [
                                 MaktabRadioListTile(
                                   title: 'لا لا أطلب',
@@ -83,7 +105,8 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
                                 SizedBox(height: 20.v),
                                 if (state.isInsuranceRequired) ...{
                                   MaktabTextFormField(
-                                    controller: insurancePriceController,
+                                    // controller: insurancePriceController,
+                                    initialValue: state.unitSettings?.price.toString() ?? '',
                                     title: 'مبلغ التأمين المسترد',
                                     textInputType: TextInputType.number,
                                     suffix: Padding(
@@ -125,25 +148,26 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
                                   SizedBox(height: 20.v),
                                 },
                               ],
-                            );
-                          },
-                        ),
-                        MaktabTextFormField(
-                          controller: conditionController,
-                          title: 'هل لديك شروط أخرى للحجز',
-                          minLines: 7,
-                          maxLines: null,
-                          validator: (value) {
-                            if (value!.trim().isEmpty) {
-                              return 'حقل مطلوب';
-                            }
-                            return null;
-                          },
-                          onSaved: (value) {
-                            context.read<UserBloc>().add(SetConditionsEvent(value!));
-                          },
-                        ),
-                      ],
+                            ),
+                            MaktabTextFormField(
+                              // controller: conditionController,
+                              initialValue: state.unitSettings?.text ?? '',
+                              title: 'هل لديك شروط أخرى للحجز',
+                              minLines: 7,
+                              maxLines: null,
+                              validator: (value) {
+                                if (value!.trim().isEmpty) {
+                                  return 'حقل مطلوب';
+                                }
+                                return null;
+                              },
+                              onSaved: (value) {
+                                context.read<UserBloc>().add(SetConditionsEvent(value!));
+                              },
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -152,16 +176,19 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
                 listener: (context, state) {
                   if (state.updateUnitSettingsApiCallState == UserApiCallState.success) {
                     MaktabSnackbar.showSuccess(context, 'تم الحفظ بنجاح');
+                    context.pop();
                   } else if (state.updateUnitSettingsApiCallState == UserApiCallState.failure) {
                     MaktabSnackbar.showError(context, state.message);
                   } else if (state.updateUnitSettingsApiCallState == UserApiCallState.noCall) {
                     MaktabSnackbar.showWarning(context, 'لا يوجد اي تغيير');
+                    context.pop();
                   }
                 },
                 builder: (context, state) => MaktabButton(
                   onPressed: /*(state.isInsuranceRequired != state.unitSettings!.isInsuranceRequired ||
                       state.insurancePrice != state.unitSettings!.price.toString() ||
-                      state.conditions != state.unitSettings!.text) ? null : */() {
+                      state.conditions != state.unitSettings!.text) ? null : */
+                      () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
                       context.read<UserBloc>().add(SetUnitSettingsEvent());
@@ -175,8 +202,9 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
                   text: 'حفظ التغييرات',
                 ),
               ),
-
-              SizedBox(height: 10.0.v,),
+              SizedBox(
+                height: 10.0.v,
+              ),
             ],
           ),
         ),

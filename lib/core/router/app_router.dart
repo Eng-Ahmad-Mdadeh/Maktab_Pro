@@ -458,7 +458,7 @@ final GoRouter appRouter = GoRouter(
                 path: AppRoutes.addContractScreen,
                 name: AppRoutes.addContractScreen,
                 // builder: (context, state) => const AddContractScreen(),
-                pageBuilder: (context, state) => _pageBuilder(context, state, const AddContractScreen()),
+                pageBuilder: (context, state) => _pageBuilder(context, state, AddContractScreen(orderID: state.extra as int?)),
               ),
             ]),
       ],

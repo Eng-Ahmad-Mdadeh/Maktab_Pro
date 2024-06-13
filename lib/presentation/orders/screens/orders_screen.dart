@@ -8,6 +8,7 @@ import 'package:maktab/presentation/orders/widgets/orders_list.dart';
 import 'package:maktab/presentation/orders/widgets/orders_states.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
 import 'package:maktab/presentation/widgets/loading_dialog.dart';
+import 'package:maktab/presentation/widgets/loading_widget.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
 
@@ -30,10 +31,18 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   void initState() {
+    // context.read<OrdersBloc>().add(const GetOrdersEvent(1));
+    // _orderReservationCubit = OrderReservationCubit();
+    // _scrollController.addListener(_scrollListener);
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
     context.read<OrdersBloc>().add(const GetOrdersEvent(1));
     _orderReservationCubit = OrderReservationCubit();
     _scrollController.addListener(_scrollListener);
-    super.initState();
+    super.didChangeDependencies();
   }
 
   void _scrollListener() {
@@ -80,9 +89,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   },
                   builder: (context, state) {
                     if (state is OrdersLoading) {
-                      return const Center(
-                        child: LoadingDialog(),
-                      );
+                      return const LoadingWidget(0);
                     }
                     if (state is OrdersFailure) {
                       return const Center(

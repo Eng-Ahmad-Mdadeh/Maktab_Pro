@@ -49,7 +49,7 @@ class ContractGroupButton<T extends Enum> extends StatelessWidget {
                       backgroundColor: value == e ? AppColors.mintGreen : AppColors.white,
                       color: value == e ? AppColors.white : AppColors.black,
                       bold: false,
-                      fontSize: 19.0,
+                      fontSize: 15.0,
                       shadow: BoxShadow(
                         color: AppColors.black.withOpacity(0.1),
                         spreadRadius: 3,

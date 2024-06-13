@@ -59,7 +59,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maktab/core/extension/date_time_extension.dart';
 import 'package:maktab/core/extension/num_extension.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab/core/router/app_routes.dart';
 import 'package:maktab/presentation/widgets/maktab_button.dart';
+import 'package:maktab/presentation/widgets/maktab_rich_text.dart';
 
 import '../../../core/constants/app_constants.dart';
 import '../../../data/models/order/order_model.dart';
@@ -96,16 +98,17 @@ class OrderScreen extends StatelessWidget {
               isLoading: true,
               child: Column(
                 children: List.generate(
-                    3,
-                    (index) => OrderDetailsCard(
-                          cardTitle: ['معلومات المستأجر', 'معلومات المؤجر', 'معلومات الوحدة'][index],
-                          items: const [
-                            ['الاسم', ''],
-                            ['معلومات الهوية', ''],
-                            ['الجوال', ''],
-                            ['الموقع', ''],
-                          ],
-                        )),
+                  3,
+                  (index) => OrderDetailsCard(
+                    cardTitle: ['معلومات المستأجر', 'معلومات المؤجر', 'معلومات الوحدة'][index],
+                    items: const [
+                      OrderDetailsItemData(title: 'الاسم', value: ''),
+                      OrderDetailsItemData(title: 'معلومات الهوية', value: ''),
+                      OrderDetailsItemData(title: 'الجوال', value: ''),
+                      OrderDetailsItemData(title: 'الموقع', value: ''),
+                    ],
+                  ),
+                ),
               ),
             ),
           );
@@ -129,10 +132,15 @@ class OrderScreen extends StatelessWidget {
                           width: 150.0.h,
                           text: "إنشاء عقد",
                           color: AppColors.white,
-                          fontSize: 19.0,
-                          onPressed: () {
-                            // todo: link this with create contract page after work on contract
-                          },
+                          bold: false,
+                          backgroundColor:
+                              order.reservation == 'acceptably' ? AppColors.mintGreen : AppColors.softAsh,
+                          fontSize: 17.0,
+                          onPressed: order.reservation == 'acceptably'
+                              ? () {
+                                  context.pushNamed(AppRoutes.addContractScreen, extra: order.id);
+                                }
+                              : null,
                         ),
                       ),
                       Padding(
@@ -140,65 +148,69 @@ class OrderScreen extends StatelessWidget {
                         child: MaktabButton(
                           // height: 60.0.v,
                           width: 150.0.h,
-                          fontSize: 19.0,
+                          fontSize: 17.0,
+                          bold: false,
                           text: "إلغاء الطلب",
                           color: AppColors.white,
-                          backgroundColor: AppColors.cherryRed,
-                          onPressed: () {
-                            showDialog<bool>(
-                              context: context,
-                              builder: (_) => AlertDialog(
-                                content: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    SizedBox(
-                                      height: 20.0.v,
+                          backgroundColor:
+                              order.reservation != 'canceled' ? AppColors.cherryRed : AppColors.softAsh,
+                          onPressed: order.reservation != 'canceled'
+                              ? () {
+                                  showDialog<bool>(
+                                    context: context,
+                                    builder: (_) => AlertDialog(
+                                      content: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SizedBox(
+                                            height: 20.0.v,
+                                          ),
+                                          Icon(
+                                            Icons.cancel_outlined,
+                                            color: AppColors.cherryRed,
+                                            size: 70.0.adaptSize,
+                                          ),
+                                          SizedBox(
+                                            height: 20.0.v,
+                                          ),
+                                          const SectionTitle(
+                                            title: 'هل انت متأكد؟',
+                                          ),
+                                          const BodyText(text: "هل انت متأكد من قيامك بهذه العملية")
+                                        ],
+                                      ),
+                                      actionsAlignment: MainAxisAlignment.center,
+                                      actions: [
+                                        MaktabButton(
+                                          width: 70,
+                                          height: 50,
+                                          onPressed: () {
+                                            context.pop(true);
+                                          },
+                                          text: 'نعم',
+                                          backgroundColor: AppColors.cherryRed,
+                                          color: AppColors.white,
+                                        ),
+                                        MaktabButton(
+                                          width: 70,
+                                          height: 50,
+                                          onPressed: () {
+                                            context.pop(false);
+                                          },
+                                          text: 'لا',
+                                          backgroundColor: AppColors.gray,
+                                          color: AppColors.white,
+                                        ),
+                                      ],
                                     ),
-                                    Icon(
-                                      Icons.cancel_outlined,
-                                      color: AppColors.cherryRed,
-                                      size: 70.0.adaptSize,
-                                    ),
-                                    SizedBox(
-                                      height: 20.0.v,
-                                    ),
-                                    const SectionTitle(
-                                      title: 'هل انت متأكد؟',
-                                    ),
-                                    const BodyText(text: "هل انت متأكد من قيامك بهذه العملية")
-                                  ],
-                                ),
-                                actionsAlignment: MainAxisAlignment.center,
-                                actions: [
-                                  MaktabButton(
-                                    width: 70,
-                                    height: 50,
-                                    onPressed: () {
-                                      context.pop(true);
-                                    },
-                                    text: 'نعم',
-                                    backgroundColor: AppColors.cherryRed,
-                                    color: AppColors.white,
-                                  ),
-                                  MaktabButton(
-                                    width: 70,
-                                    height: 50,
-                                    onPressed: () {
-                                      context.pop(false);
-                                    },
-                                    text: 'لا',
-                                    backgroundColor: AppColors.gray,
-                                    color: AppColors.white,
-                                  ),
-                                ],
-                              ),
-                            ).then((value) {
-                              final canCancel = value ?? false;
-                              if (canCancel) {
-                                context.read<OrderBloc>().add(SetOrderCancelEvent(order.id!));
-                              }
-                            });
-                          },
+                                  ).then((value) {
+                                    final canCancel = value ?? false;
+                                    if (canCancel) {
+                                      context.read<OrderBloc>().add(SetOrderCancelEvent(order.id!));
+                                    }
+                                  });
+                                }
+                              : null,
                         ),
                       ),
                     ],
@@ -206,59 +218,72 @@ class OrderScreen extends StatelessWidget {
                   OrderDetailsCard(
                     cardTitle: 'معلومات المستأجر',
                     items: [
-                      ['الاسم', order.tenant?.username ?? ''],
-                      ['معلومات الهوية', order.tenant?.idNumber ?? ''],
-                      ['الجوال', order.tenant?.phone ?? ''],
-                      ['الموقع', '${order.tenant?.city ?? ''},${order.tenant?.neighborhood ?? ''}'],
+                      OrderDetailsItemData(title: 'الاسم', value: order.tenant?.username ?? ''),
+                      OrderDetailsItemData(title: 'معلومات الهوية', value: order.tenant?.idNumber ?? ''),
+                      OrderDetailsItemData(title: 'الجوال', value: order.tenant?.phone ?? ''),
+                      OrderDetailsItemData(
+                          title: 'الموقع',
+                          value: '${order.tenant?.city ?? ''},${order.tenant?.neighborhood ?? ''}'),
                     ],
                   ),
                   OrderDetailsCard(
                     cardTitle: 'معلومات المؤجر',
                     items: [
-                      ['الاسم', order.lessor?.username ?? ''],
-                      ['معلومات الهوية', order.lessor?.idNumber ?? ''],
-                      ['الجوال', order.lessor?.phone ?? ''],
-                      ['الموقع', '${order.lessor?.city ?? ''},${order.lessor?.neighborhood ?? ''}'],
+                      OrderDetailsItemData(title: 'الاسم', value: order.lessor?.username ?? ''),
+                      OrderDetailsItemData(title: 'معلومات الهوية', value: order.lessor?.idNumber ?? ''),
+                      OrderDetailsItemData(title: 'الجوال', value: order.lessor?.phone ?? ''),
+                      OrderDetailsItemData(
+                          title: 'الموقع',
+                          value: '${order.lessor?.city ?? ''},${order.lessor?.neighborhood ?? ''}'),
                     ],
                   ),
                   OrderDetailsCard(
                     cardTitle: 'معلومات الوحدة',
                     items: [
-                      ['اسم المكتب', order.office?.title ?? ''],
-                      ['الوحدة', order.office?.unitId?.toString() ?? ''],
-                      [
-                        'الموقع',
-                        '${order.office?.location?.city ?? ''},${order.office?.location?.neighborhood ?? ''},${order.office?.location?.street ?? ''}'
-                      ],
-                      ['تاريخ الحجز', (order.startDate?.dayFormatWithLocale('ar') ?? '')],
-                      [
-                        'تاريخ الانتهاء',
-                        '${order.endDate?.dayFormatWithLocale('ar') ?? ''},${order.lessor?.neighborhood ?? ''}'
-                      ],
-                      ['مدة الإيجار', '${order.durationRes ?? ''} يوم'],
+                      OrderDetailsItemData(title: 'اسم المكتب', value: order.office?.title ?? ''),
+                      OrderDetailsItemData(title: 'الوحدة', value: order.office?.unitId?.toString() ?? ''),
+                      OrderDetailsItemData(
+                          title: 'الموقع',
+                          value:
+                              '${order.office?.location?.city ?? ''},${order.office?.location?.neighborhood ?? ''},${order.office?.location?.street ?? ''}'),
+                      OrderDetailsItemData(
+                          title: 'تاريخ الحجز', value: order.startDate?.dayFormatWithLocale('ar') ?? ''),
+                      OrderDetailsItemData(
+                          title: 'تاريخ الانتهاء', value: order.endDate?.dayFormatWithLocale('ar') ?? ''),
+                      OrderDetailsItemData(title: 'مدة الإيجار', value: '${order.durationRes ?? ''} يوم'),
                     ],
                   ),
                   OrderDetailsCard(
                     cardTitle: 'بيانات الدفع',
                     fontSize: 17,
                     items: [
-                      [
-                        'طريقة الدفع',
-                        order.paymentMethod == 'bank'
+                      OrderDetailsItemData(
+                        title: 'طريقة الدفع',
+                        value: order.paymentMethod == 'bank'
                             ? 'تحويل بنكي'
                             : order.paymentMethod == 'electronic'
                                 ? 'بطاقة ائتمانية'
-                                : ''
-                      ],
-                      ['المدفوع', _getTotal(order.paymentTenants, false)],
-                      ['المبلغ المتبقي من المدة التي حجزتها', _getTotal(order.paymentTenants, true)],
+                                : '',
+                      ),
+                      OrderDetailsItemData(
+                        title: 'المدفوع',
+                        value: _getTotal(order.paymentTenants, false),
+                        isCurrency: true,
+                        valueColor: AppColors.orangeAccent,
+                      ),
+                      OrderDetailsItemData(
+                        title: 'المبلغ المتبقي من المدة التي حجزتها',
+                        value: _getTotal(order.paymentTenants, true),
+                        isCurrency: true,
+                        valueColor: AppColors.cherryRed,
+                      ),
                     ],
                   ),
                   OrderDetailsCard(
                     cardTitle: 'بيانات معاين الموقع',
                     items: [
-                      ['الاسم', order.office?.viewerName ?? ''],
-                      ['الجوال', order.office?.viewerPhone ?? ''],
+                      OrderDetailsItemData(title: 'الاسم', value: order.office?.viewerName ?? ''),
+                      OrderDetailsItemData(title: 'الجوال', value: order.office?.viewerPhone ?? ''),
                     ],
                     location: LatLng(order.office!.location!.lat, order.office!.location!.lng),
                   ),
@@ -285,9 +310,25 @@ class OrderScreen extends StatelessWidget {
   }
 }
 
+class OrderDetailsItemData {
+  final String title;
+  final String value;
+  final Color? titleColor;
+  final Color? valueColor;
+  final bool isCurrency;
+
+  const OrderDetailsItemData({
+    required this.title,
+    required this.value,
+    this.titleColor,
+    this.valueColor,
+    this.isCurrency = false,
+  });
+}
+
 class OrderDetailsCard extends StatelessWidget {
   final String cardTitle;
-  final List<List<String>> items;
+  final List<OrderDetailsItemData> items;
   final LatLng? location;
   final double? fontSize;
 
@@ -318,7 +359,14 @@ class OrderDetailsCard extends StatelessWidget {
             title: cardTitle,
             fontSize: 17,
           ),
-          ...items.map((e) => OrderDetailsItem(title: e.first, text: e.last, fontSize: fontSize,)),
+          ...items.map((e) => OrderDetailsItem(
+                title: e.title,
+                text: e.value,
+                fontSize: fontSize,
+                titleColor: e.titleColor,
+                valueColor: e.valueColor,
+                isCurrency: e.isCurrency,
+              )),
           SizedBox(
             height: 10.0.v,
           ),
@@ -355,12 +403,18 @@ class OrderDetailsItem extends StatelessWidget {
   final String title;
   final String text;
   final double? fontSize;
+  final Color? titleColor;
+  final Color? valueColor;
+  final bool isCurrency;
 
   const OrderDetailsItem({
     super.key,
     required this.title,
     required this.text,
-    this.fontSize
+    this.fontSize,
+    this.titleColor,
+    this.valueColor,
+    this.isCurrency = false,
   });
 
   @override
@@ -373,11 +427,21 @@ class OrderDetailsItem extends StatelessWidget {
           SectionTitle(
             title: title,
             textFontWeight: FontWeight.normal,
+            textColor: titleColor,
           ),
-          BodyText(
-            text: text,
-            fontSize: fontSize,
-          ),
+          if (isCurrency)
+            MaktabRichText(
+              texts: [
+                MaktabRichTextModel(text: text, color: valueColor),
+                MaktabRichTextModel(text: ' ريال', fontWeight: FontWeight.normal),
+              ],
+            )
+          else
+            BodyText(
+              text: text,
+              fontSize: fontSize,
+              textColor: valueColor,
+            ),
         ],
       ),
     );
