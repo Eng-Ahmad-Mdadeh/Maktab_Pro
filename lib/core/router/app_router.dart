@@ -74,6 +74,7 @@ import '../../presentation/contracts_menu/screens/contracts_models/screens/contr
 import '../../presentation/contracts_menu/screens/contracts_models/screens/contracts_models_screen.dart';
 import '../../presentation/contracts_menu/screens/contracts_models/screens/edit_contracts_model/screens/edit_contracts_model_screen.dart';
 import '../../presentation/more/screens/unit_settings_screen.dart';
+import '../../presentation/notifications/screens/notifications_screen.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: AppRoutes.splashScreen,
@@ -109,13 +110,21 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const UnitSettingsScreen(),
     ),
     GoRoute(
-        path: AppRoutes.homeScreen,
-        name: AppRoutes.homeScreen,
-        // builder: (context, state) => const HomeScreen(),
-        pageBuilder: (context, state) {
-          context.read<NavigationBloc>().add(HomeNavigationEvent());
-          return _pageBuilder(context, state, const HomeScreen());
-        }),
+      path: AppRoutes.homeScreen,
+      name: AppRoutes.homeScreen,
+      // builder: (context, state) => const HomeScreen(),
+      pageBuilder: (context, state) {
+        context.read<NavigationBloc>().add(HomeNavigationEvent());
+        return _pageBuilder(context, state, const HomeScreen());
+      },
+      routes: [
+        GoRoute(
+          path: AppRoutes.notificationsScreen,
+          name: AppRoutes.notificationsScreen,
+          builder: (context, state) => const NotificationsScreen(),
+        ),
+      ],
+    ),
     GoRoute(
       path: AppRoutes.calendarScreen,
       name: AppRoutes.calendarScreen,
@@ -400,7 +409,7 @@ final GoRouter appRouter = GoRouter(
                 GoRoute(
                   path: AppRoutes.contractScreen,
                   name: AppRoutes.contractScreen,
-                  builder: (context, state) => const ContractScreen(),
+                  builder: (context, state) => ContractScreen(cancelContract: (state.extra as bool?)??false,),
                 ),
                 GoRoute(
                   path: AppRoutes.addContractScreen,

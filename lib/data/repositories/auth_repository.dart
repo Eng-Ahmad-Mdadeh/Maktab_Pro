@@ -28,7 +28,7 @@ class AuthRepository {
       (right) {
         try {
           // log(right.message);
-          return Right(right.message);
+          return Right(right.message?? 'Unknown error');
         } on ApiException catch (e) {
           return Left(e);
         }
@@ -44,9 +44,9 @@ class AuthRepository {
       (error) => Left(error),
       (right) async {
         try {
-          log(right.message);
+          log(right.message?? 'Unknown error');
           await _localDataSource.setUserToken(right.data['access_token']);
-          return Right(right.message);
+          return Right(right.message?? 'Unknown error');
         } catch (e) {
           return Left(ConversionException(e.toString()));
         }
@@ -76,7 +76,7 @@ class AuthRepository {
       (error) => Left(error),
       (right) async {
         try {
-          log(right.message);
+          log(right.message?? 'Unknown error');
           await _localDataSource.removeUserToken();
           return const Right(null);
         } on ApiException catch (e) {

@@ -1,6 +1,7 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import 'package:maktab/core/extension/date_range_extension.dart';
@@ -10,7 +11,10 @@ import 'package:maktab/data/models/office/office_model.dart';
 import 'package:maktab/data/models/office/office_price_model.dart';
 import 'package:maktab/data/repositories/offer_repository.dart';
 
+import '../../core/classes/exception/app_exception.dart';
+
 part 'offer_event.dart';
+
 part 'offer_state.dart';
 
 class OfferBloc extends Bloc<OfferEvent, OfferState> {
@@ -19,10 +23,10 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
   OfferBloc({required OfferRepository offerRepository})
       : _offerRepository = offerRepository,
         super(OfferState(
-          startDate: DateFormatterHelper.getCurrentDate(),
-          endDate: DateFormatterHelper.getCurrentDate(),
-          prices: const {},
-        )) {
+        startDate: DateFormatterHelper.getCurrentDate(),
+        endDate: DateFormatterHelper.getCurrentDate(),
+        prices: const {},
+      )) {
     on<InitialOfferEvent>((event, emit) async {
       if (event.offer != null) {
         state.isInitialized = false;
@@ -32,7 +36,8 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
         state.endDate = event.offer!.endDate;
         state.isValidOfferDateRange = true;
         state.priceTypes = event.offer!.priceTypeIds;
-        state.discountType=event.offer!.discountType=='percent'?DiscountTypes.percentage:DiscountTypes.price;
+        state.discountType =
+        event.offer!.discountType == 'percent' ? DiscountTypes.percentage : DiscountTypes.price;
         for (OfficePrice price in event.unit!.prices) {
           if (state.priceTypes.contains(price.typeResId)) {
             state.prices[price.id] = price.price;
@@ -52,10 +57,10 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
       emit(state.copyWith(offerApiCallState: OfferApiCallState.loading));
       final result = await _offerRepository.setOfferStatus(event.id);
       result.fold(
-        (failure) {
+            (failure) {
           emit(state.copyWith(offerApiCallState: OfferApiCallState.failure));
         },
-        (success) {
+            (success) {
           emit(state.copyWith(offerApiCallState: OfferApiCallState.update));
         },
       );
@@ -64,10 +69,10 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
       emit(state.copyWith(offerApiCallState: OfferApiCallState.loading));
       final result = await _offerRepository.deleteOffer(event.id);
       result.fold(
-        (failure) {
+            (failure) {
           emit(state.copyWith(offerApiCallState: OfferApiCallState.failure));
         },
-        (success) {
+            (success) {
           emit(state.copyWith(offerApiCallState: OfferApiCallState.update));
         },
       );
@@ -90,14 +95,14 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
       Map<int, num> prices = Map.from(state.prices);
       List<int> priceTypes = List.from(state.priceTypes);
       OfficePrice price =
-          state.unit!.prices.firstWhere((price) => price.typeResId == event.id);
+      state.unit!.prices.firstWhere((price) => price.typeResId == event.id);
       if (!priceTypes.contains(event.id)) {
         if (state.pricesCount == -1) {
           state.pricesCount = 1;
         } else {
           state.pricesCount++;
         }
-        prices[price.id] =price.price;
+        prices[price.id] = price.price;
         priceTypes.add(event.id);
       } else {
         if (state.pricesCount > 0) {
@@ -141,24 +146,23 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
     });
     on<CreateOfferEvent>((event, emit) async {
       emit(state.copyWith(offerApiCallState: OfferApiCallState.loading));
-       dynamic result;
-      if(event.isUpdate){
-
+      Either<AppException, Office?> result;
+      if (event.isUpdate) {
         result = await _offerRepository.updateOfferToOffice(
-            name: state.name,
-            offerId: event.offerId!,
-            status: '1',
-            discount: state.discountAmount.toString(),
-            discountType:
-            state.discountType == DiscountTypes.percentage ? 'percent' : 'rial',
-            startDate: state.startDate!,
-            endDate: state.endDate!,
-            officeId: state.unit!.id,
-            prices: state.prices.keys.toList(),
-         //   mainPrices:state.prices.keys.toList()
+          name: state.name,
+          offerId: event.offerId!,
+          status: '1',
+          discount: state.discountAmount.toString(),
+          discountType:
+          state.discountType == DiscountTypes.percentage ? 'percent' : 'rial',
+          startDate: state.startDate!,
+          endDate: state.endDate!,
+          officeId: state.unit!.id,
+          prices: state.prices.keys.toList(),
+          //   mainPrices:state.prices.keys.toList()
         );
-      }else {
-         result = await _offerRepository.createOffer(
+      } else {
+        result = await _offerRepository.createOffer(
           name: state.name,
           discount: state.discountAmount,
           discountType: state.discountType == DiscountTypes.percentage
@@ -171,10 +175,10 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
         );
       }
       result.fold(
-        (failure) {
-          emit(state.copyWith(offerApiCallState: OfferApiCallState.failure));
+            (failure) {
+          emit(state.copyWith(offerApiCallState: OfferApiCallState.failure, name: failure.message));
         },
-        (success) {
+            (success) {
           emit(state.copyWith(offerApiCallState: OfferApiCallState.success));
         },
       );

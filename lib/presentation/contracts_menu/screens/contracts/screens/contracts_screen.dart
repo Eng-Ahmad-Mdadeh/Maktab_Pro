@@ -42,12 +42,7 @@ class ContractsScreen extends StatelessWidget {
                       SizedBox(height: 20.v),
                       ContractTypeMenuWidget(
                         value: 'All',
-                        contractTypesTitle: [
-                          "كل العقود",
-                          "جديد",
-                          "مجدد",
-                          "منتهي",
-                        ],
+                        contractTypesTitle: const ["كل العقود", "جديد", "مجدد", "منتهي"],
                         contractTypesValue: const ['All', 'New', 'Renewed', 'Finished'],
                         onSelected: (String? value) {
                           context.read<ContractsBloc>().add(FilterContractsEvent(value));
@@ -77,12 +72,7 @@ class ContractsScreen extends StatelessWidget {
                     SizedBox(height: 20.v),
                     ContractTypeMenuWidget(
                       value: state.option,
-                      contractTypesTitle: const [
-                        "كل العقود",
-                        "جديد",
-                        "مجدد",
-                        "منتهي",
-                      ],
+                      contractTypesTitle: const ["كل العقود", "جديد", "مجدد", "منتهي"],
                       contractTypesValue: const ['All', 'New', 'Renewed', 'Finished'],
                       onSelected: (String? value) {
                         context.read<ContractsBloc>().add(FilterContractsEvent(value));

@@ -53,11 +53,13 @@ import '../../data/data_sources/remote/account_summary_data_source.dart';
 import '../../data/data_sources/remote/contract_model_remote_data_source.dart';
 import '../../data/data_sources/remote/contract_remote_data_source.dart';
 import '../../data/data_sources/remote/invoice_remote_data_source.dart';
+import '../../data/data_sources/remote/notification_remote_data_source.dart';
 import '../../data/data_sources/remote/order_remote_data_source.dart';
 import '../../data/repositories/account_summary_repository.dart';
 import '../../data/repositories/contract_model_repository.dart';
 import '../../data/repositories/contract_repository.dart';
 import '../../data/repositories/invoice_repository.dart';
+import '../../data/repositories/notification_repository.dart';
 import '../../data/repositories/order_repository.dart';
 import '../../data/repositories/settings_repository.dart';
 import '../../domain/account_summary/account_summary_bloc.dart';
@@ -66,6 +68,7 @@ import '../../domain/contract_models/contract_models_bloc.dart';
 import '../../domain/contracts/contract/contract_bloc.dart';
 import '../../domain/contracts/contracts_bloc.dart';
 import '../../domain/invoice/invoice_bloc.dart';
+import '../../domain/notification/notification_bloc.dart';
 import '../../domain/orders/order/order_bloc.dart';
 import '../../domain/orders/orders_bloc.dart';
 import '../../domain/settings/settings_bloc.dart';
@@ -225,6 +228,12 @@ Future<void> setup() async {
     ),
   );
 
+  locator.registerFactory<NotificationsBloc>(
+        () => NotificationsBloc(
+      locator<NotificationRepository>(),
+    ),
+  );
+
 
   //Repositories
   locator.registerLazySingleton<AuthRepository>(
@@ -327,6 +336,12 @@ Future<void> setup() async {
     ),
   );
 
+  locator.registerLazySingleton<NotificationRepository>(
+        () => NotificationRepository(
+      locator<NotificationRemoteDataSource>(),
+    ),
+  );
+
   //Data Sources
   locator.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSource(),
@@ -392,6 +407,10 @@ Future<void> setup() async {
 
   locator.registerLazySingleton<ContractModelRemoteDataSource>(
         () => ContractModelRemoteDataSource(),
+  );
+
+  locator.registerLazySingleton<NotificationRemoteDataSource>(
+        () => NotificationRemoteDataSource(),
   );
 
   //External

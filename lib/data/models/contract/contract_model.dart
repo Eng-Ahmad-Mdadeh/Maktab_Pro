@@ -94,7 +94,7 @@ class ContractModel extends Equatable {
   final String? contractContent;
   final String? contractApplicant;
   final String? propertyOwner;
-  final String? acceptOrdinaries;
+  final bool? acceptOrdinaries;
 
   final DateTime? lessorDateBirth;
   final String? lessorFullName;
@@ -155,8 +155,8 @@ class ContractModel extends Equatable {
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final dynamic deletedAt;
-  final String? lessorApproved;
-  final String? tenantApproved;
+  final bool? lessorApproved;
+  final bool? tenantApproved;
   final dynamic facilityType;
   final dynamic facilityName;
   final dynamic unifiedNumber;
@@ -175,7 +175,7 @@ class ContractModel extends Equatable {
     String? contractContent,
     String? contractApplicant,
     String? propertyOwner,
-    String? acceptOrdinaries,
+    bool? acceptOrdinaries,
     DateTime? lessorDateBirth,
     String? lessorFullName,
     String? lessorIdentityNum,
@@ -234,8 +234,8 @@ class ContractModel extends Equatable {
     DateTime? createdAt,
     DateTime? updatedAt,
     dynamic deletedAt,
-    String? lessorApproved,
-    String? tenantApproved,
+    bool? lessorApproved,
+    bool? tenantApproved,
     dynamic facilityType,
     dynamic facilityName,
     dynamic unifiedNumber,

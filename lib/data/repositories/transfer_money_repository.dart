@@ -17,13 +17,13 @@ class TransferMoneyRepository {
     return result.fold(
       (error) => Left(error),
       (right) {
-        if (right.status) {
+        if ((right.status??false)) {
           // log(right.data.toString());
           final TransferPagination transferPagination =
               TransferPagination.fromJson(right.data);
           return Right(transferPagination);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );

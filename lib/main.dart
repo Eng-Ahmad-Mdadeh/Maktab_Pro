@@ -23,6 +23,7 @@ import 'package:maktab/domain/unit/unit_bloc.dart';
 import 'package:maktab/domain/user/user_bloc.dart';
 import 'package:maktab/domain/video/video_bloc.dart';
 
+import 'core/services/notification_services.dart';
 import 'domain/account_summary/account_summary_bloc.dart';
 import 'domain/contract_models/contract_model/contract_model_bloc.dart';
 import 'domain/contract_models/contract_models_bloc.dart';
@@ -30,6 +31,7 @@ import 'domain/contracts/contract/contract_bloc.dart';
 import 'domain/contracts/contracts_bloc.dart';
 import 'domain/invoice/invoice_bloc.dart';
 import 'domain/navigation/navigation_bloc.dart';
+import 'domain/notification/notification_bloc.dart';
 import 'domain/orders/order/order_bloc.dart';
 import 'domain/orders/orders_bloc.dart';
 import 'domain/settings/settings_bloc.dart';
@@ -73,6 +75,7 @@ class MaktabApp extends StatelessWidget {
           BlocProvider(create: (context) => locator<GeneralSettingBloc>()),
           BlocProvider(create: (context) => locator<ContractModelsBloc>()),
           BlocProvider(create: (context) => locator<ContractModelBloc>()),
+          BlocProvider(create: (context) => locator<NotificationsBloc>()),
 
           BlocProvider(create: (context) => NavigationBloc()),
           // BlocProvider(create: (context) => ContractStepCubit()),

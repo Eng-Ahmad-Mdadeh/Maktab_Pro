@@ -38,6 +38,7 @@ class ContractRepository {
           final ContractModel contract = ContractModel.fromJson(right.data);
           return Right(contract);
         } catch (e) {
+          // rethrow;
           return Left(ConversionException(e.toString()));
         }
       },
@@ -116,7 +117,7 @@ class ContractRepository {
       (error) => Left(error),
       (right) {
         try {
-          return Right(right.status);
+          return Right(right.status??false);
         } catch (e) {
           return Left(ConversionException(e.toString()));
         }

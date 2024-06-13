@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGray,
+      backgroundColor: AppColors.white,
       body: SafeArea(
         child: SizedBox(
           height: SizeHelper.height,
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               const HomeHeader(),
               Positioned(
-                top: 100.v,
+                top: 80.v,
                 left: 20.h,
                 right: 20.h,
                 bottom: 0,

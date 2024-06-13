@@ -26,6 +26,8 @@ class _OfficesScreenState extends State<OfficesScreen> {
     context.read<ShimmerBloc>().add(BeginShimmerEffectEvent());
     if (context.read<OfficesCubit>().state.myOfficesApiCallState != OfficesApiCallState.success) {
       context.read<OfficesCubit>().getMyOffices();
+      context.read<OfficesCubit>().getIncompleteOffices();
+      context.read<OfficesCubit>().getIncompleteUnits();
     }
     super.initState();
   }

@@ -32,7 +32,8 @@ import 'print/contract_print_screen_second_page.dart';
 import 'print/contract_print_screen_third_page.dart';
 
 class ContractScreen extends StatefulWidget {
-  const ContractScreen({super.key});
+  final bool cancelContract;
+  const ContractScreen({super.key, required this.cancelContract});
 
   @override
   State<ContractScreen> createState() => _ContractScreenState();
@@ -83,10 +84,32 @@ class _ContractScreenState extends State<ContractScreen> {
           leadingWidth: 0,
           backgroundColor: AppColors.white,
         ),
-        body: BlocBuilder<ContractBloc, ContractState>(
+        body: BlocConsumer<ContractBloc, ContractState>(
+          listener: (context, state){
+            if(state is ContractSuccess){
+              // if(widget.cancelContract){
+              //   showDialog(
+              //     context: context,
+              //     builder: (context2) {
+              //       return ConfirmAlertDialog(
+              //         alertText: 'سوف يتم الغاء العقد',
+              //         confirmOnPressed: () {
+              //           context.read<ContractBloc>().add(DeleteContractEvent(state.contract.id));
+              //           context.pop();
+              //         },
+              //         cancelOnPressed: () => context.pop(),
+              //       );
+              //     },
+              //   );
+              // }
+            }
+          },
           builder: (context, state) {
             if (state is ContractFailure) {
-              return BodyText(state.message);
+              if(state.message.contains('غير موجود')){
+                return const Center(child: BodyText("هذا العقد غير موجود ربما يكون قد تم حذفه"));
+              }
+              return Center(child: BodyText(state.message));
             }
             if(state is ContractLoading){
               return const LoadingWidget(1);
@@ -202,14 +225,14 @@ class _ContractScreenState extends State<ContractScreen> {
                           width: 6.0.h,
                         ),
                         ContractButton(
-                          onPressed: contract.tenantApproved == '1' && contract.lessorApproved == '0'
+                          onPressed: (contract.tenantApproved??false) && !(contract.lessorApproved??false)
                               ? null
                               : () {
                             context.read<ContractBloc>().add(DeleteContractEvent(contract.id!));
                           },
-                          text: contract.tenantApproved == '1' && contract.lessorApproved == '0' ? 'بانتظار الطرف الاخر' : 'حذف',
-                          color: contract.tenantApproved == '1' && contract.lessorApproved == '0' ? AppColors.gray : AppColors.cherryRed,
-                          icon: contract.tenantApproved == '1' && contract.lessorApproved == '0' ? null : AppAssets.deleteContract,
+                          text: (contract.tenantApproved??false) && !(contract.lessorApproved??false) ? 'بانتظار الطرف الاخر' : 'الغاء',
+                          color: (contract.tenantApproved??false) && !(contract.lessorApproved??false) ? AppColors.gray : AppColors.cherryRed,
+                          icon: (contract.tenantApproved??false) && !(contract.lessorApproved??false) ? null : AppAssets.deleteContract,
                         ),
                         SizedBox(
                           width: 16.0.h,

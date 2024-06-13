@@ -28,6 +28,7 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
           },
         );
       } catch (e) {
+        // rethrow;
         emit(ContractFailure(e.toString()));
       }
     });

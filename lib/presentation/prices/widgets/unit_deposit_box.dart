@@ -67,9 +67,10 @@ class UnitDepositBox extends StatelessWidget {
                   if (unit.prices
                           .firstWhereOrNull((price) => price.typeResId == 4) !=
                       null)
-                    unit.typeDownPayment == 'سعر'
+                    unit.typeDownPayment == 'rial'
                         ? UnitPriceText(title: '', price: unit.downPayment!)
-                        : BodyText(text: '${unit.downPayment}%')
+                        : unit.typeDownPayment == 'percent' ? BodyText(text: '${unit.downPayment}%')
+                        : BodyText(text: '${unit.downPayment}')
                 ],
               ),
             ),

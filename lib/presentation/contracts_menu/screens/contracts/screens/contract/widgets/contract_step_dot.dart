@@ -17,7 +17,7 @@ class ContractStepDot extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: AppColors.softAsh)),
-          padding: const EdgeInsets.all(3),
+          padding: EdgeInsets.all(3.0.adaptSize),
           child: Container(
             padding: EdgeInsets.all(15.0.adaptSize),
             decoration: BoxDecoration(

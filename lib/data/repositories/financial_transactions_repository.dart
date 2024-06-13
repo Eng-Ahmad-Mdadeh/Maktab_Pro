@@ -23,7 +23,7 @@ class FinancialTransactionsRepository {
               ReceivingMethod.fromJson(right.data);
           return Right(receivingMethod);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -46,7 +46,7 @@ class FinancialTransactionsRepository {
               ReceivingMethod.fromJson(right.data);
           return Right(receivingMethod);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -64,7 +64,7 @@ class FinancialTransactionsRepository {
               ReceivingMethod.fromJson(right.data);
           return Right(receivingMethod);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -79,7 +79,7 @@ class FinancialTransactionsRepository {
           // log(right.message);
           return const Right(null);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -96,7 +96,7 @@ class FinancialTransactionsRepository {
           );
           return Right(bankAccounts);
         } else {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -111,12 +111,12 @@ class FinancialTransactionsRepository {
       (right) {
         try {
           if (right.data == null) {
-            return Left(AppException(right.message));
+            return Left(AppException(right.message?? 'Unknown error'));
           }
           final User user = User.fromJson(right.data);
           return Right(user);
         } catch (e) {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
       },
     );
@@ -130,7 +130,7 @@ class FinancialTransactionsRepository {
       (error) => Left(error),
       (right) {
         if (right.data == null) {
-          return Left(AppException(right.message));
+          return Left(AppException(right.message?? 'Unknown error'));
         }
         final User user = User.fromJson(right.data);
 

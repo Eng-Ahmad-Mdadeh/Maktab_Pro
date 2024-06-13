@@ -47,81 +47,85 @@ class ContractsWidget extends StatelessWidget {
                       color: _getColor(contract.contractType!),
                     ),
                   ),
-                  ListTile(
-                    onTap: ()=> onPressed(contract),
-                    minLeadingWidth: 70.h,
-                    leading: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SectionTitle(
-                          title: contract.contractType??'',
-                          textColor: AppColors.mintGreen,
-                          fontSize: 14,
-                        ),
-                        SectionTitle(
-                          title: '#${contract.contractNumber}',
-                          fontSize: 14,
-                        ),
-                      ],
-                    ),
-                    title: Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 15.0.v, bottom: 20.v),
-                          child: VerticalDivider(
-                            color: AppColors.black.withOpacity(.2),
+                  Align(
+                    alignment: Alignment.center,
+                    child: ListTile(
+                      onTap: ()=> onPressed(contract),
+                      minLeadingWidth: 60.h,
+                      leading: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SectionTitle(
+                            title: contract.contractType??'',
+                            textColor: AppColors.mintGreen,
+                            fontSize: 14,
                           ),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const BodyText(
-                                  "المؤجر",
-                                  fontSize: 14,
-                                ),
-                                SizedBox(height: 7.0.v),
-                                const BodyText(
-                                  "المستأجر",
-                                  fontSize: 14,
-                                ),
-                              ],
+                          SectionTitle(
+                            title: '#${contract.contractNumber}',
+                            fontSize: 14,
+                          ),
+                        ],
+                      ),
+                      title: Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: 15.0.v, bottom: 20.v),
+                            child: VerticalDivider(
+                              color: AppColors.black.withOpacity(.2),
                             ),
-                            const SizedBox(
-                              width: 15.0,
-                            ),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SectionTitle(
-                                  title: '${contract.tenantFullName}',
-                                  fontSize: 14,
-                                ),
-                                SizedBox(height: 7.0.v),
-                                SectionTitle(
-                                  title: '${contract.lessorFullName}',
-                                  fontSize: 14,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        MaktabImageView(imagePath: AppAssets.viewListDetails),
-                        const BodyText(
-                          "تفاصيل",
-                          fontSize: 12,
-                        ),
-                      ],
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const BodyText(
+                                    "المؤجر",
+                                    fontSize: 10,
+                                  ),
+                                  SizedBox(height: 7.0.v),
+                                  const BodyText(
+                                    "المستأجر",
+                                    fontSize: 10,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: 10.0.h,
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SectionTitle(
+                                    title: '${contract.tenantFullName}',
+                                    fontSize: 10,
+                                  ),
+                                  SizedBox(height: 7.0.v),
+                                  SectionTitle(
+                                    title: '${contract.lessorFullName}',
+                                    fontSize: 10,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          MaktabImageView(imagePath: AppAssets.viewListDetails),
+                          const BodyText(
+                            "تفاصيل",
+                            fontSize: 12,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

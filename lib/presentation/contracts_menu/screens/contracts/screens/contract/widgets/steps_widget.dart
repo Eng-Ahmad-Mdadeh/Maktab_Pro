@@ -31,7 +31,7 @@ class StepsWidget extends StatelessWidget {
                   title:  "معلومات العقد",
                 ),
               ),
-              Container(color: AppColors.softAsh, width: 40, height: 2),
+              Container(color: AppColors.softAsh, width: 30.h, height: 2.0.v),
               InkWell(
                 onTap: () => onPressed(1),
                 child: ContractStepDot(
@@ -40,7 +40,7 @@ class StepsWidget extends StatelessWidget {
                   title: "العقارات و الوحدات",
                 ),
               ),
-              Container(color: AppColors.softAsh, width: 40, height: 2),
+              Container(color: AppColors.softAsh, width: 30.h, height: 2.0.v),
               InkWell(
                 onTap: ()=> onPressed(2),
                 child: ContractStepDot(
@@ -49,7 +49,7 @@ class StepsWidget extends StatelessWidget {
                   title: "اطراف العقد",
                 ),
               ),
-              Container(color: AppColors.softAsh, width: 40, height: 2),
+              Container(color: AppColors.softAsh, width: 30.h, height: 2.0.v),
               InkWell(
                 onTap: ()=> onPressed(3),
                 child: ContractStepDot(

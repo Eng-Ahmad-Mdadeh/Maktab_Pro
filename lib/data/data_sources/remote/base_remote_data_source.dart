@@ -41,10 +41,12 @@ class BaseRemoteDataSource<T> {
       );
     } on AppException catch (e) {
       return Left(e);
+    }catch(e){
+      rethrow;
     }
   }
 
-  Future<Either<AppException, r.Response>> fetchDataWithId(id) async {
+  Future<Either<ApiException, r.Response>> fetchDataWithId(id) async {
     try {
       final Either response = await _networkHelper.get('$baseEndpoint/$id');
       return response.fold(
@@ -53,7 +55,7 @@ class BaseRemoteDataSource<T> {
           return Right(r.Response.fromJson(right));
         },
       );
-    } on AppException catch (e) {
+    } on ApiException catch (e) {
       return Left(e);
     }
   }

@@ -1331,10 +1331,12 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
 
   Future<bool> updateDepositInfo(Emitter emit) async {
     emit(state.copyWith(unitApiCallState: UnitApiCallState.loading));
+    log("_______________________________________");
+    log(state.depositType.toString());
     var result = await _officeRepository.updateDownPayment(
       officeId: state.createdUnit!.id,
       downPayment: state.depositAmount,
-      downPaymentType: getCounterDepositType(state.depositType),
+      downPaymentType: state.depositType?? DepositTypes.price,
     );
     return result.fold(
       (failure) {

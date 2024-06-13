@@ -52,7 +52,7 @@ class OfficesHeader extends StatelessWidget {
           ),
         ),
         SizedBox(width: 5.h),
-        const Expanded(
+        Expanded(
           child: OfficeNavigationDropDownButton(),
         ),
       ],
