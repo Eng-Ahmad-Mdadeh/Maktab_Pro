@@ -40,7 +40,7 @@ class SectionTitle extends StatelessWidget {
       style: AppTextStyles.titleMedium.copyWith(
         color: textColor ?? AppColors.black,
         fontWeight: textFontWeight ?? FontWeight.bold,
-        fontSize: fontSize?.fSize ?? 18.0.fSize,
+        fontSize: fontSize?.fSize ?? 16.0.fSize,
         decoration: decoration,
         decorationStyle: decorationStyle,
         decorationColor: decorationColor,

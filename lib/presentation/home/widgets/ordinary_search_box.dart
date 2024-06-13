@@ -76,6 +76,7 @@ class OrdinarySearchBox extends StatelessWidget {
               child: Icon(
                 FontAwesomeIcons.mapLocationDot,
                 size: 23.0.adaptSize,
+                color: AppColors.yellow,
               ),
             ),
             SizedBox(

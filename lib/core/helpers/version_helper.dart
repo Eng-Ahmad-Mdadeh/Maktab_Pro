@@ -50,7 +50,7 @@ class VersionHelper implements Comparable<VersionHelper> {
   bool operator <=(dynamic o) => o is VersionHelper && _compare(this, o) <= 0;
 
   @override
-  bool operator ==(dynamic o) => o is VersionHelper && _compare(this, o) == 0;
+  bool operator ==(Object other) => other is VersionHelper && _compare(this, other) == 0;
 
   bool operator >(dynamic o) => o is VersionHelper && _compare(this, o) > 0;
 

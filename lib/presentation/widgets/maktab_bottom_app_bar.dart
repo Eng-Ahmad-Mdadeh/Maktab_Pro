@@ -20,6 +20,7 @@ class MaktabBottomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(SizeHelper.width);
+    print(SizeHelper.height);
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
         return BottomAppBar(
@@ -78,7 +79,7 @@ class MaktabBottomAppBar extends StatelessWidget {
                   ],
                 ),
               ),
-              if (SizeHelper.width > 400)
+              // if (SizeHelper.width > 400)
                 Align(
                   alignment: Alignment(0.0, SizeHelper.width < 420 ? -1.1 : -1.5),
                   child: FloatingActionButton(
@@ -92,11 +93,11 @@ class MaktabBottomAppBar extends StatelessWidget {
                     },
                     child: Icon(
                       Icons.add,
-                      size: 30.0.adaptSize,
+                      size: 25.0.adaptSize,
                     ),
                   ),
                 ),
-              if (SizeHelper.width > 400)
+              // if (SizeHelper.width > 400)
                 const Align(
                   alignment: Alignment(0.0, 0.4),
                   child: BodyText(
@@ -105,11 +106,10 @@ class MaktabBottomAppBar extends StatelessWidget {
                     fontSize: 13.0,
                   ),
                 ),
-
-              const Align(
-                alignment: Alignment(0, -5),
-                child: AddOfficeButton(),
-              ),
+              // Align(
+              //   alignment: Alignment(0, SizeHelper.height > 600 ? -2 : -5),
+              //   child: const AddOfficeButton(),
+              // ),
             ],
           ),
         );
@@ -117,42 +117,44 @@ class MaktabBottomAppBar extends StatelessWidget {
     );
   }
 }
-
-class AddOfficeButton extends StatelessWidget {
-  const AddOfficeButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    if (SizeHelper.width < 400) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          MaktabButton(
-            backgroundColor: AppColors.lushGreen,
-            color: AppColors.white,
-            isCircle: true,
-            elevation: 0,
-            icon: Icon(
-              Icons.add,
-              size: 30.0.adaptSize,
-            ),
-            height: 50.0.h,
-            width: 50.0.h,
-            onPressed: () {
-              context.pushNamed(AppRoutes.createOfficeScreen);
-            },
-          ),
-          SizedBox(
-            height: 3.0.v,
-          ),
-          const BodyText(
-            text: "اضف مكتبك",
-            textColor: AppColors.lushGreen,
-          ),
-        ],
-      );
-    } else {
-      return const SizedBox();
-    }
-  }
-}
+//
+// class AddOfficeButton extends StatelessWidget {
+//   const AddOfficeButton({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     if (SizeHelper.width < 400) {
+//       return Column(
+//         mainAxisSize: MainAxisSize.min,
+//         children: [
+//           MaktabButton(
+//             backgroundColor: AppColors.lushGreen,
+//             color: AppColors.white,
+//             isCircle: true,
+//             borderRadius: BorderRadius.circular(50.0.adaptSize),
+//             elevation: 0,
+//             icon: Icon(
+//               Icons.add,
+//               size: 30.0.adaptSize,
+//               color: AppColors.white,
+//             ),
+//             height: 50.0.h,
+//             width: 50.0.h,
+//             onPressed: () {
+//               context.pushNamed(AppRoutes.createOfficeScreen);
+//             },
+//           ),
+//           SizedBox(
+//             height: 3.0.v,
+//           ),
+//           const BodyText(
+//             text: "اضف مكتبك",
+//             textColor: AppColors.lushGreen,
+//           ),
+//         ],
+//       );
+//     } else {
+//       return const SizedBox();
+//     }
+//   }
+// }

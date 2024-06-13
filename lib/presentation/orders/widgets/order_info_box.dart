@@ -49,11 +49,12 @@ class OrderInfoBox extends StatelessWidget {
                     MaktabRichTextModel(
                       text: order.totalPriceLessor?.toString() ?? '',
                       color: AppColors.emeraldTeal,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 19.0
                     ),
                     MaktabRichTextModel(
-                      text: 'ريال',
-                      color: AppColors.emeraldTeal,
+                      text: ' ريال',
+                      color: AppColors.black,
                       fontWeight: FontWeight.w500,
                     ),
                   ],

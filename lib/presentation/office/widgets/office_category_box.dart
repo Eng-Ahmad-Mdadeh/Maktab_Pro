@@ -27,7 +27,7 @@ class OfficeCategoryBox extends StatelessWidget {
         height: 60.v,
         // padding: EdgeInsets.symmetric(vertical: 15.v, horizontal: 15.h),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.royalPurpleDeep: null,
+          color: isSelected ? AppColors.royalSoftPurple : null,
           borderRadius: BorderRadius.circular(15),
           // border: isSelected ? Border.all(color: AppColors.cherryRed, width: 1) : null,
           gradient: isSelected ? null : const LinearGradient(
@@ -37,17 +37,19 @@ class OfficeCategoryBox extends StatelessWidget {
             ],
           ),
         ),
-        child: Stack(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Align(
               alignment: Alignment.center,
               child: MaktabImageView(
-                width: 50.h,
-                height: 50.v,
+                width: 30.h,
+                height: 30.v,
                 imagePath: officeCategory.icon,
                 color: AppColors.white,
               ),
             ),
+            SizedBox(height: 10.0.v,),
             // Container(
             //   width: 100.h,
             //   height: 100.v,

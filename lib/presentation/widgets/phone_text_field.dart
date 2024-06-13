@@ -15,11 +15,19 @@ class PhoneTextfield extends StatelessWidget {
     required this.controller,
     this.onChanged,
     this.onTapOutside,
+    this.titleSize,
+    this.textFieldFontSize,
+    this.hintSize,
+    this.countryCodeSize,
   });
 
   final TextEditingController controller;
   final Function(String)? onChanged;
   final Function()? onTapOutside;
+  final double? titleSize;
+  final double? textFieldFontSize;
+  final double? hintSize;
+  final double? countryCodeSize;
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +35,18 @@ class PhoneTextfield extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: MaktabTextFormField(
         title: "رقم الهاتف المحمول",
-        titleSize: 21.0,
+        titleSize: titleSize ?? 19.0,
         controller: controller,
         textAlign: TextAlign.left,
         textInputType: TextInputType.phone,
         hintText: '5xxxxxx',
+        textFieldFontSize: textFieldFontSize ?? 19.0.fSize,
         hintStyle: AppTextStyles.bodyMediun.copyWith(
-          fontSize: 26.0.fSize,
+          fontSize: hintSize ?? 19.0.fSize,
           color: AppColors.black.withOpacity(0.5),
         ),
         // textStyle: AppTextStyles.bodyMedium.copyWith(fontSize: 12.0.fSize),
-        suffix: const CountryCode(),
+        suffix: CountryCode(size: countryCodeSize),
         inputFormatters: [
           FilteringTextInputFormatter.allow(RegExp(r'^\d+')),
           LengthLimitingTextInputFormatter(9),

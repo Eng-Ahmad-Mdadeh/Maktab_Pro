@@ -32,6 +32,7 @@ class CodeTextField extends StatelessWidget {
           animationDuration: const Duration(milliseconds: 300),
           onCompleted: onCompleted,
           keyboardType: TextInputType.number,
+          androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
           defaultPinTheme: PinTheme(
             width: 70.0.h,
             height: 70.0.v,
@@ -42,6 +43,7 @@ class CodeTextField extends StatelessWidget {
               border: Border.all(
                 width: 1,
                 color: AppColors.softAsh,
+
               ),
             ),
           ),

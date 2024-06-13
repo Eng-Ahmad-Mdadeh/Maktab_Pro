@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:maktab/core/helpers/size_helper.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:maktab/presentation/widgets/maktab_button.dart';
 
@@ -16,23 +18,29 @@ class LicenseRegisterDialog extends StatelessWidget {
         textAlign: TextAlign.center,
       ),
       actionsAlignment: MainAxisAlignment.center,
-      actionsPadding: const EdgeInsets.only(bottom: 20),
+      // actionsPadding: const EdgeInsets.only(bottom: 20),
       actions: [
-        MaktabButton(
-          text: 'أوافق',
-          color: AppColors.emeraldGreen,
-          backgroundColor: AppColors.white,
-          isBordered: true,
-          borderColor: AppColors.emeraldGreen,
-          onPressed: () {},
+        Center(
+          child: MaktabButton(
+            text: 'أوافق',
+            color: AppColors.emeraldGreen,
+            backgroundColor: AppColors.white,
+            isBordered: true,
+            borderColor: AppColors.emeraldGreen,
+            // todo: make sure what the action will be if agree
+            onPressed: context.pop,
+          ),
         ),
-        MaktabButton(
-          text: 'لاحقا',
-          color: AppColors.cherryRed,
-          backgroundColor: AppColors.white,
-          isBordered: true,
-          borderColor: AppColors.cherryRed,
-          onPressed: () {},
+        SizedBox(height: 10.0.v,),
+        Center(
+          child: MaktabButton(
+            text: 'لاحقا',
+            color: AppColors.cherryRed,
+            backgroundColor: AppColors.white,
+            isBordered: true,
+            borderColor: AppColors.cherryRed,
+            onPressed: context.pop,
+          ),
         ),
       ],
     );

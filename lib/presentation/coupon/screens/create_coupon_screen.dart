@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -138,6 +141,14 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                                 title: 'الكود:',
                                 hintText: 'اكتب الكود',
                                 textInputType: TextInputType.name,
+                                suffix: IconButton(
+                                  icon: const Icon(Icons.local_offer_rounded),
+                                  color: AppColors.mintGreen,
+                                  onPressed: (){
+                                    final Random ran = Random();
+                                    couponCodeController.text = shortHash(ran) + ran.nextInt(10).toString();
+                                  },
+                                ),
                                 validator: (value) {
                                   if (value!.trim().isEmpty) {
                                     return 'الرجاء ادخال الكود';

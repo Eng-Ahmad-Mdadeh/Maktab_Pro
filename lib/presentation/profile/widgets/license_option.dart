@@ -25,6 +25,7 @@ class LicenseOption extends StatelessWidget {
               MaktabButton(
                 text: 'نعم',
                 width: 100.h,
+                height: 50.v,
                 backgroundColor: AppColors.emeraldGreen,
                 color: AppColors.white,
                 padding: EdgeInsets.zero,
@@ -35,6 +36,7 @@ class LicenseOption extends StatelessWidget {
               MaktabButton(
                 text: 'لا',
                 width: 100.h,
+                height: 50.v,
                 backgroundColor: AppColors.white,
                 color: AppColors.black,
                 padding: EdgeInsets.zero,

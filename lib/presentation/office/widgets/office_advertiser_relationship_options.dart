@@ -27,6 +27,7 @@ class OfficeAdvertiserRelationshipOptions extends StatelessWidget {
                     Expanded(
                       child: MaktabButton(
                         text: 'مالك',
+                        fontSize: 17.0,
                         color: state.advertiserRelationshipOption ==
                             AdertiserRelationshipOptions.owner
                             ? AppColors.white
@@ -47,6 +48,7 @@ class OfficeAdvertiserRelationshipOptions extends StatelessWidget {
                     Expanded(
                       child: MaktabButton(
                         text: 'وكيل',
+                        fontSize: 17.0,
                         color: state.advertiserRelationshipOption ==
                             AdertiserRelationshipOptions.agent
                             ? AppColors.white
@@ -67,6 +69,7 @@ class OfficeAdvertiserRelationshipOptions extends StatelessWidget {
                     Expanded(
                       child: MaktabButton(
                         text: 'مسوق',
+                        fontSize: 17.0,
                         color: state.advertiserRelationshipOption ==
                             AdertiserRelationshipOptions.marketer
                             ? AppColors.white

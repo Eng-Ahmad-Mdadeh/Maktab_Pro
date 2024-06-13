@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:maktab/data/models/office/unit_settings.dart';
@@ -20,21 +22,21 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         getUnitSettingsApiCallState: UserApiCallState.initial,
         updateUnitSettingsApiCallState: UserApiCallState.initial,
       ));
-      try{
+      try {
         final result = await _repository.getUserAgreement();
         result.fold(
-              (failure) => emit(state.copyWith(
+          (failure) => emit(state.copyWith(
             userAgreementApiCallState: UserApiCallState.failure,
             message: failure.message,
           )),
-              (agreement) {
+          (agreement) {
             emit(state.copyWith(
               userAgreementApiCallState: UserApiCallState.success,
               agreement: agreement,
             ));
           },
         );
-      }catch(e){
+      } catch (e) {
         // rethrow;
         emit(state.copyWith(
           userAgreementApiCallState: UserApiCallState.failure,
@@ -74,13 +76,19 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       );
     });
     on<SetUnitSettingsEvent>((event, emit) async {
+      log("state.isInsuranceRequired: ${state.isInsuranceRequired}");
+      log("state.unitSettings!.isInsuranceRequired: ${state.unitSettings!.isInsuranceRequired}");
+      log("state.insurancePrice: ${state.insurancePrice}");
+      log("state.unitSettings!.price: ${state.unitSettings!.price}");
+      log("state.conditions: ${state.conditions}");
+      log("state.unitSettings!.text: ${state.unitSettings!.text}");
+      emit(state.copyWith(
+        updateUnitSettingsApiCallState: UserApiCallState.loading,
+        getUnitSettingsApiCallState: UserApiCallState.initial,
+      ));
       if (state.isInsuranceRequired != state.unitSettings!.isInsuranceRequired ||
           state.insurancePrice != state.unitSettings!.price.toString() ||
           state.conditions != state.unitSettings!.text) {
-        emit(state.copyWith(
-          updateUnitSettingsApiCallState: UserApiCallState.loading,
-          getUnitSettingsApiCallState: UserApiCallState.initial,
-        ));
         final result = await _repository.setUnitSettings(
           isInsuranceRequired: state.isInsuranceRequired,
           insurancePrice: state.insurancePrice,

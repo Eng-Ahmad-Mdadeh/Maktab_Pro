@@ -7,7 +7,8 @@ import 'body_text.dart';
 import 'section_title.dart';
 
 class CountryCode extends StatelessWidget {
-  const CountryCode({super.key});
+  final double? size;
+  const CountryCode({super.key, this.size});
 
   @override
   Widget build(BuildContext context) {
@@ -17,16 +18,15 @@ class CountryCode extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          const SectionTitle(
-            title:
-            '966+',
+          SectionTitle(
+            title: '966+',
             textAlign: TextAlign.center,
-            fontSize: 26.0,
+            fontSize: size == null ? 19.0 : (size!/2),
           ),
           SizedBox(width: 10.h),
           BodyText(
-            text:
-            '🇸🇦',fontSize: 40.fSize
+            text: '🇸🇦',
+            fontSize: size ?? 38.0,
           ),
         ],
       ),

@@ -23,6 +23,7 @@ class SpaceTextField extends StatelessWidget {
       hintText: 'الرجاء كتابة المساحة',
       textInputType: TextInputType.number,
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+      textFieldFontSize: 17.0,
       suffix: Padding(
         padding: EdgeInsets.only(left: 10.h),
         child: const Row(

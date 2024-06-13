@@ -174,6 +174,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                             padding: EdgeInsets.symmetric(horizontal: 10.0.h),
                             child: CodeTextField(
                               controller: _codeController,
+
                               onCompleted: (value) {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<AuthBloc>().add(

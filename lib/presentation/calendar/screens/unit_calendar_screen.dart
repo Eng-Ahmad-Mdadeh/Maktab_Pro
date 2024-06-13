@@ -23,6 +23,7 @@ import '../../../domain/calendar/calendar_select_cubit.dart';
 import '../../../domain/calendar/dates_select_cubit.dart';
 import '../../../domain/entity/dates_selection_entity.dart';
 import '../../../domain/offices/offices_cubit.dart';
+import '../../widgets/order_status.dart';
 import '../widgets/hour_range_picker_widget.dart';
 import '../widgets/select_date_widget.dart';
 
@@ -44,13 +45,22 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
 
   @override
   void initState() {
-    unit = context.read<OfficesCubit>().state.calendars.where((e) => e.id == widget.officeId).first.units.where((e) => e.id == widget.unitId).first;
+    unit = context
+        .read<OfficesCubit>()
+        .state
+        .calendars
+        .where((e) => e.id == widget.officeId)
+        .first
+        .units
+        .where((e) => e.id == widget.unitId)
+        .first;
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    _calendarSelectCubit = CalendarSelectCubit(TypeRes.getCalenderFormat(unit.prices.first.typeRes?.arName ?? ''));
+    _calendarSelectCubit =
+        CalendarSelectCubit(TypeRes.getCalenderFormat(unit.prices.first.typeRes?.arName ?? ''));
     _hourSelectCubit = DatesSelectCubit();
     super.didChangeDependencies();
   }
@@ -100,16 +110,23 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                                 SelectDateWidget(
                                   _datePickerController,
                                   isSingle: optionState == CalendarFormatOptions.hour,
-                                  offer: ((calenderState is CalendarSuccess) ? calenderState.unit : unit).offers.where((e) => e.status).firstOrNull,
-                                  calendars: ((calenderState is CalendarSuccess) ? calenderState.unit : unit).calendars,
+                                  offer: ((calenderState is CalendarSuccess) ? calenderState.unit : unit)
+                                      .offers
+                                      .where((e) => e.status)
+                                      .firstOrNull,
+                                  calendars: ((calenderState is CalendarSuccess) ? calenderState.unit : unit)
+                                      .calendars,
                                   selectableDayPredicate: (date) =>
-                                      ((calenderState is CalendarSuccess) ? calenderState.unit : unit).calendars.every((calendar) {
-                                    return date.isBefore(calendar.startDate) || date.isAfter(calendar.endDate);
-                                  }),
+                                      ((calenderState is CalendarSuccess) ? calenderState.unit : unit)
+                                          .calendars.every((calendar) {
+                                        return date.isBefore(calendar.startDate) ||
+                                            date.isAfter(calendar.endDate);
+                                      }),
                                   onSelectionChanged: (args) {
                                     if (args.value is PickerDateRange) {
                                       final dates = args.value as PickerDateRange;
-                                      context.read<DatesSelectCubit>().setDates(dates.startDate, dates.endDate);
+                                      context.read<DatesSelectCubit>().setDates(
+                                          dates.startDate, dates.endDate);
                                     }
                                     if (args.value is DateTime) {
                                       final date = args.value as DateTime;
@@ -123,8 +140,11 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                                       return HourRangePickerWidget(
                                         startHour: state.startTime,
                                         endHour: state.endTime,
-                                        blockedHours: ((calenderState is CalendarSuccess) ? calenderState.unit : unit).calendars.where((e) {
-                                          return e.startDate.isAtSameMomentAs(state.startDate ?? DateTime.now());
+                                        blockedHours: ((calenderState is CalendarSuccess)
+                                            ? calenderState.unit
+                                            : unit).calendars.where((e) {
+                                          return e.startDate.isAtSameMomentAs(
+                                              state.startDate ?? DateTime.now());
                                         }).map((e) {
                                           if (e.startDate.year == e.endDate.year &&
                                               e.startDate.month == e.endDate.month &&
@@ -149,6 +169,15 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                             ),
                           ),
                         ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.h),
+                          child: const Row(
+                            children: [
+                              OrderStatus(color: AppColors.black, title: 'متاح'),
+                              OrderStatus(color: AppColors.cherryRed, title: 'محجوز'),
+                            ],
+                          ),
+                        ),
                         Expanded(
                           child: Padding(
                             padding: EdgeInsets.symmetric(vertical: 20.v, horizontal: 20.h),
@@ -161,29 +190,35 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                                     onPressed: calenderState is CalendarLoading
                                         ? null
                                         : () {
-                                            final selectedDates = context.read<DatesSelectCubit>().state;
-                                            if (selectedDates.startDate != null) {
-                                              final selectedTypeRes = context.read<CalendarSelectCubit>().state;
-                                              final priceID = unit.prices.firstWhere((e) {
-                                                return e.typeRes?.arName == TypeRes.getCalenderText(selectedTypeRes!);
-                                              }).id;
-                                              context.read<CalendarBloc>().add(
-                                                    SetOfficeCalendarsEvent(
-                                                      unit.id,
-                                                      priceID,
-                                                      [
-                                                        Calendar(
-                                                          startDate: selectedDates.startDate!.addHours(selectedDates.startTime ?? 0),
-                                                          endDate: (selectedDates.endDate ?? selectedDates.startDate!)
-                                                              .addHours(selectedDates.endTime ?? 23),
-                                                          adsId: unit.id,
-                                                          adsPriceId: priceID,
-                                                        )
-                                                      ],
-                                                    ),
-                                                  );
-                                            }
-                                          },
+                                      final selectedDates = context
+                                          .read<DatesSelectCubit>()
+                                          .state;
+                                      if (selectedDates.startDate != null) {
+                                        final selectedTypeRes = context
+                                            .read<CalendarSelectCubit>()
+                                            .state;
+                                        final priceID = unit.prices.firstWhere((e) {
+                                          return e.typeRes?.arName ==
+                                              TypeRes.getCalenderText(selectedTypeRes!);
+                                        }).id;
+                                        context.read<CalendarBloc>().add(
+                                          SetOfficeCalendarsEvent(
+                                            unit.id,
+                                            priceID,
+                                            [
+                                              Calendar(
+                                                startDate: selectedDates.startDate!.addHours(
+                                                    selectedDates.startTime ?? 0),
+                                                endDate: (selectedDates.endDate ?? selectedDates.startDate!)
+                                                    .addHours(selectedDates.endTime ?? 23),
+                                                adsId: unit.id,
+                                                adsPriceId: priceID,
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                    },
                                   ),
                                 ),
                                 SizedBox(width: 15.h),
@@ -194,24 +229,30 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                                     onPressed: calenderState is CalendarLoading
                                         ? null
                                         : () {
-                                            final selectedDates = context.read<DatesSelectCubit>().state;
-                                            if (selectedDates.startDate != null) {
-                                              context.read<CalendarBloc>().add(
-                                                    DeleteOfficeCalendarsEvent(
-                                                      unit.id,
-                                                      unit.calendars.where((e) {
-                                                        final selectedStart = selectedDates.startDate!.addHours(selectedDates.startTime ?? 0);
-                                                        final selectedEnd =
-                                                            (selectedDates.endDate ?? selectedDates.startDate!).addHours(selectedDates.endTime ?? 23);
-                                                        final isAfter =
-                                                            e.startDate.isAfter(selectedStart) || e.startDate.isAtSameMomentAs(selectedStart);
-                                                        final isBefore = e.endDate.isBefore(selectedEnd) || e.endDate.isAtSameMomentAs(selectedEnd);
-                                                        return isAfter && isBefore;
-                                                      }).toList(),
-                                                    ),
-                                                  );
-                                            }
-                                          },
+                                      final selectedDates = context
+                                          .read<DatesSelectCubit>()
+                                          .state;
+                                      if (selectedDates.startDate != null) {
+                                        context.read<CalendarBloc>().add(
+                                          DeleteOfficeCalendarsEvent(
+                                            unit.id,
+                                            unit.calendars.where((e) {
+                                              final selectedStart = selectedDates.startDate!.addHours(
+                                                  selectedDates.startTime ?? 0);
+                                              final selectedEnd =
+                                              (selectedDates.endDate ?? selectedDates.startDate!).addHours(
+                                                  selectedDates.endTime ?? 23);
+                                              final isAfter =
+                                                  e.startDate.isAfter(selectedStart) ||
+                                                      e.startDate.isAtSameMomentAs(selectedStart);
+                                              final isBefore = e.endDate.isBefore(selectedEnd) ||
+                                                  e.endDate.isAtSameMomentAs(selectedEnd);
+                                              return isAfter && isBefore;
+                                            }).toList(),
+                                          ),
+                                        );
+                                      }
+                                    },
                                   ),
                                 ),
                               ],

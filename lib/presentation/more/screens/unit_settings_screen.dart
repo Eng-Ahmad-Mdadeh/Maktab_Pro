@@ -31,13 +31,9 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
   void initState() {
     UserBloc userBloc = context.read<UserBloc>();
     insurancePriceController = TextEditingController(
-        text: userBloc.state.unitSettings != null
-            ? userBloc.state.unitSettings!.price.toString()
-            : '');
+        text: userBloc.state.unitSettings != null ? userBloc.state.unitSettings!.price.toString() : '');
     conditionController = TextEditingController(
-        text: userBloc.state.unitSettings != null
-            ? userBloc.state.unitSettings!.text
-            : '');
+        text: userBloc.state.unitSettings != null ? userBloc.state.unitSettings!.text : '');
     super.initState();
   }
 
@@ -59,8 +55,7 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SectionTitle(
-                          title:
-                              'هل تطلب تأمين مسترد من المستأجرين عند الوصول؟',
+                          title: 'هل تطلب تأمين مسترد من المستأجرين عند الوصول؟',
                           textAlign: TextAlign.start,
                           textColor: AppColors.lightBlack,
                         ),
@@ -74,8 +69,7 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
                                   value: false,
                                   groupValue: state.isInsuranceRequired,
                                   onChanged: (value) {
-                                    context.read<UserBloc>().add(
-                                        ToggleAssuranceRequiredEvent(value!));
+                                    context.read<UserBloc>().add(ToggleAssuranceRequiredEvent(value!));
                                   },
                                 ),
                                 MaktabRadioListTile(
@@ -83,8 +77,7 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
                                   value: true,
                                   groupValue: state.isInsuranceRequired,
                                   onChanged: (value) {
-                                    context.read<UserBloc>().add(
-                                        ToggleAssuranceRequiredEvent(value!));
+                                    context.read<UserBloc>().add(ToggleAssuranceRequiredEvent(value!));
                                   },
                                 ),
                                 SizedBox(height: 20.v),
@@ -105,9 +98,7 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
                                         ],
                                       ),
                                     ),
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.digitsOnly
-                                    ],
+                                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                                     validator: (value) {
                                       if (value!.trim().isEmpty) {
                                         return 'الرجاء ادخال المبلغ';
@@ -115,20 +106,15 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
                                       return null;
                                     },
                                     onSaved: (value) {
-                                      context
-                                          .read<UserBloc>()
-                                          .add(SetInsurancePriceEvent(value!));
+                                      context.read<UserBloc>().add(SetInsurancePriceEvent(value!));
                                     },
                                   ),
                                   SizedBox(height: 20.v),
                                   Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 10.v, horizontal: 10.h),
+                                    padding: EdgeInsets.symmetric(vertical: 10.v, horizontal: 10.h),
                                     decoration: BoxDecoration(
-                                      borderRadius:
-                                          BorderRadius.circular(15.adaptSize),
-                                      color:
-                                          AppColors.lightCyan.withOpacity(0.3),
+                                      borderRadius: BorderRadius.circular(15.adaptSize),
+                                      color: AppColors.lightCyan.withOpacity(0.3),
                                     ),
                                     child: const BodyText(
                                       text:
@@ -154,9 +140,7 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
                             return null;
                           },
                           onSaved: (value) {
-                            context
-                                .read<UserBloc>()
-                                .add(SetConditionsEvent(value!));
+                            context.read<UserBloc>().add(SetConditionsEvent(value!));
                           },
                         ),
                       ],
@@ -166,29 +150,33 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
               ),
               BlocConsumer<UserBloc, UserState>(
                 listener: (context, state) {
-                  if (state.updateUnitSettingsApiCallState ==
-                      UserApiCallState.success) {
+                  if (state.updateUnitSettingsApiCallState == UserApiCallState.success) {
                     MaktabSnackbar.showSuccess(context, 'تم الحفظ بنجاح');
-                  } else if (state.updateUnitSettingsApiCallState ==
-                      UserApiCallState.failure) {
+                  } else if (state.updateUnitSettingsApiCallState == UserApiCallState.failure) {
                     MaktabSnackbar.showError(context, state.message);
-                  } else if (state.updateUnitSettingsApiCallState ==
-                      UserApiCallState.noCall) {
-                    context.pop();
+                  } else if (state.updateUnitSettingsApiCallState == UserApiCallState.noCall) {
+                    MaktabSnackbar.showWarning(context, 'لا يوجد اي تغيير');
                   }
                 },
                 builder: (context, state) => MaktabButton(
-                  onPressed: () {
+                  onPressed: /*(state.isInsuranceRequired != state.unitSettings!.isInsuranceRequired ||
+                      state.insurancePrice != state.unitSettings!.price.toString() ||
+                      state.conditions != state.unitSettings!.text) ? null : */() {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
                       context.read<UserBloc>().add(SetUnitSettingsEvent());
                     }
                   },
-                  isLoading: state.updateUnitSettingsApiCallState ==
-                      UserApiCallState.loading,
+                  isLoading: state.updateUnitSettingsApiCallState == UserApiCallState.loading,
+                  fontSize: 19.0,
+                  // backgroundColor: (state.isInsuranceRequired != state.unitSettings!.isInsuranceRequired ||
+                  //     state.insurancePrice != state.unitSettings!.price.toString() ||
+                  //     state.conditions != state.unitSettings!.text) ? AppColors.softAsh : AppColors.mintGreen,
                   text: 'حفظ التغييرات',
                 ),
               ),
+
+              SizedBox(height: 10.0.v,),
             ],
           ),
         ),

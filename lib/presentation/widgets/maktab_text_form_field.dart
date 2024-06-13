@@ -39,6 +39,7 @@ class MaktabTextFormField extends StatelessWidget {
     this.focusNode,
     this.minLines,
     this.errorStyle,
+    this.textFieldFontSize,
     this.readOnly = false,
     this.disabled = false,
     this.autofocus = false,
@@ -51,6 +52,7 @@ class MaktabTextFormField extends StatelessWidget {
   final String? title;
   final String? smallTitle;
   final double? width;
+  final double? textFieldFontSize;
   final TextEditingController? scrollPadding;
   final TextEditingController? controller;
   final TextStyle? textStyle;
@@ -116,7 +118,7 @@ class MaktabTextFormField extends StatelessWidget {
             : const SizedBox.shrink(),
         TextFormField(
           controller: controller,
-          style: textStyle ?? textTheme.titleMedium!.copyWith(fontSize: 26.fSize),
+          style: textStyle ?? textTheme.titleMedium!.copyWith(fontSize: textFieldFontSize ?? 15.fSize),
           obscureText: obscureText!,
           textInputAction: textInputAction,
           keyboardType: textInputType,

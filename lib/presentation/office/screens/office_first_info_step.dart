@@ -79,6 +79,7 @@ class _OfficeFirstInfoStepState extends State<OfficeFirstInfoStep> {
                   crossAxisCount: 3,
                   mainAxisSpacing: 10.v,
                   crossAxisSpacing: 8.h,
+                  childAspectRatio: 5/4
                 ),
                 itemCount: state.searchData!.officeCategories.length,
                 itemBuilder: (context, index) {

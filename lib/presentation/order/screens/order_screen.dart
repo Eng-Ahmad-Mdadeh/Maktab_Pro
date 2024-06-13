@@ -78,8 +78,8 @@ class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<OrderBloc, OrderState>(
-      listener: (context, state){
-        if(state is OrderSuccess){
+      listener: (context, state) {
+        if (state is OrderSuccess) {
           context.read<OrdersBloc>().add(const GetOrdersEvent(1));
         }
       },
@@ -125,10 +125,11 @@ class OrderScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: MaktabButton(
-                          height: 45.0.v,
+                          // height: 45.0.v,
                           width: 150.0.h,
                           text: "إنشاء عقد",
-                            color: AppColors.white,
+                          color: AppColors.white,
+                          fontSize: 19.0,
                           onPressed: () {
                             // todo: link this with create contract page after work on contract
                           },
@@ -137,10 +138,11 @@ class OrderScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(15.0),
                         child: MaktabButton(
-                          height: 45.0.v,
+                          // height: 60.0.v,
                           width: 150.0.h,
+                          fontSize: 19.0,
                           text: "إلغاء الطلب",
-        color: AppColors.white,
+                          color: AppColors.white,
                           backgroundColor: AppColors.cherryRed,
                           onPressed: () {
                             showDialog<bool>(
@@ -149,13 +151,17 @@ class OrderScreen extends StatelessWidget {
                                 content: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    SizedBox(height: 20.0.v,),
+                                    SizedBox(
+                                      height: 20.0.v,
+                                    ),
                                     Icon(
                                       Icons.cancel_outlined,
                                       color: AppColors.cherryRed,
                                       size: 70.0.adaptSize,
                                     ),
-                                    SizedBox(height: 20.0.v,),
+                                    SizedBox(
+                                      height: 20.0.v,
+                                    ),
                                     const SectionTitle(
                                       title: 'هل انت متأكد؟',
                                     ),
@@ -186,9 +192,9 @@ class OrderScreen extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                            ).then((value){
+                            ).then((value) {
                               final canCancel = value ?? false;
-                              if(canCancel) {
+                              if (canCancel) {
                                 context.read<OrderBloc>().add(SetOrderCancelEvent(order.id!));
                               }
                             });
@@ -225,12 +231,16 @@ class OrderScreen extends StatelessWidget {
                         '${order.office?.location?.city ?? ''},${order.office?.location?.neighborhood ?? ''},${order.office?.location?.street ?? ''}'
                       ],
                       ['تاريخ الحجز', (order.startDate?.dayFormatWithLocale('ar') ?? '')],
-                      ['تاريخ الانتهاء', '${order.endDate?.dayFormatWithLocale('ar') ?? ''},${order.lessor?.neighborhood ?? ''}'],
+                      [
+                        'تاريخ الانتهاء',
+                        '${order.endDate?.dayFormatWithLocale('ar') ?? ''},${order.lessor?.neighborhood ?? ''}'
+                      ],
                       ['مدة الإيجار', '${order.durationRes ?? ''} يوم'],
                     ],
                   ),
                   OrderDetailsCard(
                     cardTitle: 'بيانات الدفع',
+                    fontSize: 17,
                     items: [
                       [
                         'طريقة الدفع',
@@ -241,7 +251,7 @@ class OrderScreen extends StatelessWidget {
                                 : ''
                       ],
                       ['المدفوع', _getTotal(order.paymentTenants, false)],
-                      ['المبلغ المتبقي من المدة التي حجزتها', _getTotal(order.paymentTenants, false)],
+                      ['المبلغ المتبقي من المدة التي حجزتها', _getTotal(order.paymentTenants, true)],
                     ],
                   ),
                   OrderDetailsCard(
@@ -268,7 +278,10 @@ class OrderScreen extends StatelessWidget {
 
   String _getTotal(List<PaymentTenant> paymentTenants, remaining) {
     if (paymentTenants.isEmpty) return '0';
-    return paymentTenants.map((e) => num.parse(remaining ? e.remaining! : e.paid!)).reduce((v, e) => v + e).toStringAsFixedWithCheck(2);
+    return paymentTenants
+        .map((e) => num.parse(remaining ? e.remaining! : e.paid!))
+        .reduce((v, e) => v + e)
+        .toStringAsFixedWithCheck(2);
   }
 }
 
@@ -276,12 +289,14 @@ class OrderDetailsCard extends StatelessWidget {
   final String cardTitle;
   final List<List<String>> items;
   final LatLng? location;
+  final double? fontSize;
 
   const OrderDetailsCard({
     super.key,
     required this.cardTitle,
     required this.items,
     this.location,
+    this.fontSize,
   });
 
   @override
@@ -303,7 +318,7 @@ class OrderDetailsCard extends StatelessWidget {
             title: cardTitle,
             fontSize: 17,
           ),
-          ...items.map((e) => OrderDetailsItem(title: e.first, text: e.last)),
+          ...items.map((e) => OrderDetailsItem(title: e.first, text: e.last, fontSize: fontSize,)),
           SizedBox(
             height: 10.0.v,
           ),
@@ -313,7 +328,12 @@ class OrderDetailsCard extends StatelessWidget {
               width: SizeHelper.width,
               child: GoogleMap(
                 circles: {
-                  Circle(circleId: CircleId(UniqueKey().toString()), center: location!, radius: 1000, fillColor: AppColors.paleBlue, strokeWidth: 0)
+                  Circle(
+                      circleId: CircleId(UniqueKey().toString()),
+                      center: location!,
+                      radius: 1000,
+                      fillColor: AppColors.paleBlue,
+                      strokeWidth: 0)
                 },
                 markers: {
                   Marker(
@@ -334,11 +354,13 @@ class OrderDetailsCard extends StatelessWidget {
 class OrderDetailsItem extends StatelessWidget {
   final String title;
   final String text;
+  final double? fontSize;
 
   const OrderDetailsItem({
     super.key,
     required this.title,
     required this.text,
+    this.fontSize
   });
 
   @override
@@ -350,10 +372,11 @@ class OrderDetailsItem extends StatelessWidget {
         children: [
           SectionTitle(
             title: title,
-            fontSize: 15,
+            textFontWeight: FontWeight.normal,
           ),
           BodyText(
             text: text,
+            fontSize: fontSize,
           ),
         ],
       ),

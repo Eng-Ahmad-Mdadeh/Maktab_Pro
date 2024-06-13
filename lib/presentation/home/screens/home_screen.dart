@@ -27,7 +27,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(context.read<OfficesCubit>().state.incompleteOffices.length);
     return BlocListener<GeneralSettingBloc, SettingsState>(
       listener: (context, state) async {
         if (state is SettingsSuccess) {

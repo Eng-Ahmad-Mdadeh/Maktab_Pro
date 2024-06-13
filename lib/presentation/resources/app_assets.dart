@@ -2,6 +2,7 @@ class AppAssets {
   //Images
   static String imagePath = 'assets/images';
   static String logo = '$imagePath/logo.png';
+  static String pattren = '$imagePath/pattren.png';
   static String gifLogo = '$imagePath/splash.gif';
   static String stcPay = '$imagePath/stcpay.png';
   static String home1 = '$imagePath/img_image_19.png';

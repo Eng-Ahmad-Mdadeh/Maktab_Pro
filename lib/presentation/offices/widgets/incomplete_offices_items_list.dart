@@ -34,7 +34,6 @@ class IncompleteOfficesItemsList extends StatelessWidget {
                     office: state.incompleteOffices[index],
                     mode: 'complete',
                     onTap: () {
-                      print(state.incompleteOffices[index].toJson());
                       context.pushNamed(AppRoutes.createOfficeScreen, extra: state.incompleteOffices[index]);
                     },
                     onDelete: () => onIncompleteOfficeDelete(state.incompleteOffices[index].id),

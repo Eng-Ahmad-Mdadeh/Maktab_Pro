@@ -57,17 +57,19 @@ class MaktabButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      width: width,
+      // width: width,
+      // height: height,
+      width: width ?? SizeHelper.width * .5,
       height: height,
       duration: const Duration(milliseconds: 600),
       curve: Curves.easeInCubic,
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: isCircle ? null : borderRadius ?? BorderRadius.circular(15.0),
+        borderRadius: isCircle ? null : borderRadius ?? BorderRadius.circular(5.0.adaptSize),
         boxShadow: shadow != null ? [shadow!] : null,
         shape: isCircle ? BoxShape.circle : BoxShape.rectangle,
       ),
-      child: ElevatedButton(
+      child: TextButton(
         onPressed: isLoading || !isEnabled ? () {} : onPressed,
         style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
               elevation: WidgetStatePropertyAll(elevation),
@@ -75,7 +77,7 @@ class MaktabButton extends StatelessWidget {
               backgroundColor: WidgetStatePropertyAll<Color>(backgroundColor),
               shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
-                    borderRadius: borderRadius ?? BorderRadius.circular(15.0),
+                    borderRadius: borderRadius ?? BorderRadius.circular(5.0.adaptSize),
                     side: isBordered
                         ? BorderSide(color: borderColor ?? AppColors.softAsh, width: 1)
                         : BorderSide.none),
@@ -92,35 +94,31 @@ class MaktabButton extends StatelessWidget {
                 padding: padding ?? EdgeInsets.symmetric(horizontal: 20.h, vertical: 15.v),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     icon != null
-                        ? Expanded(
-                            flex: 2,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: icon!,
-                            ),
-                          )
+                        ? Align(
+                          alignment: Alignment.center,
+                          child: icon!,
+                        )
                         : const SizedBox.shrink(),
+                    SizedBox(width: 10.0.h,),
                     text != null
-                        ? Expanded(
-                            flex: 4,
-                            child: bold
-                                ? SectionTitle(
-                                    title: text!,
-                                    textAlign: TextAlign.center,
-                                    textColor: color,
-                                    fontSize: fontSize,
-                                    textFontWeight: fontWeight,
-                                  )
-                                : BodyText(
-                                    text: text!,
-                                    textAlign: TextAlign.center,
-                                    textColor: color,
-                                    fontSize: fontSize,
-                                    fontWeight: fontWeight,
-                                  ),
-                          )
+                        ? bold
+                            ? SectionTitle(
+                                title: text!,
+                                textAlign: TextAlign.center,
+                                textColor: color,
+                                fontSize: fontSize ?? 17.0,
+                                textFontWeight: fontWeight,
+                              )
+                            : BodyText(
+                                text: text!,
+                                textAlign: TextAlign.center,
+                                textColor: color,
+                                fontSize: fontSize ?? 17.0,
+                                fontWeight: fontWeight,
+                              )
                         : const SizedBox.shrink()
                   ],
                 )),

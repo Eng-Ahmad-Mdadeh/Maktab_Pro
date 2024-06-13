@@ -61,6 +61,7 @@ class LatestEvaluationsSection extends StatelessWidget {
                             Expanded(
                               child: SectionTitle(
                                 title: evaluation!.userOrdinary?.userName ?? '',
+                                textColor: AppColors.lightBlack,
                               ),
                             ),
                             if (evaluation!.comment.length > 10)
@@ -68,19 +69,21 @@ class LatestEvaluationsSection extends StatelessWidget {
                                 child: MaktabRichText(
                                   texts: [
                                     MaktabRichTextModel(
-                                      text: evaluation!.comment.substring(0, 10),
-                                    ),
-                                    MaktabRichTextModel(
-                                      text: "...",
-                                    ),
+                                        text: evaluation!.comment.substring(0, 10),
+                                        fontWeight: FontWeight.normal),
+                                    MaktabRichTextModel(text: "...", fontWeight: FontWeight.normal),
                                     MaktabRichTextModel(
                                         text: "المزيد",
                                         color: AppColors.mintGreen,
+                                        fontWeight: FontWeight.normal,
                                         onTap: () {
                                           showDialog(
                                             context: context,
                                             builder: (context) {
                                               return AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10.0.adaptSize)
+                                                ),
                                                 content: BodyText(
                                                   text: evaluation!.comment,
                                                   textAlign: TextAlign.center,

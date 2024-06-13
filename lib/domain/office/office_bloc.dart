@@ -63,8 +63,16 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
         state.progressValue = 0;
         state.createdOffice = event.office;
         state.createdUnit = event.office!.units.firstWhereOrNull((unit) => unit.isCentral);
-        _toggleAddingLicenseOffice(emit);
-        _toggleAddingMarketingRequest(emit);
+        state.marketingRequestState = (state.createdUnit?.isMarketing??false) ? VisibilityStates.show : VisibilityStates.hide;
+        state.licenseOfficeState = !(state.createdUnit?.isMarketing??false) ? VisibilityStates.show : VisibilityStates.hide;
+        log("-----------------------------------------------");
+        log(state.marketingRequestState.toString());
+        log(state.licenseOfficeState.toString());
+        log(state.licenseNumber.toString());
+        log(state.createdUnit?.isMarketing.toString()??'');
+        log("-----------------------------------------------");
+        // _toggleAddingLicenseOffice(emit);
+        // _toggleAddingMarketingRequest(emit);
         state.name = state.createdUnit?.title ?? '';
         state.categoryId = state.createdUnit?.categoryId ?? 0;
         if ((state.createdUnit?.advertiserRelationship ?? '').isNotEmpty) {
@@ -919,7 +927,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
   //   emit(state.copyWith(additionalServiceKeys: additionalServiceKeys));
   // }
 
-  Future<void> _pickImage(OfficeState state, Emitter<OfficeState> emit, bool isMainImage) async {
+  Future<void>  _pickImage(OfficeState state, Emitter<OfficeState> emit, bool isMainImage) async {
     emit(state.copyWith(imagesErrorMessage: ''));
     selectedImage = await locator<FilePickerHelper>().pickImage();
     if (selectedImage != null) {

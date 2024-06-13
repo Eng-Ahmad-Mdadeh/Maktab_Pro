@@ -100,22 +100,27 @@ final GoRouter appRouter = GoRouter(
       name: AppRoutes.verifyCodeScreen,
       builder: (context, state) => const VerifyCodeScreen(),
     ),
+
     GoRoute(
         path: AppRoutes.stcPayActivateScreen,
         name: AppRoutes.stcPayActivateScreen,
-        builder: (context, state) => const StcPayActivateScreen()),
+        // builder: (context, state) => const StcPayActivateScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const StcPayActivateScreen()),
+    ),
     GoRoute(
       path: AppRoutes.unitSettingsScreen,
       name: AppRoutes.unitSettingsScreen,
-      builder: (context, state) => const UnitSettingsScreen(),
+      // builder: (context, state) => const UnitSettingsScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const UnitSettingsScreen()),
     ),
+
     GoRoute(
       path: AppRoutes.homeScreen,
       name: AppRoutes.homeScreen,
       // builder: (context, state) => const HomeScreen(),
       pageBuilder: (context, state) {
         context.read<NavigationBloc>().add(HomeNavigationEvent());
-        return _pageBuilder(context, state, const HomeScreen());
+        return _pageBuilder(context, state, const HomeScreen(), false);
       },
       routes: [
         GoRoute(
@@ -125,6 +130,7 @@ final GoRouter appRouter = GoRouter(
         ),
       ],
     ),
+
     GoRoute(
       path: AppRoutes.calendarScreen,
       name: AppRoutes.calendarScreen,
@@ -136,31 +142,42 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: AppRoutes.unitCalendarScreen,
           name: AppRoutes.unitCalendarScreen,
-          builder: (context, state) {
+          // builder: (context, state) {
+          //   int officeID = (state.extra as Map)['officeID'] as int;
+          //   int unitID = (state.extra as Map)['unitID'] as int;
+          //   return UnitCalendarScreen(
+          //     unitId: unitID,
+          //     officeId: officeID,
+          //   );
+          // },
+          pageBuilder: (context, state) {
             int officeID = (state.extra as Map)['officeID'] as int;
             int unitID = (state.extra as Map)['unitID'] as int;
-            return UnitCalendarScreen(
+            return _pageBuilder(context, state, UnitCalendarScreen(
               unitId: unitID,
               officeId: officeID,
-            );
+            ));
           },
         ),
       ],
     ),
+
     GoRoute(
       path: AppRoutes.ordersScreen,
       name: AppRoutes.ordersScreen,
       // builder: (context, state) => const OrdersScreen(),
       pageBuilder: (context, state) {
         context.read<NavigationBloc>().add(OrdersNavigationEvent());
-        return _pageBuilder(context, state, const OrdersScreen());
+        return _pageBuilder(context, state, const OrdersScreen(), false);
       },
     ),
+
     GoRoute(
       path: AppRoutes.orderScreen,
       name: AppRoutes.orderScreen,
       builder: (context, state) => const OrderScreen(),
     ),
+
     GoRoute(
       path: AppRoutes.officesScreen,
       name: AppRoutes.officesScreen,
@@ -177,6 +194,7 @@ final GoRouter appRouter = GoRouter(
             create: (context) => locator.get<OfficeBloc>(),
             child: const OfficesScreen(),
           ),
+          false
         );
       },
       routes: <RouteBase>[
@@ -329,15 +347,17 @@ final GoRouter appRouter = GoRouter(
         ),
       ],
     ),
+
     GoRoute(
       path: AppRoutes.moreScreen,
       name: AppRoutes.moreScreen,
       // builder: (context, state) => const MoreScreen(),
       pageBuilder: (context, state) {
         context.read<NavigationBloc>().add(MoreNavigationEvent());
-        return _pageBuilder(context, state, const MoreScreen());
+        return _pageBuilder(context, state, const MoreScreen(), false);
       },
     ),
+
     GoRoute(
       path: AppRoutes.editProfileScreen,
       name: AppRoutes.editProfileScreen,
@@ -347,128 +367,167 @@ final GoRouter appRouter = GoRouter(
           fromHome: fromHome ?? false,
         );
       },
+      pageBuilder: (context, state) {
+        bool? fromHome = state.extra as bool?;
+        return _pageBuilder(context, state, EditProfileScreen(fromHome: fromHome ?? false,),);
+      },
     ),
+
     GoRoute(
       path: AppRoutes.invoicesAndStatementsScreen,
       name: AppRoutes.invoicesAndStatementsScreen,
       // builder: (context, state) => const InvoicesAndStatementsScreen(),
-      builder: (context, state) => const InvoicesScreen(),
+      // builder: (context, state) => const InvoicesScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const InvoicesScreen()),
     ),
     GoRoute(
       path: AppRoutes.monthlyAccountStatementScreen,
       name: AppRoutes.monthlyAccountStatementScreen,
-      builder: (context, state) => const MonthlyAccountStatementScreen(),
+      // builder: (context, state) => const MonthlyAccountStatementScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const MonthlyAccountStatementScreen()),
     ),
     GoRoute(
       path: AppRoutes.userAgreementScreen,
       name: AppRoutes.userAgreementScreen,
-      builder: (context, state) => const UserAgreementScreen(),
+      // builder: (context, state) => const UserAgreementScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const UserAgreementScreen()),
     ),
     GoRoute(
       path: AppRoutes.contactUsScreen,
       name: AppRoutes.contactUsScreen,
-      builder: (context, state) => const ContactUsScreen(),
+      // builder: (context, state) => const ContactUsScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const ContactUsScreen()),
     ),
     GoRoute(
       path: AppRoutes.accountSummaryScreen,
       name: AppRoutes.accountSummaryScreen,
-      builder: (context, state) => const AccountStatementsScreen(),
+      // builder: (context, state) => const AccountStatementsScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const AccountStatementsScreen()),
     ),
     GoRoute(
-        path: AppRoutes.contractsMenuScreen,
-        name: AppRoutes.contractsMenuScreen,
-        builder: (context, state) => const ContractsMenuScreen(),
-        routes: <RouteBase>[
-          GoRoute(
-            path: AppRoutes.contractsModelsScreen,
-            name: AppRoutes.contractsModelsScreen,
-            builder: (context, state) => const ContractsModelsScreen(),
+      path: AppRoutes.contractsMenuScreen,
+      name: AppRoutes.contractsMenuScreen,
+      // builder: (context, state) => const ContractsMenuScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const ContractsMenuScreen()),
+      routes: <RouteBase>[
+        GoRoute(
+          path: AppRoutes.contractsModelsScreen,
+          name: AppRoutes.contractsModelsScreen,
+          // builder: (context, state) => const ContractsModelsScreen(),
+          pageBuilder: (context, state) => _pageBuilder(context, state, const ContractsModelsScreen()),
+          routes: [
+            GoRoute(
+              path: AppRoutes.contractsModelScreen,
+              name: AppRoutes.contractsModelScreen,
+              // builder: (context, state) => const ContractsModelScreen(),
+              pageBuilder: (context, state) => _pageBuilder(context, state, const ContractsModelScreen()),
+            ),
+            GoRoute(
+              path: AppRoutes.editContractsModelScreen,
+              name: AppRoutes.editContractsModelScreen,
+              // builder: (context, state) => const EditContractsModelScreen(),
+              pageBuilder: (context, state) => _pageBuilder(context, state, const EditContractsModelScreen()),
+            ),
+            GoRoute(
+              path: AppRoutes.addContractsModelScreen,
+              name: AppRoutes.addContractsModelScreen,
+              // builder: (context, state) => AddContractsModelScreen(),
+              pageBuilder: (context, state) => _pageBuilder(context, state, AddContractsModelScreen()),
+            ),
+          ],
+        ),
+        GoRoute(
+            path: AppRoutes.contractsScreen,
+            name: AppRoutes.contractsScreen,
+            // builder: (context, state) => const ContractsScreen(),
+            pageBuilder: (context, state) => _pageBuilder(context, state, const ContractsScreen()),
             routes: [
               GoRoute(
-                path: AppRoutes.contractsModelScreen,
-                name: AppRoutes.contractsModelScreen,
-                builder: (context, state) => const ContractsModelScreen(),
-              ),
-              GoRoute(
-                path: AppRoutes.editContractsModelScreen,
-                name: AppRoutes.editContractsModelScreen,
-                builder: (context, state) => const EditContractsModelScreen(),
-              ),
-              GoRoute(
-                path: AppRoutes.addContractsModelScreen,
-                name: AppRoutes.addContractsModelScreen,
-                builder: (context, state) => AddContractsModelScreen(),
-              ),
-            ],
-          ),
-          GoRoute(
-              path: AppRoutes.contractsScreen,
-              name: AppRoutes.contractsScreen,
-              builder: (context, state) => const ContractsScreen(),
-              routes: [
-                GoRoute(
-                  path: AppRoutes.contractScreen,
-                  name: AppRoutes.contractScreen,
-                  builder: (context, state) => ContractScreen(
+                path: AppRoutes.contractScreen,
+                name: AppRoutes.contractScreen,
+                builder: (context, state) => ContractScreen(
+                  cancelContract: (state.extra as bool?) ?? false,
+                ),
+                pageBuilder: (context, state) {
+                  return _pageBuilder(context, state, ContractScreen(
                     cancelContract: (state.extra as bool?) ?? false,
-                  ),
-                ),
-                GoRoute(
-                  path: AppRoutes.addContractScreen,
-                  name: AppRoutes.addContractScreen,
-                  builder: (context, state) => const AddContractScreen(),
-                ),
-              ]),
-        ]),
+                  ));
+                },
+              ),
+              GoRoute(
+                path: AppRoutes.addContractScreen,
+                name: AppRoutes.addContractScreen,
+                // builder: (context, state) => const AddContractScreen(),
+                pageBuilder: (context, state) => _pageBuilder(context, state, const AddContractScreen()),
+              ),
+            ]),
+      ],
+    ),
+
     GoRoute(
       path: AppRoutes.financialTransactionScreen,
       name: AppRoutes.financialTransactionScreen,
-      builder: (context, state) => const FinincialTransactionsScreen(),
+      // builder: (context, state) => const FinincialTransactionsScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const FinincialTransactionsScreen()),
     ),
     GoRoute(
       path: AppRoutes.receivingMethodScreen,
       name: AppRoutes.receivingMethodScreen,
-      builder: (context, state) => const ReceivingMethodScreen(),
+      // builder: (context, state) => const ReceivingMethodScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const ReceivingMethodScreen()),
     ),
     GoRoute(
       path: AppRoutes.stcPayPolicyScreen,
       name: AppRoutes.stcPayPolicyScreen,
-      builder: (context, state) => const StcPayPolicyScreen(),
+      // builder: (context, state) => const StcPayPolicyScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const StcPayPolicyScreen()),
     ),
     GoRoute(
       path: AppRoutes.bankPaymentScreen,
       name: AppRoutes.bankPaymentScreen,
-      builder: (context, state) => const BankPaymentScreen(),
+      // builder: (context, state) => const BankPaymentScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const BankPaymentScreen()),
     ),
     GoRoute(
       path: AppRoutes.moneyTransfersScreen,
       name: AppRoutes.moneyTransfersScreen,
-      builder: (context, state) => const MoneyTransfersScreen(),
+      // builder: (context, state) => const MoneyTransfersScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const MoneyTransfersScreen()),
     ),
     GoRoute(
       path: AppRoutes.verifyAccountWithNationalAccess,
       name: AppRoutes.verifyAccountWithNationalAccess,
-      builder: (context, state) => const VerifyNationalAccessScreen(),
+      // builder: (context, state) => const VerifyNationalAccessScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const VerifyNationalAccessScreen()),
     ),
     GoRoute(
       path: AppRoutes.pricesScreen,
       name: AppRoutes.pricesScreen,
-      builder: (context, state) => PricesScreen(),
+      // builder: (context, state) => PricesScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, PricesScreen()),
       routes: <RouteBase>[
         GoRoute(
           path: AppRoutes.basicPricesScreen,
           name: AppRoutes.basicPricesScreen,
-          builder: (context, state) => const BasicPricesScreen(),
+          // builder: (context, state) => const BasicPricesScreen(),
+          pageBuilder: (context, state) => _pageBuilder(context, state, const BasicPricesScreen()),
           routes: <RouteBase>[
             GoRoute(
               path: AppRoutes.updateUnitPricesScreen,
               name: AppRoutes.updateUnitPricesScreen,
-              builder: (context, state) {
+              // builder: (context, state) {
+              //   Office unit = state.extra as Office;
+              //   return BlocProvider(
+              //     create: (context) => locator.get<UnitBloc>(),
+              //     child: UpdateUnitPricesScreen(unit: unit),
+              //   );
+              // },
+              pageBuilder: (context, state) {
                 Office unit = state.extra as Office;
-                return BlocProvider(
+                return _pageBuilder(context, state, BlocProvider(
                   create: (context) => locator.get<UnitBloc>(),
                   child: UpdateUnitPricesScreen(unit: unit),
-                );
+                ));
               },
             ),
           ],
@@ -476,26 +535,37 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: AppRoutes.offerPricesScreen,
           name: AppRoutes.offerPricesScreen,
-          builder: (context, state) => const OfferPricesScreen(),
+          // builder: (context, state) => const OfferPricesScreen(),
+          pageBuilder: (context, state) => _pageBuilder(context, state, const OfferPricesScreen()),
           routes: <RouteBase>[
             GoRoute(
               path: AppRoutes.unitOffersScreen,
               name: AppRoutes.unitOffersScreen,
-              builder: (context, state) {
-                return const UnitOffersScreen();
-              },
+              // builder: (context, state) {
+              //   return const UnitOffersScreen();
+              // },
+              pageBuilder: (context, state) => _pageBuilder(context, state, const UnitOffersScreen()),
             ),
             GoRoute(
               path: AppRoutes.createOfferScreen,
               name: AppRoutes.createOfferScreen,
-              builder: (context, state) {
+              // builder: (context, state) {
+              //   Map<String, dynamic>? data = state.extra as Map<String, dynamic>?;
+              //   Offer? offer = data != null ? data['offer'] : null;
+              //   Office? unit = data != null ? data['unit'] : null;
+              //   return BlocProvider(
+              //     create: (context) => locator.get<OfferBloc>()..add(InitialOfferEvent(offer, unit)),
+              //     child: CreateOfferScreen(offer: offer, unit: unit),
+              //   );
+              // },
+              pageBuilder: (context, state) {
                 Map<String, dynamic>? data = state.extra as Map<String, dynamic>?;
                 Offer? offer = data != null ? data['offer'] : null;
                 Office? unit = data != null ? data['unit'] : null;
-                return BlocProvider(
+                return _pageBuilder(context, state, BlocProvider(
                   create: (context) => locator.get<OfferBloc>()..add(InitialOfferEvent(offer, unit)),
                   child: CreateOfferScreen(offer: offer, unit: unit),
-                );
+                ));
               },
             ),
           ],
@@ -503,17 +573,25 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: AppRoutes.depositScreen,
           name: AppRoutes.depositScreen,
-          builder: (context, state) => const DepositScreen(),
+          // builder: (context, state) => const DepositScreen(),
+          pageBuilder: (context, state) => _pageBuilder(context, state, const DepositScreen()),
           routes: <RouteBase>[
             GoRoute(
               path: AppRoutes.updateUnitDepositScreen,
               name: AppRoutes.updateUnitDepositScreen,
-              builder: (context, state) {
+              // builder: (context, state) {
+              //   Office unit = state.extra as Office;
+              //   return BlocProvider(
+              //     create: (context) => locator.get<UnitBloc>(),
+              //     child: UpdateUnitDepositScreen(unit: unit),
+              //   );
+              // },
+              pageBuilder: (context, state) {
                 Office unit = state.extra as Office;
-                return BlocProvider(
+                return _pageBuilder(context, state, BlocProvider(
                   create: (context) => locator.get<UnitBloc>(),
                   child: UpdateUnitDepositScreen(unit: unit),
-                );
+                ));
               },
             ),
           ],
@@ -521,26 +599,37 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: AppRoutes.couponsScreen,
           name: AppRoutes.couponsScreen,
-          builder: (context, state) => const CouponsScreen(),
+          // builder: (context, state) => const CouponsScreen(),
+          pageBuilder: (context, state) => _pageBuilder(context, state, const CouponsScreen()),
           routes: <RouteBase>[
             GoRoute(
               path: AppRoutes.unitCouponsScreen,
               name: AppRoutes.unitCouponsScreen,
-              builder: (context, state) {
-                return const UnitCouponsScreen();
-              },
+              // builder: (context, state) {
+              //   return const UnitCouponsScreen();
+              // },
+              pageBuilder: (context, state) => _pageBuilder(context, state, const UnitCouponsScreen()),
             ),
             GoRoute(
               path: AppRoutes.createCouponScreen,
               name: AppRoutes.createCouponScreen,
-              builder: (context, state) {
+              // builder: (context, state) {
+              //   Map<String, dynamic>? data = state.extra as Map<String, dynamic>?;
+              //   Coupon? coupon = data != null ? data['coupon'] : null;
+              //   Office? unit = data != null ? data['unit'] : null;
+              //   return BlocProvider(
+              //     create: (context) => locator.get<CouponBloc>()..add(InitialCouponEvent(coupon, unit)),
+              //     child: CreateCouponScreen(coupon: coupon, unit: unit),
+              //   );
+              // },
+              pageBuilder: (context, state) {
                 Map<String, dynamic>? data = state.extra as Map<String, dynamic>?;
                 Coupon? coupon = data != null ? data['coupon'] : null;
                 Office? unit = data != null ? data['unit'] : null;
-                return BlocProvider(
+                return _pageBuilder(context, state, BlocProvider(
                   create: (context) => locator.get<CouponBloc>()..add(InitialCouponEvent(coupon, unit)),
                   child: CreateCouponScreen(coupon: coupon, unit: unit),
-                );
+                ));
               },
             ),
           ],
@@ -550,42 +639,55 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: AppRoutes.complaintsScreen,
       name: AppRoutes.complaintsScreen,
-      builder: (context, state) => const ComplaintsScreen(),
+      // builder: (context, state) => const ComplaintsScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const ComplaintsScreen()),
     ),
     GoRoute(
       path: AppRoutes.officeScreen,
       name: AppRoutes.officeScreen,
-      builder: (context, state) => const OfficeScreen(),
+      // builder: (context, state) => const OfficeScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const OfficeScreen()),
     ),
     GoRoute(
       path: AppRoutes.createOfficeScreen,
       name: AppRoutes.createOfficeScreen,
-      builder: (context, state) {
+      // builder: (context, state) {
+      //   Office? office = state.extra as Office?;
+      //   return CreateOfficeScreen(office: office);
+      // },
+      pageBuilder: (context, state) {
         Office? office = state.extra as Office?;
-        return CreateOfficeScreen(office: office);
+        return _pageBuilder(context, state, CreateOfficeScreen(office: office));
       },
     ),
     GoRoute(
       path: AppRoutes.createUnitScreen,
       name: AppRoutes.createUnitScreen,
-      builder: (context, state) {
+      // builder: (context, state) {
+      //   Map<String, dynamic> data = state.extra as Map<String, dynamic>;
+      //   return CreateUnitScreen(
+      //     unit: data['unit'],
+      //     office: data['office'],
+      //   );
+      // },
+      pageBuilder: (context, state) {
         Map<String, dynamic> data = state.extra as Map<String, dynamic>;
-        return CreateUnitScreen(
+        return _pageBuilder(context, state, CreateUnitScreen(
           unit: data['unit'],
           office: data['office'],
-        );
+        ));
       },
     ),
   ],
   errorBuilder: (context, state) => ErrorScreen(error: state.error!),
 );
 
-CustomTransitionPage _pageBuilder(context, state, page) {
+CustomTransitionPage _pageBuilder(context, state, page, [bool slideToRight = true]) {
   return CustomTransitionPage(
     child: page,
     transitionDuration: const Duration(milliseconds: 300),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var begin = const Offset(0.0, 1.0);
+      var begin = Offset(slideToRight ? 1.0 : 0.0, slideToRight ? 0.0 : 1.0);
       var end = Offset.zero;
       var curve = Curves.ease;
 

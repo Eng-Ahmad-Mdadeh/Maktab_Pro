@@ -13,6 +13,9 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.white,
+    iconTheme: const IconThemeData(
+      color: AppColors.black
+    ),
     colorScheme: colorScheme,
     appBarTheme: appBarTheme,
     visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -34,6 +37,10 @@ class AppTheme {
     expansionTileTheme: const ExpansionTileThemeData(
       iconColor: AppColors.slateGray,
       collapsedIconColor: AppColors.slateGray,
+    ),
+
+    textSelectionTheme: const TextSelectionThemeData(
+      selectionHandleColor: AppColors.mintGreen,
     ),
   );
 
