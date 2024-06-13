@@ -1,27 +1,21 @@
-class OfficeCategory {
+class TypeAquar {
   int id;
-  String status;
+  int status;
   String arName;
   String enName;
-  String icon;
-  String numSort;
 
-  OfficeCategory({
+  TypeAquar({
     required this.id,
     required this.status,
     required this.arName,
     required this.enName,
-    required this.icon,
-    required this.numSort,
   });
 
-  factory OfficeCategory.fromJson(Map<String, dynamic> json) => OfficeCategory(
+  factory TypeAquar.fromJson(Map<String, dynamic> json) => TypeAquar(
         id: json["id"],
-        status: json["status"],
+        status: int.parse(json["status"]),
         arName: json["ar_name"],
         enName: json["en_name"],
-        icon: 'https://maktab.sa/${json["icon"]}',
-        numSort: json["num_sort"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,7 +23,5 @@ class OfficeCategory {
         "status": status,
         "ar_name": arName,
         "en_name": enName,
-        "icon": icon,
-        "num_sort": numSort,
       };
 }

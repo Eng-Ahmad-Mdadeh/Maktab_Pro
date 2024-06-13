@@ -55,19 +55,19 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
         if (event.office != null) {
           state.office = event.office;
         }
-        state.name = state.createdUnit!.title;
-        state.categoryId = state.createdUnit!.categoryId!;
+        state.name = state.createdUnit?.title??'';
+        state.categoryId = state.createdUnit!.categoryId;
         state.advertiserRelationshipOption = getAdvertiserRelationship(
-            state.createdUnit!.advertiserRelationship);
+            state.createdUnit!.advertiserRelationship??'');
         state.marketerTypeOption = getAdvertiserRelationshipType(
             state.createdUnit!.advertiserRelationshipType);
-        if (state.createdUnit!.space != null) {
+        if (state.createdUnit?.space != null) {
           state.space = state.createdUnit!.space.toString();
         }
-        if (state.createdUnit!.furnisher.isNotEmpty) {
-          state.equipment = state.createdUnit!.furnisher;
+        if ((state.createdUnit?.furnisher??'').isNotEmpty) {
+          state.equipment = state.createdUnit!.furnisher!;
         }
-        if (state.createdUnit!.typeAqar != null) {
+        if (state.createdUnit?.typeAqar != null) {
           state.type = state.createdUnit!.typeAqar!.id;
         }
         for (OfficeDetail detail in state.createdUnit!.details) {
@@ -100,16 +100,16 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
         state.facilities = state.createdUnit!.facilities
             .map((facility) => facility.id)
             .toList();
-        if (state.createdUnit!.description.isNotEmpty) {
-          state.description = state.createdUnit!.description;
+        if (state.createdUnit!.description!.isNotEmpty) {
+          state.description = state.createdUnit!.description ?? '';
         }
         state.features =
             state.createdUnit!.features.map((feature) => feature.id).toList();
         state.comforts =
             state.createdUnit!.comforts.map((comfort) => comfort.id).toList();
 
-        if (state.createdUnit!.officeInterface != null) {
-          state.interfaceId = state.createdUnit!.officeInterface!.id;
+        if (state.createdUnit!.interfaceAqar != null) {
+          state.interfaceId = state.createdUnit!.interfaceAqar!.id;
         }
         for (OfficePrice price in state.createdUnit!.prices) {
           UnitPriceOptions? option;
@@ -137,13 +137,13 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
               ? DepositTypes.percentage
               : DepositTypes.price;
         }
-        if (state.createdUnit!.viewerName.isNotEmpty &&
-            state.createdUnit!.viewerPhone.isNotEmpty) {
-          state.viewerName = state.createdUnit!.viewerName;
-          state.viewerPhone = state.createdUnit!.viewerPhone;
+        if ((state.createdUnit!.viewerName??'').isNotEmpty &&
+            (state.createdUnit!.viewerPhone??'').isNotEmpty) {
+          state.viewerName = state.createdUnit!.viewerName!;
+          state.viewerPhone = state.createdUnit!.viewerPhone!;
         }
-        if (state.createdUnit!.mainImage.isNotEmpty) {
-          state.mainImage = state.createdUnit!.mainImage;
+        if (state.createdUnit!.mainImage!.isNotEmpty) {
+          state.mainImage = state.createdUnit!.mainImage!;
         }
         if (state.createdUnit!.files
                 .firstWhereOrNull((file) => file.typeFile == 'video') !=
@@ -556,7 +556,7 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
           if (state.createdUnit!.location == null) {
             temp1 = await updateLocation(emit);
           }
-          if (state.createdUnit!.description.isEmpty ||
+          if (state.createdUnit!.description!.isEmpty ||
               state.createdUnit!.description != state.description) {
             temp2 = await updateDescription(emit);
           } else {
@@ -618,7 +618,7 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
           state.createdUnit!.typeAqarId! != state.type ||
           state.advertiserRelationshipOption !=
               getAdvertiserRelationship(
-                  state.createdUnit!.advertiserRelationship) ||
+                  state.createdUnit!.advertiserRelationship!) ||
           state.marketerTypeOption !=
               getAdvertiserRelationshipType(
                   state.createdUnit!.advertiserRelationshipType)) {
@@ -661,7 +661,7 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
       }
     });
     on<UpdateUnitDescriptionEvent>((event, emit) async {
-      if (state.createdUnit!.description.isEmpty ||
+      if (state.createdUnit!.description!.isEmpty ||
           state.createdUnit!.description != state.description) {
         await updateDescription(emit);
       } else {
@@ -738,7 +738,7 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
       for (OfficeFile originFile in state.createdUnit!.files) {
         if (!newPaths.contains(originFile.path)) {
           if (!deletedFileIds.contains(originFile.id)) {
-            deletedFileIds.add(originFile.id);
+            deletedFileIds.add(originFile.id!);
           }
           isFilesChanged = true;
           break;
@@ -896,7 +896,7 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
       title: state.name,
       categoryId: state.categoryId,
       licenseNumber: '',
-      isMarketing: state.office!.isMarketing,
+      isMarketing: state.office!.isMarketing??false,
       isCentral: false,
     );
     return result.fold(
@@ -1007,9 +1007,9 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
         deletedDetails.add(detail.id);
       }
     }
-    log("New Details: $newDetails");
-    log("Updated Details: $updatedDetails");
-    log("Deleted Details: $deletedDetails");
+    // log("New Details: $newDetails");
+    // log("Updated Details: $updatedDetails");
+    // log("Deleted Details: $deletedDetails");
     if (newDetails.isNotEmpty ||
         updatedDetails.isNotEmpty ||
         deletedDetails.isNotEmpty) {
@@ -1293,9 +1293,9 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
         deletedPrices.add(price.id);
       }
     }
-    log("New Prices: $newPrices");
-    log("Updated Details: $updatedPrices");
-    log("Deleted Details: $deletedPrices");
+    // log("New Prices: $newPrices");
+    // log("Updated Details: $updatedPrices");
+    // log("Deleted Details: $deletedPrices");
     if (newPrices.isNotEmpty ||
         updatedPrices.isNotEmpty ||
         deletedPrices.isNotEmpty) {
@@ -1441,7 +1441,7 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
 
   Future<bool> updateUnitFiles(Emitter emit, {required bool isChanged}) async {
     emit(state.copyWith(unitApiCallState: UnitApiCallState.loading));
-    log('${state.selectedImagesMap.toString()}?.............');
+    // log('${state.selectedImagesMap.toString()}?.............');
     var result = await _officeRepository.addOfficeFiles(
       officeId: state.createdUnit!.id,
       video: state.selectedVideo.isNotEmpty ? state.selectedVideo : null,

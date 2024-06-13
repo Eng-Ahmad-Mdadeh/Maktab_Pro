@@ -1,46 +1,31 @@
 part of 'calendar_bloc.dart';
 
-enum CalendarFormatOptions { hour, day }
-
 sealed class CalendarEvent extends Equatable {
   const CalendarEvent();
+}
+
+class SetOfficeCalendarsEvent extends CalendarEvent{
+  final int officeID;
+  final int priceID;
+  final List<Calendar> calendars;
+
+  const SetOfficeCalendarsEvent(this.officeID, this.priceID, this.calendars);
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
-final class SelectCalendarFormatOptionEvent extends CalendarEvent {
-  final CalendarFormatOptions option;
+class DeleteOfficeCalendarsEvent extends CalendarEvent{
+  final int officeID;
+  final List<Calendar> calendars;
 
-  const SelectCalendarFormatOptionEvent(this.option);
+  const DeleteOfficeCalendarsEvent(this.officeID, this.calendars);
+
+  @override
+  List<Object?> get props => [];
 }
 
-final class AddSelectedDayEvent extends CalendarEvent {
-  final DateTime day;
-
-  const AddSelectedDayEvent(this.day);
-}
-
-final class AddSelectedHourEvent extends CalendarEvent {
-  final DateTime hour;
-
-  const AddSelectedHourEvent(this.hour);
-}
-
-final class SelectDayEvent extends CalendarEvent {
-  final DateTime day;
-
-  const SelectDayEvent(this.day);
-}
-
-final class SelectRangeDayEvent extends CalendarEvent {
-  final DateTime day;
-
-  const SelectRangeDayEvent(this.day);
-}
-
-final class SelectRangeHourEvent extends CalendarEvent {
-  final DateTime hour;
-
-  const SelectRangeHourEvent(this.hour);
+class GetCalendars extends CalendarEvent{
+  @override
+  List<Object?> get props => [];
 }

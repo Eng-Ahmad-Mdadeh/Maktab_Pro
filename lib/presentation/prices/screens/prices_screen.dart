@@ -27,7 +27,7 @@ class PricesScreen extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 25.v),
           child: BlocListener<OfficesCubit, OfficesState>(
             listener: (context, state) {
-              log(state.pricesApiCallState.toString());
+              // log(state.pricesApiCallState.toString());
               if (state.pricesApiCallState == OfficesApiCallState.loading) {
                 LoadingDialog.show(context);
               } else if (state.pricesApiCallState ==

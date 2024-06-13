@@ -63,27 +63,27 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
         state.progressValue = 0;
         state.createdOffice = event.office;
         state.createdUnit =
-            event.office!.units.firstWhere((unit) => unit.isCentral);
+            event.office!.units.firstWhere((unit) => unit.isCentral == '1');
         _toggleAddingLicenseOffice(emit);
         _toggleAddingMarketingRequest(emit);
-        state.name = state.createdUnit!.title;
-        state.categoryId = state.createdUnit!.categoryId!;
-        if (state.createdUnit!.advertiserRelationship.isNotEmpty) {
+        state.name = state.createdUnit!.title!;
+        state.categoryId = state.createdUnit!.categoryId;
+        if (state.createdUnit!.advertiserRelationship!.isNotEmpty) {
           state.advertiserRelationshipOption = getAdvertiserRelationship(
-              state.createdUnit!.advertiserRelationship);
+              state.createdUnit!.advertiserRelationship!);
         }
-        if (state.createdUnit!.advertiserRelationshipType.isNotEmpty) {
+        if (state.createdUnit!.advertiserRelationshipType!.isNotEmpty) {
           state.marketerTypeOption = getAdvertiserRelationshipType(
               state.createdUnit!.advertiserRelationshipType);
         }
         if (state.createdUnit!.space != null) {
           state.space = state.createdUnit!.space.toString();
         }
-        if (state.createdUnit!.furnisher.isNotEmpty) {
-          state.equipment = state.createdUnit!.furnisher;
+        if (state.createdUnit!.furnisher!.isNotEmpty) {
+          state.equipment = state.createdUnit!.furnisher!;
         }
         if (state.createdUnit!.typeAqarId != null) {
-          state.type = state.createdUnit!.typeAqarId!;
+          state.type = int.parse(state.createdUnit!.typeAqarId!);
         }
         for (OfficeDetail detail in state.createdUnit!.details) {
           state.detailsMap[detail.enName] = detail.numberDetails;
@@ -115,13 +115,13 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
         state.facilities = state.createdUnit!.facilities
             .map((facility) => facility.id)
             .toList();
-        if (state.createdUnit!.description.isNotEmpty) {
-          state.description = state.createdUnit!.description;
+        if (state.createdUnit!.description!.isNotEmpty) {
+          state.description = state.createdUnit!.description!;
         }
         state.features =
-            state.createdUnit!.features.map((feature) => feature.id).toList();
+            state.createdUnit!.features.map((feature) => feature.id!).toList();
         state.comforts =
-            state.createdUnit!.comforts.map((comfort) => comfort.id).toList();
+            state.createdUnit!.comforts.map((comfort) => comfort.id!).toList();
         if (state.createdOffice!.location != null) {
           state.addressPosition = LatLng(
               state.createdOffice!.location!.lat.toDouble(),
@@ -159,10 +159,10 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
               ? DepositTypes.percentage
               : DepositTypes.price;
         }
-        if (state.createdUnit!.viewerName.isNotEmpty &&
-            state.createdUnit!.viewerPhone.isNotEmpty) {
-          state.viewerName = state.createdUnit!.viewerName;
-          state.viewerPhone = state.createdUnit!.viewerPhone;
+        if ((state.createdUnit!.viewerName??'').isNotEmpty &&
+            (state.createdUnit!.viewerPhone??'').isNotEmpty) {
+          state.viewerName = state.createdUnit!.viewerName??'';
+          state.viewerPhone = state.createdUnit!.viewerPhone!;
         }
       }
       emit(state.copyWith(isInitialized: true));
@@ -499,7 +499,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
     on<SetInterfaceEvent>((event, emit) {
       state.interfaceId = state.searchData!.officeInterfaces
           .firstWhere((interface) => interface.arName == event.interface)
-          .id;
+          .id!;
       emit(state.copyWith(
           isStepCompleted: checkIfConfirmAddressStepCompleted()));
     });
@@ -631,7 +631,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
           break;
         case 2:
           bool temp1 = false;
-          if (state.createdUnit!.advertiserRelationship.isEmpty) {
+          if (state.createdUnit!.advertiserRelationship!.isEmpty) {
             temp1 = await updateInfo(emit);
             if (temp1) {
               navigateAfterSuccessStep(emit, event.index);
@@ -674,7 +674,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
           break;
         case 4:
           bool temp1 = false;
-          if (state.createdUnit!.description.isEmpty ||
+          if (state.createdUnit!.description!.isEmpty ||
               state.createdUnit!.description != state.description) {
             temp1 = await updateDescription(emit);
             if (temp1) {
@@ -1115,7 +1115,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
       (createdOffice) async {
         emit(state.copyWith(createdOffice: createdOffice));
         var result = await _officeRepository.addUnit(
-          officeId: createdOffice!.id,
+          officeId: createdOffice!.id!,
           title: state.name,
           categoryId: state.categoryId,
           isMarketing: state.officeType == OfficeTypes.request ? true : false,
@@ -1146,7 +1146,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
     emit(state.copyWith(officeApiCallState: OfficeApiCallState.loading));
     var result = await _officeRepository.updateTitle(
       title: state.name,
-      officeId: state.createdOffice!.id,
+      officeId: state.createdOffice!.id!,
     );
     return result.fold(
       (failure) {
@@ -1159,7 +1159,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
                 state.createdOffice!.copyWith(title: updatedOffice!.title)));
         var result = await _officeRepository.updateTitle(
           title: state.name,
-          officeId: state.createdUnit!.id,
+          officeId: state.createdUnit!.id!,
         );
         return result.fold(
           (failure) {
@@ -1325,9 +1325,9 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
         deletedDetails.add(detail.id);
       }
     }
-    log("New Details: $newDetails");
-    log("Updated Details: $updatedDetails");
-    log("Deleted Details: $deletedDetails");
+    // log("New Details: $newDetails");
+    // log("Updated Details: $updatedDetails");
+    // log("Deleted Details: $deletedDetails");
     if (newDetails.isNotEmpty ||
         updatedDetails.isNotEmpty ||
         deletedDetails.isNotEmpty) {

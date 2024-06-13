@@ -118,19 +118,19 @@ class NavItem extends StatelessWidget {
     context.read<NavigationCubit>().getNavBarItem(index);
     switch (index) {
       case 0:
-        context.pushNamed(AppRoutes.homeScreen);
+        context.pushReplacementNamed(AppRoutes.homeScreen);
         break;
       case 1:
-        context.pushNamed(AppRoutes.calendarScreen);
+        context.pushReplacementNamed(AppRoutes.calendarScreen);
         break;
       case 2:
-        context.pushNamed(AppRoutes.ordersScreen);
+        context.pushReplacementNamed(AppRoutes.ordersScreen);
         break;
       case 3:
-        context.pushNamed(AppRoutes.officesScreen);
+        context.pushReplacementNamed(AppRoutes.officesScreen);
         break;
       case 4:
-        context.pushNamed(AppRoutes.moreScreen);
+        context.pushReplacementNamed(AppRoutes.moreScreen);
         break;
     }
   }

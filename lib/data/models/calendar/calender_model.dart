@@ -1,30 +1,30 @@
 class Calendar {
-  int id;
+  int? id;
   DateTime startDate;
   DateTime endDate;
-  String adsId;
-  String adsPriceId;
+  int adsId;
+  int adsPriceId;
   String? orderId;
   DateTime? createdAt;
   DateTime? updatedAt;
 
   Calendar({
-    required this.id,
+    this.id,
     required this.startDate,
     required this.endDate,
     required this.adsId,
     required this.adsPriceId,
-    required this.orderId,
-    required this.createdAt,
-    required this.updatedAt,
+    this.orderId,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory Calendar.fromJson(Map<String, dynamic> json) => Calendar(
         id: json["id"],
         startDate: DateTime.parse(json["start_date"]),
         endDate: DateTime.parse(json["end_date"]),
-        adsId: json["ads_id"],
-        adsPriceId: json["ads_price_id"],
+        adsId: int.parse(json["ads_id"]??'-1'),
+        adsPriceId: int.parse(json["ads_price_id"]??'-1'),
         orderId: json["order_id"],
         createdAt: json["created_at"] != null
             ? DateTime.parse(json["created_at"])

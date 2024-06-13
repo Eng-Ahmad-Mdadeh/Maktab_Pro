@@ -41,7 +41,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             imageErrorMessage: '')) {
     on<GetProfileEvent>((event, emit) async {
       emit(state.copyWith(profileState: ProfileStates.loading));
-      log(state.toString());
+      // log(state.toString());
       try {
         var result = await _profileRepository.getProfile();
         result.fold(
@@ -116,14 +116,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             licenseLink: event.licenseLink);
         result.fold(
           (failure) {
-            log("error message:${failure.message}");
+            // log("error message:${failure.message}");
             emit(state.copyWith(
               profileState: ProfileStates.failToUpdate,
               message: failure.message,
             ));
           },
           (user) {
-            log(" success message:${user.companyName}");
+            // log(" success message:${user.companyName}");
             emit(state.copyWith(
                 profileState: ProfileStates.updated,
                 user: user,

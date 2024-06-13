@@ -26,7 +26,7 @@ class AuthRepository {
       (error) => Left(error),
       (right) {
         try {
-          log(right.message);
+          // log(right.message);
           return Right(right.message);
         } on ApiException catch (e) {
           return Left(e);

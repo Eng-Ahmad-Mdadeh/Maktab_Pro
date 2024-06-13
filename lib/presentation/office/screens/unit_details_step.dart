@@ -2,8 +2,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/office/office_interface_model.dart';
-import 'package:maktab/data/models/office/office_type_model.dart';
+import 'package:maktab/data/models/interface_aqar/interface_aqar_model.dart';
+import 'package:maktab/data/models/type_aquar/type_aquar_model.dart';
 import 'package:maktab/domain/offices/offices_cubit.dart';
 import 'package:maktab/domain/unit/unit_bloc.dart';
 import 'package:maktab/presentation/office/widgets/space_text_field.dart';
@@ -31,8 +31,8 @@ class UnitDetailsStep extends StatefulWidget {
 class _UnitDetailsStepState extends State<UnitDetailsStep> {
   late TextEditingController _unitSpaceController;
   late GlobalKey<FormState> _unitInfoFormKey;
-  late OfficeType? type;
-  late OfficeInterface? interface;
+  late TypeAquar? type;
+  late InterfaceAqar? interface;
 
   @override
   void initState() {
@@ -141,7 +141,7 @@ class _UnitDetailsStepState extends State<UnitDetailsStep> {
                       .state
                       .searchData!
                       .officeInterfaces
-                      .map((interface) => interface.arName)
+                      .map((interface) => interface.arName!)
                       .toList(),
                   validator: (value) {
                     if (value!.isEmpty) {

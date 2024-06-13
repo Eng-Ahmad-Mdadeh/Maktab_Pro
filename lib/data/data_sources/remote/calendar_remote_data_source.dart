@@ -20,7 +20,7 @@ class CalendarRemoteDataSource extends BaseRemoteDataSource<r.Response> {
 
   Future<Either<AppException, r.Response>> deleteCalendarFromOffice(
       officeId, data) async {
-    return deleteData(
+    return postData(
       endpoint: '${ApiEndpoints.deleteOffice}/$officeId',
       data: data,
     );

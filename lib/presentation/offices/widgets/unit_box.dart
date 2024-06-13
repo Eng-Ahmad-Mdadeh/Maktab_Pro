@@ -45,7 +45,7 @@ class UnitBox extends StatelessWidget {
                 borderRadius: BorderRadius.circular(15.v),
                 border: Border.all(color: AppColors.slateGray),
               ),
-              child: unit.mainImage.isNotEmpty
+              child: unit.mainImage!.isNotEmpty
                   ? MaktabImageView(
                       imagePath: unit.mainImage,
                       fit: BoxFit.cover,
@@ -59,7 +59,7 @@ class UnitBox extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SectionTitle(title: unit.title),
+                  SectionTitle(title: unit.title??''),
                   SizedBox(height: 10.v),
                   Text(
                     unit.reject

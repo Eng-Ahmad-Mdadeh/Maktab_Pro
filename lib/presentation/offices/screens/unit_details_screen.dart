@@ -42,7 +42,7 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      SectionTitle(title: state.selectedOffice!.title),
+                      SectionTitle(title: state.selectedOffice!.title??''),
                       IconButton(
                         padding: EdgeInsets.zero,
                         onPressed: () {
@@ -88,7 +88,7 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   SizedBox(height: 10.v),
                   OfficeInfoBox(
                     title: 'معلومات الوحدة',
-                    enableEdit: !widget.office.isMarketing,
+                    enableEdit: !widget.office.isMarketing!,
                     editOnTap: () => context
                         .pushNamed(AppRoutes.updateUnitInfoScreen, extra: {
                       'office': widget.office,
@@ -112,13 +112,13 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                         ),
                         OfficeInfoItem(
                           title: 'التجهيز',
-                          value: state.selectedOffice!.furnisher.isNotEmpty
+                          value: state.selectedOffice!.furnisher!.isNotEmpty
                               ? state.selectedOffice!.furnisher.toString()
                               : 'غير محدد',
                         ),
                         OfficeInfoItem(
                           title: 'علاقة المعلن',
-                          value: state.selectedOffice!.advertiserRelationship
+                          value: state.selectedOffice!.advertiserRelationship!
                                   .isNotEmpty
                               ? state.selectedOffice!.advertiserRelationship
                                   .toString()
@@ -127,7 +127,7 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                         OfficeInfoItem(
                           title: 'نوع علاقة المعلن',
                           value: state.selectedOffice!
-                                  .advertiserRelationshipType.isNotEmpty
+                                  .advertiserRelationshipType!.isNotEmpty
                               ? state.selectedOffice!.advertiserRelationshipType
                                   .toString()
                               : 'غير محدد',
@@ -296,7 +296,7 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                         AppRoutes.updateUnitDescriptionScreen,
                         extra: state.selectedOffice),
                     infoWidget:
-                        BodyText(text: state.selectedOffice!.description),
+                        BodyText(text: state.selectedOffice!.description??''),
                   ),
                   SizedBox(height: 20.h),
                   OfficeInfoBox(
@@ -371,7 +371,7 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                         extra: state.selectedOffice),
                     infoWidget: Column(
                       children: [
-                        if (state.selectedOffice!.mainImage.isNotEmpty)
+                        if (state.selectedOffice!.mainImage!.isNotEmpty)
                           MaktabImageView(
                             width: SizeHelper.width,
                             imagePath: state.selectedOffice!.mainImage,

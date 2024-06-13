@@ -1,23 +1,19 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:maktab/core/extension/date_range_extension.dart';
 import 'package:maktab/data/models/coupon/coupon_model.dart';
 
-import '../../core/classes/exception/app_exception.dart';
 import '../../core/helpers/date_formatter_helper.dart';
-import '../../data/models/offer/offer_model.dart';
 import '../../data/models/office/office_model.dart';
 import '../../data/models/office/office_price_model.dart';
 import '../../data/repositories/coupon_repository.dart';
 
 part 'coupon_event.dart';
+
 part 'coupon_state.dart';
-
-
 
 class CouponBloc extends Bloc<CouponEvent, CouponState> {
   final CouponRepository _couponRepository;
@@ -25,26 +21,28 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
   CouponBloc({required CouponRepository offerRepository})
       : _couponRepository = offerRepository,
         super(CouponState(
-        startDate: DateFormatterHelper.getCurrentDate(),
-        endDate: DateFormatterHelper.getCurrentDate(),
-        prices:  {},
-      )) {
+          startDate: DateFormatterHelper.getCurrentDate(),
+          endDate: DateFormatterHelper.getCurrentDate(),
+          prices: {},
+        )) {
     on<InitialCouponEvent>((event, emit) async {
       if (event.coupon != null) {
-        state.isInitialized = false;
-        state.unit = event.unit;
-        state.name = event.coupon!.name;
-        state.startDate = event.coupon!.startDate;
-        state.endDate = event.coupon!.endDate;
-        state.isValidOfferDateRange = true;
-        state.numberUsed=event.coupon!.numberUsed;
-        state.code=event.coupon!.code;
-        state.priceTypes = event.coupon!.priceTypeIds;
-        state.discountType=event.coupon!.discountType=='percent'?DiscountTypes.percentage:DiscountTypes.price;
+        state.copyWith(
+          isInitialized: false,
+          unit: event.unit,
+          name: event.coupon!.name,
+          startDate: event.coupon!.startDate,
+          endDate: event.coupon!.endDate,
+          isValidOfferDateRange: true,
+          numberUsed: event.coupon!.numberUsed,
+          code: event.coupon!.code,
+          priceTypes: event.coupon!.priceTypeIds,
+          discountType: event.coupon!.discountType == 'percent' ? DiscountTypes.percentage : DiscountTypes.price,
+        );
 
         for (OfficePrice price in event.unit!.prices) {
           if (state.priceTypes.contains(price.typeResId)) {
-            state.prices[price.id] = price.price;
+            state.prices[price.id!] = price.price!;
           }
         }
         state.pricesCount = event.coupon!.priceTypeIds.length;
@@ -61,10 +59,10 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
       emit(state.copyWith(couponApiCallState: OfferApiCallState.loading));
       final result = await _couponRepository.updateStatus(event.id);
       result.fold(
-            (failure) {
+        (failure) {
           emit(state.copyWith(couponApiCallState: OfferApiCallState.failure));
         },
-            (success) {
+        (success) {
           emit(state.copyWith(couponApiCallState: OfferApiCallState.update));
         },
       );
@@ -73,10 +71,10 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
       emit(state.copyWith(couponApiCallState: OfferApiCallState.loading));
       final result = await _couponRepository.deleteCoupon(event.id);
       result.fold(
-            (failure) {
+        (failure) {
           emit(state.copyWith(couponApiCallState: OfferApiCallState.failure));
         },
-            (success) {
+        (success) {
           emit(state.copyWith(couponApiCallState: OfferApiCallState.update));
         },
       );
@@ -104,15 +102,14 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
     on<SelectUnitPriceEvent>((event, emit) async {
       Map<int, num> prices = Map.from(state.prices);
       List<int> priceTypes = List.from(state.priceTypes);
-      OfficePrice price =
-      state.unit!.prices.firstWhere((price) => price.typeResId == event.id);
+      OfficePrice price = state.unit!.prices.firstWhere((price) => price.typeResId == event.id);
       if (!priceTypes.contains(event.id)) {
         if (state.pricesCount == -1) {
           state.pricesCount = 1;
         } else {
           state.pricesCount++;
         }
-        prices[price.id] = price.price;
+        prices[price.id!] = price.price!;
         priceTypes.add(event.id);
       } else {
         if (state.pricesCount > 0) {
@@ -122,34 +119,26 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
         priceTypes.remove(event.id);
       }
       emit(state.copyWith(prices: prices, priceTypes: priceTypes));
-      checkOfferDateRange(
-          emit, DateTimeRange(start: state.startDate!, end: state.endDate!));
+      checkOfferDateRange(emit, DateTimeRange(start: state.startDate!, end: state.endDate!));
     });
     on<SelectAllUnitPricesEvent>((event, emit) async {
       if (state.prices.length < state.unit!.prices.length) {
         Map<int, num> prices = {};
         for (OfficePrice price in state.unit!.prices) {
-          prices[price.id] = price.price;
+          prices[price.id!] = price.price!;
         }
-        emit(state.copyWith(
-            prices: prices,
-            priceTypes: [1, 2, 3, 4],
-            pricesCount: prices.length));
+        emit(state.copyWith(prices: prices, priceTypes: [1, 2, 3, 4], pricesCount: prices.length));
       } else {
         emit(state.copyWith(prices: {}, priceTypes: [], pricesCount: 0));
       }
-      checkOfferDateRange(
-          emit, DateTimeRange(start: state.startDate!, end: state.endDate!));
+      checkOfferDateRange(emit, DateTimeRange(start: state.startDate!, end: state.endDate!));
     });
     on<ClearPriceCountEvent>((event, emit) async {
       emit(state.copyWith(pricesCount: 0, isValidOfferDateRange: true));
     });
     on<SelectOfferDateRangeEvent>((event, emit) async {
       if (state.unit == null) {
-        emit(state.copyWith(
-            startDate: event.range.start,
-            endDate: event.range.end,
-            isValidOfferDateRange: true));
+        emit(state.copyWith(startDate: event.range.start, endDate: event.range.end, isValidOfferDateRange: true));
       } else {
         checkOfferDateRange(emit, event.range);
       }
@@ -157,53 +146,46 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
     on<CreateCouponEvent>((event, emit) async {
       emit(state.copyWith(couponApiCallState: OfferApiCallState.loading));
       dynamic result;
-      if(event.isUpdate){
-        log(state.prices.keys.toList().toString());
+      if (event.isUpdate) {
+        // log(state.prices.keys.toList().toString());
         log("////////////////////////////////////");
-         result = await _couponRepository.updateCoupon(
-          name: state.name,
-          couponId: event.couponId!,
-          numberUsed: state.numberUsed,
-          code: state.code,
-          status: '1',
-          discount: state.discountAmount.toString(),
-          discountType:
-          state.discountType == DiscountTypes.percentage ? 'percent' : 'rial',
-          startDate: state.startDate!,
-          endDate: state.endDate!,
-          officeId: state.unit!.id,
-          prices: state.priceTypes,
-           mainPrices:state.prices.keys.toList()
-        );
-      }else{
-
-         result = await _couponRepository.createCoupon(
+        result = await _couponRepository.updateCoupon(
+            name: state.name,
+            couponId: event.couponId!,
+            numberUsed: state.numberUsed,
+            code: state.code,
+            status: '1',
+            discount: state.discountAmount.toString(),
+            discountType: state.discountType == DiscountTypes.percentage ? 'percent' : 'rial',
+            startDate: state.startDate!,
+            endDate: state.endDate!,
+            officeId: state.unit!.id!,
+            prices: state.priceTypes,
+            mainPrices: state.prices.keys.toList());
+      } else {
+        result = await _couponRepository.createCoupon(
           name: state.name,
           numberUsed: state.numberUsed,
           code: state.code,
           status: '1',
           discount: state.discountAmount.toString(),
-          discountType:
-          state.discountType == DiscountTypes.percentage ? 'percent' : 'rial',
+          discountType: state.discountType == DiscountTypes.percentage ? 'percent' : 'rial',
           startDate: state.startDate!,
           endDate: state.endDate!,
-          officeId: state.unit!.id,
+          officeId: state.unit!.id!,
           prices: state.prices.keys.toList(),
         );
       }
 
       result.fold(
-            (failure) {
-          emit(state.copyWith(couponApiCallState: OfferApiCallState.failure,
-          message: failure.message));
+        (failure) {
+          emit(state.copyWith(couponApiCallState: OfferApiCallState.failure, message: failure.message));
         },
-            (success) {
-          emit(state.copyWith(couponApiCallState: OfferApiCallState.success,
-          message: 'تمت اضافة الكوبون بنجاح'));
+        (success) {
+          emit(state.copyWith(couponApiCallState: OfferApiCallState.success, message: 'تمت اضافة الكوبون بنجاح'));
         },
       );
-      emit(state.copyWith(couponApiCallState: OfferApiCallState.initial,
-      message: ''));
+      emit(state.copyWith(couponApiCallState: OfferApiCallState.initial, message: ''));
     });
   }
 
@@ -239,4 +221,3 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
     }
   }
 }
-

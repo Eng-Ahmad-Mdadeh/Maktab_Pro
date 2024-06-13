@@ -18,7 +18,7 @@ class ServiceBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OfficeItemBox(
-      title: service.arName,
+      title: service.arName??'',
       backgroundColor: isSelected ? AppColors.lightCyan : AppColors.white,
       textColor: isSelected ? AppColors.white : AppColors.smokeGray,
       onTap: onTap,

@@ -28,7 +28,7 @@ class OfficeCouponBox extends StatelessWidget {
             Expanded(
               flex: 2,
               child: SectionTitle(
-                title: office.title,
+                title: office.title??'',
                 textAlign: TextAlign.right,
               ),
             ),

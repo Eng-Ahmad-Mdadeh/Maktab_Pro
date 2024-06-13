@@ -20,7 +20,9 @@ class CalendarRepository {
       (right) {
         if (right.status) {
           final List<Office> calendars = List<Office>.from(
-            right.data.map((data) => Office.fromJson(data)),
+            right.data.map((data) {
+              return Office.fromJson(data);
+            }),
           );
           return Right(calendars);
         } else {
@@ -41,18 +43,23 @@ class CalendarRepository {
       final result =
           await _calendarRemoteDataSource.setOfficeCalendars(calendarData);
       return result.fold(
-        (error) => Left(error),
+        (error) {
+          throw(error);
+          // return Left(error);
+        },
         (right) {
           try {
             final Office calendar = Office.fromJson(right.data);
             return Right(calendar);
           } catch (e) {
-            return Left(ConversionException(e.toString()));
+            rethrow;
+            // return Left(ConversionException(e.toString()));
           }
         },
       );
     } catch (e) {
-      return Left(ConversionException(e.toString()));
+      rethrow;
+      // return Left(ConversionException(e.toString()));
     }
   }
 

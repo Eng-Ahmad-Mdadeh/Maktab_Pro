@@ -152,7 +152,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                           child: Align(
                                             alignment: Alignment.centerRight,
                                             child: Text(
-                                              unit.title,
+                                              unit.title??'',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleSmall,

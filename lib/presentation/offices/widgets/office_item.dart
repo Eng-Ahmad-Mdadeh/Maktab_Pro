@@ -31,7 +31,7 @@ class OfficeItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SectionTitle(
-                  title: office.title,
+                  title: office.title??'',
                   textAlign: TextAlign.right,
                 ),
                 SizedBox(height: 5.v),

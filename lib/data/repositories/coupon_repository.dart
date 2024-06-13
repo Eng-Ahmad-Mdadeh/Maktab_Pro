@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:maktab/core/classes/exception/app_exception.dart';
 import 'package:maktab/core/classes/exception/data_exceptions.dart';
 import 'package:maktab/data/data_sources/remote/coupon_remote_data_source.dart';
@@ -70,7 +69,7 @@ class CouponRepository {
           status: status,
           officeId: officeId,
           prices: prices);
-      log(offerModelData.toString());
+      // log(offerModelData.toString());
       final result = await _remoteDataSource.createCoupon(offerModelData);
       return result.fold(
         (error) => Left(error),
@@ -180,7 +179,7 @@ class CouponRepository {
   }
 
   Future<Either<AppException, void>> deleteCoupon(couponId) async {
-    log(couponId.toString());
+    // log(couponId.toString());
     final result = await _remoteDataSource.deleteCoupon(couponId);
     return result.fold(
       (error) => Left(error),
@@ -248,7 +247,7 @@ class CouponRepository {
 
 
     }
-    log(offerMap.toString());
+    // log(offerMap.toString());
     return offerMap;
   }
 

@@ -1,5 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
@@ -27,8 +25,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<NavigationCubit, NavigationState>(
-      listener: (context, state) {},
+    return BlocBuilder<NavigationCubit, NavigationState>(
       builder: (context, state) {
         return Scaffold(
           appBar: const MaktabAppBar(title: 'التقويم'),
@@ -36,9 +33,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
             onWillPop: () async {
               if (state.currentIndexs.length > 1) {
                 state.currentIndexs.removeLast();
-                context
-                    .read<NavigationCubit>()
-                    .getNavBarItem(state.currentIndexs.last);
+                context.read<NavigationCubit>().getNavBarItem(state.currentIndexs.last);
               } else if (state.currentIndexs.length == 1) {
                 state.currentIndexs.clear();
                 context.read<NavigationCubit>().getNavBarItem(0);
@@ -51,28 +46,18 @@ class _CalendarScreenState extends State<CalendarScreen> {
                 child: BlocBuilder<OfficesCubit, OfficesState>(
                   builder: (context, state) {
                     return ShimmerEffect(
-                      isLoading: state.calendarsApiCallState ==
-                          OfficesApiCallState.loading,
-                      child: state.calendarsApiCallState ==
-                              OfficesApiCallState.loading
+                      isLoading: state.calendarsApiCallState == OfficesApiCallState.loading,
+                      child: state.calendarsApiCallState == OfficesApiCallState.loading
                           ? Center(child: loadingItem())
                           : ListView.separated(
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
                                 return OfficeCalendarBox(
-                                  office: context
-                                      .read<OfficesCubit>()
-                                      .state
-                                      .calendars[index],
+                                  office: context.read<OfficesCubit>().state.calendars[index],
                                 );
                               },
-                              separatorBuilder: (context, index) =>
-                                  SizedBox(height: 15.v),
-                              itemCount: context
-                                  .read<OfficesCubit>()
-                                  .state
-                                  .calendars
-                                  .length,
+                              separatorBuilder: (context, index) => SizedBox(height: 15.v),
+                              itemCount: context.read<OfficesCubit>().state.calendars.length,
                             ),
                     );
                   },
