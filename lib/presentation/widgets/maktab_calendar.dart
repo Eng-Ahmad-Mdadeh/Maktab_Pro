@@ -22,6 +22,7 @@ class MaktabCalendar extends StatelessWidget {
     this.calendarFormat = CalendarFormat.month,
     this.titleTextStyle,
     required this.selectedDates,
+    required this.onPressed,
     this.defaultBuilder,
     this.todayBuilder,
     this.selectedBuilder,
@@ -47,6 +48,7 @@ class MaktabCalendar extends StatelessWidget {
   final Widget? Function(
       BuildContext context, DateTime day, DateTime focusedDay)? selectedBuilder;
   final Function(DateTime day, DateTime focusedDay)? onDayLongPressed;
+  final Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +108,9 @@ class MaktabCalendar extends StatelessWidget {
           return false;
         },
         rangeSelectionMode: RangeSelectionMode.toggledOn,
-        onRangeSelected: (start, end, focusedDay) {},
+        onRangeSelected: (start, end, focusedDay) {
+          onPressed();
+        },
         calendarBuilders: CalendarBuilders(
           defaultBuilder: defaultBuilder ??
               (context, day, focusedDay) {

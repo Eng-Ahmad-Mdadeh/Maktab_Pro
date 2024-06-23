@@ -18,6 +18,7 @@ class AppRoutes {
   static const String complaintsScreen = '/complaintsScreen';
   static const String weeklyReportScreen = '/weeklyReportScreen';
   static const String pricesScreen = '/pricesScreen';
+  static const String evaluationScreen = '/evaluationScreen';
   static const String financialTransactionScreen = '/financialTransactionScreen';
   static const String contractsMenuScreen = '/contractsMenuScreen';
   static const String weeklyDiscountScreen = '/weeklyDiscountScreen';

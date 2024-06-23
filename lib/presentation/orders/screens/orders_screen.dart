@@ -7,7 +7,6 @@ import 'package:maktab/presentation/orders/widgets/orders_search_box.dart';
 import 'package:maktab/presentation/orders/widgets/orders_list.dart';
 import 'package:maktab/presentation/orders/widgets/orders_states.dart';
 import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/loading_dialog.dart';
 import 'package:maktab/presentation/widgets/loading_widget.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';

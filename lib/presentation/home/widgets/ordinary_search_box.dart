@@ -3,14 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:maktab/presentation/widgets/section_title.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/helpers/size_helper.dart';
 import '../../../core/services/service_locator.dart';
 import '../../../data/repositories/settings_repository.dart';
 import '../../resources/app_colors.dart';
-import '../../widgets/body_text.dart';
 import '../../widgets/maktab_snack_bar.dart';
 
 class OrdinarySearchBox extends StatelessWidget {

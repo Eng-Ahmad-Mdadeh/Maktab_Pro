@@ -7,6 +7,10 @@ import 'package:maktab/data/models/response/response_model.dart' as r;
 class EvaluationRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   EvaluationRemoteDataSource() : super(ApiEndpoints.evaluations);
 
+  Future<Either<AppException, r.Response>> getEvaluations() async {
+    return fetchAllData();
+  }
+
   Future<Either<AppException, r.Response>> getMyEvaluations() async {
     return fetchData(endpoint: ApiEndpoints.getMy);
   }

@@ -109,6 +109,7 @@ class ApiEndpoints {
   static const notifications = 'notifications/';
   static const notViewed = 'not_viewed';
   static const viewed = 'viewed';
+  static const setSeen = 'setSeen';
   //Contract
   static const contracts = 'contracts/';
   //Contract Models

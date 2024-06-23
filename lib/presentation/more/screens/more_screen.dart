@@ -69,7 +69,8 @@ class _MoreScreenState extends State<MoreScreen> {
                     ),
                   ),
                 ],
-              )
+              ),
+              SizedBox(height: 30.0.v,),
             ],
           ),
         ),

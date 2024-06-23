@@ -40,7 +40,8 @@ class DatePickerCell extends StatelessWidget {
         return Center(
           child: SectionTitle(
             title: '${(date.add(const Duration(days: 3600))).year}-${date.year}',
-            textColor: isDisabled ? AppColors.cherryRed : AppColors.black,
+            textColor: isDisabled ? AppColors.gray : AppColors.black,
+            fontSize: 18,
           ),
         );
       case CellStyleType.textYear:
@@ -48,7 +49,8 @@ class DatePickerCell extends StatelessWidget {
           child: SectionTitle(
             title:
             date.year.toString(),
-            textColor: isDisabled ? AppColors.cherryRed : AppColors.black,
+            textColor: isDisabled ? AppColors.gray : AppColors.black,
+            fontSize: 18,
           ),
         );
       case CellStyleType.monthName:
@@ -56,7 +58,7 @@ class DatePickerCell extends StatelessWidget {
           child: SectionTitle(
             title:
             DateFormat.MMM('ar').format(date),
-            textColor: isDisabled ? AppColors.cherryRed : AppColors.black,
+            textColor: isDisabled ? AppColors.gray : AppColors.black,
           ),
         );
       default:
@@ -71,9 +73,10 @@ class DatePickerCell extends StatelessWidget {
                 textColor: cellSelected
                     ? AppColors.white
                     : isDisabled
-                    ? AppColors.cherryRed
+                    ? AppColors.gray
                     : AppColors.black,
                 textAlign: TextAlign.center,
+                fontSize: 18,
               ),
               if (withOffer)
                 Row(
@@ -84,7 +87,7 @@ class DatePickerCell extends StatelessWidget {
                       textColor: cellSelected
                           ? AppColors.white
                           : isDisabled
-                          ? AppColors.cherryRed
+                          ? AppColors.gray
                           : AppColors.mintGreen,
                       textAlign: TextAlign.center,
                       fontSize: 11,
@@ -95,7 +98,7 @@ class DatePickerCell extends StatelessWidget {
                         color: cellSelected
                             ? AppColors.white
                             : isDisabled
-                            ? AppColors.cherryRed
+                            ? AppColors.gray
                             : AppColors.mintGreen,
                         size: 13,
                       )
@@ -105,7 +108,7 @@ class DatePickerCell extends StatelessWidget {
                         textColor: cellSelected
                             ? AppColors.white
                             : isDisabled
-                            ? AppColors.cherryRed
+                            ? AppColors.gray
                             : AppColors.mintGreen,
                         textAlign: TextAlign.center,
                         fontSize: 11,
