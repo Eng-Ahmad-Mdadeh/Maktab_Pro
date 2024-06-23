@@ -8,7 +8,7 @@ import '../../models/response/response_model.dart' as r;
 class AccountSummaryDataSource extends BaseRemoteDataSource<r.Response> {
   AccountSummaryDataSource() : super(ApiEndpoints.accountStatements);
 
-  Future<Either<AppException, r.Response>> getAccountSummaries() async {
-    return fetchAllData();
+  Future<Either<AppException, r.Response>> getAccountSummaries(int page) async {
+    return fetchAllData(page);
   }
 }

@@ -28,6 +28,7 @@ import 'domain/contract_models/contract_model/contract_model_bloc.dart';
 import 'domain/contract_models/contract_models_bloc.dart';
 import 'domain/contracts/contract/contract_bloc.dart';
 import 'domain/contracts/contracts_bloc.dart';
+import 'domain/evaluation/evaluation_bloc.dart';
 import 'domain/invoice/invoice_bloc.dart';
 import 'domain/navigation/navigation_bloc.dart';
 import 'domain/notification/notification_bloc.dart';
@@ -75,6 +76,7 @@ class MaktabApp extends StatelessWidget {
           BlocProvider(create: (context) => locator<ContractModelsBloc>()),
           BlocProvider(create: (context) => locator<ContractModelBloc>()),
           BlocProvider(create: (context) => locator<NotificationsBloc>()),
+          BlocProvider(create: (context) => locator<EvaluationBloc>()),
 
           BlocProvider(create: (context) => NavigationBloc()),
           // BlocProvider(create: (context) => ContractStepCubit()),

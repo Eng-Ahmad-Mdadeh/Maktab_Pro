@@ -22,7 +22,7 @@ class NotificationModel extends Equatable {
   final String? arBody;
   final String? enBody;
   final String? nameSender;
-  final String? seen;
+  final bool seen;
   final String? url;
   final String? receiverAdmin;
   final String? receiverUser;
@@ -36,7 +36,7 @@ class NotificationModel extends Equatable {
     String? arBody,
     String? enBody,
     String? nameSender,
-    String? seen,
+    bool? seen,
     String? url,
     String? receiverAdmin,
     String? receiverUser,
@@ -67,7 +67,7 @@ class NotificationModel extends Equatable {
       arBody: json["ar_body"],
       enBody: json["en_body"],
       nameSender: json["name_sender"],
-      seen: json["seen"],
+      seen: json["seen"] == '1',
       url: json["url"],
       receiverAdmin: json["receiver_admin"],
       receiverUser: json["receiver_user"],

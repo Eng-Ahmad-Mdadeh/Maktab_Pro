@@ -90,4 +90,18 @@ class NotificationRepository {
       },
     );
   }
+
+  Future<Either<AppException, void>> setNotificationSeen(id) async {
+    final result = await _remoteDataSource.setNotificationSeen(id);
+    return result.fold(
+          (error) => Left(error),
+          (right) {
+        try {
+          return const Right(null);
+        } catch (e) {
+          return Left(ConversionException(e.toString()));
+        }
+      },
+    );
+  }
 }

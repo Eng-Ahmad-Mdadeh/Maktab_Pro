@@ -174,7 +174,7 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                           child: const Row(
                             children: [
                               OrderStatus(color: AppColors.black, title: 'متاح'),
-                              OrderStatus(color: AppColors.cherryRed, title: 'محجوز'),
+                              OrderStatus(color: AppColors.gray, title: 'مشغول'),
                             ],
                           ),
                         ),

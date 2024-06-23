@@ -5,11 +5,19 @@ sealed class AccountSummaryEvent extends Equatable {
 }
 
 final class FetchAccountSummary extends AccountSummaryEvent{
+  final int currentPage;
+
+  const FetchAccountSummary(this.currentPage);
   @override
   List<Object?> get props => [];
 }
 
 final class FetchNextPage extends AccountSummaryEvent{
+  final int currentPage;
+  final int lastPage;
+
+  const FetchNextPage(this.currentPage, this.lastPage);
+
   @override
   List<Object?> get props => [];
 }

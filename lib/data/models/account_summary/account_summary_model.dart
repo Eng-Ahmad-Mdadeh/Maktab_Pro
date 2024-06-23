@@ -33,10 +33,10 @@ class AccountSummaryModel extends Equatable {
 
   factory AccountSummaryModel.fromJson(Map<String, dynamic> json){
     return AccountSummaryModel(
-      sumPaid: json["sum_paid"],
+      sumPaid: json["sum_paid"]?.toString(),
       sumRemaining: json["sum_remaining"],
-      sumCommissionValue: json["sum_commission_value"],
-      sumCommissionValueLessor: json["sum_commission_value_lessor"],
+      sumCommissionValue: json["sum_commission_value"]?.toString(),
+      sumCommissionValueLessor: json["sum_commission_value_lessor"]?.toString(),
       accountStatement: json["accountStatement"] == null ? null : AccountStatement.fromJson(json["accountStatement"]),
     );
   }

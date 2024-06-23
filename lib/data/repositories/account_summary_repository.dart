@@ -10,8 +10,8 @@ class AccountSummaryRepository{
 
   AccountSummaryRepository(this._dataSource);
 
-  Future<Either<AppException, AccountSummaryModel>> getAccountSummaries() async {
-    final result = await _dataSource.getAccountSummaries();
+  Future<Either<AppException, AccountSummaryModel>> getAccountSummaries(int page) async {
+    final result = await _dataSource.getAccountSummaries(page);
     return result.fold(
           (error) => Left(error),
           (right) {

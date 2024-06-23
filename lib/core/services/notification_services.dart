@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:maktab/core/services/service_locator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
 
 import '../../data/models/notification/notification_model.dart';
+import '../../domain/notification/notification_bloc.dart';
 
 class NotificationService {
   static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -18,7 +20,7 @@ class NotificationService {
     flutterLocalNotificationsPlugin.initialize(
       initSettings,
     );
-    var initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettingsAndroid = const AndroidInitializationSettings('@mipmap/launcher_icon');
     var initializationSettingsIOS = const DarwinInitializationSettings();
     var initializationSettings =
         InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
@@ -33,19 +35,6 @@ class NotificationService {
         onConnectionStateChange: (a, b) {
           log("pusher $a $b");
         },
-        // onConnectionStateChange: onConnectionStateChange,
-        // onError: onError,
-        // onSubscriptionSucceeded: onSubscriptionSucceeded,
-        //   onEvent: (PusherEvent? event){
-        //   log("NEW MESSAGE");
-        //   showNotification(event?.data.toString()??"");
-        // },
-        // onSubscriptionError: onSubscriptionError,
-        // onDecryptionFailure: onDecryptionFailure,
-        // onMemberAdded: onMemberAdded,
-        // onMemberRemoved: onMemberRemoved,
-
-        // onAuthorizer: onAuthorizer
       );
       await pusher.connect();
 
@@ -59,7 +48,7 @@ class NotificationService {
             log("channel_orders_business NEW MESSAGE: $event");
             if (event?.eventName == 'event-business-orders') {
               log("event.data.runtimeType: ${event.data.runtimeType}");
-              showNotification(event?.data.toString() ?? '');
+              showNotification(event?.data.toString() ?? '', 'channel_orders_business.$id');
             }
           });
     } catch (e) {
@@ -69,7 +58,7 @@ class NotificationService {
 
   Future<void> initializePusher() async {}
 
-  static Future<void> showNotification(String message) async {
+  static Future<void> showNotification(String message, String channelName) async {
     PermissionStatus status = await Permission.notification.request();
 
     if(status.isGranted){
@@ -81,9 +70,11 @@ class NotificationService {
 
     log("notification is: $notification");
 
-    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+    locator<NotificationsBloc>().add(GetNotificationsEvent());
+
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'channel_id',
-      'channel_bankPayment_business.2',
+      channelName,
       importance: Importance.max,
       priority: Priority.high,
     );

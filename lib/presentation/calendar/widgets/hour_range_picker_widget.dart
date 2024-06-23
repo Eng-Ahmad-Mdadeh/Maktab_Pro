@@ -66,19 +66,26 @@ class _EmbeddedHourRangePickerState extends State<HourRangePickerWidget> {
               color: widget.blockedHours.contains(index)
                   ? isSelected
                   ? AppColors.mintGreen.withOpacity(.5)
-                  : AppColors.cherryRed
+                  : AppColors.gray
                   : isSelected
                   ? AppColors.mintGreen
                   : AppColors.white,
               borderRadius: BorderRadius.circular(8),
-              border: Border.all(
-                color: widget.blockedHours.contains(index)
-                    ? AppColors.coralPink
-                    : isSelected
-                    ? AppColors.mintGreen
-                    : AppColors.softAsh,
-                width: 2,
-              ),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.black.withOpacity(0.1),
+                  blurRadius: 9,
+                  spreadRadius: 1,
+                )
+              ]
+              // border: Border.all(
+              //   color: widget.blockedHours.contains(index)
+              //       ? AppColors.gray
+              //       : isSelected
+              //       ? AppColors.mintGreen
+              //       : AppColors.softAsh,
+              //   width: 2,
+              // ),
             ),
             child: BodyText(
               text: '${index.toString().padLeft(2, '0')}:00',

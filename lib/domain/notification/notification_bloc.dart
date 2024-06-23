@@ -20,7 +20,37 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
           (l) => emit(NotificationsFailure(l.message)),
           (r) => emit(NotificationsSuccess(r)),
         );
-      } catch (e) {
+      } catch (e, s) {
+        print(e);
+        print(s);
+        emit(NotificationsFailure(e.toString()));
+      }
+    });
+
+    on<DeleteNotificationEvent>((event, emit) async {
+      emit(NotificationsLoading());
+      try {
+        final result = await _repository.deleteNotification(event.id);
+        result.fold(
+              (l) => emit(NotificationsFailure(l.message)),
+              (r) => add(GetNotificationsEvent()),
+        );
+      } catch (e, s) {
+        print(s);
+        emit(NotificationsFailure(e.toString()));
+      }
+    });
+
+    on<SetSeenNotificationEvent>((event, emit) async {
+      emit(NotificationsLoading());
+      try {
+        final result = await _repository.setNotificationSeen(event.id);
+        result.fold(
+              (l) => emit(NotificationsFailure(l.message)),
+              (r) => add(GetNotificationsEvent()),
+        );
+      } catch (e, s) {
+        print(s);
         emit(NotificationsFailure(e.toString()));
       }
     });

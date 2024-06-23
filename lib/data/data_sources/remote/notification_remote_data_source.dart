@@ -28,4 +28,8 @@ class NotificationRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   Future<Either<AppException, r.Response>> deleteNotification(id) async {
     return deleteData(endpoint: '/$id');
   }
+
+  Future<Either<AppException, r.Response>> setNotificationSeen(id) async {
+    return postData(endpoint: '/${ApiEndpoints.setSeen}/$id');
+  }
 }

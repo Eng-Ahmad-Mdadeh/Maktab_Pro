@@ -18,6 +18,7 @@ import 'package:maktab/presentation/widgets/loading_dialog.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
 
+import '../../../domain/notification/notification_bloc.dart';
 import '../../../domain/profile/profile_bloc.dart';
 import '../../widgets/loading_widget.dart';
 import '../../widgets/retry_widget.dart';
@@ -92,6 +93,8 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
 
           context.read<ReceivingMethodBloc>().add(GetReceivingMoneyMethodEvent());
           context.read<OfficesCubit>().getIncompleteOffices();
+          context.read<NotificationsBloc>().add(GetNotificationsEvent());
+
           await context
               .read<OfficesCubit>()
               .stream
@@ -131,6 +134,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                 .firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading)
                 .then((e) {
               Navigator.popUntil(context, (route) => route.isFirst);
+              context.read<NotificationsBloc>().add(GetNotificationsEvent());
               context.pushReplacementNamed(AppRoutes.homeScreen);
             });
           });
@@ -174,7 +178,6 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                             padding: EdgeInsets.symmetric(horizontal: 10.0.h),
                             child: CodeTextField(
                               controller: _codeController,
-
                               onCompleted: (value) {
                                 if (_formKey.currentState!.validate()) {
                                   context.read<AuthBloc>().add(
@@ -238,7 +241,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                                               title: "ارسال رمز جديد",
                                               textAlign: TextAlign.right,
                                               textColor:
-                                                  snapshot.data == 0 ? AppColors.black : AppColors.softAsh,
+                                                  snapshot.data == 0 ? AppColors.mintGreen : AppColors.softAsh,
                                               fontSize: 19.0,
                                             ),
                                           ),

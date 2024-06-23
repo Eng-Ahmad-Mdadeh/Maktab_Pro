@@ -5,11 +5,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab/core/router/app_routes.dart';
 import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab/presentation/widgets/delete_alert_dialog.dart';
 import 'package:maktab/presentation/widgets/loading_widget.dart';
 import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 
 import '../../../domain/contracts/contract/contract_bloc.dart';
 import '../../../domain/notification/notification_bloc.dart';
+import '../../../domain/orders/order/order_bloc.dart';
 import '../../widgets/body_text.dart';
 import '../../widgets/section_title.dart';
 
@@ -25,7 +27,7 @@ class NotificationsScreen extends StatelessWidget {
       body: BlocBuilder<NotificationsBloc, NotificationsState>(
         builder: (context, state) {
           if (state is NotificationsLoading) return const LoadingWidget(1);
-          if (state is NotificationsFailure) return const BodyText(text: "حدث خطأ ما حاول مجدداً");
+          if (state is NotificationsFailure) return Center(child: BodyText(text: "${state.message}حدث خطأ ما حاول مجدداً"));
           if (state is NotificationsSuccess) {
             return ListView.separated(
               separatorBuilder: (context, i) {
@@ -42,37 +44,65 @@ class NotificationsScreen extends StatelessWidget {
                     /// "dashboard/contracts/custom-contracts-details/23",
                     /// "dashboard/contracts/custom-contracts-details/11",
                     /// "dashboard/contracts/custom-contracts-details/24",
-                    ///
+
+                    context.read<NotificationsBloc>().add(SetSeenNotificationEvent(notification.id!));
 
                     final url = notification.url ?? '';
+                    late final int? id;
                     if (url.contains('contract')) {
-                      late final int? id;
                       if (url.contains('delete')) {
+                        // "url": "contract-delete-20",
                         id = int.tryParse(url.split('-').last);
                         log(id.toString());
                       } else {
+                        // "url": "dashboard/contracts/custom-contracts-details/20",
                         id = int.tryParse(url.split('/').last);
                         log(url.split('/').last);
                       }
                       context.read<ContractBloc>().add(GetContractEvent(id));
                       context.pushNamed(AppRoutes.contractScreen, extra: true);
+                    } else if (url.contains('reservations')) {
+                      // "url": "/dashboard/reservations/20",
+                      id = int.tryParse(url.split('/').last);
+                      log(url.split('/').last);
+                      context.read<OrderBloc>().add(GetOrderEvent(id));
+                      context.pushNamed(AppRoutes.orderScreen, extra: true);
                     }
                   },
                   title: SectionTitle(
                     title: notification.arTitle ?? '',
+                    textColor: notification.seen ? AppColors.gray : null,
                   ),
-                  subtitle: BodyText(text:notification.arBody ?? ''),
+                  subtitle: BodyText(
+                    text: notification.arBody ?? '',
+                    textColor: notification.seen ? AppColors.gray : null,
+                  ),
                   trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => DeleteAlertDialog(
+                          alertText: "سيتم حذف ${notification.arTitle}",
+                          confirmOnPressed: () {
+                            context.read<NotificationsBloc>().add(DeleteNotificationEvent(notification.id!));
+                            context.pop();
+                          },
+                          cancelOnPressed: context.pop,
+                        ),
+                      );
+                    },
                     color: AppColors.cherryRed,
                     icon: const Icon(Icons.delete),
                   ),
-                  leading: SectionTitle(title: '#${notification.id!}'),
+                  leading: SectionTitle(
+                    title: '#${notification.id!}',
+                    textColor: notification.seen ? AppColors.gray : null,
+                  ),
                 );
               },
             );
           }
-          return const BodyText(text: "لا يوجد شيء لعرضه");
+          return const Center(child: BodyText(text: "لا يوجد شيء لعرضه"));
         },
       ),
     );

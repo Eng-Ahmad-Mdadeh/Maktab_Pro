@@ -9,6 +9,8 @@ import 'package:maktab/presentation/more/widgets/more_list_tile.dart';
 import 'package:maktab/presentation/widgets/loading_dialog.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
 
+import '../../../domain/evaluation/evaluation_bloc.dart';
+
 class MoreItemsList extends StatelessWidget {
   const MoreItemsList({super.key});
 
@@ -69,6 +71,14 @@ class MoreItemsList extends StatelessWidget {
               onTap: () {
                 context.read<UserBloc>().add(GetUserAgreementEvent());
               }),
+        ),
+        MoreListTile(
+          title: 'التقيمات',
+          icon: FontAwesomeIcons.sackDollar,
+          onTap: () {
+            context.read<EvaluationBloc>().add(GetEvaluationsEvent());
+            return context.pushNamed(AppRoutes.evaluationScreen);
+          },
         ),
         BlocListener<OfficesCubit, OfficesState>(
           listener: (context, state) {
