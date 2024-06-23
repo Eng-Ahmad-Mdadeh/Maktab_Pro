@@ -52,12 +52,14 @@ import 'package:maktab/domain/video/video_bloc.dart';
 import '../../data/data_sources/remote/account_summary_data_source.dart';
 import '../../data/data_sources/remote/contract_model_remote_data_source.dart';
 import '../../data/data_sources/remote/contract_remote_data_source.dart';
+import '../../data/data_sources/remote/evaluation_remote_data_source.dart';
 import '../../data/data_sources/remote/invoice_remote_data_source.dart';
 import '../../data/data_sources/remote/notification_remote_data_source.dart';
 import '../../data/data_sources/remote/order_remote_data_source.dart';
 import '../../data/repositories/account_summary_repository.dart';
 import '../../data/repositories/contract_model_repository.dart';
 import '../../data/repositories/contract_repository.dart';
+import '../../data/repositories/evaluation_repository.dart';
 import '../../data/repositories/invoice_repository.dart';
 import '../../data/repositories/notification_repository.dart';
 import '../../data/repositories/order_repository.dart';
@@ -67,6 +69,7 @@ import '../../domain/contract_models/contract_model/contract_model_bloc.dart';
 import '../../domain/contract_models/contract_models_bloc.dart';
 import '../../domain/contracts/contract/contract_bloc.dart';
 import '../../domain/contracts/contracts_bloc.dart';
+import '../../domain/evaluation/evaluation_bloc.dart';
 import '../../domain/invoice/invoice_bloc.dart';
 import '../../domain/notification/notification_bloc.dart';
 import '../../domain/orders/order/order_bloc.dart';
@@ -234,6 +237,12 @@ Future<void> setup() async {
     ),
   );
 
+  locator.registerFactory<EvaluationBloc>(
+        () => EvaluationBloc(
+      locator<EvaluationRepository>(),
+    ),
+  );
+
 
   //Repositories
   locator.registerLazySingleton<AuthRepository>(
@@ -342,6 +351,12 @@ Future<void> setup() async {
     ),
   );
 
+  locator.registerLazySingleton<EvaluationRepository>(
+        () => EvaluationRepository(
+      locator<EvaluationRemoteDataSource>(),
+    ),
+  );
+
   //Data Sources
   locator.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSource(),
@@ -411,6 +426,10 @@ Future<void> setup() async {
 
   locator.registerLazySingleton<NotificationRemoteDataSource>(
         () => NotificationRemoteDataSource(),
+  );
+
+  locator.registerLazySingleton<EvaluationRemoteDataSource>(
+        () => EvaluationRemoteDataSource(),
   );
 
   //External

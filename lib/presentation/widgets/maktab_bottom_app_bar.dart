@@ -9,7 +9,6 @@ import '../../domain/navigation/navigation_bloc.dart';
 import '../../domain/navigation/navigation_state.dart';
 import '../resources/app_colors.dart';
 import 'body_text.dart';
-import 'maktab_button.dart';
 import 'nav_item.dart';
 
 class MaktabBottomAppBar extends StatelessWidget {

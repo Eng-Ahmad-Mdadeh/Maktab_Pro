@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maktab/core/extension/date_time_extension.dart';
 import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab/presentation/resources/app_text_styles.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../data/models/calendar/calender_model.dart';
@@ -17,14 +18,14 @@ class SelectDateWidget extends StatelessWidget {
   final bool isSingle;
 
   const SelectDateWidget(
-      this._controller, {
-        super.key,
-        this.onSelectionChanged,
-        required this.selectableDayPredicate,
-        required this.offer,
-        required this.calendars,
-        this.isSingle = false,
-      });
+    this._controller, {
+    super.key,
+    this.onSelectionChanged,
+    required this.selectableDayPredicate,
+    required this.offer,
+    required this.calendars,
+    this.isSingle = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +38,23 @@ class SelectDateWidget extends StatelessWidget {
       backgroundColor: Colors.transparent,
       headerStyle: DateRangePickerHeaderStyle(
         backgroundColor: Colors.transparent,
-        textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(color: AppColors.black),
+        textStyle: AppTextStyles.bodyLarge.copyWith(
+          color: AppColors.black,
+          fontSize: 15.0
+        ),
       ),
       monthCellStyle: DateRangePickerMonthCellStyle(
-        todayTextStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(color: AppColors.black),
+        todayTextStyle: AppTextStyles.bodyLarge.copyWith(color: AppColors.black, fontSize: 18.0.fSize),
       ),
       monthViewSettings: DateRangePickerMonthViewSettings(
         viewHeaderStyle: DateRangePickerViewHeaderStyle(
-          textStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(color: AppColors.black),
+          textStyle: AppTextStyles.bodyLarge.copyWith(
+            color: AppColors.black,
+            fontSize: 15.0.fSize,
+          ),
         ),
       ),
+      enablePastDates: false,
       rangeSelectionColor: AppColors.mintGreen,
       selectionMode: isSingle ? DateRangePickerSelectionMode.single : DateRangePickerSelectionMode.range,
       yearCellStyle: DateRangePickerYearCellStyle(
@@ -64,27 +72,35 @@ class SelectDateWidget extends StatelessWidget {
         final isDisabled = !selectableDayPredicate(date) || date.isBefore(DateTime.now());
         CellStyleType cellStyleType = CellStyleType.text;
 
-        final startOrEndSelected = _controller.selectedRange?.startDate == date && _controller.selectedRange?.endDate == null;
+        final startOrEndSelected =
+            _controller.selectedRange?.startDate == date && _controller.selectedRange?.endDate == null;
         // // circle with offer
         if (startOrEndSelected) cellStyleType = CellStyleType.circle;
         final selectedSingleDate = _controller.selectedDate == date;
         // circle
         if (selectedSingleDate) cellStyleType = CellStyleType.circle;
-        final startSelected = _controller.selectedRange?.startDate == date && _controller.selectedRange?.endDate != null;
+        final startSelected =
+            _controller.selectedRange?.startDate == date && _controller.selectedRange?.endDate != null;
         // right radius
         if (startSelected) cellStyleType = CellStyleType.rightRadius;
-        final endSelected = _controller.selectedRange?.endDate == date && _controller.selectedRange?.startDate != null;
+        final endSelected =
+            _controller.selectedRange?.endDate == date && _controller.selectedRange?.startDate != null;
         // left radius
         if (endSelected) cellStyleType = CellStyleType.leftRadius;
-        final dateInOfferRange = offer == null ? false : date.isInRangeWithSameDayR({'start': offer!.startDate, 'end': offer!.endDate});
+        final dateInOfferRange = offer == null
+            ? false
+            : date.isInRangeWithSameDayR({'start': offer!.startDate, 'end': offer!.endDate});
         if (dateInOfferRange) cellStyleType = CellStyleType.textWithOffer;
         if (dateInOfferRange && startOrEndSelected) cellStyleType = CellStyleType.circleWithOffer;
         if (dateInOfferRange && selectedSingleDate) cellStyleType = CellStyleType.circleWithOffer;
         if (dateInOfferRange && startSelected) cellStyleType = CellStyleType.rightRadiusWithOffer;
         if (dateInOfferRange && endSelected) cellStyleType = CellStyleType.leftRadiusWithOffer;
-        if (_controller.selectedRange?.startDate != null && _controller.selectedRange?.endDate != null && !startSelected && !endSelected) {
-          final dateInSelectedRange =
-          date.isInRangeWithSameDayR({'start': _controller.selectedRange!.startDate!, 'end': _controller.selectedRange!.endDate!});
+        if (_controller.selectedRange?.startDate != null &&
+            _controller.selectedRange?.endDate != null &&
+            !startSelected &&
+            !endSelected) {
+          final dateInSelectedRange = date.isInRangeWithSameDayR(
+              {'start': _controller.selectedRange!.startDate!, 'end': _controller.selectedRange!.endDate!});
           if (dateInSelectedRange) cellStyleType = CellStyleType.textInRange;
           if (dateInOfferRange && dateInSelectedRange) cellStyleType = CellStyleType.textInRangeWithOffer;
         }
@@ -98,7 +114,7 @@ class SelectDateWidget extends StatelessWidget {
               offer: offer,
               cellStyleType: cellStyleType,
             );
-        // month name
+          // month name
           case DateRangePickerView.year:
             return DatePickerCell(
               date: date,
@@ -106,7 +122,7 @@ class SelectDateWidget extends StatelessWidget {
               offer: offer,
               cellStyleType: CellStyleType.monthName,
             );
-        // text year
+          // text year
           case DateRangePickerView.decade:
             return DatePickerCell(
               date: date,
@@ -114,7 +130,7 @@ class SelectDateWidget extends StatelessWidget {
               offer: offer,
               cellStyleType: CellStyleType.textYear,
             );
-        // year range
+          // year range
           case DateRangePickerView.century:
             return DatePickerCell(
               date: date,
@@ -127,4 +143,3 @@ class SelectDateWidget extends StatelessWidget {
     );
   }
 }
-

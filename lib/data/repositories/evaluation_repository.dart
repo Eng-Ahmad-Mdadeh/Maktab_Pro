@@ -9,6 +9,22 @@ class EvaluationRepository {
 
   EvaluationRepository(this._remoteDataSource);
 
+  Future<Either<AppException, List<Office>>> getEvaluations() async {
+    final result = await _remoteDataSource.getEvaluations();
+    return result.fold(
+          (error) => Left(error),
+          (right) {
+        try {
+          final List<Office> evaluations = List<Office>.from(
+              right.data.map((evaluation) => Office.fromJson(evaluation)));
+          return Right(evaluations);
+        } catch (e) {
+          return Left(ConversionException(e.toString()));
+        }
+      },
+    );
+  }
+
   Future<Either<AppException, List<Office>>> getMyEvaluations() async {
     final result = await _remoteDataSource.getMyEvaluations();
     return result.fold(
@@ -16,7 +32,7 @@ class EvaluationRepository {
       (right) {
         try {
           final List<Office> evaluations = List<Office>.from(
-              right.data.map((coupon) => Office.fromJson(coupon)));
+              right.data.map((evaluation) => Office.fromJson(evaluation)));
           return Right(evaluations);
         } catch (e) {
           return Left(ConversionException(e.toString()));

@@ -64,7 +64,7 @@ import 'package:maktab/presentation/more/screens/user_agreement_screen.dart';
 import 'package:maktab/presentation/verify_national_access/screens/verify_national_access_screen.dart';
 import '../../domain/navigation/navigation_bloc.dart';
 import '../../domain/navigation/navigation_event.dart';
-import '../../presentation/account_statements/screens/account_statements_screen.dart';
+import '../../presentation/account_summary/screens/account_summary_screen.dart';
 import '../../presentation/contracts_menu/contracts_menu_screen.dart';
 import '../../presentation/contracts_menu/screens/contracts/screens/contract/screens/add/screens/add_contract_screen.dart';
 import '../../presentation/contracts_menu/screens/contracts/screens/contract/screens/contract_screen.dart';
@@ -73,6 +73,7 @@ import '../../presentation/contracts_menu/screens/contracts_models/screens/add_c
 import '../../presentation/contracts_menu/screens/contracts_models/screens/contracts_model/screens/contracts_model_screen.dart';
 import '../../presentation/contracts_menu/screens/contracts_models/screens/contracts_models_screen.dart';
 import '../../presentation/contracts_menu/screens/contracts_models/screens/edit_contracts_model/screens/edit_contracts_model_screen.dart';
+import '../../presentation/evaluation/screens/evaluation_screen.dart';
 import '../../presentation/more/screens/unit_settings_screen.dart';
 import '../../presentation/notifications/screens/notifications_screen.dart';
 
@@ -641,6 +642,12 @@ final GoRouter appRouter = GoRouter(
       name: AppRoutes.complaintsScreen,
       // builder: (context, state) => const ComplaintsScreen(),
       pageBuilder: (context, state) => _pageBuilder(context, state, const ComplaintsScreen()),
+    ),
+    GoRoute(
+      path: AppRoutes.evaluationScreen,
+      name: AppRoutes.evaluationScreen,
+      // builder: (context, state) => const ComplaintsScreen(),
+      pageBuilder: (context, state) => _pageBuilder(context, state, const EvaluationScreen()),
     ),
     GoRoute(
       path: AppRoutes.officeScreen,

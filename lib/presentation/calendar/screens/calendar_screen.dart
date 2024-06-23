@@ -7,7 +7,6 @@ import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab/presentation/widgets/maktab_loading.dart';
 import 'package:maktab/presentation/widgets/shimmer_effect.dart';
 
-
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});
 

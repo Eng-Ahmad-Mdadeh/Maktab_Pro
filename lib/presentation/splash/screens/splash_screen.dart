@@ -14,6 +14,8 @@ import 'package:maktab/presentation/widgets/maktab_button.dart';
 import 'package:maktab/presentation/widgets/maktab_image_view.dart';
 import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
 
+import '../../../domain/notification/notification_bloc.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -49,6 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 .firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading)
                 .then((e) {
               context.pushReplacement(AppRoutes.homeScreen);
+              context.read<NotificationsBloc>().add(GetNotificationsEvent());
             });
           });
         } else if (state is NavigationToEditProfileScreen) {

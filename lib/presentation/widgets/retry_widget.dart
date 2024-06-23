@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../resources/app_colors.dart';
 import 'body_text.dart';
 
 

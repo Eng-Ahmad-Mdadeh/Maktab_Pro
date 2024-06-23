@@ -15,7 +15,6 @@ import 'package:maktab/presentation/resources/app_colors.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../core/services/notification_services.dart';
 import '../../../domain/offices/offices_cubit.dart';
 import '../../../domain/settings/settings_bloc.dart';
 import '../../widgets/body_text.dart';
