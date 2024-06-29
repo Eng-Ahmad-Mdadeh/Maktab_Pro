@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/order/order_model.dart';
-import 'package:maktab/presentation/orders/widgets/order_info_box.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/data/models/order/order_model.dart';
+import 'package:maktab_lessor/presentation/orders/widgets/order_info_box.dart';
 
 class OrdersList extends StatelessWidget {
   const OrdersList(this._scrollController, {super.key, required this.orders, required this.moreOrderLoader});

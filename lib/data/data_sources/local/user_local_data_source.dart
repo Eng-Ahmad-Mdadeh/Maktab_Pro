@@ -1,4 +1,4 @@
-import 'package:maktab/core/helpers/hive_helper.dart';
+import 'package:maktab_lessor/core/helpers/hive_helper.dart';
 
 class UserLocalDataSource {
   final String tokenBox = 'token';

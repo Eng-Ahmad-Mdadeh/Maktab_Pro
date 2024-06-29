@@ -5,9 +5,9 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/office/office_bloc.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/office/office_bloc.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 
 class MaktabGoogleMap extends StatefulWidget {
   const MaktabGoogleMap({super.key, this.isEditMode = false});

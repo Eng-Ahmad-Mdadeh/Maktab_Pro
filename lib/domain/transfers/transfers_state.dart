@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:maktab/data/models/transfers/transfer_pagination_model.dart';
+import 'package:maktab_lessor/data/models/transfers/transfer_pagination_model.dart';
 
 enum FetchingDataStates { initial, loading, success, failure, paginate }
 

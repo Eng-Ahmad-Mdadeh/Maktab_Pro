@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/extension/string_extention.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/transfers/transfer_pagination_model.dart';
+import 'package:maktab_lessor/core/extension/string_extention.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/data/models/transfers/transfer_pagination_model.dart';
 
 import '../../resources/app_colors.dart';
 import 'money_transfer_item.dart';

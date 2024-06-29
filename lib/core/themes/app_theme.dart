@@ -1,13 +1,13 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
-import 'package:maktab/core/themes/app_bar_theme.dart';
-import 'package:maktab/core/themes/bottom_app_bar_theme.dart';
-import 'package:maktab/core/themes/color_scheme.dart';
-import 'package:maktab/core/themes/elevated_button_theme.dart';
-import 'package:maktab/core/themes/input_decoration_theme.dart';
-import 'package:maktab/core/themes/text_theme.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/core/themes/app_bar_theme.dart';
+import 'package:maktab_lessor/core/themes/bottom_app_bar_theme.dart';
+import 'package:maktab_lessor/core/themes/color_scheme.dart';
+import 'package:maktab_lessor/core/themes/elevated_button_theme.dart';
+import 'package:maktab_lessor/core/themes/input_decoration_theme.dart';
+import 'package:maktab_lessor/core/themes/text_theme.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(

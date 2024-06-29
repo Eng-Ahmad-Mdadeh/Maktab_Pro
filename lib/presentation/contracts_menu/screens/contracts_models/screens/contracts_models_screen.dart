@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/router/app_routes.dart';
-import 'package:maktab/domain/contract_models/contract_model/contract_model_bloc.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/loading_widget.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/router/app_routes.dart';
+import 'package:maktab_lessor/domain/contract_models/contract_model/contract_model_bloc.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_widget.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
 
 import '../../../../../domain/contract_models/contract_models_bloc.dart';
 import '../../../../widgets/confirm_alert_dialog.dart';

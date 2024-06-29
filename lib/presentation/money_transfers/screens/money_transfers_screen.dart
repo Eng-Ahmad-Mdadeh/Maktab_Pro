@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/transfers/transdfers_bloc.dart';
-import 'package:maktab/domain/transfers/transfers_event.dart';
-import 'package:maktab/domain/transfers/transfers_state.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/transfers/transfers_bloc.dart';
+import 'package:maktab_lessor/domain/transfers/transfers_event.dart';
+import 'package:maktab_lessor/domain/transfers/transfers_state.dart';
 
 import '../../../core/services/service_locator.dart';
 import '../../widgets/body_text.dart';

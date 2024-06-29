@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/shimmer/shimmer_bloc.dart';
-import 'package:maktab/presentation/more/widgets/more_header.dart';
-import 'package:maktab/presentation/more/widgets/more_items_list.dart';
-import 'package:maktab/presentation/resources/app_assets.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/maktab_image_view.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/shimmer/shimmer_bloc.dart';
+import 'package:maktab_lessor/presentation/more/widgets/more_header.dart';
+import 'package:maktab_lessor/presentation/more/widgets/more_items_list.dart';
+import 'package:maktab_lessor/presentation/resources/app_assets.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_image_view.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 

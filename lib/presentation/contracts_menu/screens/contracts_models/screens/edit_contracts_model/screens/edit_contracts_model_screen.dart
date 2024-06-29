@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:go_router/go_router.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/widgets/loading_widget.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_widget.dart';
 
 import '../../../../../../../domain/contract_models/contract_model/contract_model_bloc.dart';
 import '../../../../../../../domain/contract_models/contract_models_bloc.dart';

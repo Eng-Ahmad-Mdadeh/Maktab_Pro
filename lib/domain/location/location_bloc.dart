@@ -3,8 +3,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:maktab/core/helpers/location_helper.dart';
-import 'package:maktab/core/services/service_locator.dart';
+import 'package:maktab_lessor/core/helpers/location_helper.dart';
+import 'package:maktab_lessor/core/services/service_locator.dart';
 
 part 'location_event.dart';
 part 'location_state.dart';

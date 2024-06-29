@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/domain/video/video_bloc.dart';
+import 'package:maktab_lessor/domain/video/video_bloc.dart';
 import 'package:video_player/video_player.dart';
 
 class MaktabVideoPlayer extends StatefulWidget {

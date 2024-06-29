@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:maktab/core/extension/date_time_extension.dart';
-import 'package:maktab/core/extension/string_extention.dart';
-import 'package:maktab/data/repositories/settings_repository.dart';
+import 'package:maktab_lessor/core/extension/date_time_extension.dart';
+import 'package:maktab_lessor/core/extension/string_extention.dart';
+import 'package:maktab_lessor/data/repositories/settings_repository.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';

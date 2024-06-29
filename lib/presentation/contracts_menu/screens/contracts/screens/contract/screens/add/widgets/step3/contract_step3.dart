@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/domain/contracts/contract/add/contract_state.dart';
+import 'package:maktab_lessor/domain/contracts/contract/add/contract_state.dart';
 
 import '../../../../../../../../../../../core/helpers/size_helper.dart';
 import '../../../../../../../../../../domain/contracts/contract/add/contract_cubit.dart';

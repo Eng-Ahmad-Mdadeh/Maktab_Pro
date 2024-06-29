@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/router/app_routes.dart';
-import 'package:maktab/data/models/calendar/calender_model.dart';
-import 'package:maktab/data/models/office/office_model.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/resources/app_text_styles.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/maktab_calendar.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/router/app_routes.dart';
+import 'package:maktab_lessor/data/models/calendar/calender_model.dart';
+import 'package:maktab_lessor/data/models/office/office_model.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/resources/app_text_styles.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_calendar.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 
@@ -44,7 +44,7 @@ class UnitCalendarBox extends StatelessWidget {
                   .expand((calendar) => Calendar.getDaysInBetween(calendar.startDate, calendar.endDate))
                   .toList(),
               defaultBuilder: (context, day, focusedDay) {
-                return getCircleContainer(color: AppColors.softAsh);
+                return getCircleContainer(color: AppColors.gray);
               },
               todayBuilder: (context, day, focusedDay) {
                 return getCircleContainer(

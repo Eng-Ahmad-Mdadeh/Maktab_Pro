@@ -2,11 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/comfort/comfort_model.dart';
-import 'package:maktab/domain/unit/unit_bloc.dart';
-import 'package:maktab/presentation/office/widgets/comfort_box.dart';
-import 'package:maktab/presentation/widgets/page_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/data/models/comfort/comfort_model.dart';
+import 'package:maktab_lessor/domain/unit/unit_bloc.dart';
+import 'package:maktab_lessor/presentation/office/widgets/comfort_box.dart';
+import 'package:maktab_lessor/presentation/widgets/page_title.dart';
 
 class UnitComfortsList extends StatelessWidget {
   UnitComfortsList({super.key});

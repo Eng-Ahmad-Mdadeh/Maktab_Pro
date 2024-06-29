@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:maktab/core/classes/exception/api_exceptions.dart';
-import 'package:maktab/core/network/api_endpoints.dart';
-import 'package:maktab/core/services/service_locator.dart';
-import 'package:maktab/data/data_sources/local/user_local_data_source.dart';
+import 'package:maktab_lessor/core/classes/exception/api_exceptions.dart';
+import 'package:maktab_lessor/core/network/api_endpoints.dart';
+import 'package:maktab_lessor/core/services/service_locator.dart';
+import 'package:maktab_lessor/data/data_sources/local/user_local_data_source.dart';
 
 
 class NetworkHelper {

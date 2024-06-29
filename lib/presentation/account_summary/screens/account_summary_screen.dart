@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
 
 import '../../../domain/account_summary/account_summary_bloc.dart';
 import '../widgets/account_summary_details_section.dart';

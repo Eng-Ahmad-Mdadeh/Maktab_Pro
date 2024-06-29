@@ -1,4 +1,4 @@
-import 'package:maktab/data/models/user/user_type.dart';
+import 'package:maktab_lessor/data/models/user/user_type.dart';
 
 class User {
   int id;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/unit/unit_bloc.dart';
-import 'package:maktab/presentation/office/widgets/unit_marketer_type_options.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/unit/unit_bloc.dart';
+import 'package:maktab_lessor/presentation/office/widgets/unit_marketer_type_options.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class UnitAdvertiserRelationshipOption extends StatelessWidget {
   const UnitAdvertiserRelationshipOption({super.key});

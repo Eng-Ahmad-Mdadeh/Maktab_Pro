@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 
 class ImageCropperHelper {
   static final ImageCropper _imageCropper = ImageCropper();

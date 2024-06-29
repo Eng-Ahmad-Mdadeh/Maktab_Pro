@@ -1,14 +1,14 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/invoices_and_statements/widgets/statement_balance_section.dart';
-import 'package:maktab/presentation/invoices_and_statements/widgets/statement_ending_section.dart';
-import 'package:maktab/presentation/invoices_and_statements/widgets/statement_header.dart';
-import 'package:maktab/presentation/invoices_and_statements/widgets/statement_total_section.dart';
-import 'package:maktab/presentation/invoices_and_statements/widgets/statements_table.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/invoices_and_statements/widgets/statement_balance_section.dart';
+import 'package:maktab_lessor/presentation/invoices_and_statements/widgets/statement_ending_section.dart';
+import 'package:maktab_lessor/presentation/invoices_and_statements/widgets/statement_header.dart';
+import 'package:maktab_lessor/presentation/invoices_and_statements/widgets/statement_total_section.dart';
+import 'package:maktab_lessor/presentation/invoices_and_statements/widgets/statements_table.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
 
 class MonthlyAccountStatementScreen extends StatefulWidget {
   const MonthlyAccountStatementScreen({super.key});

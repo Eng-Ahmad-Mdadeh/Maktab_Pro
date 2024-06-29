@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/resources/app_assets.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/maktab_image_view.dart';
-import 'package:maktab/presentation/widgets/page_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/resources/app_assets.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_image_view.dart';
+import 'package:maktab_lessor/presentation/widgets/page_title.dart';
 
 class StcPayHeader extends StatelessWidget {
   const StcPayHeader({super.key});

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/widgets/maktab_text_form_field.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_text_form_field.dart';
 
 class LicenseTextFields extends StatelessWidget {
   const LicenseTextFields({

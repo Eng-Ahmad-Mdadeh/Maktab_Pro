@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/facility/facility_model.dart';
-import 'package:maktab/domain/office/office_bloc.dart';
-import 'package:maktab/presentation/office/widgets/facility_box.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/data/models/facility/facility_model.dart';
+import 'package:maktab_lessor/domain/office/office_bloc.dart';
+import 'package:maktab_lessor/presentation/office/widgets/facility_box.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class OfficeFacilitiesGridView extends StatelessWidget {
   const OfficeFacilitiesGridView({super.key, required this.facilities});

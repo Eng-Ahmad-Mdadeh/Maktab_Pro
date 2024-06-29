@@ -2,16 +2,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/helpers/version_helper.dart';
-import 'package:maktab/presentation/home/widgets/home_header.dart';
-import 'package:maktab/presentation/home/widgets/latest_complaints_card.dart';
-import 'package:maktab/presentation/home/widgets/latest_evaluation_section.dart.dart';
-import 'package:maktab/presentation/home/widgets/latest_orders_card.dart';
-import 'package:maktab/presentation/home/widgets/latest_transfers_section.dart';
-import 'package:maktab/presentation/home/widgets/ordinary_search_box.dart';
-import 'package:maktab/presentation/home/widgets/units_card.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/helpers/version_helper.dart';
+import 'package:maktab_lessor/presentation/home/widgets/home_header.dart';
+import 'package:maktab_lessor/presentation/home/widgets/latest_complaints_card.dart';
+import 'package:maktab_lessor/presentation/home/widgets/latest_evaluation_section.dart.dart';
+import 'package:maktab_lessor/presentation/home/widgets/latest_orders_card.dart';
+import 'package:maktab_lessor/presentation/home/widgets/latest_transfers_section.dart';
+import 'package:maktab_lessor/presentation/home/widgets/ordinary_search_box.dart';
+import 'package:maktab_lessor/presentation/home/widgets/units_card.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 

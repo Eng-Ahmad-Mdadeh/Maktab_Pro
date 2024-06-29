@@ -1,14 +1,14 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/offices/offices_cubit.dart';
-import 'package:maktab/domain/unit/unit_bloc.dart';
-import 'package:maktab/presentation/office/widgets/delete_media_icon_button.delete.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/file_selector_box.dart';
-import 'package:maktab/presentation/widgets/maktab_video_player.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/offices/offices_cubit.dart';
+import 'package:maktab_lessor/domain/unit/unit_bloc.dart';
+import 'package:maktab_lessor/presentation/office/widgets/delete_media_icon_button.delete.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/file_selector_box.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_video_player.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class UnitVideoSection extends StatelessWidget {
   const UnitVideoSection({super.key});

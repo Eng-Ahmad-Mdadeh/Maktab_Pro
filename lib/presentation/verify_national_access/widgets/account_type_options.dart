@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/domain/national_access/national_access_bloc.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
+import 'package:maktab_lessor/domain/national_access/national_access_bloc.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
 
 class AccountTypeOptions extends StatelessWidget {
   const AccountTypeOptions({

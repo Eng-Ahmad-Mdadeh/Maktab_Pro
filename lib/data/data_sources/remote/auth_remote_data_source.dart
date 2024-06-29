@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:maktab/core/classes/exception/api_exceptions.dart';
-import 'package:maktab/core/network/api_endpoints.dart';
-import 'package:maktab/data/data_sources/remote/base_remote_data_source.dart';
+import 'package:maktab_lessor/core/classes/exception/api_exceptions.dart';
+import 'package:maktab_lessor/core/network/api_endpoints.dart';
+import 'package:maktab_lessor/data/data_sources/remote/base_remote_data_source.dart';
 import '../../models/response/response_model.dart' as r;
 
 class AuthRemoteDataSource extends BaseRemoteDataSource<r.Response> {

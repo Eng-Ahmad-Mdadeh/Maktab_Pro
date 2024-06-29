@@ -1,6 +1,6 @@
 // import 'package:flutter/material.dart';
-// import 'package:maktab/core/helpers/size_helper.dart';
-// import 'package:maktab/presentation/calendar/widgets/unit_calendar.dart';
+// import 'package:maktab_lessor/core/helpers/size_helper.dart';
+// import 'package:maktab_lessor/presentation/calendar/widgets/unit_calendar.dart';
 // import 'package:table_calendar/table_calendar.dart';
 
 // class WeeklyCalendarSection extends StatelessWidget {

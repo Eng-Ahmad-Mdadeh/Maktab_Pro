@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/profile/profile_bloc.dart';
-import 'package:maktab/presentation/profile/widgets/account_type_option.dart';
-import 'package:maktab/presentation/widgets/retry_button.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/profile/profile_bloc.dart';
+import 'package:maktab_lessor/presentation/profile/widgets/account_type_option.dart';
+import 'package:maktab_lessor/presentation/widgets/retry_button.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class AccountTypeOptions extends StatefulWidget {
   const AccountTypeOptions({super.key});

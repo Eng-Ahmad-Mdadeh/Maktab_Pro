@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/data/models/office/office_service_model.dart';
-import 'package:maktab/presentation/office/widgets/office_item_box.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/data/models/office/office_service_model.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_item_box.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 
 class ServiceBox extends StatelessWidget {
   const ServiceBox({

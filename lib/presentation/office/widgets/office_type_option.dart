@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class OfficeTypeOption extends StatelessWidget {
   const OfficeTypeOption({
@@ -18,7 +18,7 @@ class OfficeTypeOption extends StatelessWidget {
   final String title;
   final String subtitle;
   final Widget trailing;
-  final Function() onTap;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {

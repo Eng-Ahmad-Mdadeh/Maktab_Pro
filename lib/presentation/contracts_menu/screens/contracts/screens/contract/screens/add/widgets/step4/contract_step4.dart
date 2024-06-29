@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 
 import '../../../../../../../../../../../core/helpers/size_helper.dart';
 import '../../../../../../../../../../data/models/contract/contract_model_model.dart';

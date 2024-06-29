@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/office/office_model.dart';
-import 'package:maktab/presentation/offices/widgets/office_box.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/data/models/office/office_model.dart';
+import 'package:maktab_lessor/presentation/offices/widgets/office_box.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
 
 class OfficesList extends StatelessWidget {
   const OfficesList({super.key, required this.offices});

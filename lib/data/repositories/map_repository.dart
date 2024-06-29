@@ -3,11 +3,11 @@ import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:maktab/core/classes/exception/app_exception.dart';
-import 'package:maktab/core/constants/app_constants.dart';
-import 'package:maktab/data/data_sources/remote/map_remote_data_source.dart';
-import 'package:maktab/data/models/map/map_place.dart';
-import 'package:maktab/data/models/map/map_search_suggestion.dart';
+import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
+import 'package:maktab_lessor/core/constants/app_constants.dart';
+import 'package:maktab_lessor/data/data_sources/remote/map_remote_data_source.dart';
+import 'package:maktab_lessor/data/models/map/map_place.dart';
+import 'package:maktab_lessor/data/models/map/map_search_suggestion.dart';
 
 class MapRepository {
   final MapRemoteDataSource _mapRemoteDataSource;
