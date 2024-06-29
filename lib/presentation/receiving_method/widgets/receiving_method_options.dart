@@ -2,11 +2,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/router/app_routes.dart';
-import 'package:maktab/domain/receiving_method/receiving_method_bloc.dart';
-import 'package:maktab/presentation/receiving_method/widgets/receiving_method_option.dart';
-import 'package:maktab/presentation/widgets/loading_dialog.dart';
-import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
+import 'package:maktab_lessor/core/router/app_routes.dart';
+import 'package:maktab_lessor/domain/receiving_method/receiving_method_bloc.dart';
+import 'package:maktab_lessor/presentation/receiving_method/widgets/receiving_method_option.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_dialog.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
 
 class ReceivingMethodOptions extends StatelessWidget {
   const ReceivingMethodOptions({super.key});

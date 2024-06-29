@@ -4,14 +4,14 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:maktab/core/helpers/file_picker_helper.dart';
-import 'package:maktab/core/helpers/image_cropper_helper.dart';
-import 'package:maktab/core/services/service_locator.dart';
-import 'package:maktab/data/models/user/user_model.dart';
-import 'package:maktab/data/models/user/user_type.dart';
-import 'package:maktab/data/repositories/auth_repository.dart';
-import 'package:maktab/data/repositories/profile_repository.dart';
-import 'package:maktab/data/repositories/user_repository.dart';
+import 'package:maktab_lessor/core/helpers/file_picker_helper.dart';
+import 'package:maktab_lessor/core/helpers/image_cropper_helper.dart';
+import 'package:maktab_lessor/core/services/service_locator.dart';
+import 'package:maktab_lessor/data/models/user/user_model.dart';
+import 'package:maktab_lessor/data/models/user/user_type.dart';
+import 'package:maktab_lessor/data/repositories/auth_repository.dart';
+import 'package:maktab_lessor/data/repositories/profile_repository.dart';
+import 'package:maktab_lessor/data/repositories/user_repository.dart';
 
 import '../../core/services/notification_services.dart';
 

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/financial_transactions/receiving_method_model.dart';
-import 'package:maktab/domain/receiving_method/receiving_method_bloc.dart';
-import 'package:maktab/presentation/widgets/loading_dialog.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
-import 'package:maktab/presentation/widgets/maktab_drop_down_form_field.dart';
-import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
-import 'package:maktab/presentation/widgets/maktab_text_form_field.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
-import 'package:maktab/presentation/widgets/shimmer_effect.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/data/models/financial_transactions/receiving_method_model.dart';
+import 'package:maktab_lessor/domain/receiving_method/receiving_method_bloc.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_dialog.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_drop_down_form_field.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_text_form_field.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/presentation/widgets/shimmer_effect.dart';
 
 class BankForm extends StatefulWidget {
   const BankForm({super.key, this.editingMode = false});

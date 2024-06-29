@@ -6,12 +6,12 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
-import 'package:maktab/core/extension/date_range_extension.dart';
-import 'package:maktab/core/helpers/date_formatter_helper.dart';
-import 'package:maktab/data/models/offer/offer_model.dart';
-import 'package:maktab/data/models/office/office_model.dart';
-import 'package:maktab/data/models/office/office_price_model.dart';
-import 'package:maktab/data/repositories/offer_repository.dart';
+import 'package:maktab_lessor/core/extension/date_range_extension.dart';
+import 'package:maktab_lessor/core/helpers/date_formatter_helper.dart';
+import 'package:maktab_lessor/data/models/offer/offer_model.dart';
+import 'package:maktab_lessor/data/models/office/office_model.dart';
+import 'package:maktab_lessor/data/models/office/office_price_model.dart';
+import 'package:maktab_lessor/data/repositories/offer_repository.dart';
 
 import '../../core/classes/exception/app_exception.dart';
 

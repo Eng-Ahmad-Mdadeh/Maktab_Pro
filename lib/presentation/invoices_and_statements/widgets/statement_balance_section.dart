@@ -1,7 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
 
 import 'period_balance_item.dart';
 

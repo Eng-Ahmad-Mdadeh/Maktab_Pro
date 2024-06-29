@@ -2,24 +2,24 @@ part of 'coupon_bloc.dart';
 
 class CouponState extends Equatable {
   final OfferApiCallState couponApiCallState;
-  Office? unit;
-  String name;
-  int numberUsed;
-  String code;
-  String message;
+  final Office? unit;
+  final String name;
+  final int numberUsed;
+  final String code;
+  final String message;
 
-   DiscountTypes discountType;
+  final  DiscountTypes discountType;
   final num discountAmount;
-  DateTime? startDate;
-  DateTime? endDate;
-  Map<int, num> prices;
-  List<int> priceTypes;
-  int pricesCount;
-  bool isValidOfferDateRange;
-  Coupon? selectedOffer;
-  bool isInitialized;
+  final DateTime? startDate;
+  final DateTime? endDate;
+  final Map<int, num> prices;
+  final List<int> priceTypes;
+  final int pricesCount;
+  final bool isValidOfferDateRange;
+  final Coupon? selectedOffer;
+  final bool isInitialized;
 
-  CouponState(
+  const CouponState(
       {this.couponApiCallState = OfferApiCallState.initial,
       this.unit,
       this.name = '',

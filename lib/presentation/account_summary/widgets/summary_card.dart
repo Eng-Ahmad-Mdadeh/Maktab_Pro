@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:maktab/core/extension/date_time_extension.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/extension/date_time_extension.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
 
 import '../../../data/models/account_summary/account_summary_model.dart';
 import '../../resources/app_colors.dart';

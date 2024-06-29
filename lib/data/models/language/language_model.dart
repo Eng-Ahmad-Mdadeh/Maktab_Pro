@@ -1,4 +1,4 @@
-import 'package:maktab/core/network/api_endpoints.dart';
+import 'package:maktab_lessor/core/network/api_endpoints.dart';
 
 class Language {
   int id;

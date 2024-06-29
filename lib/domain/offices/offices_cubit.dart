@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:maktab/data/models/office/office_model.dart';
-import 'package:maktab/data/models/office/search_data_model.dart';
-import 'package:maktab/data/repositories/calendar_repository.dart';
-import 'package:maktab/data/repositories/complaint_repository.dart';
-import 'package:maktab/data/repositories/coupon_repository.dart';
-import 'package:maktab/data/repositories/offer_repository.dart';
-import 'package:maktab/data/repositories/office_repository.dart';
-import 'package:maktab/data/repositories/price_repository.dart';
+import 'package:maktab_lessor/data/models/office/office_model.dart';
+import 'package:maktab_lessor/data/models/office/search_data_model.dart';
+import 'package:maktab_lessor/data/repositories/calendar_repository.dart';
+import 'package:maktab_lessor/data/repositories/complaint_repository.dart';
+import 'package:maktab_lessor/data/repositories/coupon_repository.dart';
+import 'package:maktab_lessor/data/repositories/offer_repository.dart';
+import 'package:maktab_lessor/data/repositories/office_repository.dart';
+import 'package:maktab_lessor/data/repositories/price_repository.dart';
 
 part 'offices_state.dart';
 

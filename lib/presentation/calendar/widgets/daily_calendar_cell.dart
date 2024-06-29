@@ -3,9 +3,9 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_animate/flutter_animate.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:maktab/domain/calendar/calendar_bloc.dart';
-// import 'package:maktab/presentation/resources/app_colors.dart';
-// import 'package:maktab/presentation/widgets/calendar_cell.dart';
+// import 'package:maktab_lessor/domain/calendar/calendar_bloc.dart';
+// import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+// import 'package:maktab_lessor/presentation/widgets/calendar_cell.dart';
 // import 'package:table_calendar/table_calendar.dart';
 //
 // class DailyCalendarCell extends StatelessWidget {

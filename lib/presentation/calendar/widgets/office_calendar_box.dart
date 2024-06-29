@@ -1,10 +1,10 @@
 // ignore: depend_on_referenced_packages
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/office/office_model.dart';
-import 'package:maktab/presentation/calendar/widgets/unit_calendar_box.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/data/models/office/office_model.dart';
+import 'package:maktab_lessor/presentation/calendar/widgets/unit_calendar_box.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class OfficeCalendarBox extends StatelessWidget {
   const OfficeCalendarBox({super.key, required this.office});

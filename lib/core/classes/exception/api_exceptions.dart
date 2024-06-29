@@ -1,6 +1,6 @@
 // ignore_for_file: overridden_fields, annotate_overrides
 
-import 'package:maktab/core/classes/exception/app_exception.dart';
+import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
 
 class ApiException extends AppException {
   final String message;

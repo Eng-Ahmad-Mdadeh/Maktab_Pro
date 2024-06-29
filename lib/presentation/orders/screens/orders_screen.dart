@@ -2,14 +2,14 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/orders/widgets/orders_search_box.dart';
-import 'package:maktab/presentation/orders/widgets/orders_list.dart';
-import 'package:maktab/presentation/orders/widgets/orders_states.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/loading_widget.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
-import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/orders/widgets/orders_search_box.dart';
+import 'package:maktab_lessor/presentation/orders/widgets/orders_list.dart';
+import 'package:maktab_lessor/presentation/orders/widgets/orders_states.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_widget.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
 
 import '../../../domain/orders/orders_bloc.dart';
 import '../../widgets/maktab_bottom_app_bar.dart';

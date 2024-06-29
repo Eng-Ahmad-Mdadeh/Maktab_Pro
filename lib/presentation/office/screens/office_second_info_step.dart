@@ -1,14 +1,14 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/type_aquar/type_aquar_model.dart';
-import 'package:maktab/domain/office/office_bloc.dart';
-import 'package:maktab/presentation/office/widgets/office_advertiser_relationship_options.dart';
-import 'package:maktab/presentation/office/widgets/space_text_field.dart';
-import 'package:maktab/presentation/widgets/maktab_drop_down_form_field.dart';
-import 'package:maktab/presentation/widgets/page_title.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/data/models/type_aquar/type_aquar_model.dart';
+import 'package:maktab_lessor/domain/office/office_bloc.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_advertiser_relationship_options.dart';
+import 'package:maktab_lessor/presentation/office/widgets/space_text_field.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_drop_down_form_field.dart';
+import 'package:maktab_lessor/presentation/widgets/page_title.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class OfficeSecondInfoStep extends StatefulWidget {
   const OfficeSecondInfoStep({super.key});

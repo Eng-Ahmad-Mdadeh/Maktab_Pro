@@ -1,6 +1,6 @@
 import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/data/models/transfers/transfer_pagination_model.dart';
+import 'package:maktab_lessor/data/models/transfers/transfer_pagination_model.dart';
 import '../../data/repositories/transfer_money_repository.dart';
 import 'transfers_event.dart';
 import 'transfers_state.dart';

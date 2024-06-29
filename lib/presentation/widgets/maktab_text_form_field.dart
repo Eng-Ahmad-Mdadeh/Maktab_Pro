@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
 
 import '../../core/themes/text_theme.dart';
 import '../resources/app_colors.dart';
@@ -160,9 +160,9 @@ class MaktabTextFormField extends StatelessWidget {
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 import 'body_text.dart';
 

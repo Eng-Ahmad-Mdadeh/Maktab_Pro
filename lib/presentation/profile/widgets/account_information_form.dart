@@ -4,15 +4,15 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/extension/email_validation_extension.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/user/user_model.dart';
-import 'package:maktab/domain/profile/profile_bloc.dart';
-import 'package:maktab/presentation/profile/widgets/license_option.dart';
-import 'package:maktab/presentation/profile/widgets/license_text_fields.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
-import 'package:maktab/presentation/widgets/maktab_text_form_field.dart';
-import 'package:maktab/presentation/widgets/phone_text_field.dart';
+import 'package:maktab_lessor/core/extension/email_validation_extension.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/data/models/user/user_model.dart';
+import 'package:maktab_lessor/domain/profile/profile_bloc.dart';
+import 'package:maktab_lessor/presentation/profile/widgets/license_option.dart';
+import 'package:maktab_lessor/presentation/profile/widgets/license_text_fields.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_text_form_field.dart';
+import 'package:maktab_lessor/presentation/widgets/phone_text_field.dart';
 
 class AccountInformationForm extends StatefulWidget {
   const AccountInformationForm({super.key});

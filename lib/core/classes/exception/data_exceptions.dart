@@ -1,4 +1,4 @@
-import 'package:maktab/core/classes/exception/app_exception.dart';
+import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
 
 class ServerException extends AppException {
   ServerException(super.message);

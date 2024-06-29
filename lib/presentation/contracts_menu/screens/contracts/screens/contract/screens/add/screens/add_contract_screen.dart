@@ -3,10 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/repositories/office_repository.dart';
-import 'package:maktab/domain/contracts/contracts_event.dart';
-import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/data/repositories/office_repository.dart';
+import 'package:maktab_lessor/domain/contracts/contracts_event.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
 
 import '../../../../../../../../../core/network/api_endpoints.dart';
 import '../../../../../../../../../core/services/service_locator.dart';

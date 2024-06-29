@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/resources/app_text_styles.dart';
-import 'package:maktab/presentation/widgets/loading_widget.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/resources/app_text_styles.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_widget.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
 
 import '../../../../../../../domain/contract_models/contract_model/contract_model_bloc.dart';
 import '../../../../../../widgets/body_text.dart';

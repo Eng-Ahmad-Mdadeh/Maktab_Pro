@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:go_router/go_router.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/contract_select_widget.dart';
-import 'package:maktab/presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/step4/contract_step4.dart';
-import 'package:maktab/presentation/widgets/loading_dialog.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
-import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/contract_select_widget.dart';
+import 'package:maktab_lessor/presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/step4/contract_step4.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_dialog.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
 
 import '../../../../../../../domain/contract_models/contract_model/contract_model_bloc.dart';
 import '../../../../../../../domain/contract_models/contract_models_bloc.dart';

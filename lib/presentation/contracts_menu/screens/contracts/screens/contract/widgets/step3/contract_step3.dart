@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/extension/date_time_extension.dart';
+import 'package:maktab_lessor/core/extension/date_time_extension.dart';
 
 import '../../../../../../../../../core/helpers/size_helper.dart';
 import '../../../../../../../../data/models/contract/contract_model.dart';
