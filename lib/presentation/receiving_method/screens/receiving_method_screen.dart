@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/receiving_method/receiving_method_bloc.dart';
-import 'package:maktab/presentation/receiving_method/widgets/bank_form.dart';
-import 'package:maktab/presentation/receiving_method/widgets/receiving_method_options.dart';
-import 'package:maktab/presentation/receiving_method/widgets/stc_phone_form.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/receiving_method/receiving_method_bloc.dart';
+import 'package:maktab_lessor/presentation/receiving_method/widgets/bank_form.dart';
+import 'package:maktab_lessor/presentation/receiving_method/widgets/receiving_method_options.dart';
+import 'package:maktab_lessor/presentation/receiving_method/widgets/stc_phone_form.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class ReceivingMethodScreen extends StatefulWidget {
   const ReceivingMethodScreen({super.key});

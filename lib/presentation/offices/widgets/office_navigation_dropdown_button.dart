@@ -3,17 +3,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/router/app_routes.dart';
-import 'package:maktab/domain/offices/offices_cubit.dart';
-import 'package:maktab/domain/receiving_method/receiving_method_bloc.dart';
-import 'package:maktab/presentation/offices/widgets/choose_office_dialog.dart';
-import 'package:maktab/presentation/offices/widgets/incomplete_offices_items_list.dart';
-import 'package:maktab/presentation/offices/widgets/incomplete_unit_items_list.dart';
-import 'package:maktab/presentation/offices/widgets/my_offices_items_list.dart';
-import 'package:maktab/presentation/offices/widgets/required_info_dialog.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/router/app_routes.dart';
+import 'package:maktab_lessor/domain/offices/offices_cubit.dart';
+import 'package:maktab_lessor/domain/receiving_method/receiving_method_bloc.dart';
+import 'package:maktab_lessor/presentation/offices/widgets/choose_office_dialog.dart';
+import 'package:maktab_lessor/presentation/offices/widgets/incomplete_offices_items_list.dart';
+import 'package:maktab_lessor/presentation/offices/widgets/incomplete_unit_items_list.dart';
+import 'package:maktab_lessor/presentation/offices/widgets/my_offices_items_list.dart';
+import 'package:maktab_lessor/presentation/offices/widgets/required_info_dialog.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
 
 import '../../widgets/body_text.dart';
 

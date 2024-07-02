@@ -1,13 +1,13 @@
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:maktab/core/helpers/size_helper.dart';
-// import 'package:maktab/presentation/order/widgets/guest_data_box.dart';
-// import 'package:maktab/presentation/order/widgets/order_data_box.dart';
-// import 'package:maktab/presentation/order/widgets/order_summary_box.dart';
-// import 'package:maktab/presentation/order/widgets/payment_data_box.dart';
-// import 'package:maktab/presentation/resources/app_colors.dart';
-// import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
-// import 'package:maktab/presentation/widgets/shimmer_effect.dart';
+// import 'package:maktab_lessor/core/helpers/size_helper.dart';
+// import 'package:maktab_lessor/presentation/order/widgets/guest_data_box.dart';
+// import 'package:maktab_lessor/presentation/order/widgets/order_data_box.dart';
+// import 'package:maktab_lessor/presentation/order/widgets/order_summary_box.dart';
+// import 'package:maktab_lessor/presentation/order/widgets/payment_data_box.dart';
+// import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+// import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
+// import 'package:maktab_lessor/presentation/widgets/shimmer_effect.dart';
 //
 // import '../../../domain/orders/order/order_bloc.dart';
 //
@@ -56,12 +56,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:maktab/core/extension/date_time_extension.dart';
-import 'package:maktab/core/extension/num_extension.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/router/app_routes.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
-import 'package:maktab/presentation/widgets/maktab_rich_text.dart';
+import 'package:maktab_lessor/core/extension/date_time_extension.dart';
+import 'package:maktab_lessor/core/extension/num_extension.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/router/app_routes.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_rich_text.dart';
 
 import '../../../core/constants/app_constants.dart';
 import '../../../data/models/order/order_model.dart';
@@ -134,7 +134,7 @@ class OrderScreen extends StatelessWidget {
                           color: AppColors.white,
                           bold: false,
                           backgroundColor:
-                              order.reservation == 'acceptably' ? AppColors.mintGreen : AppColors.softAsh,
+                              order.reservation == 'acceptably' ? AppColors.mintGreen : AppColors.gray,
                           fontSize: 17.0,
                           onPressed: order.reservation == 'acceptably'
                               ? () {
@@ -153,7 +153,7 @@ class OrderScreen extends StatelessWidget {
                           text: "إلغاء الطلب",
                           color: AppColors.white,
                           backgroundColor:
-                              order.reservation != 'canceled' ? AppColors.cherryRed : AppColors.softAsh,
+                              order.reservation != 'canceled' ? AppColors.cherryRed : AppColors.gray,
                           onPressed: order.reservation != 'canceled'
                               ? () {
                                   showDialog<bool>(

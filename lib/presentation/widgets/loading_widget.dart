@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
 
 import '../resources/app_colors.dart';
 

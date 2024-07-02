@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:maktab/core/classes/exception/app_exception.dart';
-import 'package:maktab/data/data_sources/remote/transfer_money_data_source.dart';
-import 'package:maktab/data/models/transfers/transfer_pagination_model.dart';
+import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
+import 'package:maktab_lessor/data/data_sources/remote/transfer_money_data_source.dart';
+import 'package:maktab_lessor/data/models/transfers/transfer_pagination_model.dart';
 
 class TransferMoneyRepository {
   final TransferMoneyRemoteDataSource _transferMoneyRemoteDataSource;

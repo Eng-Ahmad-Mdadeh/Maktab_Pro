@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:maktab/core/network/api_endpoints.dart';
+import 'package:maktab_lessor/core/network/api_endpoints.dart';
 
 import '../../../core/classes/exception/app_exception.dart';
 import 'base_remote_data_source.dart';

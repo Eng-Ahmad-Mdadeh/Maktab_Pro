@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/receiving_method/widgets/bank_form.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/receiving_method/widgets/bank_form.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
 
 class BankPaymentScreen extends StatefulWidget {
   const BankPaymentScreen({super.key});

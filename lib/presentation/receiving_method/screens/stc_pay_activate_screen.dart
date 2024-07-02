@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/receiving_method/widgets/stc_phone_form.dart';
-import 'package:maktab/presentation/receiving_method/widgets/stc_terms_list.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/receiving_method/widgets/stc_phone_form.dart';
+import 'package:maktab_lessor/presentation/receiving_method/widgets/stc_terms_list.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class StcPayActivateScreen extends StatefulWidget {
   const StcPayActivateScreen({super.key});

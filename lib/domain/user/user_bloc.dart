@@ -2,9 +2,9 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:maktab/data/models/office/unit_settings.dart';
-import 'package:maktab/data/models/user/user_agreement_model.dart';
-import 'package:maktab/data/repositories/user_repository.dart';
+import 'package:maktab_lessor/data/models/office/unit_settings.dart';
+import 'package:maktab_lessor/data/models/user/user_agreement_model.dart';
+import 'package:maktab_lessor/data/repositories/user_repository.dart';
 
 part 'user_event.dart';
 

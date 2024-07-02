@@ -1,4 +1,4 @@
-import 'package:maktab/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
 import 'package:pdf/widgets.dart';
 import 'package:pdf/pdf.dart';
 

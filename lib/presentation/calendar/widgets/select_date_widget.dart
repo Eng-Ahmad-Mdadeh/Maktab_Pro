@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/extension/date_time_extension.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/resources/app_text_styles.dart';
+import 'package:maktab_lessor/core/extension/date_time_extension.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/resources/app_text_styles.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../data/models/calendar/calender_model.dart';

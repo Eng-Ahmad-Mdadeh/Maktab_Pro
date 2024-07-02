@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/offices/widgets/office_info_card.dart';
-import 'package:maktab/presentation/offices/widgets/office_primary_details_list.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/offices/widgets/office_info_card.dart';
+import 'package:maktab_lessor/presentation/offices/widgets/office_primary_details_list.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class OfficeScreen extends StatefulWidget {
   const OfficeScreen({super.key});

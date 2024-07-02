@@ -3,7 +3,7 @@
 // import 'package:bloc/bloc.dart';
 // import 'package:equatable/equatable.dart';
 // import 'package:table_calendar/table_calendar.dart';
-// import 'package:maktab/data/models/calendar/calender_model.dart';
+// import 'package:maktab_lessor/data/models/calendar/calender_model.dart';
 // part 'calendar_event.dart';
 // part 'calendar_state.dart';
 //

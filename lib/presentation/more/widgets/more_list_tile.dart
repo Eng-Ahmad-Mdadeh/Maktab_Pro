@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 
 import '../../widgets/section_title.dart';
 

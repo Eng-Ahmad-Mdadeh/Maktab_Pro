@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:maktab/data/models/map/map_search_suggestion.dart';
-import 'package:maktab/data/repositories/map_repository.dart';
+import 'package:maktab_lessor/data/models/map/map_search_suggestion.dart';
+import 'package:maktab_lessor/data/repositories/map_repository.dart';
 
 part 'map_state.dart';
 

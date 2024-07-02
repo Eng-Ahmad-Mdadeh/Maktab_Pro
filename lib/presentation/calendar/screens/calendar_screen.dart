@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/offices/offices_cubit.dart';
-import 'package:maktab/presentation/calendar/widgets/office_calendar_box.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
-import 'package:maktab/presentation/widgets/maktab_loading.dart';
-import 'package:maktab/presentation/widgets/shimmer_effect.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/offices/offices_cubit.dart';
+import 'package:maktab_lessor/presentation/calendar/widgets/office_calendar_box.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_loading.dart';
+import 'package:maktab_lessor/presentation/widgets/shimmer_effect.dart';
 
 class CalendarScreen extends StatefulWidget {
   const CalendarScreen({super.key});

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/office/office_bloc.dart';
-import 'package:maktab/presentation/office/widgets/office_deposit_form_field.dart';
-import 'package:maktab/presentation/office/widgets/office_price_form_field.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/maktab_text_form_field.dart';
-import 'package:maktab/presentation/widgets/page_title.dart';
-import 'package:maktab/presentation/widgets/phone_text_field.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/office/office_bloc.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_deposit_form_field.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_price_form_field.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_text_form_field.dart';
+import 'package:maktab_lessor/presentation/widgets/page_title.dart';
+import 'package:maktab_lessor/presentation/widgets/phone_text_field.dart';
 
 class OfficeUnitPricesStep extends StatefulWidget {
   const OfficeUnitPricesStep({super.key});

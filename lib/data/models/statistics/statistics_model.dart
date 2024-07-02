@@ -1,7 +1,7 @@
-import 'package:maktab/data/models/complaint/complaint_model.dart';
-import 'package:maktab/data/models/evaluation/evaluation_model.dart';
-import 'package:maktab/data/models/financial_transactions/financial_transfer.dart';
-import 'package:maktab/data/models/order/order_model.dart';
+import 'package:maktab_lessor/data/models/complaint/complaint_model.dart';
+import 'package:maktab_lessor/data/models/evaluation/evaluation_model.dart';
+import 'package:maktab_lessor/data/models/financial_transactions/financial_transfer.dart';
+import 'package:maktab_lessor/data/models/order/order_model.dart';
 
 class Statistics {
   String username;

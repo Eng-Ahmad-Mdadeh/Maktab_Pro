@@ -2,26 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:maktab/core/classes/custom_scroll_behavior.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/router/app_router.dart';
-import 'package:maktab/core/services/app_services.dart';
-import 'package:maktab/core/services/service_locator.dart';
-import 'package:maktab/core/themes/app_theme.dart';
-import 'package:maktab/domain/auth/auth_bloc.dart';
-import 'package:maktab/domain/coupon/coupon_bloc.dart';
-import 'package:maktab/domain/home/home_bloc.dart';
-import 'package:maktab/domain/map/map_cubit.dart';
-import 'package:maktab/domain/offices/offices_cubit.dart';
-import 'package:maktab/domain/receiving_method/receiving_method_bloc.dart';
-import 'package:maktab/domain/location/location_bloc.dart';
-import 'package:maktab/domain/profile/profile_bloc.dart';
-import 'package:maktab/domain/shimmer/shimmer_bloc.dart';
-import 'package:maktab/domain/splash/splash_bloc.dart';
-import 'package:maktab/domain/transfers/transdfers_bloc.dart';
-import 'package:maktab/domain/unit/unit_bloc.dart';
-import 'package:maktab/domain/user/user_bloc.dart';
-import 'package:maktab/domain/video/video_bloc.dart';
+import 'package:maktab_lessor/core/classes/custom_scroll_behavior.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/router/app_router.dart';
+import 'package:maktab_lessor/core/services/app_services.dart';
+import 'package:maktab_lessor/core/services/service_locator.dart';
+import 'package:maktab_lessor/core/themes/app_theme.dart';
+import 'package:maktab_lessor/domain/auth/auth_bloc.dart';
+import 'package:maktab_lessor/domain/coupon/coupon_bloc.dart';
+import 'package:maktab_lessor/domain/home/home_bloc.dart';
+import 'package:maktab_lessor/domain/map/map_cubit.dart';
+import 'package:maktab_lessor/domain/offices/offices_cubit.dart';
+import 'package:maktab_lessor/domain/receiving_method/receiving_method_bloc.dart';
+import 'package:maktab_lessor/domain/location/location_bloc.dart';
+import 'package:maktab_lessor/domain/profile/profile_bloc.dart';
+import 'package:maktab_lessor/domain/shimmer/shimmer_bloc.dart';
+import 'package:maktab_lessor/domain/splash/splash_bloc.dart';
+import 'package:maktab_lessor/domain/transfers/transfers_bloc.dart';
+import 'package:maktab_lessor/domain/unit/unit_bloc.dart';
+import 'package:maktab_lessor/domain/user/user_bloc.dart';
+import 'package:maktab_lessor/domain/video/video_bloc.dart';
 
 import 'domain/account_summary/account_summary_bloc.dart';
 import 'domain/contract_models/contract_model/contract_model_bloc.dart';
@@ -79,7 +79,6 @@ class MaktabApp extends StatelessWidget {
           BlocProvider(create: (context) => locator<EvaluationBloc>()),
 
           BlocProvider(create: (context) => NavigationBloc()),
-          // BlocProvider(create: (context) => ContractStepCubit()),
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/data/repositories/settings_repository.dart';
-import 'package:maktab/presentation/widgets/loading_widget.dart';
+import 'package:maktab_lessor/data/repositories/settings_repository.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';

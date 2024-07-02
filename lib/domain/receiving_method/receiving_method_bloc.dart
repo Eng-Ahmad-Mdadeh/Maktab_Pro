@@ -3,9 +3,9 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:maktab/data/models/financial_transactions/bank_account.dart';
-import 'package:maktab/data/models/financial_transactions/receiving_method_model.dart';
-import 'package:maktab/data/repositories/financial_transactions_repository.dart';
+import 'package:maktab_lessor/data/models/financial_transactions/bank_account.dart';
+import 'package:maktab_lessor/data/models/financial_transactions/receiving_method_model.dart';
+import 'package:maktab_lessor/data/repositories/financial_transactions_repository.dart';
 
 part 'receiving_method_event.dart';
 part 'receiving_method_state.dart';
