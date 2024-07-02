@@ -11,6 +11,7 @@ class GetProfileEvent extends ProfileEvent {}
 class GetUserTypes extends ProfileEvent {}
 class LogOutEvent extends ProfileEvent {}
 
+class DeleteProfileEvent extends ProfileEvent {}
 
 class UpdateProfileEvent extends ProfileEvent {
   final String id;

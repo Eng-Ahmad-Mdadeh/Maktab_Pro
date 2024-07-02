@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
+import 'package:smart_auth/smart_auth.dart';
 
 import '../../../../core/helpers/size_helper.dart';
 import '../../resources/app_colors.dart';
@@ -31,7 +32,8 @@ class CodeTextField extends StatelessWidget {
         onCompleted: onCompleted,
         keyboardType: TextInputType.number,
 
-        androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
+        // androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
+        smsRetriever: L(),
         defaultPinTheme: PinTheme(
           width: 90.0.h,
           height: 90.0.v,
@@ -61,4 +63,29 @@ class CodeTextField extends StatelessWidget {
       ),
     );
   }
+}
+
+class L implements SmsRetriever{
+
+  final smartAuth = SmartAuth();
+
+
+  @override
+  Future<void> dispose() => smartAuth.removeSmsListener();
+
+  @override
+  Future<String?> getSmsCode() async {
+    final res = await smartAuth.getSmsCode();
+    if (res.succeed) {
+      debugPrint('SMS: ${res.code}');
+      return res.code;
+    } else {
+      debugPrint('SMS Failure:');
+      return '';
+    }
+  }
+
+  @override
+  bool get listenForMultipleSms => true;
+
 }

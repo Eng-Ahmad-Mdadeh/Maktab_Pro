@@ -14,7 +14,7 @@ class NotificationService {
   static late PusherChannelsFlutter pusher;
 
   static Future<void> init(int id) async {
-    const android = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const android = AndroidInitializationSettings('@mipmap/launcher_icon');
     const iOS = DarwinInitializationSettings();
     const initSettings = InitializationSettings(android: android, iOS: iOS);
     flutterLocalNotificationsPlugin.initialize(

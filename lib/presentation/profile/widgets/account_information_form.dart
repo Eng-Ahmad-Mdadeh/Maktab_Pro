@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:maktab_lessor/core/extension/email_validation_extension.dart';
 import 'package:maktab_lessor/core/helpers/size_helper.dart';
 import 'package:maktab_lessor/data/models/user/user_model.dart';
@@ -13,6 +14,14 @@ import 'package:maktab_lessor/presentation/profile/widgets/license_text_fields.d
 import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
 import 'package:maktab_lessor/presentation/widgets/maktab_text_form_field.dart';
 import 'package:maktab_lessor/presentation/widgets/phone_text_field.dart';
+
+import '../../resources/app_assets.dart';
+import '../../resources/app_colors.dart';
+import '../../widgets/body_text.dart';
+import '../../widgets/loading_widget.dart';
+import '../../widgets/maktab_image_view.dart';
+import '../../widgets/page_title.dart';
+import '../../widgets/section_title.dart';
 
 class AccountInformationForm extends StatefulWidget {
   const AccountInformationForm({super.key});
@@ -223,31 +232,103 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
                 licenseNumberController: licenseNumberController,
               ),
               SizedBox(height: 25.v),
-              MaktabButton(
-                text: 'حفظ واستمرار',
-                // width: SizeHelper.width,
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    log("selected:${aboutController.text}");
-                    context.read<ProfileBloc>().add(UpdateProfileEvent(
-                        state.user!.id.toString(),
-                        userNameController.text,
-                        companyNameController.text,
-                        officeNameController.text,
-                        emailController.text,
-                        cityController.text,
-                        neighborhoodController.text,
-                        identityNumberController.text,
-                        commercialRecordController.text,
-                        phoneController.text,
-                        aboutController.text,
-                        state.selectedAccountTypeIndex,
-                        state.pickedImage,
-                        licenseNumberController.text,
-                        licenseLinkController.text));
-                  }
-                },
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  MaktabButton(
+                    text: 'حفظ واستمرار',
+                    width: SizeHelper.width * 0.4,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        log("selected:${aboutController.text}");
+                        context.read<ProfileBloc>().add(UpdateProfileEvent(
+                            state.user!.id.toString(),
+                            userNameController.text,
+                            companyNameController.text,
+                            officeNameController.text,
+                            emailController.text,
+                            cityController.text,
+                            neighborhoodController.text,
+                            identityNumberController.text,
+                            commercialRecordController.text,
+                            phoneController.text,
+                            aboutController.text,
+                            state.selectedAccountTypeIndex,
+                            state.pickedImage,
+                            licenseNumberController.text,
+                            licenseLinkController.text));
+                      }
+                    },
+                  ),
+                  state.profileState == ProfileStates.loading
+                      ? const LoadingWidget(0)
+                      : Column(
+                    children: [
+                      MaktabButton(
+                        text: "حذف الحساب",
+                        backgroundColor: AppColors.cherryRed,
+                        width: SizeHelper.width * 0.4,
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const PageTitle(
+                                title: "تأكيد الحذف",
+                              ),
+                              content: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  MaktabImageView(
+                                    imagePath: AppAssets.deleteContract,
+                                    color: AppColors.cherryRed,
+                                    width: 100.adaptSize,
+                                  ),
+                                  const SectionTitle(title: "هل تريد تأكيد حذف حسابك"),
+                                  SizedBox(
+                                    height: 10.v,
+                                  ),
+                                  const BodyText(
+                                    text: "ملاحظة: سيتم حذف حسابك بعد الموفقة على طلب الحذف",
+                                    overflow: TextOverflow.visible,
+                                  ),
+                                ],
+                              ),
+                              actionsAlignment: MainAxisAlignment.center,
+                              actions: [
+                                MaktabButton(
+                                  text: "لا",
+                                  width: SizeHelper.width * 0.3,
+                                  onPressed: context.pop,
+                                ),
+                                MaktabButton(
+                                  text: "نعم",
+                                  width: SizeHelper.width * 0.3,
+                                  backgroundColor: AppColors.cherryRed,
+                                  onPressed: () {
+                                    context.read<ProfileBloc>().add(DeleteProfileEvent());
+                                    context.pop();
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
+              if (state.user != null)
+                if (state.user!.requestDeleteAccount)
+                  Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 14.v),
+                      child: const BodyText(
+                        text: "تم ارسال طلب حذف حسابك",
+                        textColor: AppColors.cherryRed,
+                      ),
+                    ),
+                  ),
             ],
           ),
         );
