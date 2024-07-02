@@ -70,6 +70,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             } else if (state.profileState == ProfileStates.loadingForEdit) {
               LoadingDialog.show(context);
             }
+            if(state.profileState == ProfileStates.deleted){
+              LoadingDialog.hide(context);
+              MaktabSnackbar.showError(context, state.message);
+            }
             // else if (state.bigImage == true) {
             //   MaktabSnackbar.showError(context, 'حجم الصورة كبير');
             // }

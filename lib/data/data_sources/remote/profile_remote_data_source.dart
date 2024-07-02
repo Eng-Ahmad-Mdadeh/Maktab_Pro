@@ -18,4 +18,10 @@ class ProfileRemoteDataSource extends BaseRemoteDataSource<r.Response> {
       files: files,
     );
   }
+
+  Future<Either<AppException, r.Response>> deleteAccount() async {
+    return postData(
+        endpoint: ApiEndpoints.deleteAccount
+    );
+  }
 }

@@ -8,6 +8,7 @@ class ApiEndpoints {
   static const changeCode = "changeCode";
   static const logout = "logout";
   static const profile = "profile";
+  static const deleteAccount = "/DeleteUser";
   //User
   static const userTypes = "get_user_types";
   static const statistics = "statistics";

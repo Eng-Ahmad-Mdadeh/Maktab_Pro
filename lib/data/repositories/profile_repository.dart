@@ -81,4 +81,18 @@ class ProfileRepository {
       },
     );
   }
+
+  Future<Either<AppException, String>> deleteAccount() async {
+    final result = await _remoteDataSource.deleteAccount();
+    return result.fold(
+          (error) => Left(error),
+          (right) {
+        try {
+          return Right(right.data??'');
+        } on ApiException catch (e) {
+          return Left(e);
+        }
+      },
+    );
+  }
 }

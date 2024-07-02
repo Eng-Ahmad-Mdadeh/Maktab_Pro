@@ -140,6 +140,37 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ));
       }
     });
+
+    on<DeleteProfileEvent>((event, emit) async {
+      emit(state.copyWith(profileState: ProfileStates.loadingForEdit));
+      try {
+        var result = await _profileRepository.deleteAccount();
+        result.fold(
+          (failure) {
+            // log("error message:${failure.message}");
+            emit(state.copyWith(
+              profileState: ProfileStates.failToUpdate,
+              message: failure.message,
+            ));
+          },
+          (user) {
+            // log(" success message:${user.companyName}");
+            emit(state.copyWith(
+              profileState: ProfileStates.deleted,
+              message: "تم ارسال طلب الحذف",
+            ));
+            add(GetProfileEvent());
+          },
+        );
+      } catch (e) {
+        log("catch message:${e.toString()}");
+        emit(state.copyWith(
+          profileState: ProfileStates.failToUpdate,
+          message: e.toString(),
+        ));
+      }
+    });
+
     on<PickImageEvent>((event, emit) async {
       emit(state.copyWith(imageErrorMessage: ''));
       String? selectedImage = await locator<FilePickerHelper>().pickImage();
