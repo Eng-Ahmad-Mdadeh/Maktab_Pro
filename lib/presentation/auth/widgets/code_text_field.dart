@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pinput/pinput.dart';
@@ -33,7 +35,7 @@ class CodeTextField extends StatelessWidget {
         keyboardType: TextInputType.number,
 
         // androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
-        smsRetriever: L(),
+        smsRetriever: Platform.isAndroid ? L() : null,
         defaultPinTheme: PinTheme(
           width: 90.0.h,
           height: 90.0.v,
