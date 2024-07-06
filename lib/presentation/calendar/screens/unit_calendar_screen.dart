@@ -137,6 +137,7 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                                 if (optionState == CalendarFormatOptions.hour)
                                   BlocBuilder<DatesSelectCubit, DatesSelectionEntity>(
                                     builder: (context, state) {
+                                      if(state.startDate == null) return const SizedBox();
                                       return HourRangePickerWidget(
                                         startHour: state.startTime,
                                         endHour: state.endTime,
@@ -186,7 +187,7 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                                 Flexible(
                                   child: MaktabButton(
                                     text: 'اشغال',
-                                    backgroundColor: AppColors.lightCyan,
+                                    backgroundColor: AppColors.slateGray,
                                     onPressed: calenderState is CalendarLoading
                                         ? null
                                         : () {
@@ -225,7 +226,7 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                                 Flexible(
                                   child: MaktabButton(
                                     text: 'اتاحة',
-                                    backgroundColor: AppColors.slateGray,
+                                    backgroundColor: AppColors.mintGreen,
                                     onPressed: calenderState is CalendarLoading
                                         ? null
                                         : () {

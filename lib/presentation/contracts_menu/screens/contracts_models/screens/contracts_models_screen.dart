@@ -119,7 +119,9 @@ class ContractsModelsScreen extends StatelessWidget {
           ),
           MaktabButton(
             text: "إنشاء نموذج",
-            onPressed: () {},
+            onPressed: () {
+              context.pushNamed(AppRoutes.addContractsModelScreen);
+            },
           ),
           SizedBox(height: 10.0.v,),
         ],

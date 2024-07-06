@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:maktab_lessor/core/helpers/size_helper.dart';
 import 'package:maktab_lessor/presentation/orders/widgets/orders_search_box.dart';
 import 'package:maktab_lessor/presentation/orders/widgets/orders_list.dart';
@@ -11,6 +12,9 @@ import 'package:maktab_lessor/presentation/widgets/loading_widget.dart';
 import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
 
+import '../../../core/router/app_routes.dart';
+import '../../../domain/navigation/navigation_bloc.dart';
+import '../../../domain/navigation/navigation_event.dart';
 import '../../../domain/orders/orders_bloc.dart';
 import '../../widgets/maktab_bottom_app_bar.dart';
 
@@ -63,73 +67,80 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _orderReservationCubit,
-      child: Scaffold(
-        appBar: const MaktabAppBar(
-          title: 'الطلبات',
-          leading: SizedBox(),
-        ),
-        body: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 25.v),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                OrdersSearchBox(currentPage: currentPage),
-                SizedBox(height: 10.v),
-                const OrdersStates(),
-                SizedBox(height: 10.v),
-                BlocConsumer<OrdersBloc, OrdersState>(
-                  listener: (context, orderState) {
-                    if (orderState is OrdersFailure) {
-                      MaktabSnackbar.showError(context, orderState.message);
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is OrdersLoading) {
-                      return const LoadingWidget(0);
-                    }
-                    if (state is OrdersFailure) {
-                      return const Center(
-                        child: BodyText(
-                          text: "Error",
-                        ),
-                      );
-                    }
-                    if (state is OrdersSuccess) {
-                      lastPage = state.orders.firstOrNull?.lastPage ?? 1;
-                      currentPage = state.currentPage;
-                      listEndTriggered = false;
-                      return OrdersList(
-                        _scrollController,
-                        orders: state.orders,
-                        moreOrderLoader: false,
-                      );
-                    }
-                    if (state is MoreOrdersLoading) {
-                      return OrdersList(
-                        _scrollController,
-                        orders: state.prevOrders,
-                        moreOrderLoader: true,
-                      );
-                    }
-                    if (state is OrdersFilter) {
-                      return OrdersList(
-                        // _scrollController,
-                        null,
-                        orders: state.orders,
-                        moreOrderLoader: false,
-                      );
-                    }
-                    return const SizedBox();
-                  },
-                ),
-              ],
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (v) async {
+        context.read<NavigationBloc>().add(HomeNavigationEvent());
+        context.pushReplacementNamed(AppRoutes.homeScreen, extra: false);
+      },
+      child: BlocProvider(
+        create: (context) => _orderReservationCubit,
+        child: Scaffold(
+          appBar: const MaktabAppBar(
+            title: 'الطلبات',
+            leading: SizedBox(),
+          ),
+          body: SafeArea(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 25.v),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  OrdersSearchBox(currentPage: currentPage),
+                  SizedBox(height: 10.v),
+                  const OrdersStates(),
+                  SizedBox(height: 10.v),
+                  BlocConsumer<OrdersBloc, OrdersState>(
+                    listener: (context, orderState) {
+                      if (orderState is OrdersFailure) {
+                        MaktabSnackbar.showError(context, orderState.message);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is OrdersLoading) {
+                        return const LoadingWidget(0);
+                      }
+                      if (state is OrdersFailure) {
+                        return const Center(
+                          child: BodyText(
+                            text: "Error",
+                          ),
+                        );
+                      }
+                      if (state is OrdersSuccess) {
+                        lastPage = state.orders.firstOrNull?.lastPage ?? 1;
+                        currentPage = state.currentPage;
+                        listEndTriggered = false;
+                        return OrdersList(
+                          _scrollController,
+                          orders: state.orders,
+                          moreOrderLoader: false,
+                        );
+                      }
+                      if (state is MoreOrdersLoading) {
+                        return OrdersList(
+                          _scrollController,
+                          orders: state.prevOrders,
+                          moreOrderLoader: true,
+                        );
+                      }
+                      if (state is OrdersFilter) {
+                        return OrdersList(
+                          // _scrollController,
+                          null,
+                          orders: state.orders,
+                          moreOrderLoader: false,
+                        );
+                      }
+                      return const SizedBox();
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
+          bottomNavigationBar: const MaktabBottomAppBar(),
         ),
-        bottomNavigationBar: const MaktabBottomAppBar(),
       ),
     );
   }
