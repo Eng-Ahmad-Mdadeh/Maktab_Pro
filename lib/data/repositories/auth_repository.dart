@@ -90,13 +90,18 @@ class AuthRepository {
     try {
       bool logged = false;
       final result = await locator<ProfileRepository>().getProfile();
-      logged = result.fold(
-        (l) => false,
-        (r) => true,
+      logged = await result.fold(
+        (l) async {
+          await _localDataSource.removeUserToken();
+          return false;
+        },
+        (r) async {
+          String? token = await _localDataSource.getUserToken();
+          log("USER_TOKEN: $token");
+          return true;
+        },
       );
-      String? token = await _localDataSource.getUserToken();
-      log("USER_TOKEN: $token");
-      return logged ? token != null ? true : false : false;
+      return logged;
     } catch (e) {
       return false;
     }
