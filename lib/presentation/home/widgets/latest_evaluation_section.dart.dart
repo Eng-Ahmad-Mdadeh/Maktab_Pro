@@ -54,51 +54,91 @@ class LatestEvaluationsSection extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 10.v),
                       itemBuilder: (context, index) {
                         evaluation = context.read<HomeBloc>().state.statistics!.evaluations[index];
-                        return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(width: 8.h),
-                            Expanded(
-                              child: SectionTitle(
-                                title: evaluation!.userOrdinary?.userName ?? '',
-                                textColor: AppColors.lightBlack,
-                              ),
-                            ),
-                            if (evaluation!.comment.length > 10)
-                              Expanded(
-                                child: MaktabRichText(
-                                  texts: [
-                                    MaktabRichTextModel(
-                                        text: evaluation!.comment.substring(0, 10),
-                                        fontWeight: FontWeight.normal),
-                                    MaktabRichTextModel(text: "...", fontWeight: FontWeight.normal),
-                                    MaktabRichTextModel(
-                                        text: "المزيد",
-                                        color: AppColors.mintGreen,
-                                        fontWeight: FontWeight.normal,
-                                        onTap: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AlertDialog(
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(10.0.adaptSize)
-                                                ),
-                                                content: BodyText(
-                                                  text: evaluation!.comment,
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        }),
-                                  ],
+                        print(evaluation?.unit);
+                        return Card(
+                          elevation: 0,
+                          color: AppColors.white,
+                          shape: RoundedRectangleBorder(
+                            side: const BorderSide(color: AppColors.softAsh),
+                            borderRadius: BorderRadius.circular(10.adaptSize),
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: ExpansionTile(
+                            tilePadding: EdgeInsets.symmetric(vertical: 0.v, horizontal: 10.h),
+                            title: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: SectionTitle(
+                                    title: evaluation!.userOrdinary?.userName ?? '',
+                                    textColor: AppColors.lightBlack,
+                                  ),
                                 ),
-                              )
-                            else
-                              Expanded(child: BodyText(text: evaluation!.comment)),
-                            MaktabRatingBar(rate: evaluation!.rate.toDouble()),
-                          ],
+                                if (evaluation!.comment.length > 10)
+                                  Expanded(
+                                    child: MaktabRichText(
+                                      texts: [
+                                        MaktabRichTextModel(
+                                            text: evaluation!.comment.substring(0, 10), fontWeight: FontWeight.normal),
+                                        MaktabRichTextModel(text: "...", fontWeight: FontWeight.normal),
+                                        MaktabRichTextModel(
+                                            text: "المزيد",
+                                            color: AppColors.mintGreen,
+                                            fontWeight: FontWeight.normal,
+                                            onTap: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) {
+                                                  return AlertDialog(
+                                                    shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(10.0.adaptSize)),
+                                                    content: BodyText(
+                                                      text: evaluation!.comment,
+                                                      textAlign: TextAlign.center,
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            }),
+                                      ],
+                                    ),
+                                  )
+                                else
+                                  Expanded(child: BodyText(text: evaluation!.comment)),
+                                MaktabRatingBar(rate: evaluation!.rate.toDouble()),
+                              ],
+                            ),
+                            childrenPadding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 15.v),
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const BodyText(
+                                    text: 'الوحدة: ',
+                                    textColor: AppColors.lightBlack,
+                                  ),
+                                  Expanded(
+                                    child: BodyText(
+                                      text: evaluation?.unit?.title ?? '',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10.v),
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const BodyText(
+                                    text: 'الهاتف: ',
+                                    textColor: AppColors.lightBlack,
+                                  ),
+                                  Expanded(
+                                    child: BodyText(text: '0${evaluation?.userOrdinary?.phone ?? 'لايوجد'}'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         );
                       },
                       separatorBuilder: (context, index) => SizedBox(height: 5.v),

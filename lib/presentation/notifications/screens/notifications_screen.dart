@@ -27,7 +27,9 @@ class NotificationsScreen extends StatelessWidget {
       body: BlocBuilder<NotificationsBloc, NotificationsState>(
         builder: (context, state) {
           if (state is NotificationsLoading) return const LoadingWidget(1);
-          if (state is NotificationsFailure) return Center(child: BodyText(text: "${state.message}حدث خطأ ما حاول مجدداً"));
+          if (state is NotificationsFailure) {
+            return Center(child: BodyText(text: "${state.message}حدث خطأ ما حاول مجدداً"));
+          }
           if (state is NotificationsSuccess) {
             return ListView.separated(
               separatorBuilder: (context, i) {

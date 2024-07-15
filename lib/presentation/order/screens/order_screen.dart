@@ -87,7 +87,20 @@ class OrderScreen extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is OrderFailure) {
-          return const BodyText(text: "error");
+          if (state.message.contains('غير موجود')) {
+            return const Scaffold(
+              appBar: MaktabAppBar(title: ''),
+              body: Center(
+                child: BodyText(text: "هذا الطلب غير موجود ربما يكون قد تم حذفه"),
+              ),
+            );
+          }
+          return Scaffold(
+            appBar: const MaktabAppBar(title: ''),
+            body: Center(
+              child: BodyText(text: state.message),
+            ),
+          );
         }
         if (state is OrderLoading) {
           return Scaffold(
@@ -133,8 +146,7 @@ class OrderScreen extends StatelessWidget {
                           text: "إنشاء عقد",
                           color: AppColors.white,
                           bold: false,
-                          backgroundColor:
-                              order.reservation == 'acceptably' ? AppColors.mintGreen : AppColors.gray,
+                          backgroundColor: order.reservation == 'acceptably' ? AppColors.mintGreen : AppColors.gray,
                           fontSize: 17.0,
                           onPressed: order.reservation == 'acceptably'
                               ? () {
@@ -152,8 +164,7 @@ class OrderScreen extends StatelessWidget {
                           bold: false,
                           text: "إلغاء الطلب",
                           color: AppColors.white,
-                          backgroundColor:
-                              order.reservation != 'canceled' ? AppColors.cherryRed : AppColors.gray,
+                          backgroundColor: order.reservation != 'canceled' ? AppColors.cherryRed : AppColors.gray,
                           onPressed: order.reservation != 'canceled'
                               ? () {
                                   showDialog<bool>(
@@ -222,8 +233,7 @@ class OrderScreen extends StatelessWidget {
                       OrderDetailsItemData(title: 'معلومات الهوية', value: order.tenant?.idNumber ?? ''),
                       OrderDetailsItemData(title: 'الجوال', value: order.tenant?.phone ?? ''),
                       OrderDetailsItemData(
-                          title: 'الموقع',
-                          value: '${order.tenant?.city ?? ''},${order.tenant?.neighborhood ?? ''}'),
+                          title: 'الموقع', value: '${order.tenant?.city ?? ''},${order.tenant?.neighborhood ?? ''}'),
                     ],
                   ),
                   OrderDetailsCard(
@@ -233,8 +243,7 @@ class OrderScreen extends StatelessWidget {
                       OrderDetailsItemData(title: 'معلومات الهوية', value: order.lessor?.idNumber ?? ''),
                       OrderDetailsItemData(title: 'الجوال', value: order.lessor?.phone ?? ''),
                       OrderDetailsItemData(
-                          title: 'الموقع',
-                          value: '${order.lessor?.city ?? ''},${order.lessor?.neighborhood ?? ''}'),
+                          title: 'الموقع', value: '${order.lessor?.city ?? ''},${order.lessor?.neighborhood ?? ''}'),
                     ],
                   ),
                   OrderDetailsCard(

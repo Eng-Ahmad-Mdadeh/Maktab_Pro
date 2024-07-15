@@ -32,8 +32,12 @@ class _EditContractsModelScreenState extends State<EditContractsModelScreen> {
 
   final TextEditingController _statusController = TextEditingController();
 
-  final HtmlEditorController _htmlController = HtmlEditorController();
-  late final QuillController _quillController;
+  final QuillController _quillController =  QuillController(
+    document: Document(),
+    selection: TextSelection.fromPosition(
+      const TextPosition(offset: 1),
+    ),
+  );
 
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
@@ -66,12 +70,13 @@ class _EditContractsModelScreenState extends State<EditContractsModelScreen> {
                 _descriptionController.text = state.contractModel.description ?? '';
                 log("LOADING TEXT INTO HTML");
                 // _htmlController.setText(state.contractModel.contentContractModel ?? '');
-                _quillController = QuillController(
-                  document: Document.fromHtml(state.contractModel.contentContractModel??'<p></p>'),
-                  selection: TextSelection.fromPosition(
-                    const TextPosition(offset: 1),
-                  ),
-                );
+                _quillController.document.insert(0, state.contractModel.contentContractModel??'<p></p>');
+                // _quillController = QuillController(
+                //   document: Document.fromHtml(state.contractModel.contentContractModel??'<p></p>'),
+                //   selection: TextSelection.fromPosition(
+                //     const TextPosition(offset: 1),
+                //   ),
+                // );
                 if (canShowMessages) {
                   LoadingDialog.hide(context);
                   MaktabSnackbar.showSuccess(context, "تم الحفظ بنجاح");
@@ -129,7 +134,6 @@ class _EditContractsModelScreenState extends State<EditContractsModelScreen> {
                     ),
                     if (state is ContractModelSuccess)
                       ContractHtmlEditorWidget(
-                        _htmlController,
                         _quillController,
                         initText: state.contractModel.contentContractModel,
                         title: "محتوى النموذج",
@@ -143,20 +147,19 @@ class _EditContractsModelScreenState extends State<EditContractsModelScreen> {
                       isLoading: state is ContractModelLoading,
                       onPressed: () {
                         if (_key.currentState!.validate()) {
-                          _htmlController.getText().then((value) {
-                            if (state is ContractModelSuccess) {
-                              context.read<ContractModelBloc>().add(EditContractModels(
-                                    id: state.contractModel.id!,
-                                    name: _nameController.text,
-                                    description: _descriptionController.text,
-                                    contentContractModel: value,
-                                    status: _statusController.text.isEmpty
-                                        ? (state.contractModel.status ?? '1')
-                                        : _statusController.text,
-                                  ));
-                              canShowMessages = true;
-                            }
-                          });
+                          final String editorText = _quillController.document.toPlainText();
+                          if (state is ContractModelSuccess) {
+                            context.read<ContractModelBloc>().add(EditContractModels(
+                              id: state.contractModel.id!,
+                              name: _nameController.text,
+                              description: _descriptionController.text,
+                              contentContractModel: editorText,
+                              status: _statusController.text.isEmpty
+                                  ? (state.contractModel.status ?? '1')
+                                  : _statusController.text,
+                            ));
+                            canShowMessages = true;
+                          }
                         }
                       },
                     ),

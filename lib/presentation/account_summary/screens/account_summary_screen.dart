@@ -6,6 +6,7 @@ import 'package:maktab_lessor/core/helpers/size_helper.dart';
 
 import '../../../domain/account_summary/account_summary_bloc.dart';
 import '../widgets/account_summary_details_section.dart';
+import '../widgets/account_summary_header.dart';
 import '../widgets/office_selection_section.dart';
 import '../widgets/unit_selection_section.dart';
 import '../../widgets/maktab_app_bar.dart';
@@ -59,8 +60,8 @@ class _AccountStatementsScreenState extends State<AccountStatementsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // const AccountSummaryHeader(),
-                // SizedBox(height: 20.v),
+                const AccountSummaryHeader(),
+                SizedBox(height: 20.v),
                 const OfficeSelectionSection(),
                 SizedBox(height: 20.v),
                 const UnitSelectionSection(),
@@ -71,7 +72,6 @@ class _AccountStatementsScreenState extends State<AccountStatementsScreen> {
                     onAccountSummarySuccess: (int lPage, int cPage) {
                       lastPage = lPage;
                       currentPage = cPage;
-                      print(lastPage);
                       listEndTriggered = false;
                     },
                   ),

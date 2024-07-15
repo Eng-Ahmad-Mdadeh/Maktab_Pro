@@ -45,18 +45,18 @@ class OrderInfoWidget extends StatelessWidget {
               BlocConsumer<OrdersBloc, OrdersState>(
                 listener: (context, orderState) {
                     print("orderrrrrrrrrrrrrrrrrrrr");
-                  if (orderState is OrdersWithoutPaginationSuccess) {
+                  if (orderState is OrdersSuccess) {
                     final orderID = context.read<ContractCubit>().orderIdFromOrders;
 
                   }
                 },
                 builder: (context, orderState) {
                   print("orderrrrrrrrrrrrrrrrrrrr 2");
-                  if (orderState is OrdersWithoutPaginationSuccess) {
+                  if (orderState is OrdersSuccess) {
                     print("orderrrrrrrrrrrrrrrrrrrr 3");
                     return ContractOrderSelectWidget(
                       title: "الرجاء اختيار الطلب",
-                      items: orderState.orders,
+                      items: orderState.withoutPagination??[],
                       initialValue:
                           context.read<ContractCubit>().orderIdFromOrders?.toString() ?? state.orderId,
                       onChanged: context.read<ContractCubit>().setorder,

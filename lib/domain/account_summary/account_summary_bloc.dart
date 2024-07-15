@@ -60,7 +60,13 @@ class AccountSummaryBloc extends Bloc<AccountSummaryEvent, AccountSummaryState> 
               print("FetchNextPage 5");
               log("--------------------------------");
               log(_accountSummaries?.accountStatement?.data.length.toString() ?? '');
-              _accountSummaries = r;
+              final List pAccountSummaries = _accountSummaries?.accountStatement?.data ?? [];
+
+              _accountSummaries = _accountSummaries!.copyWith(
+                accountStatement: _accountSummaries!.accountStatement!.copyWith(
+                  data: [...pAccountSummaries, ...(r.accountStatement?.data??[])]
+                )
+              );
               log(_accountSummaries?.accountStatement?.data.length.toString() ?? '');
               log("*--------------------------------*");
               emit(AccountSummarySuccess(
@@ -79,52 +85,23 @@ class AccountSummaryBloc extends Bloc<AccountSummaryEvent, AccountSummaryState> 
     });
     // on<FetchNextPage>(_onFetchNextPage);
     on<FilterAccountSummary>((event, emit) {
-      if (state is AccountSummarySuccess) {
-        final loadedState = state as AccountSummarySuccess;
-        final filteredAccountSummaries = loadedState.accountSummaries.accountStatement!.data.where(
-          (accountSummary) {
-            if (event.isPhoneSearch) {
-              return accountSummary.phoneTenant!.contains(event.query);
-            } else {
-              return accountSummary.orderId == event.query;
-            }
-          },
-        ).toList();
-        final s = loadedState.accountSummaries.copyWith(
-            accountStatement:
-                loadedState.accountSummaries.accountStatement!.copyWith(data: filteredAccountSummaries));
+      final filteredAccountSummaries = event.query.isNotEmpty ? _accountSummaries?.accountStatement!.data.where(
+            (accountSummary) {
+          if (event.isPhoneSearch) {
+            final withOutCountryCode = accountSummary.phoneTenant!.startsWith('966') ? accountSummary.phoneTenant!.replaceFirst('966', '0') : !accountSummary.phoneTenant!.startsWith('0') ? '0${accountSummary.phoneTenant}' : accountSummary.phoneTenant;
+            return accountSummary.phoneTenant!.contains(event.query) || withOutCountryCode!.contains(event.query);
+          } else {
+            return accountSummary.orderId == event.query;
+          }
+        },
+      ).toList() : _accountSummaries?.accountStatement?.data;
+      final s = _accountSummaries?.copyWith(
+          accountStatement:
+          _accountSummaries?.accountStatement!.copyWith(data: filteredAccountSummaries));
 
-        _filteredList = s;
-        log("s.accountStatement?.data.length: ${s.accountStatement?.data.length}");
-        emit(loadedState.copyWith(filteredAccountSummaries: s));
-      }
+      _filteredList = s;
+      log("s.accountStatement?.data.length: ${s?.accountStatement?.data.length}");
+      emit(AccountSummarySuccess(accountSummaries: _accountSummaries!, currentPage: currentPage, filteredAccountSummaries: s));
     });
   }
-
-// void _onFetchNextPage(FetchNextPage event, Emitter<AccountSummaryState> emit) async {
-//   if (state is AccountSummaryLoaded) {
-//     final loadedState = state as AccountSummaryLoaded;
-//     if (loadedState.hasReachedMax) return;
-//
-//     try {
-//       final nextPage = (loadedState.accountSummaries.accountStatement!.data.length / _pageSize).ceil() + 1;
-//       final result = await _repository.getAccountSummaries(nextPage);
-//
-//       result.fold(
-//             (l) => emit(AccountSummaryError(l.message)),
-//             (r) =>
-//             emit(r.accountStatement!.data.isEmpty
-//                 ? loadedState.copyWith(hasReachedMax: true)
-//                 : loadedState.copyWith(
-//               accountSummaries: loadedState.accountSummaries.copyWith(
-//                 accountStatement: loadedState.accountSummaries.accountStatement!.copyWith(data: List.of(loadedState.accountSummaries.accountStatement!.data)
-//                   ..addAll(r.accountStatement!.data),),),
-//               filteredAccountSummaries: List.of(loadedState.filteredAccountSummaries)..addAll(accountSummaries),
-//             )),
-//       );
-//     } catch (e) {
-//       emit(AccountSummaryError(e.toString()));
-//     }
-//   }
-// }
 }

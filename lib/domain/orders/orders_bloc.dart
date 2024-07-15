@@ -98,12 +98,13 @@ class OrdersBloc extends Bloc<OrdersEvent, OrdersState> {
         result.fold(
               (l) => emit(OrdersFailure(l.message)),
               (r) {
-            emit(OrdersWithoutPaginationSuccess(r));
+            emit(OrdersSuccess(_orders, currentPage, r));
           },
         );
-      } catch (e) {
-        rethrow;
-        // emit(OrdersFailure(e.toString()));
+      } catch (e, s) {
+        log(e.toString());
+        log(s.toString());
+        emit(OrdersFailure(e.toString()));
       }
     });
   }

@@ -70,7 +70,9 @@ class BaseRemoteDataSource<T> {
           return Right(r.Response.fromJson(right));
         },
       );
-    } on ApiException catch (e) {
+    } on ApiException catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(e);
     }
   }

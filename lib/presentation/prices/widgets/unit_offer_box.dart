@@ -30,7 +30,7 @@ class UnitOfferBox extends StatelessWidget {
         } else if (state.officeApiCallState == OfficesApiCallState.success &&
             state.selectedOffice?.id == unit.id) {
           LoadingDialog.hide(context);
-          context.pushNamed(AppRoutes.unitOffersScreen, extra: unit);
+          context.pushNamed(AppRoutes.unitOffersScreen);
         } else if (state.officeApiCallState == OfficesApiCallState.failure &&
             state.selectedOffice?.id == unit.id) {
           LoadingDialog.hide(context);

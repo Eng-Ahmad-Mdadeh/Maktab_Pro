@@ -44,7 +44,6 @@ class ContractStep4 extends StatelessWidget {
                 },
               ),
               ContractHtmlEditorWidget(
-                context.read<ContractCubit>().htmlEditorController,
                 QuillController(
                   selection: TextSelection.fromPosition(const TextPosition(offset: 1)),
                   document: Document(),
@@ -64,14 +63,13 @@ class ContractHtmlEditorWidget extends StatelessWidget {
   final String title;
   final String? initText;
   final String? hint;
-  final HtmlEditorController _controller;
   final bool disabled;
   final ToolbarType? toolbarType;
   final double? height;
   final QuillController _quillController;
 
   const ContractHtmlEditorWidget(
-    this._controller,this._quillController, {
+   this._quillController, {
     super.key,
     required this.title,
     this.disabled = false,
@@ -115,75 +113,6 @@ class ContractHtmlEditorWidget extends StatelessWidget {
             controller: _quillController,
           ),
         ),
-        // HtmlEditor(
-        //   controller: _controller,
-        //   htmlEditorOptions: HtmlEditorOptions(
-        //     hint: hint,
-        //     initialText: initText,
-        //     shouldEnsureVisible: true,
-        //     darkMode: false,
-        //     disabled: disabled,
-        //     //initialText: "<p>text content initial, if any</p>",
-        //   ),
-        //   htmlToolbarOptions: HtmlToolbarOptions(
-        //     toolbarPosition: ToolbarPosition.aboveEditor,
-        //     //by default
-        //     toolbarType: toolbarType ?? ToolbarType.nativeScrollable,
-        //     dropdownFocusColor: AppColors.black,
-        //     dropdownIconColor: AppColors.black,
-        //     buttonBorderColor: AppColors.black,
-        //     buttonColor: AppColors.black,
-        //     buttonFillColor: AppColors.black,
-        //     buttonFocusColor: AppColors.black,
-        //     buttonHighlightColor: AppColors.black,
-        //     buttonHoverColor: AppColors.black,
-        //     buttonSelectedBorderColor: AppColors.black,
-        //     buttonSelectedColor: AppColors.black,
-        //     buttonSplashColor: AppColors.black,
-        //     dropdownBackgroundColor: AppColors.white,
-        //     //by default
-        //     onButtonPressed: (ButtonType type, bool? status, Function? updateStatus) {
-        //       log("button '$type' pressed, the current selected status is $status");
-        //       return true;
-        //     },
-        //     onDropdownChanged: (DropdownType type, dynamic changed, Function(dynamic)? updateSelectedItem) {
-        //       log("dropdown '$type' changed to $changed");
-        //       return true;
-        //     },
-        //     mediaLinkInsertInterceptor: (String url, InsertFileType type) {
-        //       log(url);
-        //       return true;
-        //     },
-        //     mediaUploadInterceptor: (PlatformFile file, InsertFileType type) async {
-        //       log(file.name); //filename
-        //       log(file.size.toString()); //size in bytes
-        //       log(file.extension.toString()); //file extension (eg jpeg or mp4)
-        //       return true;
-        //     },
-        //   ),
-        //   otherOptions: OtherOptions(
-        //     height: height?.v ?? 450.0.v,
-        //   ),
-        //   plugins: [
-        //     SummernoteAtMention(
-        //       getSuggestionsMobile: (String value) {
-        //         var mentions = <String>['test1', 'test2', 'test3'];
-        //         return mentions.where((element) => element.contains(value)).toList();
-        //       },
-        //       mentionsWeb: ['test1', 'test2', 'test3'],
-        //       onSelect: (String value) {
-        //         log(value);
-        //       },
-        //     ),
-        //   ],
-        //   callbacks: Callbacks(
-        //     onInit: () {
-        //       _controller.editorController!.evaluateJavascript(
-        //         source: "\$('div.note-editable').attr('dir', 'rtl');",
-        //       );
-        //     },
-        //   ),
-        // ),
       ],
     );
   }

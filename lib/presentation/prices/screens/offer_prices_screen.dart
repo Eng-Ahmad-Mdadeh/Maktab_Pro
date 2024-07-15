@@ -5,6 +5,7 @@ import 'package:maktab_lessor/core/helpers/size_helper.dart';
 import 'package:maktab_lessor/core/router/app_routes.dart';
 import 'package:maktab_lessor/domain/offices/offices_cubit.dart';
 import 'package:maktab_lessor/presentation/prices/widgets/office_offer_box.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
 import 'package:maktab_lessor/presentation/widgets/page_title.dart';
@@ -34,7 +35,7 @@ class OfferPricesScreen extends StatelessWidget {
                       height: 60.v,
                       text: 'إنشاء عرض',
                       padding: EdgeInsets.symmetric(horizontal: 15.h),
-                      icon: const Icon(Icons.add),
+                      icon: const Icon(Icons.add, color: AppColors.white),
                       onPressed: () =>
                           context.pushNamed(AppRoutes.createOfferScreen),
                     ),

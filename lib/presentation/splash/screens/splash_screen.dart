@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +14,6 @@ import 'package:maktab_lessor/presentation/widgets/maktab_image_view.dart';
 import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
 
 import '../../../domain/notification/notification_bloc.dart';
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -50,8 +48,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 .stream
                 .firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading)
                 .then((e) {
-              context.pushReplacement(AppRoutes.homeScreen);
-              context.read<NotificationsBloc>().add(GetNotificationsEvent());
+              context.read<OfficesCubit>().getIncompleteOffices().then((e) {
+                context.pushReplacement(AppRoutes.homeScreen);
+                context.read<NotificationsBloc>().add(GetNotificationsEvent());
+              });
             });
           });
         } else if (state is NavigationToEditProfileScreen) {

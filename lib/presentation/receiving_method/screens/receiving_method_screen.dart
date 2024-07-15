@@ -16,6 +16,15 @@ class ReceivingMethodScreen extends StatefulWidget {
 }
 
 class _ReceivingMethodScreenState extends State<ReceivingMethodScreen> {
+
+
+
+  @override
+  void didChangeDependencies() {
+    context.read<ReceivingMethodBloc>().add(GetBankAccountsEvent());
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

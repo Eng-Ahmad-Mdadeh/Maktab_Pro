@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab_lessor/core/extension/date_time_extension.dart';
 import 'package:maktab_lessor/core/extension/string_extention.dart';
 import 'package:maktab_lessor/data/repositories/settings_repository.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -18,6 +20,14 @@ import '../../resources/app_colors.dart';
 import '../../widgets/body_text.dart';
 import '../../widgets/section_title.dart';
 import '../screens/invoice_print_screen.dart';
+
+class InvoiceDownloadingCubit extends Cubit<int?> {
+  InvoiceDownloadingCubit() : super(null);
+
+  void setInvoiceDownloadingOn(int? v) => emit(v);
+
+  void setInvoiceDownloadingOf() => emit(null);
+}
 
 class InvoiceItemCard extends StatelessWidget {
   final Invoice invoice;
@@ -45,7 +55,7 @@ class InvoiceItemCard extends StatelessWidget {
             subtitle: Padding(
               padding: const EdgeInsets.only(bottom: 15.0, right: 5),
               child: BodyText(
-                text:'${"الباقي"}: ${invoice.remainingAmount?.toStringAsNumber('ar')}',
+                text: '${"الباقي"}: ${invoice.remainingAmount?.toStringAsNumber('ar')}',
                 textColor: invoice.remainingAmount == '0' ? AppColors.rustOrange : AppColors.black,
               ),
             ),
@@ -61,10 +71,9 @@ class InvoiceItemCard extends StatelessWidget {
                     title: invoice.invoiceStatus == 'paid'
                         ? "مسدد"
                         : invoice.invoiceStatus == 'partial'
-                            ? 'مسدد جزئي'
-                            : '',
-                    textColor:
-                        invoice.invoiceStatus == 'paid' ? AppColors.deepForestGreen : AppColors.coralPink,
+                        ? 'مسدد جزئي'
+                        : '',
+                    textColor: invoice.invoiceStatus == 'paid' ? AppColors.deepForestGreen : AppColors.coralPink,
                     fontSize: 15.0,
                   ),
                 ),
@@ -72,7 +81,7 @@ class InvoiceItemCard extends StatelessWidget {
                   height: 3.0,
                 ),
                 BodyText(
-                 text: invoice.createdAt!.dayFormatWithLocale('ar'),
+                  text: invoice.createdAt!.dayFormatWithLocale('ar'),
                   textColor: AppColors.black,
                   fontSize: 13.0,
                 ),
@@ -89,17 +98,17 @@ class InvoiceItemCard extends StatelessWidget {
               ),
               gradient: invoice.invoiceStatus == 'paid'
                   ? const LinearGradient(
-                      colors: [
-                        AppColors.lushGreen,
-                        AppColors.mintGreen,
-                      ],
-                    )
+                colors: [
+                  AppColors.lushGreen,
+                  AppColors.mintGreen,
+                ],
+              )
                   : const LinearGradient(
-                      colors: [
-                        AppColors.cherryRed,
-                        AppColors.coralPink,
-                      ],
-                    ),
+                colors: [
+                  AppColors.cherryRed,
+                  AppColors.coralPink,
+                ],
+              ),
             ),
             child: Align(
               alignment: const Alignment(0, .6),
@@ -110,47 +119,59 @@ class InvoiceItemCard extends StatelessWidget {
                     title: '#${invoice.invoiceNumber}',
                     textColor: AppColors.white,
                   ),
-                  InkWell(
-                    onTap: () async {
-                      final fullInvoice = await locator<InvoiceRepository>().getInvoice(invoice.id);
+                  BlocBuilder<InvoiceDownloadingCubit, int?>(
+                    builder: (context, state) {
+                      if(state == invoice.id) {
+                        return LoadingWidget(1, size: 30.adaptSize,);
+                      }
+                      return InkWell(
+                        onTap: () async {
+                          context.read<InvoiceDownloadingCubit>().setInvoiceDownloadingOn(invoice.id);
+                          await locator<InvoiceRepository>().getInvoice(invoice.id).then((fullInvoice) {
+                            return fullInvoice.fold(
+                                  (l) async {
+                                return null;
+                              },
+                                  (r) async {
+                                final pdf = pw.Document();
+                                final font = await PdfGoogleFonts.tajawalMedium();
+                                final materialFont = await PdfGoogleFonts.materialIcons();
+                                final generalSettings = await locator<SettingsRepository>().getGeneralSettings();
+                                var logoURL = '';
+                                generalSettings.fold((l) {}, (r) => logoURL = r.logo ?? '');
 
-                      fullInvoice.fold(
-                        (l) {},
-                        (r) async {
-                          final pdf = pw.Document();
-                          final font = await PdfGoogleFonts.tajawalMedium();
-                          final materialFont = await PdfGoogleFonts.materialIcons();
-                          final generalSettings = await locator<SettingsRepository>().getGeneralSettings();
-                          var logoURL = '';
-                          generalSettings.fold((l) {}, (r) => logoURL = r.logo ?? '');
+                                final logo = await networkImage(ApiEndpoints.siteUrl + logoURL);
 
-                          final logo = await networkImage(ApiEndpoints.siteUrl + logoURL);
+                                pdf.addPage(
+                                  pw.Page(
+                                    build: (pw.Context context) =>
+                                        InvoicePrintScreen(
+                                          r,
+                                          font: font,
+                                          materialFont: materialFont,
+                                          logo: logo,
+                                        ),
+                                  ),
+                                );
+                                final path = await getDownloadsDirectory();
 
-                          pdf.addPage(
-                            pw.Page(
-                              build: (pw.Context context) => InvoicePrintScreen(
-                                r,
-                                font: font,
-                                materialFont: materialFont,
-                                logo: logo,
-                              ),
-                            ),
-                          );
-                          final path = await getDownloadsDirectory();
+                                final file = File(
+                                    '${path?.path}/invoice ${invoice.releaseDate?.toIso8601String()}.pdf');
 
-                          final file =
-                              File('${path?.path}/invoice ${invoice.releaseDate?.toIso8601String()}.pdf');
-
-                          await file.writeAsBytes(await pdf.save());
-                          Share.shareXFiles([XFile(file.path)]);
-                          // await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdf.save());
+                                await file.writeAsBytes(await pdf.save());
+                                return Share.shareXFiles([XFile(file.path)]);
+                              },
+                            );
+                          }).then((e) {
+                            context.read<InvoiceDownloadingCubit>().setInvoiceDownloadingOf();
+                          });
                         },
+                        child: const Icon(
+                          Icons.cloud_download,
+                          color: AppColors.white,
+                        ),
                       );
                     },
-                    child: const Icon(
-                      Icons.cloud_download,
-                      color: AppColors.white,
-                    ),
                   ),
                 ],
               ),

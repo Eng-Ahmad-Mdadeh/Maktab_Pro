@@ -21,7 +21,7 @@ class ReceivingMethodOptions extends StatelessWidget {
           context.read<ReceivingMethodBloc>().add(GetBankAccountsEvent());
         }
         if (state.selectedReceivingMoneyMethod == ReceivingMoneyMethods.bank) {
-          context.push(AppRoutes.bankPaymentScreen);
+          context.pushNamed(AppRoutes.bankPaymentScreen);
         } else if (state.selectedReceivingMoneyMethod ==
             ReceivingMoneyMethods.stc) {
           context.pushNamed(AppRoutes.stcPayPolicyScreen);

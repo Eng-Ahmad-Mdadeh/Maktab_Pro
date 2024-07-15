@@ -16,7 +16,7 @@ class OrderRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   }
 
   Future<Either<AppException, r.Response>> getOrderById(id) async {
-    return fetchData(endpoint: '/$id');
+    return fetchData(endpoint: '$id');
   }
 
   Future<Either<AppException, r.Response>> setPending() async {

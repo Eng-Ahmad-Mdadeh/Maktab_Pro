@@ -19,9 +19,10 @@ final class MoreOrdersLoading extends OrdersState {
 }
 final class OrdersSuccess extends OrdersState {
   final List<OrderModel> orders;
+  final List<OrderModel>? withoutPagination;
   final int currentPage;
 
-  const OrdersSuccess(this.orders, this.currentPage);
+  const OrdersSuccess(this.orders, this.currentPage, [this.withoutPagination]);
 
   @override
   List<Object> get props => [...orders, currentPage];

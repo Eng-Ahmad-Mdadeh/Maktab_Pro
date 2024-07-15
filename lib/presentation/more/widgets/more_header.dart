@@ -7,6 +7,7 @@ import 'package:maktab_lessor/domain/profile/profile_bloc.dart';
 import 'package:maktab_lessor/presentation/resources/app_assets.dart';
 import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/confirm_alert_dialog.dart';
 import 'package:maktab_lessor/presentation/widgets/loading_dialog.dart';
 import 'package:maktab_lessor/presentation/widgets/maktab_image_view.dart';
 import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
@@ -47,12 +48,11 @@ class MoreHeader extends StatelessWidget {
                           radius: 30.adaptSize,
                           backgroundColor: AppColors.white,
                           child: MaktabImageView(
-                            imagePath:
-                                state.profileState == ProfileStates.success
-                                    ? (state.user?.image??'').isNotEmpty
-                                        ? state.user!.image!
-                                        : AppAssets.profile
-                                    : AppAssets.profile,
+                            imagePath: state.profileState == ProfileStates.success
+                                ? (state.user?.image ?? '').isNotEmpty
+                                    ? state.user!.image!
+                                    : AppAssets.profile
+                                : AppAssets.profile,
                             height: 70.h,
                             width: 70.v,
                           ),
@@ -65,18 +65,14 @@ class MoreHeader extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 BodyText(
-                                  text: state.profileState ==
-                                          ProfileStates.success
+                                  text: state.profileState == ProfileStates.success
                                       ? state.user!.userName.toString()
                                       : '',
                                   textColor: AppColors.lightBlack,
                                 ),
                                 SizedBox(height: 5.v),
                                 BodyText(
-                                  text: state.profileState ==
-                                          ProfileStates.success
-                                      ? state.user!.phone
-                                      : '',
+                                  text: state.profileState == ProfileStates.success ? state.user!.phone : '',
                                   textColor: AppColors.lightBlack,
                                 ),
                               ],
@@ -87,8 +83,20 @@ class MoreHeader extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    onPressed: () =>
-                        context.read<ProfileBloc>().add(LogOutEvent()),
+                    onPressed: () {
+                      showDialog<bool>(
+                        context: context,
+                        builder: (dContext) => ConfirmAlertDialog(
+                          alertText: "هل تريد تسجيل الخروج",
+                          confirmOnPressed: () => dContext.pop(true),
+                          cancelOnPressed: () => dContext.pop(false),
+                        ),
+                      ).then((confirmed) {
+                        if (confirmed ?? false) {
+                          context.read<ProfileBloc>().add(LogOutEvent());
+                        }
+                      });
+                    },
                     icon: Icon(
                       Icons.logout,
                       color: AppColors.cherryRed,
