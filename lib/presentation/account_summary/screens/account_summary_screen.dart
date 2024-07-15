@@ -56,11 +56,10 @@ class _AccountStatementsScreenState extends State<AccountStatementsScreen> {
         child: SizedBox(
           width: SizeHelper.width,
           child: Padding(
-            padding: EdgeInsets.all(20.0.adaptSize),
+            padding: EdgeInsets.symmetric(horizontal: 20.0.adaptSize),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const AccountSummaryHeader(),
                 SizedBox(height: 20.v),
                 const OfficeSelectionSection(),
                 SizedBox(height: 20.v),
@@ -76,6 +75,7 @@ class _AccountStatementsScreenState extends State<AccountStatementsScreen> {
                     },
                   ),
                 ),
+                const AccountSummaryHeader(),
               ],
             ),
           ),

@@ -22,29 +22,29 @@ class AccountSummaryHeader extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 14.0.h, vertical: 7.0.v),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SectionTitle(title: 'الإجمالي:'),
-                    SectionTitle(title: 'الباقي:'),
-                    SectionTitle(title: 'عمولة مكتب:'),
-                  ],
-                ),
-                SizedBox(
-                  width: 10.0.adaptSize,
-                ),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SectionTitle(title: 'الإجمالي'),
                     SectionTitle(
                       title: (state is AccountSummarySuccess) ? state.accountSummaries.sumPaid?.toCurrency() ?? '' : '0',
                       textColor: AppColors.mintGreen,
                     ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    const SectionTitle(title: 'الباقي'),
                     SectionTitle(
                       title: (state is AccountSummarySuccess) ? state.accountSummaries.sumRemaining?.toStringAsFixedWithCheck(2) ?? '' : '0',
                       textColor: AppColors.cherryRed,
                     ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    const SectionTitle(title: 'عمولة مكتب'),
                     SectionTitle(
                       title: (state is AccountSummarySuccess) ? state.accountSummaries.sumCommissionValue?.toCurrency() ?? '' : '0',
                     ),
