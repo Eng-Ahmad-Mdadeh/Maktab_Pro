@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/unit/unit_bloc.dart';
-import 'package:maktab/presentation/office/widgets/offices_sub_images_section.dart';
-import 'package:maktab/presentation/office/widgets/unit_main_image_section.dart';
-import 'package:maktab/presentation/office/widgets/unit_video_section.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
-import 'package:maktab/presentation/widgets/page_title.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/unit/unit_bloc.dart';
+import 'package:maktab_lessor/presentation/office/widgets/offices_sub_images_section.dart';
+import 'package:maktab_lessor/presentation/office/widgets/unit_main_image_section.dart';
+import 'package:maktab_lessor/presentation/office/widgets/unit_video_section.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
+import 'package:maktab_lessor/presentation/widgets/page_title.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class UnitImagesStep extends StatefulWidget {
   const UnitImagesStep({super.key});

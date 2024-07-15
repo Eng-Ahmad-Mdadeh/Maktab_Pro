@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:maktab/core/classes/exception/app_exception.dart';
-import 'package:maktab/core/network/api_endpoints.dart';
-import 'package:maktab/data/data_sources/remote/base_remote_data_source.dart';
-import 'package:maktab/data/models/response/response_model.dart' as r;
+import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
+import 'package:maktab_lessor/core/network/api_endpoints.dart';
+import 'package:maktab_lessor/data/data_sources/remote/base_remote_data_source.dart';
+import 'package:maktab_lessor/data/models/response/response_model.dart' as r;
 
 class NotificationRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   NotificationRemoteDataSource() : super(ApiEndpoints.notifications);
@@ -16,20 +16,18 @@ class NotificationRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   }
 
   Future<Either<AppException, r.Response>> getViewedNotifications() async {
-    return fetchData(
-        endpoint: ApiEndpoints.notifications + ApiEndpoints.viewed);
+    return fetchData(endpoint: ApiEndpoints.viewed);
   }
 
   Future<Either<AppException, r.Response>> getNotViewedNotifications() async {
-    return fetchData(
-        endpoint: ApiEndpoints.notifications + ApiEndpoints.notViewed);
+    return fetchData(endpoint: ApiEndpoints.notViewed);
   }
 
   Future<Either<AppException, r.Response>> deleteNotification(id) async {
-    return deleteData(endpoint: '/$id');
+    return deleteData(endpoint: '$id');
   }
 
   Future<Either<AppException, r.Response>> setNotificationSeen(id) async {
-    return postData(endpoint: '/${ApiEndpoints.setSeen}/$id');
+    return postData(endpoint: '${ApiEndpoints.setSeen}/$id');
   }
 }

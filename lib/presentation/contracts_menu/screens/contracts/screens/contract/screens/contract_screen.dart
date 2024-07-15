@@ -3,8 +3,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/data/repositories/settings_repository.dart';
-import 'package:maktab/presentation/widgets/loading_widget.dart';
+import 'package:go_router/go_router.dart';
+import 'package:maktab_lessor/data/repositories/settings_repository.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_widget.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
@@ -15,8 +16,6 @@ import '../../../../../../../../core/helpers/size_helper.dart';
 import '../../../../../../../core/network/api_endpoints.dart';
 import '../../../../../../../domain/contracts/contract/contract_bloc.dart';
 import '../../../../../../../domain/contracts/contracts_step_cubit.dart';
-import '../../../../../../../domain/settings/settings_bloc.dart';
-import '../../../../../../widgets/maktab_image_view.dart';
 import '../../../../../../widgets/body_text.dart';
 import '../../../../../../resources/app_assets.dart';
 import '../../../../../../resources/app_colors.dart';
@@ -67,23 +66,27 @@ class _ContractScreenState extends State<ContractScreen> {
       create: (context) => _contractStepCubit,
       child: Scaffold(
         appBar: AppBar(
-          title: BlocBuilder<GeneralSettingBloc, SettingsState>(
-            builder: (context, state) {
-              if (state is SettingsSuccess) {
-                return MaktabImageView(
-                  imagePath: ApiEndpoints.siteUrl + (state.generalSettings.logo ?? ''),
-                  // color: AppColors.black,
-                  height: 50.h,
-                );
-              }
-              return const SizedBox();
-            },
-          ),
+          // title: BlocBuilder<GeneralSettingBloc, SettingsState>(
+          //   builder: (context, state) {
+          //     if (state is SettingsSuccess) {
+          //       return MaktabImageView(
+          //         imagePath: ApiEndpoints.siteUrl + (state.generalSettings.logo ?? ''),
+          //         // color: AppColors.black,
+          //         height: 50.h,
+          //       );
+          //     }
+          //     return const SizedBox();
+          //   },
+          // ),
           centerTitle: false,
-          leading: const SizedBox(),
-          leadingWidth: 0,
+          leading: IconButton(
+            onPressed: context.pop,
+            icon: const Icon(Icons.arrow_back_ios),
+          ),
+          // leadingWidth: 0,
           backgroundColor: AppColors.white,
         ),
+
         body: BlocConsumer<ContractBloc, ContractState>(
           listener: (context, state){
             if(state is ContractSuccess){

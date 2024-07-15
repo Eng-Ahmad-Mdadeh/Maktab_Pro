@@ -1,8 +1,8 @@
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
-import 'package:maktab/core/classes/exception/app_exception.dart';
-import 'package:maktab/core/network/network_helper.dart';
+import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
+import 'package:maktab_lessor/core/network/network_helper.dart';
 import '../../../core/classes/exception/api_exceptions.dart';
 import '../../models/response/response_model.dart' as r;
 
@@ -70,7 +70,9 @@ class BaseRemoteDataSource<T> {
           return Right(r.Response.fromJson(right));
         },
       );
-    } on ApiException catch (e) {
+    } on ApiException catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(e);
     }
   }

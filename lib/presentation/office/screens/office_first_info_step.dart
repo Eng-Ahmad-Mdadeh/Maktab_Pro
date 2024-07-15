@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/router/app_routes.dart';
-import 'package:maktab/domain/office/office_bloc.dart';
-import 'package:maktab/domain/user/user_bloc.dart';
-import 'package:maktab/presentation/office/widgets/office_category_box.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/loading_dialog.dart';
-import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
-import 'package:maktab/presentation/widgets/maktab_text_form_field.dart';
-import 'package:maktab/presentation/widgets/page_title.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/router/app_routes.dart';
+import 'package:maktab_lessor/domain/office/office_bloc.dart';
+import 'package:maktab_lessor/domain/user/user_bloc.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_category_box.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_dialog.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_text_form_field.dart';
+import 'package:maktab_lessor/presentation/widgets/page_title.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 import '../../widgets/maktab_rich_text.dart';
 

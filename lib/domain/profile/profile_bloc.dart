@@ -4,14 +4,14 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:maktab/core/helpers/file_picker_helper.dart';
-import 'package:maktab/core/helpers/image_cropper_helper.dart';
-import 'package:maktab/core/services/service_locator.dart';
-import 'package:maktab/data/models/user/user_model.dart';
-import 'package:maktab/data/models/user/user_type.dart';
-import 'package:maktab/data/repositories/auth_repository.dart';
-import 'package:maktab/data/repositories/profile_repository.dart';
-import 'package:maktab/data/repositories/user_repository.dart';
+import 'package:maktab_lessor/core/helpers/file_picker_helper.dart';
+import 'package:maktab_lessor/core/helpers/image_cropper_helper.dart';
+import 'package:maktab_lessor/core/services/service_locator.dart';
+import 'package:maktab_lessor/data/models/user/user_model.dart';
+import 'package:maktab_lessor/data/models/user/user_type.dart';
+import 'package:maktab_lessor/data/repositories/auth_repository.dart';
+import 'package:maktab_lessor/data/repositories/profile_repository.dart';
+import 'package:maktab_lessor/data/repositories/user_repository.dart';
 
 import '../../core/services/notification_services.dart';
 
@@ -140,6 +140,37 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         ));
       }
     });
+
+    on<DeleteProfileEvent>((event, emit) async {
+      emit(state.copyWith(profileState: ProfileStates.loadingForEdit));
+      try {
+        var result = await _profileRepository.deleteAccount();
+        result.fold(
+          (failure) {
+            // log("error message:${failure.message}");
+            emit(state.copyWith(
+              profileState: ProfileStates.failToUpdate,
+              message: failure.message,
+            ));
+          },
+          (user) {
+            // log(" success message:${user.companyName}");
+            emit(state.copyWith(
+              profileState: ProfileStates.deleted,
+              message: "تم ارسال طلب الحذف",
+            ));
+            add(GetProfileEvent());
+          },
+        );
+      } catch (e) {
+        log("catch message:${e.toString()}");
+        emit(state.copyWith(
+          profileState: ProfileStates.failToUpdate,
+          message: e.toString(),
+        ));
+      }
+    });
+
     on<PickImageEvent>((event, emit) async {
       emit(state.copyWith(imageErrorMessage: ''));
       String? selectedImage = await locator<FilePickerHelper>().pickImage();

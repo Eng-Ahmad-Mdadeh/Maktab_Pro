@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:maktab/data/models/contract/contract_model_model.dart';
+import 'package:maktab_lessor/data/models/contract/contract_model_model.dart';
 
 import '../../../data/repositories/contract_model_repository.dart';
 

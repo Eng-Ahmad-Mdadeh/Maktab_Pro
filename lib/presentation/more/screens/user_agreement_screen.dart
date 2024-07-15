@@ -3,10 +3,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/user/user_bloc.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/user/user_bloc.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 import '../../resources/app_text_styles.dart';
 

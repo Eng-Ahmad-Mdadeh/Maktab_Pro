@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/router/app_routes.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/delete_alert_dialog.dart';
-import 'package:maktab/presentation/widgets/loading_widget.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/core/router/app_routes.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/delete_alert_dialog.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_widget.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
 
 import '../../../domain/contracts/contract/contract_bloc.dart';
 import '../../../domain/notification/notification_bloc.dart';
@@ -27,7 +27,9 @@ class NotificationsScreen extends StatelessWidget {
       body: BlocBuilder<NotificationsBloc, NotificationsState>(
         builder: (context, state) {
           if (state is NotificationsLoading) return const LoadingWidget(1);
-          if (state is NotificationsFailure) return Center(child: BodyText(text: "${state.message}حدث خطأ ما حاول مجدداً"));
+          if (state is NotificationsFailure) {
+            return Center(child: BodyText(text: "${state.message}حدث خطأ ما حاول مجدداً"));
+          }
           if (state is NotificationsSuccess) {
             return ListView.separated(
               separatorBuilder: (context, i) {

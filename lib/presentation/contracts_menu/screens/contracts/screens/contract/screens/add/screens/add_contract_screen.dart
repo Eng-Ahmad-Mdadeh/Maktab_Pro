@@ -3,12 +3,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/repositories/office_repository.dart';
-import 'package:maktab/domain/contracts/contracts_event.dart';
-import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
+import 'package:maktab_lessor/data/repositories/office_repository.dart';
+import 'package:maktab_lessor/domain/contracts/contracts_event.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
 
-import '../../../../../../../../../core/network/api_endpoints.dart';
 import '../../../../../../../../../core/services/service_locator.dart';
 import '../../../../../../../../../domain/contract_models/contract_models_bloc.dart';
 import '../../../../../../../../../domain/contracts/contract/add/contract_cubit.dart';
@@ -18,7 +16,6 @@ import '../../../../../../../../../domain/contracts/contracts_step_cubit.dart';
 import '../../../../../../../../../domain/orders/orders_bloc.dart';
 import '../../../../../../../../../domain/settings/settings_bloc.dart';
 import '../../../../../../../../resources/app_colors.dart';
-import '../../../../../../../../widgets/maktab_image_view.dart';
 
 import '../widgets/contract_pages.dart';
 import '../widgets/contracts_buttons.dart';
@@ -78,21 +75,26 @@ class _ContractScreenState extends State<AddContractScreen> {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: BlocBuilder<GeneralSettingBloc, SettingsState>(
-            builder: (context, state) {
-              if (state is SettingsSuccess) {
-                return MaktabImageView(
-                  imagePath: ApiEndpoints.siteUrl + (state.generalSettings.logo ?? ''),
-                  // color: AppColors.black,
-                  height: 50.h,
-                );
-              }
-              return const SizedBox();
-            },
+          // title: BlocBuilder<GeneralSettingBloc, SettingsState>(
+          //   builder: (context, state) {
+          //     if (state is SettingsSuccess) {
+          //       return MaktabImageView(
+          //         imagePath: ApiEndpoints.siteUrl + (state.generalSettings.logo ?? ''),
+          //         // color: AppColors.black,
+          //         height: 50.h,
+          //       );
+          //     }
+          //     return const SizedBox();
+          //   },
+          // ),
+          // centerTitle: false,
+          // leading: const SizedBox(),
+          // leadingWidth: 0,
+          leading: IconButton(
+            onPressed: context.pop,
+            icon: const Icon(Icons.arrow_back_ios),
           ),
-          centerTitle: false,
-          leading: const SizedBox(),
-          leadingWidth: 0,
+
           backgroundColor: AppColors.white,
         ),
         body: BlocListener<ContractBloc, ContractState>(

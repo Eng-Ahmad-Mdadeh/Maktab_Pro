@@ -1,21 +1,19 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/router/app_routes.dart';
-import 'package:maktab/domain/home/home_bloc.dart';
-import 'package:maktab/domain/offices/offices_cubit.dart';
-import 'package:maktab/domain/receiving_method/receiving_method_bloc.dart';
-import 'package:maktab/domain/splash/splash_bloc.dart';
-import 'package:maktab/presentation/resources/app_assets.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
-import 'package:maktab/presentation/widgets/maktab_image_view.dart';
-import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/router/app_routes.dart';
+import 'package:maktab_lessor/domain/home/home_bloc.dart';
+import 'package:maktab_lessor/domain/offices/offices_cubit.dart';
+import 'package:maktab_lessor/domain/receiving_method/receiving_method_bloc.dart';
+import 'package:maktab_lessor/domain/splash/splash_bloc.dart';
+import 'package:maktab_lessor/presentation/resources/app_assets.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_image_view.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
 
 import '../../../domain/notification/notification_bloc.dart';
-
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -50,8 +48,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 .stream
                 .firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading)
                 .then((e) {
-              context.pushReplacement(AppRoutes.homeScreen);
-              context.read<NotificationsBloc>().add(GetNotificationsEvent());
+              context.read<OfficesCubit>().getIncompleteOffices().then((e) {
+                context.pushReplacement(AppRoutes.homeScreen);
+                context.read<NotificationsBloc>().add(GetNotificationsEvent());
+              });
             });
           });
         } else if (state is NavigationToEditProfileScreen) {

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/profile/profile_bloc.dart';
-import 'package:maktab/presentation/resources/app_assets.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/maktab_image_view.dart';
-import 'package:maktab/presentation/widgets/shimmer_effect.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/profile/profile_bloc.dart';
+import 'package:maktab_lessor/presentation/resources/app_assets.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_image_view.dart';
+import 'package:maktab_lessor/presentation/widgets/shimmer_effect.dart';
 
 import '../../widgets/section_title.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/domain/unit/unit_bloc.dart';
-import 'package:maktab/presentation/widgets/maktab_switch.dart';
-import 'package:maktab/presentation/widgets/quantity_selector.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/domain/unit/unit_bloc.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_switch.dart';
+import 'package:maktab_lessor/presentation/widgets/quantity_selector.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class UnitCountSection extends StatelessWidget {
   const UnitCountSection({super.key});

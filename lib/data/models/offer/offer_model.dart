@@ -1,4 +1,4 @@
-import 'package:maktab/data/models/office/office_price_model.dart';
+import 'package:maktab_lessor/data/models/office/office_price_model.dart';
 
 class Offer {
   int id;

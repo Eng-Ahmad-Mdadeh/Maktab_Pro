@@ -5,14 +5,14 @@ import 'dart:developer';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/extension/date_time_extension.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/office/office_model.dart';
-import 'package:maktab/presentation/calendar/widgets/calendar_header.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/loading_dialog.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
+import 'package:maktab_lessor/core/extension/date_time_extension.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/data/models/office/office_model.dart';
+import 'package:maktab_lessor/presentation/calendar/widgets/calendar_header.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_dialog.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../../core/services/service_locator.dart';
@@ -137,6 +137,7 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                                 if (optionState == CalendarFormatOptions.hour)
                                   BlocBuilder<DatesSelectCubit, DatesSelectionEntity>(
                                     builder: (context, state) {
+                                      if(state.startDate == null) return const SizedBox();
                                       return HourRangePickerWidget(
                                         startHour: state.startTime,
                                         endHour: state.endTime,
@@ -186,7 +187,7 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                                 Flexible(
                                   child: MaktabButton(
                                     text: 'اشغال',
-                                    backgroundColor: AppColors.lightCyan,
+                                    backgroundColor: AppColors.slateGray,
                                     onPressed: calenderState is CalendarLoading
                                         ? null
                                         : () {
@@ -225,7 +226,7 @@ class _UnitCalendarScreenState extends State<UnitCalendarScreen> {
                                 Flexible(
                                   child: MaktabButton(
                                     text: 'اتاحة',
-                                    backgroundColor: AppColors.slateGray,
+                                    backgroundColor: AppColors.mintGreen,
                                     onPressed: calenderState is CalendarLoading
                                         ? null
                                         : () {

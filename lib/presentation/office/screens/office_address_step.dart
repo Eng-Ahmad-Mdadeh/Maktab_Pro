@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/widgets/maktab_google_map.dart';
-import 'package:maktab/presentation/widgets/maktab_map_search_text_form_field.dart';
-import 'package:maktab/presentation/widgets/page_title.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_google_map.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_map_search_text_form_field.dart';
+import 'package:maktab_lessor/presentation/widgets/page_title.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class OfficeAddressStep extends StatefulWidget {
   const OfficeAddressStep({super.key});

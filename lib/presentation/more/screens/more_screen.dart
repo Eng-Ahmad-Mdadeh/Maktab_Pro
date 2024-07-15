@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/shimmer/shimmer_bloc.dart';
-import 'package:maktab/presentation/more/widgets/more_header.dart';
-import 'package:maktab/presentation/more/widgets/more_items_list.dart';
-import 'package:maktab/presentation/resources/app_assets.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/maktab_image_view.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:go_router/go_router.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/shimmer/shimmer_bloc.dart';
+import 'package:maktab_lessor/presentation/more/widgets/more_header.dart';
+import 'package:maktab_lessor/presentation/more/widgets/more_items_list.dart';
+import 'package:maktab_lessor/presentation/resources/app_assets.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_image_view.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../core/router/app_routes.dart';
+import '../../../domain/navigation/navigation_bloc.dart';
+import '../../../domain/navigation/navigation_event.dart';
 import '../../widgets/maktab_bottom_app_bar.dart';
 
 class MoreScreen extends StatefulWidget {
@@ -38,44 +42,51 @@ class _MoreScreenState extends State<MoreScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const MoreHeader(),
-              SizedBox(height: 20.v),
-              const MoreItemsList(),
-              SizedBox(height: 50.0.v,),
-              SectionTitle(title:  version != null ? "v${version!}" : "v0.0.1"),
-              SizedBox(height: 30.0.v,),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const BodyText(text: "Developed by"),
-                  SizedBox(
-                    height: 30.v,
-                    child: InkWell(
-                      onTap: () async {
-                        await launchUrl(Uri.parse('https://sta.sa/'));
-                      },
-                      child: MaktabImageView(
-                        imagePath: AppAssets.logoStarsTech,
-                        height: 30.v,
-                        color: AppColors.black,
+    return PopScope(
+      canPop: false,
+      onPopInvoked: (v) async {
+        context.read<NavigationBloc>().add(HomeNavigationEvent());
+        context.pushReplacementNamed(AppRoutes.homeScreen, extra: false);
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const MoreHeader(),
+                SizedBox(height: 20.v),
+                const MoreItemsList(),
+                SizedBox(height: 50.0.v,),
+                SectionTitle(title:  version != null ? "v${version!}" : "v0.0.1"),
+                SizedBox(height: 30.0.v,),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const BodyText(text: "Developed by"),
+                    SizedBox(
+                      height: 30.v,
+                      child: InkWell(
+                        onTap: () async {
+                          await launchUrl(Uri.parse('https://sta.sa/'));
+                        },
+                        child: MaktabImageView(
+                          imagePath: AppAssets.logoStarsTech,
+                          height: 30.v,
+                          color: AppColors.black,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 30.0.v,),
-            ],
+                  ],
+                ),
+                SizedBox(height: 30.0.v,),
+              ],
+            ),
           ),
         ),
+        bottomNavigationBar: const MaktabBottomAppBar(),
       ),
-      bottomNavigationBar: const MaktabBottomAppBar(),
     );
   }
 }

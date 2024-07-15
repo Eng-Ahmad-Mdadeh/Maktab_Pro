@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/widgets/loading_widget.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_widget.dart';
 
 import '../../../data/models/account_summary/account_summary_model.dart';
 import '../../../domain/account_summary/account_summary_bloc.dart';
@@ -32,7 +32,7 @@ class AccountSummaryDetailsSection extends StatelessWidget {
           return AccountSummaryBuilder(
             _scrollController,
             moreOrderLoader: false,
-            accountSummaries: state.accountSummaries,
+            accountSummaries: state.filteredAccountSummaries ?? state.accountSummaries,
             noContents: noContents,
           );
         }
@@ -40,7 +40,7 @@ class AccountSummaryDetailsSection extends StatelessWidget {
           return AccountSummaryBuilder(
             _scrollController,
             moreOrderLoader: true,
-            accountSummaries: state.accountSummaries!,
+            accountSummaries: state.filteredAccountSummaries ?? state.accountSummaries!,
             noContents: noContents,
           );
         }
@@ -79,14 +79,18 @@ class AccountSummaryBuilder extends StatelessWidget {
           }
         }
         final data = accountSummaries.accountStatement!.data[i];
-        return Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.softAsh),
-            borderRadius: BorderRadius.circular(7.0.adaptSize),
-          ),
-          // padding: const EdgeInsets.all(14.0),
-          child: SummaryCard(
-            data: data,
+        return Padding(
+          padding: EdgeInsets.symmetric(vertical: 7.0.v),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.softAsh),
+              borderRadius: BorderRadius.circular(7.0.adaptSize),
+            ),
+            // padding: const EdgeInsets.all(14.0),
+            child: SummaryCard(
+              index: i,
+              data: data,
+            ),
           ),
         );
       },

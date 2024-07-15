@@ -3,9 +3,9 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:maktab/core/services/service_locator.dart';
-import 'package:maktab/data/repositories/auth_repository.dart';
-import 'package:maktab/domain/profile/profile_bloc.dart';
+import 'package:maktab_lessor/core/services/service_locator.dart';
+import 'package:maktab_lessor/data/repositories/auth_repository.dart';
+import 'package:maktab_lessor/domain/profile/profile_bloc.dart';
 
 part 'auth_event.dart';
 

@@ -1,4 +1,4 @@
-import 'package:maktab/core/helpers/hive_helper.dart';
+import 'package:maktab_lessor/core/helpers/hive_helper.dart';
 import 'service_locator.dart' as di;
 
 class AppServices {

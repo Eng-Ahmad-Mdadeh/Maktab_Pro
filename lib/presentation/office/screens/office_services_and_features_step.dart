@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/office/widgets/office_additional_services_section.dart';
-import 'package:maktab/presentation/office/widgets/office_comforts_list.dart';
-import 'package:maktab/presentation/office/widgets/office_features_list.dart';
-import 'package:maktab/presentation/office/widgets/office_sevices_list.dart';
-import 'package:maktab/presentation/widgets/page_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_additional_services_section.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_comforts_list.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_features_list.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_sevices_list.dart';
+import 'package:maktab_lessor/presentation/widgets/page_title.dart';
 
 class OfficeServicesAndFeaturesStep extends StatelessWidget {
   const OfficeServicesAndFeaturesStep({super.key});

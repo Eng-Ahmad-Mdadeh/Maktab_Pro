@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:maktab/core/extension/date_range_extension.dart';
-import 'package:maktab/data/models/coupon/coupon_model.dart';
+import 'package:maktab_lessor/core/extension/date_range_extension.dart';
+import 'package:maktab_lessor/data/models/coupon/coupon_model.dart';
 
 import '../../core/helpers/date_formatter_helper.dart';
 import '../../data/models/office/office_model.dart';
@@ -45,7 +45,8 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
             state.prices[price.id] = price.price;
           }
         }
-        state.pricesCount = event.coupon!.priceTypeIds.length;
+        // state.pricesCount = event.coupon!.priceTypeIds.length;
+        state.copyWith(pricesCount: event.coupon!.priceTypeIds.length);
       }
       //state.discountType = ;
       // final num discountAmount;
@@ -105,15 +106,24 @@ class CouponBloc extends Bloc<CouponEvent, CouponState> {
       OfficePrice price = state.unit!.prices.firstWhere((price) => price.typeResId == event.id);
       if (!priceTypes.contains(event.id)) {
         if (state.pricesCount == -1) {
-          state.pricesCount = 1;
+          // state.pricesCount = 1;
+          state.copyWith(
+            pricesCount: 1,
+          );
         } else {
-          state.pricesCount++;
+          // state.pricesCount++;
+          state.copyWith(
+            pricesCount: state.pricesCount+1,
+          );
         }
         prices[price.id] = price.price;
         priceTypes.add(event.id);
       } else {
         if (state.pricesCount > 0) {
-          state.pricesCount--;
+          // state.pricesCount--;
+          state.copyWith(
+            pricesCount: state.pricesCount-1,
+          );
         }
         prices.remove(price.id);
         priceTypes.remove(event.id);

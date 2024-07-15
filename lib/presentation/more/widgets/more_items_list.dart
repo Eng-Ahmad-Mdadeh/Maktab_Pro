@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/router/app_routes.dart';
-import 'package:maktab/domain/offices/offices_cubit.dart';
-import 'package:maktab/domain/user/user_bloc.dart';
-import 'package:maktab/presentation/more/widgets/more_list_tile.dart';
-import 'package:maktab/presentation/widgets/loading_dialog.dart';
-import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
+import 'package:maktab_lessor/core/router/app_routes.dart';
+import 'package:maktab_lessor/domain/offices/offices_cubit.dart';
+import 'package:maktab_lessor/domain/user/user_bloc.dart';
+import 'package:maktab_lessor/presentation/more/widgets/more_list_tile.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_dialog.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
 
 import '../../../domain/evaluation/evaluation_bloc.dart';
 

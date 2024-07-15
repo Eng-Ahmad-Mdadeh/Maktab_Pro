@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/presentation/receiving_method/widgets/stc_terms_item.dart';
+import 'package:maktab_lessor/presentation/receiving_method/widgets/stc_terms_item.dart';
 
 class StcTermsList extends StatelessWidget {
   const StcTermsList({super.key});

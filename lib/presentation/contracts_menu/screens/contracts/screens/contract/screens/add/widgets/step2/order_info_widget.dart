@@ -3,8 +3,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
 
 import '../../../../../../../../../../domain/contracts/contract/add/contract_cubit.dart';
 import '../../../../../../../../../../domain/contracts/contract/add/contract_state.dart';
@@ -45,18 +45,18 @@ class OrderInfoWidget extends StatelessWidget {
               BlocConsumer<OrdersBloc, OrdersState>(
                 listener: (context, orderState) {
                     print("orderrrrrrrrrrrrrrrrrrrr");
-                  if (orderState is OrdersWithoutPaginationSuccess) {
+                  if (orderState is OrdersSuccess) {
                     final orderID = context.read<ContractCubit>().orderIdFromOrders;
 
                   }
                 },
                 builder: (context, orderState) {
                   print("orderrrrrrrrrrrrrrrrrrrr 2");
-                  if (orderState is OrdersWithoutPaginationSuccess) {
+                  if (orderState is OrdersSuccess) {
                     print("orderrrrrrrrrrrrrrrrrrrr 3");
                     return ContractOrderSelectWidget(
                       title: "الرجاء اختيار الطلب",
-                      items: orderState.orders,
+                      items: orderState.withoutPagination??[],
                       initialValue:
                           context.read<ContractCubit>().orderIdFromOrders?.toString() ?? state.orderId,
                       onChanged: context.read<ContractCubit>().setorder,

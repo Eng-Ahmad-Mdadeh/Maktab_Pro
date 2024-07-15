@@ -3,11 +3,10 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:maktab/core/classes/exception/api_exceptions.dart';
-import 'package:maktab/core/network/api_endpoints.dart';
-import 'package:maktab/core/services/service_locator.dart';
-import 'package:maktab/data/data_sources/local/user_local_data_source.dart';
-
+import 'package:maktab_lessor/core/classes/exception/api_exceptions.dart';
+import 'package:maktab_lessor/core/network/api_endpoints.dart';
+import 'package:maktab_lessor/core/services/service_locator.dart';
+import 'package:maktab_lessor/data/data_sources/local/user_local_data_source.dart';
 
 class NetworkHelper {
   late Dio _dio;
@@ -36,44 +35,53 @@ class NetworkHelper {
   Dio get dio => _dio;
 
   Future<dynamic> get(String url, {Map<String, dynamic>? queryParams, bool googleApi = false}) async {
+    log("____________________ get _______________________");
+    log(url);
+    log("____________________ get _______________________");
     String? token = await getToken();
-    return _performRequest(googleApi: googleApi,() => _dio.get(
-          url,
-          queryParameters: queryParams,
-          options: Options(headers: {'Authorization': 'Bearer $token'}),
-        ));
+    return _performRequest(
+        googleApi: googleApi,
+        () => _dio.get(
+              url,
+              queryParameters: queryParams,
+              options: Options(headers: {'Authorization': 'Bearer $token'}),
+            ));
   }
 
-  Future<dynamic> post(String url,
-      {dynamic data, List<Map<String, dynamic>>? files}) async {
+  Future<dynamic> post(String url, {dynamic data, List<Map<String, dynamic>>? files}) async {
+    log("____________________ post _______________________");
+    log(url);
+    log("____________________ post _______________________");
     String? token = await getToken();
     FormData formData = FormData();
     if (data != null) {
       formData = FormData.fromMap(data as Map<String, dynamic>);
     }
     if (files != null && files.isNotEmpty) {
-      List<MapEntry<String, MultipartFile>> multipartFiles =
-          await convertFiles(files);
+      List<MapEntry<String, MultipartFile>> multipartFiles = await convertFiles(files);
       formData.files.addAll(multipartFiles);
     }
     return _performRequest(() => _dio.post(
           url,
           options: Options(
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': 'Bearer $token'
-            },
+            headers: {'Content-Type': 'multipart/form-data', 'Authorization': 'Bearer $token'},
           ),
           data: formData,
         ));
   }
 
   Future<dynamic> patch(String url, dynamic data, {List<String>? files}) async {
+    log("____________________ patch _______________________");
+    log(url);
+    log("____________________ patch _______________________");
     FormData formData = FormData.fromMap(data);
     return _performRequest(() => _dio.patch(url, data: formData));
   }
 
   Future<dynamic> delete(String url, {dynamic data}) async {
+    log("____________________ delete _______________________");
+    log(url);
+    log("____________________ delete _______________________");
     String? token = await getToken();
     log("REQUEST DATA");
     log(data.toString());
@@ -82,35 +90,30 @@ class NetworkHelper {
     return _performRequest(() => _dio.delete(
           url,
           options: Options(
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': 'Bearer $token'
-            },
+            headers: {'Content-Type': 'multipart/form-data', 'Authorization': 'Bearer $token'},
           ),
           data: data,
         ));
   }
 
-  Future<Either<Exception, dynamic>> _performRequest(Future<Response> Function() request, {bool googleApi = false}) async {
+  Future<Either<Exception, dynamic>> _performRequest(Future<Response> Function() request,
+      {bool googleApi = false}) async {
     if (!(await Connectivity().checkConnectivity()).contains(ConnectivityResult.none)) {
       try {
         Response response = await request();
-        log("RESPONSE RESULT");
-        log(response.data.toString());
-        if(googleApi) return Right(response.data);
-        if((bool.tryParse(response.data['status'].toString())??false)) {
+        if (googleApi) return Right(response.data);
+        if ((bool.tryParse(response.data['status'].toString()) ?? false)) {
           return Right(response.data);
-        }else{
-          return Left(_handleError(response.data['errNum']??0, response.data['message']??''));
+        } else {
+          return Left(_handleError(response.data['errNum'] ?? 0, response.data['message'] ?? ''));
         }
-      } catch (e) {
-        // print("eeeeeeeeee: $e");
-        // rethrow;
-        if(e is DioException){
+      } catch (e, s) {
+        log(e.toString());
+        log(s.toString());
+        if (e is DioException) {
           return Left(_handleError(e.response?.statusCode, e.message));
         }
-        rethrow;
-        // return Left(ApiException('أعد المحاولة'));
+        return Left(ApiException('أعد المحاولة'));
       }
     } else {
       return Left(NoInternetConnectionException());
@@ -138,8 +141,7 @@ class NetworkHelper {
     }
   }
 
-  Future<List<MapEntry<String, MultipartFile>>> convertFiles(
-      List<Map<String, dynamic>> files) async {
+  Future<List<MapEntry<String, MultipartFile>>> convertFiles(List<Map<String, dynamic>> files) async {
     List<MapEntry<String, MultipartFile>> entryList = [];
     File file;
     for (Map<String, dynamic> f in files) {

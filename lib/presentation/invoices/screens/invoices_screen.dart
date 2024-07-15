@@ -44,33 +44,36 @@ class _InvoicesScreenState extends State<InvoicesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const MaktabAppBar(title: 'فواتيري'),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10.h),
-        child: BlocBuilder<InvoiceBloc, InvoiceState>(builder: (context, state) {
-          if (state is LoadingInvoiceState) {
-            return const LoadingWidget(1);
-          }
-          if (state is FailureInvoiceState) {
-            return Center(
-              child: BodyText(text:state.message),
+    return BlocProvider(
+      create: (context) => InvoiceDownloadingCubit(),
+      child: Scaffold(
+        appBar: const MaktabAppBar(title: 'فواتيري'),
+        body: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.h),
+          child: BlocBuilder<InvoiceBloc, InvoiceState>(builder: (context, state) {
+            if (state is LoadingInvoiceState) {
+              return const LoadingWidget(1);
+            }
+            if (state is FailureInvoiceState) {
+              return Center(
+                child: BodyText(text: state.message),
+              );
+            }
+            if (state is SuccessInvoiceState) {
+              return ListView.builder(
+                controller: _scrollController,
+                itemCount: state.invoices.length,
+                itemBuilder: (context, i) {
+                  final invoice = state.invoices[i];
+                  return InvoiceItemCard(invoice: invoice);
+                },
+              );
+            }
+            return const Center(
+              child: BodyText(text: 'لا يوجد فواتير'),
             );
-          }
-          if (state is SuccessInvoiceState) {
-            return ListView.builder(
-              controller: _scrollController,
-              itemCount: state.invoices.length,
-              itemBuilder: (context, i) {
-                final invoice = state.invoices[i];
-                return InvoiceItemCard(invoice: invoice);
-              },
-            );
-          }
-          return const Center(
-            child: BodyText(text: 'لا يوجد فواتير'),
-          );
-        }),
+          }),
+        ),
       ),
     );
   }

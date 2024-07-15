@@ -9,8 +9,9 @@ class UnitSelectionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaktabTextFormField(
+    return MaktabSolidTextFormField(
       title: 'ابحث بحسب رقم الجوال',
+      keyboardType: TextInputType.phone,
       onChanged: (value){
         context.read<AccountSummaryBloc>().add(FilterAccountSummary(value, true));
       },

@@ -73,9 +73,9 @@ const SetCouponUseTimesEvent(this.times);
 class ClearPriceCountEvent extends CouponEvent {}
 
 class CreateCouponEvent extends CouponEvent {
-  bool isUpdate;
-  int? couponId;
-  CreateCouponEvent({this.isUpdate = false,this.couponId});
+  final bool isUpdate;
+  final int? couponId;
+  const CreateCouponEvent({this.isUpdate = false,this.couponId});
 }
 
 class InitialCouponEvent extends CouponEvent {

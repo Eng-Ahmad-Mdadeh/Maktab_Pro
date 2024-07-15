@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:go_router/go_router.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/contract_select_widget.dart';
-import 'package:maktab/presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/step4/contract_step4.dart';
-import 'package:maktab/presentation/widgets/loading_dialog.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
-import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/contract_select_widget.dart';
+import 'package:maktab_lessor/presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/step4/contract_step4.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_dialog.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
 
 import '../../../../../../../domain/contract_models/contract_model/contract_model_bloc.dart';
 import '../../../../../../../domain/contract_models/contract_models_bloc.dart';
@@ -21,7 +21,10 @@ class AddContractsModelScreen extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _statusController = TextEditingController();
-  final HtmlEditorController _htmlController = HtmlEditorController();
+  final QuillController _quillController = QuillController(
+    selection: TextSelection.fromPosition(const TextPosition(offset: 1)),
+    document: Document(),
+  );
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   @override
@@ -96,11 +99,7 @@ class AddContractsModelScreen extends StatelessWidget {
                     },
                   ),
                   ContractHtmlEditorWidget(
-                    _htmlController,
-                    QuillController(
-                      selection: TextSelection.fromPosition(const TextPosition(offset: 1)),
-                      document: Document(),
-                    ),
+                    _quillController,
                     title: "محتوى النموذج",
                     hint: "محتوى النموذج",
                     toolbarType: ToolbarType.nativeExpandable,
@@ -110,14 +109,13 @@ class AddContractsModelScreen extends StatelessWidget {
                     text: "حفظ",
                     onPressed: () {
                       if (_key.currentState!.validate()) {
-                        _htmlController.getText().then((value) {
-                          context.read<ContractModelBloc>().add(CreateContractModels(
-                                name: _nameController.text,
-                                description: _descriptionController.text,
-                                contentContractModel: value,
-                                status: _statusController.text == '1' ? '1' : _statusController.text == '0' ? '0' : '1',
-                              ));
-                        });
+                        final String editorText = _quillController.document.toPlainText();
+                        context.read<ContractModelBloc>().add(CreateContractModels(
+                          name: _nameController.text,
+                          description: _descriptionController.text,
+                          contentContractModel: editorText,
+                          status: _statusController.text == '1' ? '1' : _statusController.text == '0' ? '0' : '1',
+                        ));
                       }
                     },
                   ),

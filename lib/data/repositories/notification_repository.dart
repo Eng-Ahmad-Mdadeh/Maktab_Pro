@@ -1,9 +1,11 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
-import 'package:maktab/core/classes/exception/app_exception.dart';
-import 'package:maktab/core/classes/exception/data_exceptions.dart';
-import 'package:maktab/data/data_sources/remote/notification_remote_data_source.dart';
-import 'package:maktab/data/models/notification/notification_model.dart' as n;
-import 'package:maktab/data/models/pagination/pagination_model.dart';
+import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
+import 'package:maktab_lessor/core/classes/exception/data_exceptions.dart';
+import 'package:maktab_lessor/data/data_sources/remote/notification_remote_data_source.dart';
+import 'package:maktab_lessor/data/models/notification/notification_model.dart' as n;
+import 'package:maktab_lessor/data/models/pagination/pagination_model.dart';
 
 class NotificationRepository {
   final NotificationRemoteDataSource _remoteDataSource;
@@ -98,7 +100,9 @@ class NotificationRepository {
           (right) {
         try {
           return const Right(null);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },

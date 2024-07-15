@@ -32,7 +32,8 @@ class AppColors {
   // Gray
   static const Color lightGray = Color(0XFFF7F7F7);
   static const Color palePlatinum = Color(0XFFF0F0F0);
-  static const Color softAsh = Color(0XFFE1E1E1);
+  // static const Color softAsh = Color(0XFFE1E1E1);
+  static const Color softAsh = Color.fromRGBO(180, 180, 180, 1);
   static const Color slateGray = Color(0XFFB4B4B4);
   static const Color steelBlue = Color(0XFF91928C);
   static const Color stormyGray = Color(0XFF6D6D6D);

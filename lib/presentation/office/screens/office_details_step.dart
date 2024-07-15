@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/office/office_bloc.dart';
-import 'package:maktab/presentation/office/widgets/office_floor_section.dart';
-import 'package:maktab/presentation/office/widgets/office_meeting_rooms_count_section.dart';
-import 'package:maktab/presentation/office/widgets/office_age_section.dart';
-import 'package:maktab/presentation/office/widgets/office_facilities_grid_view.dart';
-import 'package:maktab/presentation/office/widgets/office_shared_work_spaces_section.dart';
-import 'package:maktab/presentation/office/widgets/office_tables_count_scetion.dart';
-import 'package:maktab/presentation/office/widgets/offices_count_section.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/page_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/office/office_bloc.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_floor_section.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_meeting_rooms_count_section.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_age_section.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_facilities_grid_view.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_shared_work_spaces_section.dart';
+import 'package:maktab_lessor/presentation/office/widgets/office_tables_count_scetion.dart';
+import 'package:maktab_lessor/presentation/office/widgets/offices_count_section.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/page_title.dart';
 
 class OfficeDetailsStep extends StatefulWidget {
   const OfficeDetailsStep({super.key});

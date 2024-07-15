@@ -1,10 +1,10 @@
-import 'package:maktab/data/models/category_aqar/category_aqar_model.dart';
-import 'package:maktab/data/models/comfort/comfort_model.dart';
-import 'package:maktab/data/models/facility/facility_model.dart';
-import 'package:maktab/data/models/feature/feature_model.dart';
-import 'package:maktab/data/models/interface_aqar/interface_aqar_model.dart';
-import 'package:maktab/data/models/office/office_service_model.dart';
-import 'package:maktab/data/models/type_aquar/type_aquar_model.dart';
+import 'package:maktab_lessor/data/models/category_aqar/category_aqar_model.dart';
+import 'package:maktab_lessor/data/models/comfort/comfort_model.dart';
+import 'package:maktab_lessor/data/models/facility/facility_model.dart';
+import 'package:maktab_lessor/data/models/feature/feature_model.dart';
+import 'package:maktab_lessor/data/models/interface_aqar/interface_aqar_model.dart';
+import 'package:maktab_lessor/data/models/office/office_service_model.dart';
+import 'package:maktab_lessor/data/models/type_aquar/type_aquar_model.dart';
 
 class SearchData {
   List<CategoryAqar> officeCategories;

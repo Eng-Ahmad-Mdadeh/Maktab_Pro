@@ -5,6 +5,7 @@ enum ProfileStates {
   loading,
   loadingForEdit,
   success,
+  deleted,
   failure,
   updated,
   failToUpdate

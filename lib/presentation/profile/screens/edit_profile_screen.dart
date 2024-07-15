@@ -3,15 +3,15 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/services/service_locator.dart';
-import 'package:maktab/domain/profile/profile_bloc.dart';
-import 'package:maktab/presentation/profile/widgets/account_information_form.dart';
-import 'package:maktab/presentation/profile/widgets/account_type_options.dart';
-import 'package:maktab/presentation/profile/widgets/upload_profile_image_box.dart';
-import 'package:maktab/presentation/widgets/loading_dialog.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
-import 'package:maktab/presentation/widgets/maktab_snack_bar.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/services/service_locator.dart';
+import 'package:maktab_lessor/domain/profile/profile_bloc.dart';
+import 'package:maktab_lessor/presentation/profile/widgets/account_information_form.dart';
+import 'package:maktab_lessor/presentation/profile/widgets/account_type_options.dart';
+import 'package:maktab_lessor/presentation/profile/widgets/upload_profile_image_box.dart';
+import 'package:maktab_lessor/presentation/widgets/loading_dialog.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
 
 class EditProfileScreen extends StatefulWidget {
   final bool fromHome;
@@ -69,6 +69,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               MaktabSnackbar.showError(context, state.message);
             } else if (state.profileState == ProfileStates.loadingForEdit) {
               LoadingDialog.show(context);
+            }
+            if(state.profileState == ProfileStates.deleted){
+              LoadingDialog.hide(context);
+              MaktabSnackbar.showError(context, state.message);
             }
             // else if (state.bigImage == true) {
             //   MaktabSnackbar.showError(context, 'حجم الصورة كبير');

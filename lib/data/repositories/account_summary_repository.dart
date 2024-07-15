@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:maktab/data/models/account_summary/account_summary_model.dart';
+import 'package:maktab_lessor/data/models/account_summary/account_summary_model.dart';
 
 import '../../core/classes/exception/api_exceptions.dart';
 import '../../core/classes/exception/app_exception.dart';

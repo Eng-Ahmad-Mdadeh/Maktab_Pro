@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/core/router/app_routes.dart';
-import 'package:maktab/domain/offices/offices_cubit.dart';
-import 'package:maktab/presentation/prices/widgets/office_coupon_box.dart';
-import 'package:maktab/presentation/widgets/maktab_app_bar.dart';
-import 'package:maktab/presentation/widgets/maktab_button.dart';
-import 'package:maktab/presentation/widgets/page_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/router/app_routes.dart';
+import 'package:maktab_lessor/domain/offices/offices_cubit.dart';
+import 'package:maktab_lessor/presentation/prices/widgets/office_coupon_box.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
+import 'package:maktab_lessor/presentation/widgets/page_title.dart';
 
 class CouponsScreen extends StatelessWidget {
   const CouponsScreen({super.key});

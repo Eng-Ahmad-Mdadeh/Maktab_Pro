@@ -1,4 +1,4 @@
-import 'package:maktab/data/models/user/user_type.dart';
+import 'package:maktab_lessor/data/models/user/user_type.dart';
 
 class User {
   int id;
@@ -10,6 +10,7 @@ class User {
   String? about;
   String? licenseLink;
   String? licenseNumber;
+  bool requestDeleteAccount;
   String? city;
   String? neighborhood;
   String? commercialRecord;
@@ -28,6 +29,7 @@ class User {
     required this.email,
     required this.officeName,
     required this.about,
+    required this.requestDeleteAccount,
     required this.licenseLink,
     required this.licenseNumber,
     required this.city,
@@ -48,6 +50,7 @@ class User {
         phone: json["phone"].toString().replaceRange(0, 3, ''),
         email: json["email"] ?? '',
         officeName: json["office_name"] ?? '',
+    requestDeleteAccount: json["request_delete_account"] == '1',
         about: json["about"] ?? '',
         licenseLink: json["licenseLink"] ?? '',
         licenseNumber: json["license_number"] ?? '',
@@ -77,6 +80,7 @@ class User {
         "office_name": officeName,
         "about": about,
         "licenseLink": licenseLink,
+        "request_delete_account": requestDeleteAccount ? '1' : '0',
         "license_number": licenseNumber,
         "city": city,
         "neighborhood": neighborhood,

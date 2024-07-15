@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/domain/office/office_bloc.dart';
-import 'package:maktab/presentation/widgets/confirm_alert_dialog.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/maktab_switch.dart';
-import 'package:maktab/presentation/widgets/maktab_text_form_field.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/domain/office/office_bloc.dart';
+import 'package:maktab_lessor/presentation/widgets/confirm_alert_dialog.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_switch.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_text_form_field.dart';
 
 class AdditionalServiceForm extends StatefulWidget {
   const AdditionalServiceForm({super.key});

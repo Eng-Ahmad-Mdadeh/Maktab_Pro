@@ -2,10 +2,10 @@
 //
 // import 'package:flutter/material.dart';
 // import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:maktab/core/extension/date_time_extension.dart';
-// import 'package:maktab/core/helpers/size_helper.dart';
-// import 'package:maktab/domain/calendar/calendar_bloc.dart';
-// import 'package:maktab/presentation/widgets/section_title.dart';
+// import 'package:maktab_lessor/core/extension/date_time_extension.dart';
+// import 'package:maktab_lessor/core/helpers/size_helper.dart';
+// import 'package:maktab_lessor/domain/calendar/calendar_bloc.dart';
+// import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 //
 // class RangeCalendarSection extends StatelessWidget {
 //   const RangeCalendarSection({super.key});

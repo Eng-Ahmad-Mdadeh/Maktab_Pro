@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Maktab</string>
+	<string>مكتب Business</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>maktab</string>
+	<string>maktab_lessor</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -45,10 +45,15 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>sms</string>
-        <string>tel</string>
-    </array>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>We need reach photos to upload Aqars photos</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>We need it to make call</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Location is required when share an Aqar</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Location is required when share an Aqar</string>
+	<key>FLTEnableImpeller</key>
+        <false />
 </dict>
 </plist>

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:maktab/core/network/api_endpoints.dart';
+import 'package:maktab_lessor/core/network/api_endpoints.dart';
 
 import '../aqar_filter/type_res.dart';
 import '../calendar/calender_model.dart';

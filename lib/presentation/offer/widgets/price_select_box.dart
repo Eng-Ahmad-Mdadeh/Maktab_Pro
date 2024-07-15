@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
 
 class PriceSelectBox extends StatelessWidget {
   const PriceSelectBox({

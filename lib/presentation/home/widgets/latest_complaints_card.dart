@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/data/models/complaint/complaint_model.dart';
-import 'package:maktab/domain/home/home_bloc.dart';
-import 'package:maktab/presentation/home/widgets/complaint_list_item.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/section_title.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/data/models/complaint/complaint_model.dart';
+import 'package:maktab_lessor/domain/home/home_bloc.dart';
+import 'package:maktab_lessor/presentation/home/widgets/complaint_list_item.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class LatestComplaintsCard extends StatelessWidget {
   LatestComplaintsCard({super.key});

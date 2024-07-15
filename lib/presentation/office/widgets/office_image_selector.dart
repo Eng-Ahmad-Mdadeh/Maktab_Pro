@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:maktab/core/helpers/size_helper.dart';
-import 'package:maktab/presentation/office/widgets/delete_media_icon_button.delete.dart';
-import 'package:maktab/presentation/resources/app_colors.dart';
-import 'package:maktab/presentation/widgets/body_text.dart';
-import 'package:maktab/presentation/widgets/file_selector_box.dart';
-import 'package:maktab/presentation/widgets/maktab_image_view.dart';
+import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/presentation/office/widgets/delete_media_icon_button.delete.dart';
+import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
+import 'package:maktab_lessor/presentation/widgets/file_selector_box.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_image_view.dart';
 
 class OfficeImageSelector extends StatelessWidget {
   const OfficeImageSelector({
