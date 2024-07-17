@@ -418,10 +418,13 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
           currentMapZoom: event.zoom));
     });
     on<GoToSelectedAddressEvent>((event, emit) async {
+      log("POSITION 1");
       var result = await _mapRepository.getPlaceDetails(event.placeId);
       result.fold(
         (failure) {},
         (position) {
+          log("POSITION 2" );
+          log(position.toString());
           if (position != null) {
             emit(state.copyWith(addressPosition: position));
           }

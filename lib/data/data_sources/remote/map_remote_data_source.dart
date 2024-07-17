@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
 import 'package:maktab_lessor/core/network/api_endpoints.dart';
@@ -11,11 +13,8 @@ class MapRemoteDataSource extends BaseRemoteDataSource<r.Response> {
 
   Future<Either<AppException, Map<String, dynamic>>> getAddressDetails(data) async {
     try {
-      final Either response = await locator<NetworkHelper>().get(
-        ApiEndpoints.googleMapsApi + ApiEndpoints.geocoding,
-        queryParams: data,
-        googleApi: true
-      );
+      final Either response = await locator<NetworkHelper>()
+          .get(ApiEndpoints.googleMapsApi + ApiEndpoints.geocoding, queryParams: data, googleApi: true);
       return response.fold(
         (error) => Left(error),
         (right) {
@@ -25,7 +24,7 @@ class MapRemoteDataSource extends BaseRemoteDataSource<r.Response> {
     } on AppException catch (e) {
       // rethrow;
       return Left(e);
-    }catch(e){
+    } catch (e) {
       return Left(AppException("خطأ غير معروف G-A-D-1"));
     }
   }
@@ -33,22 +32,32 @@ class MapRemoteDataSource extends BaseRemoteDataSource<r.Response> {
   Future<Either<AppException, Map<String, dynamic>>> getPlaceSearchSuggesions(data) async {
     try {
       final Either response = await locator<NetworkHelper>()
-          .get(ApiEndpoints.googleMapsApi + ApiEndpoints.placeAutocomplete, queryParams: data);
+          .get(ApiEndpoints.googleMapsApi + ApiEndpoints.placeAutocomplete, queryParams: data, googleApi: true);
       return response.fold(
-        (error) => Left(error),
+        (error) {
+          log("getPlaceSearchSuggesions E R O R R");
+          log(error.toString());
+          return Left(error);
+        },
         (right) {
           return Right(right);
         },
       );
     } on AppException catch (e) {
       return Left(e);
+    } catch (e, s) {
+      log("getPlaceSearchSuggesions 1 E R O R R");
+      log(e.toString());
+      log("getPlaceSearchSuggesions 1 S T A C K");
+      log(s.toString());
+      return Left(AppException(e.toString()));
     }
   }
 
   Future<Either<AppException, Map<String, dynamic>>> getPlaceDetails(data) async {
     try {
-      final Either response = await locator<NetworkHelper>()
-          .get(ApiEndpoints.googleMapsApi + ApiEndpoints.placeDetails, queryParams: data);
+      final Either response =
+          await locator<NetworkHelper>().get(ApiEndpoints.googleMapsApi + ApiEndpoints.placeDetails, queryParams: data, googleApi: true);
       return response.fold(
         (error) => Left(error),
         (right) {
