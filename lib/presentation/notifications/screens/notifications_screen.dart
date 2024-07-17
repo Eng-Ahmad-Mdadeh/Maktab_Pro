@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:maktab_lessor/core/extension/date_time_extension.dart';
 import 'package:maktab_lessor/core/router/app_routes.dart';
 import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 import 'package:maktab_lessor/presentation/widgets/delete_alert_dialog.dart';
@@ -79,22 +80,31 @@ class NotificationsScreen extends StatelessWidget {
                     text: notification.arBody ?? '',
                     textColor: notification.seen ? AppColors.gray : null,
                   ),
-                  trailing: IconButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => DeleteAlertDialog(
-                          alertText: "سيتم حذف ${notification.arTitle}",
-                          confirmOnPressed: () {
-                            context.read<NotificationsBloc>().add(DeleteNotificationEvent(notification.id!));
-                            context.pop();
-                          },
-                          cancelOnPressed: context.pop,
-                        ),
-                      );
-                    },
-                    color: AppColors.cherryRed,
-                    icon: const Icon(Icons.delete),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => DeleteAlertDialog(
+                              alertText: "سيتم حذف ${notification.arTitle}",
+                              confirmOnPressed: () {
+                                context.read<NotificationsBloc>().add(DeleteNotificationEvent(notification.id!));
+                                context.pop();
+                              },
+                              cancelOnPressed: context.pop,
+                            ),
+                          );
+                        },
+
+                        child: const Icon(Icons.delete, color: AppColors.cherryRed),
+                      ),
+                      BodyText(
+                        text: notification.createdAt!.dayFormatWithLocale('ar'),
+                        textColor: notification.seen ? AppColors.gray : null,
+                      ),
+                    ],
                   ),
                   leading: SectionTitle(
                     title: '#${notification.id!}',

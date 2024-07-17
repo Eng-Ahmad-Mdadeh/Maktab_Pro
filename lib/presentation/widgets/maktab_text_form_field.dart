@@ -136,6 +136,9 @@ class MaktabTextFormField extends StatelessWidget {
           validator: validator,
           onChanged: onChanged,
           onTapOutside: (event) {
+            if (unFocusWhenTabOutside) {
+              FocusManager.instance.primaryFocus?.unfocus();
+            }
             onTapOutside?.call();
             if (formKey != null) {
               formKey!.currentState!.validate();
