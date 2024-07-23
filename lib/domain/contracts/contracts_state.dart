@@ -17,7 +17,7 @@ final class LoadingContractsState extends ContractsState {
 final class SuccessContractsState extends ContractsState {
   final List<ContractModel> contracts;
   final List<ContractModel>? filteredContracts;
-  final String option;
+  final ContractType option;
 
   SuccessContractsState(this.contracts, this.option, [this.filteredContracts]);
 

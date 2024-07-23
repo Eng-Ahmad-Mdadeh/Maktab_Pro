@@ -53,13 +53,6 @@ class LessorInfoWidget extends StatelessWidget {
                   onChanged: context.read<ContractCubit>().setlessorFullName,
                   controller: context.read<ContractCubit>().lessorFullName,
                 ),
-                ContractInputWidget(
-                  title: "الهوية / الإقامة",
-                  hint: "رقم هوية المؤجر",
-                  numberMode: true,
-                  onChanged: context.read<ContractCubit>().setlessorIdentityNum,
-                  controller: context.read<ContractCubit>().lessorIdentityNum,
-                ),
                 BlocBuilder<ContractCubit, ContractEntity>(
                   builder: (context, state) {
                     return ContractSelectWidget<IdentityType>(
@@ -73,6 +66,17 @@ class LessorInfoWidget extends StatelessWidget {
                       items: const [IdentityType.national, IdentityType.residence],
                       onChanged: context.read<ContractCubit>().setlessorIdentityType,
                     );
+                  },
+                ),
+                ContractInputWidget(
+                  title: "الهوية / الإقامة",
+                  hint: "رقم هوية المؤجر",
+                  numberMode: true,
+                  onChanged: context.read<ContractCubit>().setlessorIdentityNum,
+                  controller: context.read<ContractCubit>().lessorIdentityNum,
+                  validator: (value){
+                    if((value??'').length < 10) return 'يجب ان يكون أكبر من 10 ارقام';
+                    return null;
                   },
                 ),
                 ContractInputWidget(

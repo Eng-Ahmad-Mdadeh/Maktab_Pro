@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maktab_lessor/core/extension/date_time_extension.dart';
 
 import '../../../../../../core/helpers/size_helper.dart';
 import '../../../../../data/models/contract/contract_model.dart';
@@ -44,7 +45,7 @@ class ContractsWidget extends StatelessWidget {
                   Container(
                     width: 3.0,
                     decoration: BoxDecoration(
-                      color: _getColor(contract.contractType!),
+                      color: _getColor(_getType(contract)),
                     ),
                   ),
                   Align(
@@ -52,20 +53,24 @@ class ContractsWidget extends StatelessWidget {
                     child: ListTile(
                       onTap: ()=> onPressed(contract),
                       minLeadingWidth: 60.h,
-                      leading: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SectionTitle(
-                            title: contract.contractType??'',
-                            textColor: AppColors.mintGreen,
-                            fontSize: 14,
-                          ),
-                          SectionTitle(
-                            title: '#${contract.contractNumber}',
-                            fontSize: 14,
-                          ),
-                        ],
+                      leading: SizedBox(
+                        width: 60.h,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SectionTitle(
+                              title: _getText(_getType(contract)),
+                              textColor: _getColor(_getType(contract)),
+                              fontSize: 13,
+                              textAlign: TextAlign.center,
+                            ),
+                            SectionTitle(
+                              title: '${contract.contractNumber}',
+                              fontSize: 14,
+                            ),
+                          ],
+                        ),
                       ),
                       title: Row(
                         children: [
@@ -83,14 +88,16 @@ class ContractsWidget extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  const BodyText(
+                                  BodyText(
                                     text: "المؤجر",
                                     fontSize: 10,
+                                    textColor: AppColors.black.withOpacity(.6),
                                   ),
                                   SizedBox(height: 7.0.v),
-                                  const BodyText(
+                                  BodyText(
                                     text: "المستأجر",
                                     fontSize: 10,
+                                    textColor: AppColors.black.withOpacity(.6),
                                   ),
                                 ],
                               ),
@@ -124,6 +131,11 @@ class ContractsWidget extends StatelessWidget {
                             text: "تفاصيل",
                             fontSize: 12,
                           ),
+                          BodyText(
+                            text: contract.updatedAt?.dayFormatWithLocale('ar')??'',
+                            fontSize: 12,
+                            textColor: AppColors.gray,
+                          ),
                         ],
                       ),
                     ),
@@ -138,16 +150,54 @@ class ContractsWidget extends StatelessWidget {
   }
 
   // 'New', 'Renewed', 'Finished'
-  Color _getColor(String item) {
-    switch (item) {
-      case 'New':
+  Color _getColor(ContractType type) {
+    switch(type){
+      case ContractType.waiting:
+        return AppColors.orangeAccent;
+      case ContractType.accepted:
         return AppColors.mintGreen;
-      case 'Finished':
+      case ContractType.expired:
+        return AppColors.deepCrimson;
+      case ContractType.canceled:
         return AppColors.cherryRed;
-      case 'Renewed':
-        return AppColors.mintGreen;
-      default:
+      case ContractType.none:
         return AppColors.mintGreen;
     }
   }
+
+  String _getText(ContractType type){
+    switch(type){
+      case ContractType.waiting:
+        return 'بأنتظار الموافقة';
+      case ContractType.accepted:
+        return 'مقبول';
+      case ContractType.expired:
+        return 'منتهي';
+      case ContractType.canceled:
+        return 'ملغي';
+      case ContractType.none:
+        return '';
+    }
+  }
+
+  // 'New', 'Renewed', 'Finished'
+  // 'منتهي', 'ملغي', 'بأنتظار الموافقة', 'مقبول'
+  ContractType _getType(ContractModel contract) {
+    if(contract.contractEndDate!.isBefore(DateTime.now())) return ContractType.expired;
+    if((contract.lessorApproved??false) && (contract.tenantApproved??false)) {
+      if(contract.requiredApprove == '1') return ContractType.canceled;
+      if(contract.requiredApprove == '2') return ContractType.none;
+    }
+    if(contract.contractType == '') {
+      if(contract.requiredApprove == '1') return ContractType.waiting;
+      if(contract.requiredApprove == '2') return ContractType.none;
+    }
+    if(contract.contractType == 'New') {
+      if(contract.requiredApprove == '1') return ContractType.accepted;
+      if(contract.requiredApprove == '2') return ContractType.none;
+    }
+    return ContractType.none;
+  }
 }
+
+

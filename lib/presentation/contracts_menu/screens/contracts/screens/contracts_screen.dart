@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
 import 'package:maktab_lessor/presentation/widgets/retry_button.dart';
 
 import '../../../../../../core/helpers/size_helper.dart';
@@ -41,10 +42,22 @@ class ContractsScreen extends StatelessWidget {
                       const SectionTitle(title: "نوع العقد"),
                       SizedBox(height: 20.v),
                       ContractTypeMenuWidget(
-                        value: 'All',
-                        contractTypesTitle: const ["كل العقود", "جديد", "مجدد", "منتهي"],
-                        contractTypesValue: const ['All', 'New', 'Renewed', 'Finished'],
-                        onSelected: (String? value) {
+                        value: ContractType.none,
+                        contractTypesTitle: [
+                          _getText(ContractType.none),
+                          _getText(ContractType.waiting),
+                          _getText(ContractType.accepted),
+                          _getText(ContractType.canceled),
+                          _getText(ContractType.expired)
+                        ],
+                        contractTypesValue: const [
+                          ContractType.none,
+                          ContractType.waiting,
+                          ContractType.accepted,
+                          ContractType.canceled,
+                          ContractType.expired
+                        ],
+                        onSelected: (ContractType? value) {
                           context.read<ContractsBloc>().add(FilterContractsEvent(value));
                         },
                       ),
@@ -70,13 +83,46 @@ class ContractsScreen extends StatelessWidget {
                   children: [
                     const SectionTitle(title: "نوع العقد"),
                     SizedBox(height: 20.v),
-                    ContractTypeMenuWidget(
-                      value: state.option,
-                      contractTypesTitle: const ["كل العقود", "جديد", "مجدد", "منتهي"],
-                      contractTypesValue: const ['All', 'New', 'Renewed', 'Finished'],
-                      onSelected: (String? value) {
-                        context.read<ContractsBloc>().add(FilterContractsEvent(value));
-                      },
+                    Row(
+                      children: [
+                        Expanded(
+                          child: ContractTypeMenuWidget(
+                            value: state.option,
+                            contractTypesTitle: [
+                              _getText(ContractType.none),
+                              _getText(ContractType.waiting),
+                              _getText(ContractType.accepted),
+                              _getText(ContractType.canceled),
+                              _getText(ContractType.expired)
+                            ],
+                            contractTypesValue: const [
+                              ContractType.none,
+                              ContractType.waiting,
+                              ContractType.accepted,
+                              ContractType.canceled,
+                              ContractType.expired
+                            ],
+                            onSelected: (ContractType? value) {
+                              context.read<ContractsBloc>().add(FilterContractsEvent(value));
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 20.0.h,),
+                        Expanded(
+                          child: MaktabButton(
+                            height: 50.0.v,
+                            text: 'إنشاء عقد',
+                            bold: true,
+                            icon: const Icon(
+                              Icons.add,
+                              color: AppColors.white,
+                            ),
+                            onPressed: () {
+                              context.pushNamed(AppRoutes.addContractScreen);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: 10.v),
                     ContractsWidget(
@@ -96,16 +142,31 @@ class ContractsScreen extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.pushNamed(AppRoutes.addContractScreen);
-        },
-        backgroundColor: AppColors.mintGreen,
-        child: const Icon(
-          Icons.add,
-          color: AppColors.white,
-        ),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     context.pushNamed(AppRoutes.addContractScreen);
+      //   },
+      //   backgroundColor: AppColors.mintGreen,
+      //   child: const Icon(
+      //     Icons.add,
+      //     color: AppColors.white,
+      //   ),
+      // ),
     );
+  }
+
+  String _getText(ContractType type) {
+    switch (type) {
+      case ContractType.waiting:
+        return 'بأنتظار الموافقة';
+      case ContractType.accepted:
+        return 'مقبول';
+      case ContractType.expired:
+        return 'منتهي';
+      case ContractType.canceled:
+        return 'ملغي';
+      case ContractType.none:
+        return 'الكل';
+    }
   }
 }

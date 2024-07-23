@@ -62,6 +62,7 @@ import 'package:maktab_lessor/presentation/complaints/screens/complaints_screen.
 import 'package:maktab_lessor/presentation/splash/screens/splash_screen.dart';
 import 'package:maktab_lessor/presentation/more/screens/user_agreement_screen.dart';
 import 'package:maktab_lessor/presentation/verify_national_access/screens/verify_national_access_screen.dart';
+import '../../data/models/order/order_model.dart';
 import '../../domain/navigation/navigation_bloc.dart';
 import '../../domain/navigation/navigation_event.dart';
 import '../../presentation/account_summary/screens/account_summary_screen.dart';
@@ -447,7 +448,7 @@ final GoRouter appRouter = GoRouter(
                 name: AppRoutes.addContractScreen,
                 // builder: (context, state) => const AddContractScreen(),
                 pageBuilder: (context, state) =>
-                    _pageBuilder(context, state, AddContractScreen(orderID: state.extra as int?)),
+                    _pageBuilder(context, state, AddContractScreen(order: state.extra as OrderModel?)),
               ),
             ]),
       ],

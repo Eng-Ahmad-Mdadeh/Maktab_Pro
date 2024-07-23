@@ -73,6 +73,8 @@ class HomeHeader extends StatelessWidget {
                   child: BlocBuilder<NotificationsBloc, NotificationsState>(
                     builder: (context, state) {
                       if (state is NotificationsSuccess) {
+                        final notificationsCount = state.notifications.where((e) => !e.seen).length;
+                        if(notificationsCount <= 0) return const SizedBox();
                         return Container(
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
@@ -80,13 +82,14 @@ class HomeHeader extends StatelessWidget {
                           ),
                           padding: EdgeInsets.only(top: 6.0.v, bottom: 2.0.v, left: 6.0.h, right: 6.0.h),
                           child: BodyText(
-                            text: state.notifications.where((e) => !e.seen).length.toString(),
+                            text: notificationsCount.toString(),
                             textColor: AppColors.white,
                             fontSize: 12,
                           ),
                         );
                       }
                       return const SizedBox();
+
                     },
                   ),
                 ),

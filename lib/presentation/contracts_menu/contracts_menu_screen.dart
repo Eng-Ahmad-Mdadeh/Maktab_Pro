@@ -7,6 +7,8 @@ import 'package:maktab_lessor/presentation/widgets/maktab_app_bar.dart';
 import 'package:maktab_lessor/presentation/widgets/maktab_navigation_item.dart';
 
 import '../../domain/contract_models/contract_models_bloc.dart';
+import '../../domain/contracts/contracts_bloc.dart';
+import '../../domain/contracts/contracts_event.dart';
 
 class ContractsMenuScreen extends StatelessWidget {
   const ContractsMenuScreen({super.key});
@@ -30,7 +32,10 @@ class ContractsMenuScreen extends StatelessWidget {
             ),
             MaktabNavigationItemItem(
               title: 'عقود التأجير',
-              onTap: () => context.pushNamed(AppRoutes.contractsScreen),
+              onTap: () {
+                context.read<ContractsBloc>().add(GetContractsEvent());
+                context.pushNamed(AppRoutes.contractsScreen);
+              },
             ),
           ],
         ),

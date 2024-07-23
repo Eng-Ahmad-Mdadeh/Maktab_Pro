@@ -150,7 +150,7 @@ class OrderScreen extends StatelessWidget {
                           fontSize: 17.0,
                           onPressed: order.reservation == 'acceptably'
                               ? () {
-                                  context.pushNamed(AppRoutes.addContractScreen, extra: order.id);
+                                  context.pushNamed(AppRoutes.addContractScreen, extra: order);
                                 }
                               : null,
                         ),

@@ -1,12 +1,11 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:maktab_lessor/data/repositories/office_repository.dart';
-import 'package:maktab_lessor/domain/contracts/contracts_event.dart';
-import 'package:maktab_lessor/presentation/widgets/maktab_snack_bar.dart';
 
+import '../../../../../../../../../data/models/order/order_model.dart';
+import '../../../../../../../../widgets/maktab_snack_bar.dart';
+import '../../../../../../../../../data/repositories/office_repository.dart';
+import '../../../../../../../../../domain/contracts/contracts_event.dart';
 import '../../../../../../../../../core/services/service_locator.dart';
 import '../../../../../../../../../domain/contract_models/contract_models_bloc.dart';
 import '../../../../../../../../../domain/contracts/contract/add/contract_cubit.dart';
@@ -22,9 +21,9 @@ import '../widgets/contracts_buttons.dart';
 import '../widgets/steps_widget.dart';
 
 class AddContractScreen extends StatefulWidget {
-  final int? orderID;
+  final OrderModel? order;
 
-  const AddContractScreen({super.key, this.orderID});
+  const AddContractScreen({super.key, this.order});
 
   @override
   State<AddContractScreen> createState() => _ContractScreenState();
@@ -34,16 +33,14 @@ class _ContractScreenState extends State<AddContractScreen> {
   late ContractStepCubit _contractStepCubit;
   late ContractCubit _contractCubit;
 
-  // late ContractModelBloc _contractModelBloc;
   late SearchDataBloc _searchDataBloc;
 
   @override
   void initState() {
     context.read<OrdersBloc>().add(GetOrdersWithoutPaginationEvent());
     context.read<ContractModelsBloc>().add(GetContractsModels());
-    // _contractModelBloc = ContractModelBloc(locator<ContractModelRepository>());
     _contractStepCubit = ContractStepCubit();
-    _contractCubit = ContractCubit(_contractStepCubit, widget.orderID);
+    _contractCubit = ContractCubit(_contractStepCubit, widget.order);
     _searchDataBloc = SearchDataBloc(locator<OfficeRepository>())..add(GetSearchDataEvent());
     super.initState();
   }
@@ -59,7 +56,6 @@ class _ContractScreenState extends State<AddContractScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log("GetOrdersWithoutPaginationEvent");
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -75,21 +71,6 @@ class _ContractScreenState extends State<AddContractScreen> {
       ],
       child: Scaffold(
         appBar: AppBar(
-          // title: BlocBuilder<GeneralSettingBloc, SettingsState>(
-          //   builder: (context, state) {
-          //     if (state is SettingsSuccess) {
-          //       return MaktabImageView(
-          //         imagePath: ApiEndpoints.siteUrl + (state.generalSettings.logo ?? ''),
-          //         // color: AppColors.black,
-          //         height: 50.h,
-          //       );
-          //     }
-          //     return const SizedBox();
-          //   },
-          // ),
-          // centerTitle: false,
-          // leading: const SizedBox(),
-          // leadingWidth: 0,
           leading: IconButton(
             onPressed: context.pop,
             icon: const Icon(Icons.arrow_back_ios),

@@ -1,16 +1,18 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_switch.dart';
 
 import '../../../../../../../../../../../core/helpers/size_helper.dart';
 import '../../../../../../../../../../data/models/contract/contract_model_model.dart';
 import '../../../../../../../../../../domain/contract_models/contract_models_bloc.dart';
 import '../../../../../../../../../../domain/contracts/contract/add/contract_cubit.dart';
+import '../../../../../../../../../../domain/contracts/contract/add/contract_state.dart';
 import '../../../../../../../../../widgets/maktab_drop_down_form_field.dart';
 import '../../../../../../../../../widgets/body_text.dart';
+import '../../../../../../../../../widgets/section_title.dart';
 
 class ContractStep4 extends StatelessWidget {
   const ContractStep4({super.key});
@@ -25,6 +27,20 @@ class ContractStep4 extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const SectionTitle(title: 'يجب موافقة الطرف الاخر؟'),
+                  BlocBuilder<ContractCubit, ContractEntity>(
+                    builder: (context, state) {
+                      return MaktabSwitch(
+                        value: state.mustAccept ?? false,
+                        onChanged: context.read<ContractCubit>().setmustAccept,
+                      );
+                    },
+                  ),
+                ],
+              ),
               BlocBuilder<ContractModelsBloc, ContractModelsState>(
                 builder: (context, state) {
                   if (state is ContractModelsSuccess) {
@@ -44,10 +60,7 @@ class ContractStep4 extends StatelessWidget {
                 },
               ),
               ContractHtmlEditorWidget(
-                QuillController(
-                  selection: TextSelection.fromPosition(const TextPosition(offset: 1)),
-                  document: Document(),
-                ),
+                context.read<ContractCubit>().quillController,
                 title: "محتوى العقد",
                 disabled: true,
               ),
@@ -69,7 +82,7 @@ class ContractHtmlEditorWidget extends StatelessWidget {
   final QuillController _quillController;
 
   const ContractHtmlEditorWidget(
-   this._quillController, {
+    this._quillController, {
     super.key,
     required this.title,
     this.disabled = false,

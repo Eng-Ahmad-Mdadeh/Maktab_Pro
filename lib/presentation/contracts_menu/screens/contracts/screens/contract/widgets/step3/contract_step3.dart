@@ -129,6 +129,15 @@ class ContractStep3 extends StatelessWidget {
                       ContractGridItem1(title: "الجنسية", value: contract.tenantNationality),
                       ContractGridItem1(title: "رقم الهاتف المحمول", value: contract.tenantPhone),
                       ContractGridItem1(title:"العنوان", value: contract.tenantAddress),
+                      if(contract.tenantType == 'facility')
+                        ...{
+                            ContractGridItem1(title:"اسم المنشأة", value: (contract.facilityName??'').isEmpty ? 'لا يوجد' : contract.facilityName),
+                            ContractGridItem1(title:"نوع المنشأة", value: (contract.facilityType??'').isEmpty ? 'لا يوجد' : contract.facilityType),
+                            ContractGridItem1(title:"الرقم الموحد", value: (contract.unifiedNumber??'').isEmpty ? 'لا يوجد' : contract.unifiedNumber),
+                            ContractGridItem1(title:"تاريخ السجل التجاري", value: (contract.commercialRecordDate??'').isEmpty ? 'لا يوجد' : contract.commercialRecordDate),
+                            ContractGridItem1(title:"رقم السجل التجاري", value: (contract.recordNumber??'').isEmpty ? 'لا يوجد' : contract.recordNumber),
+                        },
+
                     ],
                   ),
                 ),
