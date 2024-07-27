@@ -54,6 +54,7 @@ import '../../data/data_sources/remote/contract_model_remote_data_source.dart';
 import '../../data/data_sources/remote/contract_remote_data_source.dart';
 import '../../data/data_sources/remote/evaluation_remote_data_source.dart';
 import '../../data/data_sources/remote/invoice_remote_data_source.dart';
+import '../../data/data_sources/remote/menus_remote_data_source.dart';
 import '../../data/data_sources/remote/notification_remote_data_source.dart';
 import '../../data/data_sources/remote/order_remote_data_source.dart';
 import '../../data/repositories/account_summary_repository.dart';
@@ -61,6 +62,7 @@ import '../../data/repositories/contract_model_repository.dart';
 import '../../data/repositories/contract_repository.dart';
 import '../../data/repositories/evaluation_repository.dart';
 import '../../data/repositories/invoice_repository.dart';
+import '../../data/repositories/menus_repository.dart';
 import '../../data/repositories/notification_repository.dart';
 import '../../data/repositories/order_repository.dart';
 import '../../data/repositories/settings_repository.dart';
@@ -75,6 +77,7 @@ import '../../domain/notification/notification_bloc.dart';
 import '../../domain/orders/order/order_bloc.dart';
 import '../../domain/orders/orders_bloc.dart';
 import '../../domain/settings/settings_bloc.dart';
+import '../../presentation/menus/menus_bloc.dart';
 
 final locator = GetIt.I;
 
@@ -243,6 +246,12 @@ Future<void> setup() async {
     ),
   );
 
+  locator.registerFactory<MenusBloc>(
+        () => MenusBloc(
+      locator<MenusRepository>(),
+    ),
+  );
+
 
   //Repositories
   locator.registerLazySingleton<AuthRepository>(
@@ -357,6 +366,12 @@ Future<void> setup() async {
     ),
   );
 
+  locator.registerLazySingleton<MenusRepository>(
+        () => MenusRepository(
+      locator<MenusRemoteDataSource>(),
+    ),
+  );
+
   //Data Sources
   locator.registerLazySingleton<AuthRemoteDataSource>(
     () => AuthRemoteDataSource(),
@@ -430,6 +445,10 @@ Future<void> setup() async {
 
   locator.registerLazySingleton<EvaluationRemoteDataSource>(
         () => EvaluationRemoteDataSource(),
+  );
+
+  locator.registerLazySingleton<MenusRemoteDataSource>(
+        () => MenusRemoteDataSource(),
   );
 
   //External

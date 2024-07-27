@@ -472,13 +472,14 @@ class Office extends Equatable{
     );
   }
 
+
   static String getOfficeState(bool state, bool active) {
-    if (active) {
-      return 'معروض';
+    if (state && active) {
+      return "معروض";
     } else if (state && !active) {
-      return 'معلق';
+      return "معلق";
     } else {
-      return 'غير معروض';
+      return "غير معروض";
     }
   }
 

@@ -25,6 +25,12 @@ class ApiEndpoints {
   static const searchData = 'search_data';
   static const officeSettings = 'office_settings';
   static const general = 'general';
+
+  //Settings
+  static const menus = 'menus/';
+  static const getFooter = 'getFooter';
+
+
   //Office
   static const offices = 'offices/';
   static const updateOfficeInfo = 'updateInfo';
