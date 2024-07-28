@@ -46,14 +46,16 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-    <string>We need reach photos to upload Aqars photos</string>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>We need it to make call</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Location is required when share an Aqar</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Location is required when share an Aqar</string>
+	<string>We need reach photos to upload Aqars photos</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need it to make call</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Location is required when share an Aqar</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location is required when share an Aqar</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
 	<key>FLTEnableImpeller</key>
-        <false />
+	<false/>
 </dict>
 </plist>
