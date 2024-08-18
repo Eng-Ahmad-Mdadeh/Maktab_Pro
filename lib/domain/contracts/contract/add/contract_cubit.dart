@@ -492,20 +492,20 @@ class ContractCubit extends Cubit<ContractEntity> {
 
   void setcontractContent(ContractModelModel? value) {
     if (value?.contentContractModel != null) {
-      _quillController.document.insert(0, value!.contentContractModel!);
+      _quillController.document = Document()..insert(0, value!.contentContractModel!);
     }
     emit(state.copyWith(contractContent: value?.contentContractModel));
     emit(state.copyWith(contractModelId: value?.id?.toString()));
   }
 
   void clearContractContent() {
-    _quillController.document.insert(0, '');
+    _quillController.document = Document();
     emit(state.copyWith(contractContent: '', contractModelId: ''));
   }
 
   final QuillController _quillController = QuillController(
     selection: TextSelection.fromPosition(
-      const TextPosition(offset: 1),
+      const TextPosition(offset: 0),
     ),
     document: Document(),
   );

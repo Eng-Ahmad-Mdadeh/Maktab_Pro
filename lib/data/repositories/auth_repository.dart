@@ -98,6 +98,7 @@ class AuthRepository {
         (r) async {
           String? token = await _localDataSource.getUserToken();
           log("USER_TOKEN: $token");
+          print("USER_TOKEN: $token");
           return true;
         },
       );

@@ -52,6 +52,7 @@ class NetworkHelper {
   Future<dynamic> post(String url, {dynamic data, List<Map<String, dynamic>>? files}) async {
     log("____________________ post _______________________");
     log(url);
+    log(data.toString());
     log("____________________ post _______________________");
     String? token = await getToken();
     FormData formData = FormData();
@@ -140,7 +141,7 @@ class NetworkHelper {
       case "500":
         return InternalServerErrorException(message);
       default:
-        return ApiException(message);
+        return ApiException('خطأ غير معروف');
     }
   }
 

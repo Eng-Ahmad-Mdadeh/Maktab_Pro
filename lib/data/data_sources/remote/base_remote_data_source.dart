@@ -71,6 +71,7 @@ class BaseRemoteDataSource<T> {
         },
       );
     } on ApiException catch (e, s) {
+      log("postData: ($endpoint, data: $data)");
       log(e.toString());
       log(s.toString());
       return Left(e);

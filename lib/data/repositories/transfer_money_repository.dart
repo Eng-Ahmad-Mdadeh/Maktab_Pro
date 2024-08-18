@@ -6,23 +6,20 @@ import 'package:maktab_lessor/data/models/transfers/transfer_pagination_model.da
 class TransferMoneyRepository {
   final TransferMoneyRemoteDataSource _transferMoneyRemoteDataSource;
 
-  TransferMoneyRepository(
-      {required TransferMoneyRemoteDataSource transferMoneyRemoteDataSource})
+  TransferMoneyRepository({required TransferMoneyRemoteDataSource transferMoneyRemoteDataSource})
       : _transferMoneyRemoteDataSource = transferMoneyRemoteDataSource;
 
-  Future<Either<AppException, TransferPagination>> getAllTransfers(
-      {required int page}) async {
+  Future<Either<AppException, TransferPagination>> getAllTransfers({required int page}) async {
     final result = await _transferMoneyRemoteDataSource.getAllTransfers(page);
     return result.fold(
       (error) => Left(error),
       (right) {
         if (right.status) {
           // log(right.data.toString());
-          final TransferPagination transferPagination =
-              TransferPagination.fromJson(right.data);
+          final TransferPagination transferPagination = TransferPagination.fromJson(right.data);
           return Right(transferPagination);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );

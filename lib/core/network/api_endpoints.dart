@@ -15,8 +15,8 @@ class ApiEndpoints {
   static const userAgreement = "term";
   //Financial Transactions
   static const receivingMoneyMethod = 'receive_monies/';
-  static const bankMethod = 'bank';
-  static const stcMethod = 'stc';
+  static const bankMethod = 'Bank';
+  static const stcMethod = 'Stc';
   static const bankAccounts = 'bank_accounts';
   //Languages
   static const languages = "languages";

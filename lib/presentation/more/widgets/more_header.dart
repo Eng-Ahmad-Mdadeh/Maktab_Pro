@@ -55,6 +55,8 @@ class MoreHeader extends StatelessWidget {
                                 : AppAssets.profile,
                             height: 70.h,
                             width: 70.v,
+                            isExpanded: true,
+                            fit: BoxFit.cover,
                           ),
                         ),
                         SizedBox(width: 20.h),

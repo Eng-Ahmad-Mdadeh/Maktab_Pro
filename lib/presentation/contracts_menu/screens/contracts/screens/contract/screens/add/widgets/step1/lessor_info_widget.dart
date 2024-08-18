@@ -115,8 +115,8 @@ class LessorInfoWidget extends StatelessWidget {
                   controller: context.read<ContractCubit>().lessorDateBirth,
                 ),
                 ContractInputWidget(
-                  title: "رقم البيان",
-                  hint: "رقم البيان",
+                  title: "رقم الآيبان",
+                  hint: "رقم الآيبان",
                   // inputFormatters: [
                   //   // FilteringTextInputFormatter.allow(RegExp("\\d{2}[a-zA-Z0-9]{18}")),
                   // ],

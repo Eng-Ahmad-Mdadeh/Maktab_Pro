@@ -22,7 +22,7 @@ class AddContractsModelScreen extends StatelessWidget {
   final TextEditingController _descriptionController = TextEditingController();
   final TextEditingController _statusController = TextEditingController();
   final QuillController _quillController = QuillController(
-    selection: TextSelection.fromPosition(const TextPosition(offset: 1)),
+    selection: TextSelection.fromPosition(const TextPosition(offset: 0)),
     document: Document(),
   );
   final GlobalKey<FormState> _key = GlobalKey<FormState>();

@@ -62,7 +62,7 @@ class _MoneyTransfersScreenState extends State<MoneyTransfersScreen> {
             listener: (context, state) {
               if (state.fetchingDataState == FetchingDataStates.loading) {
                 LoadingDialog.show(context);
-              } else if (state.fetchingDataState == FetchingDataStates.failure && state.page == 2) {
+              } else if (state.fetchingDataState == FetchingDataStates.failure) {
                 LoadingDialog.hide(context);
               } else if (state.fetchingDataState == FetchingDataStates.success && state.page == 2) {
                 LoadingDialog.hide(context);
