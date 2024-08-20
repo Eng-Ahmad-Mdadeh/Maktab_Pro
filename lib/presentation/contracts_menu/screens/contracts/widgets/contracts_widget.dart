@@ -183,19 +183,23 @@ class ContractsWidget extends StatelessWidget {
   // 'New', 'Renewed', 'Finished'
   // 'منتهي', 'ملغي', 'بأنتظار الموافقة', 'مقبول'
   ContractType _getType(ContractModel contract) {
-    if(contract.contractEndDate!.isBefore(DateTime.now())) return ContractType.expired;
-    if((contract.lessorApproved??false) && (contract.tenantApproved??false)) {
-      if(contract.requiredApprove == '1') return ContractType.canceled;
-      if(contract.requiredApprove == '2') return ContractType.none;
-    }
-    if(contract.contractType == '') {
-      if(contract.requiredApprove == '1') return ContractType.waiting;
-      if(contract.requiredApprove == '2') return ContractType.none;
-    }
-    if(contract.contractType == 'New') {
-      if(contract.requiredApprove == '1') return ContractType.accepted;
-      if(contract.requiredApprove == '2') return ContractType.none;
-    }
+    // if(contract.contractEndDate!.isBefore(DateTime.now())) return ContractType.expired;
+    // if((contract.lessorApproved??false) && (contract.tenantApproved??false)) {
+    //   if(contract.requiredApprove == '1') return ContractType.canceled;
+    //   if(contract.requiredApprove == '2') return ContractType.none;
+    // }
+    // if(contract.contractType == '') {
+    //   if(contract.requiredApprove == '1') return ContractType.waiting;
+    //   if(contract.requiredApprove == '2') return ContractType.none;
+    // }
+    // if(contract.contractType == 'New') {
+    //   if(contract.requiredApprove == '1') return ContractType.accepted;
+    //   if(contract.requiredApprove == '2') return ContractType.none;
+    // }
+    if(contract.contractType == 'expired') return ContractType.expired;
+    if(contract.contractType == 'cancelled') return ContractType.canceled;
+    if(contract.contractType == 'approved') return ContractType.accepted;
+    if(contract.contractType == 'new_waiting_tenant_approve') return ContractType.waiting;
     return ContractType.none;
   }
 }

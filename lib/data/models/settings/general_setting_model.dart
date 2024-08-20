@@ -22,6 +22,10 @@ class GeneralSettingsModel extends Equatable {
     required this.imageDashboard,
     required this.imageFavorite,
     required this.iconBrowser,
+
+    required this.vIosBusiness,
+    required this.vAndroidBusiness,
+    required this.vAppGalleryBusiness,
   });
 
   final String? siteTitleAr;
@@ -45,6 +49,11 @@ class GeneralSettingsModel extends Equatable {
   final String? imageFavorite;
   final String? iconBrowser;
 
+
+  final String? vIosBusiness;
+  final String? vAndroidBusiness;
+  final String? vAppGalleryBusiness;
+
   GeneralSettingsModel copyWith({
     String? siteTitleAr,
     String? siteTitleEn,
@@ -66,6 +75,9 @@ class GeneralSettingsModel extends Equatable {
     String? imageDashboard,
     String? imageFavorite,
     String? iconBrowser,
+    String? vIosBusiness,
+    String? vAndroidBusiness,
+    String? vAppGalleryBusiness,
   }) {
     return GeneralSettingsModel(
       siteTitleAr: siteTitleAr ?? this.siteTitleAr,
@@ -88,6 +100,9 @@ class GeneralSettingsModel extends Equatable {
       imageDashboard: imageDashboard ?? this.imageDashboard,
       imageFavorite: imageFavorite ?? this.imageFavorite,
       iconBrowser: iconBrowser ?? this.iconBrowser,
+      vIosBusiness: vIosBusiness ?? this.vIosBusiness,
+      vAndroidBusiness: vAndroidBusiness ?? this.vAndroidBusiness,
+      vAppGalleryBusiness: vAppGalleryBusiness ?? this.vAppGalleryBusiness,
     );
   }
 
@@ -113,6 +128,9 @@ class GeneralSettingsModel extends Equatable {
       imageDashboard: json["image_dashboard"],
       imageFavorite: json["image_favorite"],
       iconBrowser: json["icon_browser"],
+      vIosBusiness: json["v_ios_business"],
+      vAndroidBusiness: json["v_android_business"],
+      vAppGalleryBusiness: json["v_app_gallery_business"],
     );
   }
 
@@ -137,6 +155,9 @@ class GeneralSettingsModel extends Equatable {
     "image_dashboard": imageDashboard,
     "image_favorite": imageFavorite,
     "icon_browser": iconBrowser,
+    "v_ios_business": vIosBusiness,
+    "v_android_business": vAndroidBusiness,
+    "v_app_gallery_business": vAppGalleryBusiness,
   };
 
   @override

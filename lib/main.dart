@@ -92,12 +92,9 @@ class MaktabApp extends StatelessWidget {
           supportedLocales: const [Locale('en', ''), Locale('ar', '')],
           routerConfig: appRouter,
           builder: (context, child) {
-            return ScrollConfiguration(
-              behavior: CustomScrollBehavior(),
-              child: Directionality(
-                textDirection: TextDirection.rtl,
-                child: child!,
-              ),
+            return Directionality(
+              textDirection: TextDirection.rtl,
+              child: child!,
             );
           },
         ),
