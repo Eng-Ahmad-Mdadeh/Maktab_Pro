@@ -1,7 +1,7 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/models/account_summary/account_summary_model.dart';
 import '../../data/repositories/account_summary_repository.dart';

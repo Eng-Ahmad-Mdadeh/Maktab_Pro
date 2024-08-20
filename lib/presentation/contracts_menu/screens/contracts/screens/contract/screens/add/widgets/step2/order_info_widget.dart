@@ -24,11 +24,9 @@ class OrderInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ContractCubit, ContractEntity>(
       listener: (context, state) {
-        print("orderrrrrrrrrrrrrrrrrrrr -1");
-        final orderID = context.read<ContractCubit>().orderIdFromOrders;
+        final orderID = context.read<ContractCubit>().order?.id;
         if (orderID != null) {
-          if(!(state.isOrderOn??false)) {
-            print("orderrrrrrrrrrrrrrrrrrrr -2");
+          if (!(state.isOrderOn ?? false)) {
             context.read<ContractCubit>().setisOrderOn(true, orderID);
           }
         }
@@ -42,23 +40,13 @@ class OrderInfoWidget extends StatelessWidget {
               value: state.isOrderOn ?? false,
             ),
             if (state.isOrderOn ?? false)
-              BlocConsumer<OrdersBloc, OrdersState>(
-                listener: (context, orderState) {
-                    print("orderrrrrrrrrrrrrrrrrrrr");
-                  if (orderState is OrdersSuccess) {
-                    final orderID = context.read<ContractCubit>().orderIdFromOrders;
-
-                  }
-                },
+              BlocBuilder<OrdersBloc, OrdersState>(
                 builder: (context, orderState) {
-                  print("orderrrrrrrrrrrrrrrrrrrr 2");
                   if (orderState is OrdersSuccess) {
-                    print("orderrrrrrrrrrrrrrrrrrrr 3");
                     return ContractOrderSelectWidget(
                       title: "الرجاء اختيار الطلب",
-                      items: orderState.withoutPagination??[],
-                      initialValue:
-                          context.read<ContractCubit>().orderIdFromOrders?.toString() ?? state.orderId,
+                      items: orderState.withoutPagination ?? [],
+                      value: context.read<ContractCubit>().order ?? state.order,
                       onChanged: context.read<ContractCubit>().setorder,
                     );
                   }
@@ -78,8 +66,6 @@ class OrderInfoWidget extends StatelessWidget {
               onChanged: context.read<ContractCubit>().setofficeName,
               controller: context.read<ContractCubit>().officeName,
             ),
-
-            //
             BlocBuilder<SearchDataBloc, SearchDataState>(
               builder: (context, searchDataState) {
                 if (searchDataState is SearchDataSuccess) {
@@ -98,7 +84,6 @@ class OrderInfoWidget extends StatelessWidget {
                 return const BodyText(text: "لا يمكن التحميل هنالك خطأ");
               },
             ),
-            //
             BlocBuilder<SearchDataBloc, SearchDataState>(
               builder: (context, searchDataState) {
                 if (searchDataState is SearchDataSuccess) {

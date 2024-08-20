@@ -23,6 +23,11 @@ final class ContractSuccess extends ContractState {
   List<Object?> get props => [contract];
 }
 
+final class ContractDeletedSuccess extends ContractState {
+  @override
+  List<Object?> get props => [];
+}
+
 final class ContractFailure extends ContractState {
   final String message;
 

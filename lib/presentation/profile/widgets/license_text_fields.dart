@@ -45,7 +45,7 @@ class LicenseTextFields extends StatelessWidget {
             if (value!.isEmpty) {
               return 'الرجاء ادخال رقم الرخصة';
             }
-            if (value.length < 7) {
+            if (value.length < 10) {
               return 'الرجاء ادخال رقم الرخصة صحيح';
             }
             return null;

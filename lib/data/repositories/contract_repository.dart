@@ -22,7 +22,9 @@ class ContractRepository {
             right.data.map((dynamic data) => ContractModel.fromJson(data)),
           );
           return Right(contracts);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -47,14 +49,6 @@ class ContractRepository {
 
   Future<Either<AppException, ContractModel>> createContract(ContractEntity contractEntity) async {
     try {
-      // final contractData = _createContractDataMap(
-      //     status: status,
-      //     statusContract: statusContract,
-      //     type: type,
-      //     totalPrice: totalPrice,
-      //     ownershipNumber: ownershipNumber,
-      //     contentContract: contentContract,
-      //     orderId: orderId);
       final result = await _remoteDataSource.createContract(contractEntity.toJson());
       log(result.toString());
       return result.fold(
@@ -63,15 +57,17 @@ class ContractRepository {
           try {
             final ContractModel contract = ContractModel.fromJson(right.data);
             return Right(contract);
-          } catch (e) {
-            rethrow;
-            // return Left(ConversionException(e.toString()));
+          } catch (e, s) {
+            log(e.toString());
+            log(s.toString());
+            return Left(ConversionException(e.toString()));
           }
         },
       );
-    } catch (e) {
-      rethrow;
-      // return Left(ConversionException(e.toString()));
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+      return Left(ConversionException(e.toString()));
     }
   }
 

@@ -1,11 +1,11 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:maktab_lessor/core/services/service_locator.dart';
 import 'package:maktab_lessor/data/repositories/order_repository.dart';
 
@@ -21,8 +21,7 @@ import 'contract_state.dart';
 class ContractCubit extends Cubit<ContractEntity> {
   late final PageController _controller;
 
-  ContractCubit(ContractStepCubit contractStepCubit, this._orderIdFromOrders)
-      : super(ContractEntity.empty()) {
+  ContractCubit(ContractStepCubit contractStepCubit, this._order) : super(ContractEntity.empty()) {
     _controller = PageController(initialPage: 0)
       ..addListener(() {
         final i = _controller.page?.round() ?? 0;
@@ -41,9 +40,9 @@ class ContractCubit extends Cubit<ContractEntity> {
 
   late LatLng _position;
 
-  final int? _orderIdFromOrders;
+  final OrderModel? _order;
 
-  int? get orderIdFromOrders => _orderIdFromOrders;
+  OrderModel? get order => _order;
 
   PageController get pageController => _controller;
   bool _step1Completed = false;
@@ -147,7 +146,7 @@ class ContractCubit extends Cubit<ContractEntity> {
         MaktabSnackbar.showWarning(context, "يجب تحديد نوع هوية المستأجر");
         return false;
       }
-      final content = await htmlEditorController.getText();
+      final content = _quillController.document.toPlainText();
       emit(state.copyWith(contractContent: content));
 
       log("HERE THE STATE: ");
@@ -272,10 +271,29 @@ class ContractCubit extends Cubit<ContractEntity> {
   final TextEditingController tenantIdentityNum = TextEditingController();
 
   void settenantIdentityType(IdentityType? value) => emit(state.copyWith(tenantIdentityType: value));
+
+  void settenantType(TenantType? value) => emit(state.copyWith(tenantType: value));
   final TextEditingController tenantIdentityType = TextEditingController();
 
   void settenantNationality(String? value) => emit(state.copyWith(tenantNationality: value));
   final TextEditingController tenantNationality = TextEditingController();
+
+  void settenantOrgNumber(String? value) => emit(state.copyWith(tenantOrgNumber: value));
+  final TextEditingController tenantOrgNumber = TextEditingController();
+
+  void settenantOrgName(String? value) => emit(state.copyWith(tenantOrgName: value));
+  final TextEditingController tenantOrgName = TextEditingController();
+
+  void settenantOrgType(String? value) => emit(state.copyWith(tenantOrgType: value));
+  final TextEditingController tenantOrgType = TextEditingController();
+
+  void setrecordDateDT(DateTime? value) {
+    recordDate.text = value?.dayFormatWithLocale('ar') ?? '';
+    emit(state.copyWith(recordDate: value.toString()));
+  }
+
+  void setrecordDate(String? value) => emit(state.copyWith(recordDate: value));
+  final TextEditingController recordDate = TextEditingController();
 
   void settenantPhone(String? value) => emit(state.copyWith(tenantPhone: value));
   final TextEditingController tenantPhone = TextEditingController();
@@ -303,7 +321,7 @@ class ContractCubit extends Cubit<ContractEntity> {
     officeNeighborhood.clear();
     officeStreet.clear();
     if (orderId != null) {
-      if((value??false)) {
+      if ((value ?? false)) {
         final result = await locator<OrderRepository>().getOrdersWithoutPage();
         result.fold((l) {}, (orders) {
           final order = orders.firstWhereOrNull((e) => e.id == orderId);
@@ -318,9 +336,11 @@ class ContractCubit extends Cubit<ContractEntity> {
         .setNull(
           officeLatitude: true,
           officeLongitude: true,
-          orderId: true,
+          order: true,
         ));
   }
+
+  void setmustAccept(bool? value) => emit(state.copyWith(mustAccept: value));
 
   void setorder(OrderModel? value) {
     officeName.text = value?.office?.title ?? '';
@@ -336,7 +356,7 @@ class ContractCubit extends Cubit<ContractEntity> {
 
     emit(
       state.copyWith(
-        orderId: value?.id.toString(),
+        order: value,
         officeName: value?.office?.title,
         officeCategoryAqar: value?.office?.categoryAqar?.enName,
         officeTypeAqar: value?.office?.typeAqar?.enName,
@@ -350,7 +370,7 @@ class ContractCubit extends Cubit<ContractEntity> {
     );
   }
 
-  void setorderId(String? value) => emit(state.copyWith(orderId: value));
+  void setorderId(OrderModel? value) => emit(state.copyWith(order: value));
 
   void setofficeName(String? value) => emit(state.copyWith(officeName: value));
   final TextEditingController officeName = TextEditingController();
@@ -439,15 +459,13 @@ class ContractCubit extends Cubit<ContractEntity> {
   void setdurationDaysOpenContract(String? value) => emit(state.copyWith(durationDaysOpenContract: value));
   final TextEditingController durationDaysOpenContract = TextEditingController();
 
-  void setdurationDaysCancelContract(String? value) =>
-      emit(state.copyWith(durationDaysCancelContract: value));
+  void setdurationDaysCancelContract(String? value) => emit(state.copyWith(durationDaysCancelContract: value));
   final TextEditingController durationDaysCancelContract = TextEditingController();
 
   void setnotes(String? value) => emit(state.copyWith(notes: value));
   final TextEditingController notes = TextEditingController();
 
-  void setwaterConstAmount(String? value) =>
-      emit(state.copyWith(waterConstAmount: int.tryParse(value ?? '0')));
+  void setwaterConstAmount(String? value) => emit(state.copyWith(waterConstAmount: int.tryParse(value ?? '0')));
   final TextEditingController waterConstAmount = TextEditingController();
 
   void setwaterType(WaterElectricityType? value) => emit(state.copyWith(waterType: value));
@@ -474,18 +492,25 @@ class ContractCubit extends Cubit<ContractEntity> {
 
   void setcontractContent(ContractModelModel? value) {
     if (value?.contentContractModel != null) {
-      htmlEditorController.setText(value!.contentContractModel!);
+      _quillController.document = Document()..insert(0, value!.contentContractModel!);
     }
     emit(state.copyWith(contractContent: value?.contentContractModel));
     emit(state.copyWith(contractModelId: value?.id?.toString()));
   }
 
   void clearContractContent() {
-    htmlEditorController.setText('');
+    _quillController.document = Document();
     emit(state.copyWith(contractContent: '', contractModelId: ''));
   }
 
-  final HtmlEditorController htmlEditorController = HtmlEditorController();
+  final QuillController _quillController = QuillController(
+    selection: TextSelection.fromPosition(
+      const TextPosition(offset: 0),
+    ),
+    document: Document(),
+  );
+
+  QuillController get quillController => _quillController;
 
   String getName(dynamic type) {
     if (type == null) return "null";
@@ -574,7 +599,14 @@ class ContractCubit extends Cubit<ContractEntity> {
           return "لا";
       }
     }
-
+    if (type is TenantType) {
+      switch (type) {
+        case TenantType.personally:
+          return "فرد";
+        case TenantType.organisation:
+          return "منشأة";
+      }
+    }
     return "Unknown";
   }
 }
@@ -593,3 +625,5 @@ enum LessorRoyalDeedType { electronic, bank, paper, nothing }
 // lessor_identity_type
 // enum('National', 'Residence')
 enum IdentityType { national, residence }
+
+enum TenantType { personally, organisation }

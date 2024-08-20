@@ -42,9 +42,9 @@ class TransferBloc extends Bloc<TransfersEvent, TransfersState> {
             ));
           },
         );
-      } catch (e) {
+      } catch (e, s) {
         log(e.toString());
-        log(e.toString());
+        log(s.toString());
         // rethrow;
         emit(state.copyWith(
           fetchingDataState: FetchingDataStates.failure,

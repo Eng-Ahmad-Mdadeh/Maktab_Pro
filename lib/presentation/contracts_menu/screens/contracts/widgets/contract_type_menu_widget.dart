@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/helpers/size_helper.dart';
+import '../../../../../data/models/contract/contract_model.dart';
 import '../../../../resources/app_colors.dart';
 import '../../../../widgets/body_text.dart';
 
 class ContractTypeMenuWidget extends StatelessWidget {
-  final List<String> contractTypesValue;
+  final List<ContractType> contractTypesValue;
   final List<String> contractTypesTitle;
-  final Function(String?) onSelected;
-  final String value;
+  final Function(ContractType?) onSelected;
+  final ContractType value;
+  final Color? textColor;
 
   const ContractTypeMenuWidget({
     super.key,
@@ -16,6 +18,7 @@ class ContractTypeMenuWidget extends StatelessWidget {
     required this.contractTypesValue,
     required this.onSelected,
     required this.value,
+    this.textColor,
   });
 
   @override
@@ -34,7 +37,7 @@ class ContractTypeMenuWidget extends StatelessWidget {
       ),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.h),
-        child: DropdownButton<String>(
+        child: DropdownButton<ContractType>(
           isExpanded: true,
           icon: Icon(
             Icons.arrow_drop_down,
@@ -44,14 +47,32 @@ class ContractTypeMenuWidget extends StatelessWidget {
           underline: const SizedBox(),
           value: value,
           items: List.generate(contractTypesValue.length, (i) {
-            return DropdownMenuItem<String>(
+            return DropdownMenuItem<ContractType>(
               value: contractTypesValue[i],
-              child: BodyText(text:contractTypesTitle[i]),
+              child: BodyText(
+                text: contractTypesTitle[i],
+                textColor: _getColor(contractTypesValue[i]),
+              ),
             );
           }),
           onChanged: onSelected,
         ),
       ),
     );
+  }
+
+  Color _getColor(ContractType type) {
+    switch(type){
+      case ContractType.waiting:
+        return AppColors.orangeAccent;
+      case ContractType.accepted:
+        return AppColors.mintGreen;
+      case ContractType.expired:
+        return AppColors.deepCrimson;
+      case ContractType.canceled:
+        return AppColors.cherryRed;
+      case ContractType.none:
+        return AppColors.black;
+    }
   }
 }

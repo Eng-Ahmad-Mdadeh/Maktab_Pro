@@ -103,7 +103,7 @@ class TransferModel {
   DateTime executionDate;
   String transferMethod;
   String numOrder;
-  String receiverMobile;
+  String? receiverMobile;
   String? receiverIban;
   String transferFeesRate;
   String transferFeesValue;

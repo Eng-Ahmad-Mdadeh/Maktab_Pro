@@ -13,8 +13,7 @@ class MaktabMapSearchTextField extends StatefulWidget {
   const MaktabMapSearchTextField({super.key});
 
   @override
-  State<MaktabMapSearchTextField> createState() =>
-      _MaktabMapSearchTextFieldState();
+  State<MaktabMapSearchTextField> createState() => _MaktabMapSearchTextFieldState();
 }
 
 class _MaktabMapSearchTextFieldState extends State<MaktabMapSearchTextField> {
@@ -24,8 +23,7 @@ class _MaktabMapSearchTextFieldState extends State<MaktabMapSearchTextField> {
   Widget build(BuildContext context) {
     return TypeAheadField<MapSearchSuggestion>(
       controller: searchController,
-      suggestionsCallback: (input) async =>
-          await context.read<MapCubit>().getSearchSuggestions(input),
+      suggestionsCallback: (input) async => await context.read<MapCubit>().getSearchSuggestions(input),
       hideWithKeyboard: false,
       hideOnEmpty: true,
       builder: (context, controller, focusNode) {
@@ -68,9 +66,7 @@ class _MaktabMapSearchTextFieldState extends State<MaktabMapSearchTextField> {
         );
       },
       onSelected: (suggestion) {
-        context
-            .read<OfficeBloc>()
-            .add(GoToSelectedAddressEvent(suggestion.placeId));
+        context.read<OfficeBloc>().add(GoToSelectedAddressEvent(suggestion.placeId));
       },
     );
   }

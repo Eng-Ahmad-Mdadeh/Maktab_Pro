@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../data/models/contract/contract_model.dart';
@@ -20,20 +22,22 @@ class ContractsBloc extends Bloc<ContractsEvent, ContractsState> {
           (l) => emit(FailureContractsState(l.message)),
           (r) {
             _contracts = r;
-            emit(SuccessContractsState(r, "All"));
+            emit(SuccessContractsState(r, ContractType.none));
           },
         );
-      } catch (e) {
+      } catch (e, s) {
+        log(e.toString());
+        log(s.toString());
         emit(FailureContractsState(e.toString()));
       }
     });
 
     on<FilterContractsEvent>((event, emit) {
       emit(SuccessContractsState(
-          _contracts, event.option ?? "All", event.option == "All" ? _contracts : _contracts.where((e) => e.contractType == event.option).toList()));
+          _contracts, event.option ?? ContractType.none, event.option == ContractType.none ? _contracts : _contracts.where((e) {
+            return e.customContractType == event.option;
+          }).toList()));
     });
-    add(GetContractsEvent());
-
   }
 }
 // viewed ads on map

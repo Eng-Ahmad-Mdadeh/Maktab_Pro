@@ -35,8 +35,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       context.read<ProfileBloc>().add(GetUserTypes());
     }
     if (bloc.state.user != null) {
-      bloc.add(SelectAccountTypeEvent(
-          index: bloc.getUserTypeAccountInd(bloc.state.user!)));
+      bloc.add(SelectAccountTypeEvent(index: bloc.getUserTypeAccountInd(bloc.state.user!)));
     }
     super.initState();
   }
@@ -47,7 +46,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return Scaffold(
       appBar: MaktabAppBar(
         title: widget.fromHome ? 'أكمل الملف الشخصي' : 'تعديل الملف الشخصي',
-        leading: widget.fromHome ? const SizedBox() : null,
+        leadingWidth: 80.h,
       ),
       body: WillPopScope(
         onWillPop: () async {
@@ -70,7 +69,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             } else if (state.profileState == ProfileStates.loadingForEdit) {
               LoadingDialog.show(context);
             }
-            if(state.profileState == ProfileStates.deleted){
+            if (state.profileState == ProfileStates.deleted) {
               LoadingDialog.hide(context);
               MaktabSnackbar.showError(context, state.message);
             }

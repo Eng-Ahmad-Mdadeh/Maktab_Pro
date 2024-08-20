@@ -26,7 +26,7 @@ class AppTheme {
     datePickerTheme: const DatePickerThemeData(
       //surfaceTintColor: Colors.transparent,
       todayBackgroundColor: WidgetStatePropertyAll(AppColors.royalPurple),
-      backgroundColor: AppColors.black
+      backgroundColor: AppColors.white
       //todayBorder: BorderSide(color: AppColors.royalPurple, width: 2),
     ),
     switchTheme: const SwitchThemeData(

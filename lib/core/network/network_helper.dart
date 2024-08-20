@@ -37,6 +37,7 @@ class NetworkHelper {
   Future<dynamic> get(String url, {Map<String, dynamic>? queryParams, bool googleApi = false}) async {
     log("____________________ get _______________________");
     log(url);
+    log(queryParams.toString());
     log("____________________ get _______________________");
     String? token = await getToken();
     return _performRequest(
@@ -51,6 +52,7 @@ class NetworkHelper {
   Future<dynamic> post(String url, {dynamic data, List<Map<String, dynamic>>? files}) async {
     log("____________________ post _______________________");
     log(url);
+    log(data.toString());
     log("____________________ post _______________________");
     String? token = await getToken();
     FormData formData = FormData();
@@ -108,7 +110,9 @@ class NetworkHelper {
           return Left(_handleError(response.data['errNum'] ?? 0, response.data['message'] ?? ''));
         }
       } catch (e, s) {
+        log("E R O R R");
         log(e.toString());
+        log("S T A C K");
         log(s.toString());
         if (e is DioException) {
           return Left(_handleError(e.response?.statusCode, e.message));
@@ -137,7 +141,7 @@ class NetworkHelper {
       case "500":
         return InternalServerErrorException(message);
       default:
-        return ApiException(message);
+        return ApiException('خطأ غير معروف');
     }
   }
 

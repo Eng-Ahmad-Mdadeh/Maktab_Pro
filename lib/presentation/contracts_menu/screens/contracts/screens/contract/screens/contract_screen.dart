@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab_lessor/data/repositories/settings_repository.dart';
 import 'package:maktab_lessor/presentation/widgets/loading_widget.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_image_view.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:printing/printing.dart';
 import 'package:share_plus/share_plus.dart';
@@ -14,11 +15,15 @@ import 'package:pdf/widgets.dart' as pw;
 import '../../../../../../../../core/services/service_locator.dart';
 import '../../../../../../../../core/helpers/size_helper.dart';
 import '../../../../../../../core/network/api_endpoints.dart';
+import '../../../../../../../data/models/contract/contract_model.dart';
 import '../../../../../../../domain/contracts/contract/contract_bloc.dart';
+import '../../../../../../../domain/contracts/contracts_bloc.dart';
+import '../../../../../../../domain/contracts/contracts_event.dart';
 import '../../../../../../../domain/contracts/contracts_step_cubit.dart';
 import '../../../../../../widgets/body_text.dart';
 import '../../../../../../resources/app_assets.dart';
 import '../../../../../../resources/app_colors.dart';
+import '../../../../../../widgets/confirm_alert_dialog.dart';
 import '../widgets/step1/contract_button.dart';
 import '../widgets/step1/contract_step1.dart';
 import '../widgets/step2/contract_step2.dart';
@@ -30,8 +35,17 @@ import 'print/contract_print_screen_first_page.dart';
 import 'print/contract_print_screen_second_page.dart';
 import 'print/contract_print_screen_third_page.dart';
 
+class PrintingContractCubit extends Cubit<bool> {
+  PrintingContractCubit() : super(false);
+
+  void setPrinting() => emit(true);
+
+  void setIdle() => emit(false);
+}
+
 class ContractScreen extends StatefulWidget {
   final bool cancelContract;
+
   const ContractScreen({super.key, required this.cancelContract});
 
   @override
@@ -62,63 +76,71 @@ class _ContractScreenState extends State<ContractScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => _contractStepCubit,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => _contractStepCubit,
+        ),
+        BlocProvider(
+          create: (context) => PrintingContractCubit(),
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
-          // title: BlocBuilder<GeneralSettingBloc, SettingsState>(
-          //   builder: (context, state) {
-          //     if (state is SettingsSuccess) {
-          //       return MaktabImageView(
-          //         imagePath: ApiEndpoints.siteUrl + (state.generalSettings.logo ?? ''),
-          //         // color: AppColors.black,
-          //         height: 50.h,
-          //       );
-          //     }
-          //     return const SizedBox();
-          //   },
-          // ),
           centerTitle: false,
           leading: IconButton(
             onPressed: context.pop,
             icon: const Icon(Icons.arrow_back_ios),
           ),
-          // leadingWidth: 0,
           backgroundColor: AppColors.white,
+          actions: [
+            BlocBuilder<PrintingContractCubit, bool>(
+              builder: (context, state) {
+                if (state) {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0.h),
+                    child: LoadingWidget(
+                      1,
+                      size: 30.0.h,
+                    ),
+                  );
+                }
+                return IconButton(
+                  onPressed: () {
+                    final contract = (context.read<ContractBloc>().state as ContractSuccess).contract;
+                    _print(contract, context);
+                  } /*_print(contract)*/,
+                  icon: MaktabImageView(
+                    imagePath: AppAssets.printer,
+                    color: AppColors.darkGreen,
+                    width: 25.0.h,
+                    height: 25.0.h,
+                  ),
+                );
+              },
+            ),
+            SizedBox(width: 10.0.h),
+          ],
         ),
-
         body: BlocConsumer<ContractBloc, ContractState>(
           listener: (context, state){
-            if(state is ContractSuccess){
-              // if(widget.cancelContract){
-              //   showDialog(
-              //     context: context,
-              //     builder: (context2) {
-              //       return ConfirmAlertDialog(
-              //         alertText: 'سوف يتم الغاء العقد',
-              //         confirmOnPressed: () {
-              //           context.read<ContractBloc>().add(DeleteContractEvent(state.contract.id));
-              //           context.pop();
-              //         },
-              //         cancelOnPressed: () => context.pop(),
-              //       );
-              //     },
-              //   );
-              // }
+            if(state is ContractDeletedSuccess){
+              context.read<ContractsBloc>().add(GetContractsEvent());
             }
           },
           builder: (context, state) {
             if (state is ContractFailure) {
-              if(state.message.contains('غير موجود')){
+              if (state.message.contains('غير موجود')) {
                 return const Center(child: BodyText(text: "هذا العقد غير موجود ربما يكون قد تم حذفه"));
               }
-              return Center(child: BodyText(text:state.message));
+              return Center(child: BodyText(text: state.message));
             }
-            if(state is ContractLoading){
+            if (state is ContractLoading) {
               return const LoadingWidget(1);
             }
             if (state is ContractSuccess) {
               final contract = state.contract;
+              print(contract.contractType);
               return Column(
                 children: [
                   Padding(
@@ -144,104 +166,34 @@ class _ContractScreenState extends State<ContractScreen> {
                       ],
                     ),
                   ),
+                  if(!(contract.tenantApproved ?? false) || !(contract.lessorApproved ?? false))
+                  SizedBox(
+                    width: SizeHelper.width * .5,
+                    child: ContractButton(
+                      onPressed: !(contract.tenantApproved ?? false) && (contract.lessorApproved ?? false)
+                          ? null
+                          : () {
+                              showDialog(
+                                context: context,
+                                builder: (context2) {
+                                  return ConfirmAlertDialog(
+                                    alertText: 'سوف يتم الغاء العقد',
+                                    confirmOnPressed: () {
+                                      context.read<ContractBloc>().add(DeleteContractEvent(contract.id!));
+                                      context.pop();
+                                    },
+                                    cancelOnPressed: () => context.pop(),
+                                  );
+                                },
+                              );
+                            },
+                      text: !(contract.tenantApproved ?? false) && (contract.lessorApproved ?? false) ? 'بانتظار الطرف الاخر' : 'الغاء',
+                      color: !(contract.tenantApproved ?? false) && (contract.lessorApproved ?? false) ? AppColors.gray : AppColors.cherryRed,
+                      icon: !(contract.tenantApproved ?? false) && (contract.lessorApproved ?? false) ? null : AppAssets.deleteContract,
+                    ),
+                  ),
                   SizedBox(
                     height: 7.0.v,
-                  ),
-                  Container(
-                    height: 70.0.v,
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.black.withOpacity(.25),
-                          blurRadius: 4,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                          width: 16.0.h,
-                        ),
-                        ContractButton(
-                          onPressed: () async {
-                            log("////////////////////////////");
-                            final pdf = pw.Document();
-                            final font = await PdfGoogleFonts.tajawalMedium();
-                            final materialFont = await PdfGoogleFonts.materialIcons();
-                            final generalSettings = await locator<SettingsRepository>().getGeneralSettings();
-                            var logoURL = '';
-                            generalSettings.fold((l) {}, (r) => logoURL = r.logo ?? '');
-
-                            final logo = await networkImage(ApiEndpoints.siteUrl + logoURL);
-
-                            pdf.addPage(
-                              pw.Page(
-                                textDirection: pw.TextDirection.rtl,
-                                build: (pw.Context context) =>
-                                    ContractPrintFirstPageScreen(
-                                      contract,
-                                      font: font,
-                                      materialFont: materialFont,
-                                      logo: logo,
-                                    ),
-                              ),
-                            );
-                            pdf.addPage(
-                              pw.Page(
-                                textDirection: pw.TextDirection.rtl,
-                                build: (pw.Context context) =>
-                                    ContractPrintSecondPageScreen(
-                                      contract,
-                                      font: font,
-                                      materialFont: materialFont,
-                                      logo: logo,
-                                    ),
-                              ),
-                            );
-                            pdf.addPage(
-                              pw.Page(
-                                textDirection: pw.TextDirection.rtl,
-                                build: (pw.Context context) =>
-                                    ContractPrintThirdPageScreen(
-                                      contract,
-                                      font: font,
-                                      materialFont: materialFont,
-                                      logo: logo,
-                                    ),
-                              ),
-                            );
-                            final path = await getDownloadsDirectory();
-
-                            final file = File('${path?.path}/contract ${contract.actionDate}.pdf');
-
-                            await file.writeAsBytes(await pdf.save());
-                            //   await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdf.save());
-                            Share.shareXFiles([XFile(file.path)]);
-                          },
-                          text: "طباعة",
-                          color: AppColors.yellow,
-                          icon: AppAssets.printer,
-                        ),
-                        SizedBox(
-                          width: 6.0.h,
-                        ),
-                        ContractButton(
-                          onPressed: (contract.tenantApproved??false) && !(contract.lessorApproved??false)
-                              ? null
-                              : () {
-                            context.read<ContractBloc>().add(DeleteContractEvent(contract.id!));
-                          },
-                          text: (contract.tenantApproved??false) && !(contract.lessorApproved??false) ? 'بانتظار الطرف الاخر' : 'الغاء',
-                          color: (contract.tenantApproved??false) && !(contract.lessorApproved??false) ? AppColors.gray : AppColors.cherryRed,
-                          icon: (contract.tenantApproved??false) && !(contract.lessorApproved??false) ? null : AppAssets.deleteContract,
-                        ),
-                        SizedBox(
-                          width: 16.0.h,
-                        ),
-                      ],
-                    ),
                   ),
                 ],
               );
@@ -253,5 +205,61 @@ class _ContractScreenState extends State<ContractScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> _print(ContractModel contract, BuildContext context) async {
+    context.read<PrintingContractCubit>().setPrinting();
+    log("////////////////////////////");
+    final pdf = pw.Document();
+    final font = await PdfGoogleFonts.tajawalMedium();
+    final materialFont = await PdfGoogleFonts.materialIcons();
+    final generalSettings = await locator<SettingsRepository>().getGeneralSettings();
+    var logoURL = '';
+    generalSettings.fold((l) {}, (r) => logoURL = r.logo ?? '');
+
+    final logo = await networkImage(ApiEndpoints.siteUrl + logoURL);
+
+    pdf.addPage(
+      pw.Page(
+        textDirection: pw.TextDirection.rtl,
+        build: (pw.Context context) => ContractPrintFirstPageScreen(
+          contract,
+          font: font,
+          materialFont: materialFont,
+          logo: logo,
+        ),
+      ),
+    );
+    pdf.addPage(
+      pw.Page(
+        textDirection: pw.TextDirection.rtl,
+        build: (pw.Context context) => ContractPrintSecondPageScreen(
+          contract,
+          font: font,
+          materialFont: materialFont,
+          logo: logo,
+        ),
+      ),
+    );
+    pdf.addPage(
+      pw.Page(
+        textDirection: pw.TextDirection.rtl,
+        build: (pw.Context context) => ContractPrintThirdPageScreen(
+          contract,
+          font: font,
+          materialFont: materialFont,
+          logo: logo,
+        ),
+      ),
+    );
+    final path = await getDownloadsDirectory();
+
+    final file = File('${path?.path}/contract ${contract.actionDate}.pdf');
+
+    await file.writeAsBytes(await pdf.save());
+    //   await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdf.save());
+    Share.shareXFiles([XFile(file.path)]).then((e) {
+      context.read<PrintingContractCubit>().setIdle();
+    });
   }
 }

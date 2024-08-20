@@ -5,18 +5,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:go_router/go_router.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:maktab_lessor/core/helpers/size_helper.dart';
-import 'package:maktab_lessor/presentation/widgets/loading_widget.dart';
 
+import '../../../../contracts/screens/contract/screens/add/widgets/contract_input_widget.dart';
+import '../../../../contracts/screens/contract/screens/add/widgets/contract_select_widget.dart';
+import '../../../../contracts/screens/contract/screens/add/widgets/step4/contract_step4.dart';
 import '../../../../../../../domain/contract_models/contract_model/contract_model_bloc.dart';
 import '../../../../../../../domain/contract_models/contract_models_bloc.dart';
+import '../../../../../../../core/helpers/size_helper.dart';
+import '../../../../../../widgets/loading_widget.dart';
 import '../../../../../../widgets/loading_dialog.dart';
 import '../../../../../../widgets/maktab_app_bar.dart';
 import '../../../../../../widgets/maktab_button.dart';
 import '../../../../../../widgets/maktab_snack_bar.dart';
-import '../../../../contracts/screens/contract/screens/add/widgets/contract_input_widget.dart';
-import '../../../../contracts/screens/contract/screens/add/widgets/contract_select_widget.dart';
-import '../../../../contracts/screens/contract/screens/add/widgets/step4/contract_step4.dart';
 
 class EditContractsModelScreen extends StatefulWidget {
   const EditContractsModelScreen({super.key});

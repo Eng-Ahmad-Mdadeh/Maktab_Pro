@@ -63,7 +63,7 @@ class ReceivingMethodBloc
                 getReceivingMoneyMethodState:
                     FinancialTransactionsApiState.success,
                 receivingMethod: method,
-                receivingMoneyMethod: method.type == 'stc'
+                receivingMoneyMethod: method.type == 'Stc'
                     ? ReceivingMoneyMethods.stcconfirmed
                     : ReceivingMoneyMethods.bankconfirmed,
               ),

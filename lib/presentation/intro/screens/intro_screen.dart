@@ -130,7 +130,7 @@ class _IntroScreenState extends State<IntroScreen> {
                             redirectUrl = Platform.isAndroid
                                 ? 'market://details?id=${generalSettings.packageNameAndroidIndividual}'
                                 : Platform.isIOS
-                                    ? 'https://apps.apple.com/app/id${generalSettings.packageNameIosIndividual}'
+                                    ? 'https://apps.apple.com/sa/app/id${generalSettings.packageNameIosIndividual}'
                                     : '';
                             final uri = Uri(
                               host: "ordinary.maktab.sa",

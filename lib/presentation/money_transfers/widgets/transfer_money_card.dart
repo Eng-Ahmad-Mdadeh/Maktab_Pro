@@ -41,11 +41,13 @@ class TransferMoneyCard extends StatelessWidget {
                 title: 'طريقة التحويل',
                 text: model.transferMethod,
               ),
-              SizedBox(height: 10.v),
-              MoneyTransferItem(
-                title: 'رقم الجوال محول له',
-                text: model.receiverMobile,
-              ),
+              if ((model.receiverMobile ?? '').isNotEmpty) ...{
+                SizedBox(height: 10.v),
+                MoneyTransferItem(
+                  title: 'رقم الجوال محول له',
+                  text: model.receiverMobile!,
+                ),
+              },
               SizedBox(height: 10.v),
               MoneyTransferItem(
                 title: 'عدد الطلبات',
@@ -54,9 +56,7 @@ class TransferMoneyCard extends StatelessWidget {
               SizedBox(height: 10.v),
               MoneyTransferItem(
                 title: 'رسوم التحويل',
-                text: model.transferFeesRate != '0'
-                    ? '${model.transferFeesRate}%'
-                    : '${model.transferFeesValue}ريال',
+                text: model.transferFeesRate != '0' ? '${model.transferFeesRate}%' : '${model.transferFeesValue}ريال',
               ),
               SizedBox(height: 10.v),
               MoneyTransferItem(

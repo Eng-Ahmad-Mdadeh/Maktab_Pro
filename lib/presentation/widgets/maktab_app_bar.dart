@@ -15,6 +15,7 @@ class MaktabAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.centerTitle = true,
     this.backgroundColor,
     this.actions,
+    this.leadingWidth,
   });
 
   final String title;
@@ -23,6 +24,7 @@ class MaktabAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool? centerTitle;
   final Color? backgroundColor;
   final List<Widget>? actions;
+  final double? leadingWidth;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,7 @@ class MaktabAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       automaticallyImplyLeading: false,
       backgroundColor: backgroundColor,
+      leadingWidth: leadingWidth,
       flexibleSpace: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(

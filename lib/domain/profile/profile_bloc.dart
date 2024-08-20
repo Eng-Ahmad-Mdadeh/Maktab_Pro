@@ -132,8 +132,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
                 profileState: ProfileStates.updated, user: user, message: "تم تحديث الملف الشخصي بنجاح"));
           },
         );
-      } catch (e) {
+      } catch (e, s) {
         log("catch message:${e.toString()}");
+        log("catch message:${s.toString()}");
         emit(state.copyWith(
           profileState: ProfileStates.failToUpdate,
           message: e.toString(),

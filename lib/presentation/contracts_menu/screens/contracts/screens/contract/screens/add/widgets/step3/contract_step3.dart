@@ -21,7 +21,7 @@ class ContractStep3 extends StatelessWidget {
               children: [
                 ContractInputWidget(
                   title: "قيمة العربون المدفوع إن وجد",
-                  hint: "0 %",
+                  hint: "0 ريال",
                   numberMode: true,
                   disabled: state.isOrderOn ?? false,
                   onChanged: context.read<ContractCubit>().setdownPayment,

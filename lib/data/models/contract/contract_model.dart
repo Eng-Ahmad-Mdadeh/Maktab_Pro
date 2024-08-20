@@ -3,6 +3,8 @@ import 'package:equatable/equatable.dart';
 import '../order/order_model.dart';
 import '../user/admin_model.dart';
 
+enum ContractType { waiting, accepted, expired, canceled, none }
+
 class ContractModel extends Equatable {
   const ContractModel({
     required this.id,
@@ -80,8 +82,11 @@ class ContractModel extends Equatable {
     required this.facilityName,
     required this.unifiedNumber,
     required this.commercialRecordDate,
+    required this.tenantType,
+    required this.requiredApprove,
     required this.order,
     required this.admin,
+    required this.customContractType,
   });
 
   final int? id;
@@ -95,7 +100,6 @@ class ContractModel extends Equatable {
   final String? contractApplicant;
   final String? propertyOwner;
   final bool? acceptOrdinaries;
-
   final DateTime? lessorDateBirth;
   final String? lessorFullName;
   final String? lessorIdentityNum;
@@ -113,7 +117,6 @@ class ContractModel extends Equatable {
   final String? tenantNationality;
   final String? tenantPhone;
   final String? tenantAddress;
-
   final String? officeAdditionalNo;
   final String? officeBuildingNo;
   final String? officeAddress;
@@ -131,7 +134,7 @@ class ContractModel extends Equatable {
   final String? officeSpace;
   final String? officeLengthFrontEnd;
   final String? officeIsMushtab;
-  final dynamic recordFile;
+  final String? recordFile;
   final String? recordNumber;
   final String? noCentralConditioners;
   final String? noWindowConditioners;
@@ -139,7 +142,7 @@ class ContractModel extends Equatable {
   final String? waterConstAmount;
   final String? waterMoney;
   final String? electricityConstAmount;
-  final dynamic electricityMoney;
+  final String? electricityMoney;
   final String? rentPaymentCycle;
   final String? durationDaysOpenContract;
   final String? durationDaysCancelContract;
@@ -149,18 +152,21 @@ class ContractModel extends Equatable {
   final String? insuranceAmount;
   final String? totalPrice;
   final String? orderId;
-  final dynamic contractModelId;
+  final String? contractModelId;
   final String? lessorId;
   final String? tenantId;
   final DateTime? createdAt;
   final DateTime? updatedAt;
-  final dynamic deletedAt;
+  final DateTime? deletedAt;
   final bool? lessorApproved;
   final bool? tenantApproved;
-  final dynamic facilityType;
-  final dynamic facilityName;
-  final dynamic unifiedNumber;
-  final dynamic commercialRecordDate;
+  final String? facilityType;
+  final String? facilityName;
+  final String? unifiedNumber;
+  final String? commercialRecordDate;
+  final String? tenantType;
+  final String? requiredApprove;
+  final ContractType customContractType;
   final OrderModel? order;
   final Admin? admin;
 
@@ -210,7 +216,7 @@ class ContractModel extends Equatable {
     String? officeSpace,
     String? officeLengthFrontEnd,
     String? officeIsMushtab,
-    dynamic recordFile,
+    String? recordFile,
     String? recordNumber,
     String? noCentralConditioners,
     String? noWindowConditioners,
@@ -218,7 +224,7 @@ class ContractModel extends Equatable {
     String? waterConstAmount,
     String? waterMoney,
     String? electricityConstAmount,
-    dynamic electricityMoney,
+    String? electricityMoney,
     String? rentPaymentCycle,
     String? durationDaysOpenContract,
     String? durationDaysCancelContract,
@@ -228,20 +234,23 @@ class ContractModel extends Equatable {
     String? insuranceAmount,
     String? totalPrice,
     String? orderId,
-    dynamic contractModelId,
+    String? contractModelId,
     String? lessorId,
     String? tenantId,
     DateTime? createdAt,
     DateTime? updatedAt,
-    dynamic deletedAt,
+    DateTime? deletedAt,
     bool? lessorApproved,
     bool? tenantApproved,
-    dynamic facilityType,
-    dynamic facilityName,
-    dynamic unifiedNumber,
-    dynamic commercialRecordDate,
+    String? facilityType,
+    String? facilityName,
+    String? unifiedNumber,
+    String? commercialRecordDate,
+    String? tenantType,
+    String? requiredApprove,
     OrderModel? order,
     Admin? admin,
+    ContractType? customContractType,
   }) {
     return ContractModel(
       id: id ?? this.id,
@@ -319,12 +328,35 @@ class ContractModel extends Equatable {
       facilityName: facilityName ?? this.facilityName,
       unifiedNumber: unifiedNumber ?? this.unifiedNumber,
       commercialRecordDate: commercialRecordDate ?? this.commercialRecordDate,
+      tenantType: tenantType ?? this.tenantType,
+      requiredApprove: requiredApprove ?? this.requiredApprove,
       order: order ?? this.order,
       admin: admin ?? this.admin,
+      customContractType: customContractType ?? this.customContractType,
     );
   }
 
-  factory ContractModel.fromJson(Map<String, dynamic> json){
+  factory ContractModel.fromJson(Map<String, dynamic> json) {
+    // 'New', 'Renewed', 'Finished'
+    // 'منتهي', 'ملغي', 'بأنتظار الموافقة', 'مقبول'
+    ContractType getType() {
+      if (DateTime.tryParse(json["contract_end_date"] ?? "")!.isBefore(DateTime.now())) return ContractType.expired;
+      if ((json["lessor_approved"] ?? false) && (json["tenant_approved"] ?? false)) {
+        if (json["required_approve"] == '1') return ContractType.canceled;
+        if (json["required_approve"] == '2') return ContractType.none;
+      }
+      if (json["contract_type"] == '') {
+        if (json["required_approve"] == '1') return ContractType.waiting;
+        if (json["required_approve"] == '2') return ContractType.none;
+      }
+      if (json["contract_type"] == 'New') {
+        if (json["required_approve"] == '1') return ContractType.accepted;
+        if (json["required_approve"] == '2') return ContractType.none;
+      }
+      return ContractType.none;
+    }
+
+
     return ContractModel(
       id: json["id"],
       status: json["status"],
@@ -389,7 +421,7 @@ class ContractModel extends Equatable {
       insuranceAmount: json["insurance_amount"],
       totalPrice: json["total_price"],
       orderId: json["order_id"],
-      contractModelId: json["contract_model_id"],
+      contractModelId: json["contract_model_id"].toString(),
       lessorId: json["lessor_id"],
       tenantId: json["tenant_id"],
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
@@ -401,97 +433,180 @@ class ContractModel extends Equatable {
       facilityName: json["facility_name"],
       unifiedNumber: json["unified_number"],
       commercialRecordDate: json["commercial_record_date"],
+      tenantType: json["tenant_type"],
+      requiredApprove: json["required_approve"],
       order: json["order"] == null ? null : OrderModel.fromJson(json["order"]),
       admin: json["admin"] == null ? null : Admin.fromJson(json["admin"]),
+      customContractType: getType(),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "status": status,
-    "action_date": actionDate?.toIso8601String(),
-    "contract_end_date": contractEndDate?.toIso8601String(),
-    "contract_start_date": contractStartDate?.toIso8601String(),
-    "contract_number": contractNumber,
-    "contract_type": contractType,
-    "contract_content": contractContent,
-    "contract_applicant": contractApplicant,
-    "property_owner": propertyOwner,
-    "accept_ordinaries": acceptOrdinaries,
-    "lessor_date_birth": lessorDateBirth?.toIso8601String(),
-    "lessor_full_name": lessorFullName,
-    "lessor_identity_num": lessorIdentityNum,
-    "lessor_identity_type": lessorIdentityType,
-    "lessor_nationality": lessorNationality,
-    "lessor_phone": lessorPhone,
-    "lessor_address": lessorAddress,
-    "lessor_iban": lessorIban,
-    "lessor_royal_deed_type": lessorRoyalDeedType,
-    "lessor_royal_deed_number": lessorRoyalDeedNumber,
-    "tenant_date_birth": tenantDateBirth?.toIso8601String(),
-    "tenant_full_name": tenantFullName,
-    "tenant_identity_num": tenantIdentityNum,
-    "tenant_identity_type": tenantIdentityType,
-    "tenant_nationality": tenantNationality,
-    "tenant_phone": tenantPhone,
-    "tenant_address": tenantAddress,
-    "office_additional_no": officeAdditionalNo,
-    "office_building_no": officeBuildingNo,
-    "office_address": officeAddress,
-    "office_city": officeCity,
-    "office_neighborhood": officeNeighborhood,
-    "office_latitude": officeLatitude,
-    "office_longitude": officeLongitude,
-    "office_street": officeStreet,
-    "office_postal_code": officePostalCode,
-    "office_name": officeName,
-    "office_unit_no": officeUnitNo,
-    "office_no_floor": officeNoFloor,
-    "office_type_aqar": officeTypeAqar,
-    "office_category_aqar": officeCategoryAqar,
-    "office_space": officeSpace,
-    "office_length_front_end": officeLengthFrontEnd,
-    "office_is_mushtab": officeIsMushtab,
-    "record_file": recordFile,
-    "record_number": recordNumber,
-    "no_central_conditioners": noCentralConditioners,
-    "no_window_conditioners": noWindowConditioners,
-    "no_split_conditioners": noSplitConditioners,
-    "water_const_amount": waterConstAmount,
-    "water_money": waterMoney,
-    "electricity_const_amount": electricityConstAmount,
-    "electricity_money": electricityMoney,
-    "rent_payment_cycle": rentPaymentCycle,
-    "duration_days_open_contract": durationDaysOpenContract,
-    "duration_days_cancel_contract": durationDaysCancelContract,
-    "notes": notes,
-    "type_reservation": typeReservation,
-    "down_payment": downPayment,
-    "insurance_amount": insuranceAmount,
-    "total_price": totalPrice,
-    "order_id": orderId,
-    "contract_model_id": contractModelId,
-    "lessor_id": lessorId,
-    "tenant_id": tenantId,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "deleted_at": deletedAt,
-    "lessor_approved": lessorApproved,
-    "tenant_approved": tenantApproved,
-    "facility_type": facilityType,
-    "facility_name": facilityName,
-    "unified_number": unifiedNumber,
-    "commercial_record_date": commercialRecordDate,
-    "order": order?.toJson(),
-    "admin": admin?.toJson(),
-  };
+        "id": id,
+        "status": status,
+        "action_date": actionDate?.toIso8601String(),
+        "contract_end_date": contractEndDate?.toIso8601String(),
+        "contract_start_date": contractStartDate?.toIso8601String(),
+        "contract_number": contractNumber,
+        "contract_type": contractType,
+        "contract_content": contractContent,
+        "contract_applicant": contractApplicant,
+        "property_owner": propertyOwner,
+        "accept_ordinaries": acceptOrdinaries,
+        "lessor_date_birth": lessorDateBirth?.toIso8601String(),
+        "lessor_full_name": lessorFullName,
+        "lessor_identity_num": lessorIdentityNum,
+        "lessor_identity_type": lessorIdentityType,
+        "lessor_nationality": lessorNationality,
+        "lessor_phone": lessorPhone,
+        "lessor_address": lessorAddress,
+        "lessor_iban": lessorIban,
+        "lessor_royal_deed_type": lessorRoyalDeedType,
+        "lessor_royal_deed_number": lessorRoyalDeedNumber,
+        "tenant_date_birth": tenantDateBirth?.toIso8601String(),
+        "tenant_full_name": tenantFullName,
+        "tenant_identity_num": tenantIdentityNum,
+        "tenant_identity_type": tenantIdentityType,
+        "tenant_nationality": tenantNationality,
+        "tenant_phone": tenantPhone,
+        "tenant_address": tenantAddress,
+        "office_additional_no": officeAdditionalNo,
+        "office_building_no": officeBuildingNo,
+        "office_address": officeAddress,
+        "office_city": officeCity,
+        "office_neighborhood": officeNeighborhood,
+        "office_latitude": officeLatitude,
+        "office_longitude": officeLongitude,
+        "office_street": officeStreet,
+        "office_postal_code": officePostalCode,
+        "office_name": officeName,
+        "office_unit_no": officeUnitNo,
+        "office_no_floor": officeNoFloor,
+        "office_type_aqar": officeTypeAqar,
+        "office_category_aqar": officeCategoryAqar,
+        "office_space": officeSpace,
+        "office_length_front_end": officeLengthFrontEnd,
+        "office_is_mushtab": officeIsMushtab,
+        "record_file": recordFile,
+        "record_number": recordNumber,
+        "no_central_conditioners": noCentralConditioners,
+        "no_window_conditioners": noWindowConditioners,
+        "no_split_conditioners": noSplitConditioners,
+        "water_const_amount": waterConstAmount,
+        "water_money": waterMoney,
+        "electricity_const_amount": electricityConstAmount,
+        "electricity_money": electricityMoney,
+        "rent_payment_cycle": rentPaymentCycle,
+        "duration_days_open_contract": durationDaysOpenContract,
+        "duration_days_cancel_contract": durationDaysCancelContract,
+        "notes": notes,
+        "type_reservation": typeReservation,
+        "down_payment": downPayment,
+        "insurance_amount": insuranceAmount,
+        "total_price": totalPrice,
+        "order_id": orderId,
+        "contract_model_id": contractModelId,
+        "lessor_id": lessorId,
+        "tenant_id": tenantId,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "deleted_at": deletedAt,
+        "lessor_approved": lessorApproved,
+        "tenant_approved": tenantApproved,
+        "facility_type": facilityType,
+        "facility_name": facilityName,
+        "unified_number": unifiedNumber,
+        "commercial_record_date": commercialRecordDate,
+        "tenant_type": tenantType,
+        "required_approve": requiredApprove,
+        "order": order?.toJson(),
+        "admin": admin?.toJson(),
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$id, $status, $actionDate, $contractEndDate, $contractStartDate, $contractNumber, $contractType, $contractContent, $contractApplicant, $propertyOwner, $acceptOrdinaries, $lessorDateBirth, $lessorFullName, $lessorIdentityNum, $lessorIdentityType, $lessorNationality, $lessorPhone, $lessorAddress, $lessorIban, $lessorRoyalDeedType, $lessorRoyalDeedNumber, $tenantDateBirth, $tenantFullName, $tenantIdentityNum, $tenantIdentityType, $tenantNationality, $tenantPhone, $tenantAddress, $officeAdditionalNo, $officeBuildingNo, $officeAddress, $officeCity, $officeNeighborhood, $officeLatitude, $officeLongitude, $officeStreet, $officePostalCode, $officeName, $officeUnitNo, $officeNoFloor, $officeTypeAqar, $officeCategoryAqar, $officeSpace, $officeLengthFrontEnd, $officeIsMushtab, $recordFile, $recordNumber, $noCentralConditioners, $noWindowConditioners, $noSplitConditioners, $waterConstAmount, $waterMoney, $electricityConstAmount, $electricityMoney, $rentPaymentCycle, $durationDaysOpenContract, $durationDaysCancelContract, $notes, $typeReservation, $downPayment, $insuranceAmount, $totalPrice, $orderId, $contractModelId, $lessorId, $tenantId, $createdAt, $updatedAt, $deletedAt, $lessorApproved, $tenantApproved, $facilityType, $facilityName, $unifiedNumber, $commercialRecordDate, $order, $admin";
   }
 
   @override
   List<Object?> get props => [
-    id, status, admin, actionDate, contractEndDate, contractStartDate, contractNumber, contractType, contractContent, contractApplicant, propertyOwner, acceptOrdinaries, lessorDateBirth, lessorFullName, lessorIdentityNum, lessorIdentityType, lessorNationality, lessorPhone, lessorAddress, lessorIban, lessorRoyalDeedType, lessorRoyalDeedNumber, tenantDateBirth, tenantFullName, tenantIdentityNum, tenantIdentityType, tenantNationality, tenantPhone, tenantAddress, officeAdditionalNo, officeBuildingNo, officeAddress, officeCity, officeNeighborhood, officeLatitude, officeLongitude, officeStreet, officePostalCode, officeName, officeUnitNo, officeNoFloor, officeTypeAqar, officeCategoryAqar, officeSpace, officeLengthFrontEnd, officeIsMushtab, recordFile, recordNumber, noCentralConditioners, noWindowConditioners, noSplitConditioners, waterConstAmount, waterMoney, electricityConstAmount, electricityMoney, rentPaymentCycle, durationDaysOpenContract, durationDaysCancelContract, notes, typeReservation, downPayment, insuranceAmount, totalPrice, orderId, contractModelId, lessorId, tenantId, createdAt, updatedAt, deletedAt, lessorApproved, tenantApproved, facilityType, facilityName, unifiedNumber, commercialRecordDate, order, ];
+        id,
+        status,
+        admin,
+        actionDate,
+        tenantType,
+        contractEndDate,
+        contractStartDate,
+        contractNumber,
+        contractType,
+        contractContent,
+        contractApplicant,
+        propertyOwner,
+        acceptOrdinaries,
+        lessorDateBirth,
+        lessorFullName,
+        lessorIdentityNum,
+        lessorIdentityType,
+        lessorNationality,
+        lessorPhone,
+        lessorAddress,
+        lessorIban,
+        lessorRoyalDeedType,
+        lessorRoyalDeedNumber,
+        tenantDateBirth,
+        tenantFullName,
+        tenantIdentityNum,
+        tenantIdentityType,
+        tenantNationality,
+        tenantPhone,
+        tenantAddress,
+        officeAdditionalNo,
+        officeBuildingNo,
+        officeAddress,
+        officeCity,
+        officeNeighborhood,
+        officeLatitude,
+        officeLongitude,
+        officeStreet,
+        officePostalCode,
+        officeName,
+        officeUnitNo,
+        officeNoFloor,
+        officeTypeAqar,
+        officeCategoryAqar,
+        officeSpace,
+        officeLengthFrontEnd,
+        officeIsMushtab,
+        recordFile,
+        recordNumber,
+        noCentralConditioners,
+        noWindowConditioners,
+        noSplitConditioners,
+        waterConstAmount,
+        waterMoney,
+        electricityConstAmount,
+        electricityMoney,
+        rentPaymentCycle,
+        durationDaysOpenContract,
+        durationDaysCancelContract,
+        notes,
+        typeReservation,
+        downPayment,
+        insuranceAmount,
+        totalPrice,
+        orderId,
+        contractModelId,
+        lessorId,
+        tenantId,
+        createdAt,
+        updatedAt,
+        deletedAt,
+        lessorApproved,
+        tenantApproved,
+        facilityType,
+        facilityName,
+        unifiedNumber,
+        commercialRecordDate,
+        order,
+      ];
 }

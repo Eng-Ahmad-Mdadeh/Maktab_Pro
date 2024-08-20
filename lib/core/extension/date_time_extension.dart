@@ -52,6 +52,11 @@ extension DateTimeExtension on DateTime {
     return dateFormat.format(this);
   }
 
+  String shorDate() {
+    final y = year.toString();
+    return '$day-$month-${y.substring(y.length-2, y.length)}';
+  }
+
   String hourFormatWithLocale(String locale) {
     final hourFormat = DateFormat('HH:mm, EEEE, d MMM, yyyy', locale);
     return hourFormat.format(this);

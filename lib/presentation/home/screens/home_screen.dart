@@ -49,8 +49,8 @@ class HomeScreen extends StatelessWidget {
       child: BlocListener<GeneralSettingBloc, SettingsState>(
         listener: (context, state) async {
           if (state is SettingsSuccess) {
-            final vAndroid = state.generalSettings.vAndroid;
-            final vIos = state.generalSettings.vIos;
+            final vAndroid = state.generalSettings.vAndroidBusiness;
+            final vIos = state.generalSettings.vIosBusiness;
             // final vAppGallery = state.generalSettings.vAppGallery;
 
             await PackageInfo.fromPlatform().then((packageInfo) {
@@ -60,6 +60,10 @@ class HomeScreen extends StatelessWidget {
                   : Platform.isIOS
                       ? (vIos ?? '1.0.0')
                       : '1.0.0');
+              print("vAndroid: $vAndroid");
+              print("vIos: $vIos");
+              print("lVersion: $lVersion");
+              print("rVersion: $rVersion");
               if (lVersion < rVersion) {
                 showDialog(
                   context: context,
@@ -74,7 +78,7 @@ class HomeScreen extends StatelessWidget {
                               final url = Uri.parse(Platform.isAndroid
                                   ? 'market://details?id=${packageInfo.packageName}'
                                   : Platform.isIOS
-                                      ? 'https://apps.apple.com/app/id${packageInfo.packageName}'
+                                      ? 'https://apps.apple.com/sa/app/id${packageInfo.packageName}'
                                       : '');
 
                               if (await canLaunchUrl(url)) {

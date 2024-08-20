@@ -40,6 +40,7 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
           (l) => emit(ContractFailure(l.message)),
           (r) {
             if (r) {
+              emit(ContractDeletedSuccess());
               add(GetContractEvent(event.id));
             }
           },
@@ -59,8 +60,10 @@ class ContractBloc extends Bloc<ContractEvent, ContractState> {
             emit(ContractSuccess(r));
           },
         );
-      } catch (e) {
+      } catch (e,s) {
         // rethrow;
+        log(e.toString());
+        log(s.toString());
         emit(ContractFailure(e.toString()));
       }
     });

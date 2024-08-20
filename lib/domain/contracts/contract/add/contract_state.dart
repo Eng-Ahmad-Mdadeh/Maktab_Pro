@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../../data/models/order/order_model.dart';
 import '../../../../presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/step2/additional_info_widget.dart';
 import '../../../../presentation/contracts_menu/screens/contracts/screens/contract/screens/add/widgets/step2/order_info_widget.dart';
 import 'contract_cubit.dart';
@@ -20,14 +21,20 @@ class ContractEntity extends Equatable {
   final String? tenantFullName;
   final String? tenantIdentityNum;
   final IdentityType? tenantIdentityType;
+  final TenantType? tenantType;
   final String? tenantNationality;
   final String? tenantPhone;
   final String? tenantAddress;
   final String? tenantDateBirth;
+  final String? tenantOrgName;
+  final String? tenantOrgType;
+  final String? tenantOrgNumber;
+  final String? recordDate;
   final String? recordNumber;
   final String? recordFile;
   final bool? isOrderOn;
-  final String? orderId;
+  final bool? mustAccept;
+  final OrderModel? order;
   final String? officeName;
   final String? officeCategoryAqar;
   final String? officeTypeAqar;
@@ -83,14 +90,20 @@ class ContractEntity extends Equatable {
         tenantFullName,
         tenantIdentityNum,
         tenantIdentityType,
+        tenantType,
         tenantNationality,
         tenantPhone,
         tenantAddress,
         tenantDateBirth,
+        tenantOrgName,
+        tenantOrgType,
+        tenantOrgNumber,
+        recordDate,
         recordNumber,
         recordFile,
         isOrderOn,
-        orderId,
+    mustAccept,
+        order,
         officeName,
         officeCategoryAqar,
         officeTypeAqar,
@@ -148,14 +161,20 @@ class ContractEntity extends Equatable {
     this.tenantFullName,
     this.tenantIdentityNum,
     this.tenantIdentityType,
+    this.tenantType,
     this.tenantNationality,
     this.tenantPhone,
     this.tenantAddress,
     this.tenantDateBirth,
+    this.tenantOrgName,
+    this.tenantOrgType,
+    this.tenantOrgNumber,
+    this.recordDate,
     this.recordNumber,
     this.recordFile,
     this.isOrderOn,
-    this.orderId,
+    this.mustAccept,
+    this.order,
     this.officeName,
     this.officeCategoryAqar,
     this.officeTypeAqar,
@@ -211,14 +230,20 @@ class ContractEntity extends Equatable {
     bool tenantFullName = false,
     bool tenantIdentityNum = false,
     bool tenantIdentityType = false,
+    bool tenantType = false,
     bool tenantNationality = false,
     bool tenantPhone = false,
     bool tenantAddress = false,
     bool tenantDateBirth = false,
     bool recordNumber = false,
+    bool tenantOrgName = false,
+    bool tenantOrgType = false,
+    bool tenantOrgNumber = false,
+    bool recordDate = false,
     bool recordFile = false,
     bool isOrderOn = false,
-    bool orderId = false,
+    bool mustAccept = false,
+    bool order = false,
     bool officeName = false,
     bool officeCategoryAqar = false,
     bool officeTypeAqar = false,
@@ -273,14 +298,20 @@ class ContractEntity extends Equatable {
       tenantFullName: tenantFullName ? null : this.tenantFullName,
       tenantIdentityNum: tenantIdentityNum ? null : this.tenantIdentityNum,
       tenantIdentityType: tenantIdentityType ? null : this.tenantIdentityType,
+      tenantType: tenantType ? null : this.tenantType,
       tenantNationality: tenantNationality ? null : this.tenantNationality,
       tenantPhone: tenantPhone ? null : this.tenantPhone,
       tenantAddress: tenantAddress ? null : this.tenantAddress,
       tenantDateBirth: tenantDateBirth ? null : this.tenantDateBirth,
+      tenantOrgName: tenantOrgName ? null : this.tenantOrgName,
+      tenantOrgType: tenantOrgType ? null : this.tenantOrgType,
+      tenantOrgNumber: tenantOrgNumber ? null : this.tenantOrgNumber,
+      recordDate: recordDate ? null : this.recordDate,
       recordNumber: recordNumber ? null : this.recordNumber,
       recordFile: recordFile ? null : this.recordFile,
       isOrderOn: isOrderOn ? null : this.isOrderOn,
-      orderId: orderId ? null : this.orderId,
+      mustAccept: mustAccept ? null : this.mustAccept,
+      order: order ? null : this.order,
       officeName: officeName ? null : this.officeName,
       officeCategoryAqar: officeCategoryAqar ? null : this.officeCategoryAqar,
       officeTypeAqar: officeTypeAqar ? null : this.officeTypeAqar,
@@ -335,16 +366,22 @@ class ContractEntity extends Equatable {
     String? lessorDateBirth,
     String? lessorIban,
     String? tenantFullName,
+    String? tenantOrgName,
+    String? tenantOrgType,
+    String? tenantOrgNumber,
+    String? recordDate,
+    String? recordNumber,
+    String? recordFile,
     String? tenantIdentityNum,
     IdentityType? tenantIdentityType,
+    TenantType? tenantType,
     String? tenantNationality,
     String? tenantPhone,
     String? tenantAddress,
     String? tenantDateBirth,
-    String? recordNumber,
-    String? recordFile,
     bool? isOrderOn,
-    String? orderId,
+    bool? mustAccept,
+    OrderModel? order,
     String? officeName,
     String? officeCategoryAqar,
     String? officeTypeAqar,
@@ -399,14 +436,20 @@ class ContractEntity extends Equatable {
       tenantFullName: tenantFullName ?? this.tenantFullName,
       tenantIdentityNum: tenantIdentityNum ?? this.tenantIdentityNum,
       tenantIdentityType: tenantIdentityType ?? this.tenantIdentityType,
+      tenantType: tenantType ?? this.tenantType,
       tenantNationality: tenantNationality ?? this.tenantNationality,
       tenantPhone: tenantPhone ?? this.tenantPhone,
       tenantAddress: tenantAddress ?? this.tenantAddress,
       tenantDateBirth: tenantDateBirth ?? this.tenantDateBirth,
+      tenantOrgName: tenantOrgName ?? this.tenantOrgName,
+      tenantOrgType: tenantOrgType ?? this.tenantOrgType,
+      tenantOrgNumber: tenantOrgNumber ?? this.tenantOrgNumber,
+      recordDate: recordDate ?? this.recordDate,
       recordNumber: recordNumber ?? this.recordNumber,
       recordFile: recordFile ?? this.recordFile,
       isOrderOn: isOrderOn ?? this.isOrderOn,
-      orderId: orderId ?? this.orderId,
+      mustAccept: mustAccept ?? this.mustAccept,
+      order: order ?? this.order,
       officeName: officeName ?? this.officeName,
       officeCategoryAqar: officeCategoryAqar ?? this.officeCategoryAqar,
       officeTypeAqar: officeTypeAqar ?? this.officeTypeAqar,
@@ -468,6 +511,10 @@ class ContractEntity extends Equatable {
       tenantPhone: json['tenant_phone'],
       tenantAddress: json['tenant_address'],
       tenantDateBirth: json['tenant_date_birth'],
+      tenantOrgName: json['facility_name'],
+      tenantOrgType: json['tenant_type'],
+      tenantOrgNumber: json['unified_number'],
+      recordDate: json['commercial_record_date'],
       recordNumber: json['record_number'],
       officeName: json['office_name'],
       officeCategoryAqar: json['office_category_aqar'],
@@ -506,48 +553,59 @@ class ContractEntity extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
-      'action_date': actionDate,
-      'contract_end_date': contractEndDate,
-      'contract_start_date': contractStartDate,
-      'contract_content': contractContent,
+      if(actionDate != null) 'action_date': actionDate,
+      if(contractEndDate != null) 'contract_end_date': contractEndDate,
+      if(contractStartDate != null) 'contract_start_date': contractStartDate,
+      if(contractContent != null) 'contract_content': contractContent,
+      if(lessorDateBirth != null) 'lessor_date_birth': lessorDateBirth,
+      if(lessorFullName != null) 'lessor_full_name': lessorFullName,
+      if(lessorNationality != null) 'lessor_nationality': lessorNationality,
+      if(lessorPhone != null) 'lessor_phone': lessorPhone,
+      if(lessorAddress != null) 'lessor_address': lessorAddress,
+      if(lessorIban != null) 'lessor_iban': lessorIban,
+      if(lessorRoyalDeedNumber != null) 'lessor_royal_deed_number': lessorRoyalDeedNumber,
+      if(tenantDateBirth != null) 'tenant_date_birth': tenantDateBirth,
+      if(tenantFullName != null) 'tenant_full_name': tenantFullName,
+      if(tenantIdentityNum != null) 'tenant_identity_num': tenantIdentityNum,
+      if(tenantNationality != null) 'tenant_nationality': tenantNationality,
+      if(tenantPhone != null) 'tenant_phone': tenantPhone,
+      if(tenantAddress != null) 'tenant_address': tenantAddress,
+      if(tenantOrgName != null) 'facility_name': tenantOrgName,
+      if(tenantOrgNumber != null) 'unified_number': tenantOrgNumber,
+      if(recordDate != null) 'commercial_record_date': recordDate,
+      if(recordNumber != null) 'record_number': recordNumber,
+      if(officeAdditionalNo != null) 'office_additional_no': officeAdditionalNo,
+      if(officeBuildingNo != null) 'office_building_no': officeBuildingNo,
+      if(officeCity != null) 'office_city': officeCity,
+      if(officeNeighborhood != null) 'office_neighborhood': officeNeighborhood,
+      if(officeLatitude != null) 'office_latitude': officeLatitude,
+      if(officeLongitude != null) 'office_longitude': officeLongitude,
+      if(officeStreet != null) 'office_street': officeStreet,
+      if(officePostalCode != null) 'office_postal_code': officePostalCode,
+      if(officeName != null) 'office_name': officeName,
+      if(officeUnitNo != null) 'office_unit_no': officeUnitNo,
+      if(officeNoFloor != null) 'office_no_floor': officeNoFloor,
+      if(officeTypeAqar != null) 'office_type_aqar': officeTypeAqar,
+      if(officeCategoryAqar != null) 'office_category_aqar': officeCategoryAqar,
+      if(officeSpace != null) 'office_space': officeSpace,
+      if(officeLengthFrontEnd != null) 'office_length_front_end': officeLengthFrontEnd,
+      if(durationDaysOpenContract != null) 'duration_days_open_contract': durationDaysOpenContract,
+      if(durationDaysCancelContract != null) 'duration_days_cancel_contract': durationDaysCancelContract,
+      if(notes != null) 'notes': notes,
+      if(downPayment != null) 'down_payment': downPayment,
+      if(insuranceAmount != null) 'insurance_amount': insuranceAmount,
+      if(totalPrice != null) 'total_price': totalPrice,
+      if(contractModelId != null) 'contract_model_id': contractModelId,
+      'office_address': officeAddress ?? _getAddress(),
+      'lessor_identity_num': "\"$lessorIdentityNum\"",
       'contract_applicant': _getContractApplicant(contractApplicant),
       'property_owner': _getPropertyOwner(propertyOwner),
-      'lessor_date_birth': lessorDateBirth,
-      'lessor_full_name': lessorFullName,
-      'lessor_identity_num': "\"$lessorIdentityNum\"",
       'lessor_identity_type': _getLessorIdentityType(lessorIdentityType),
-      'lessor_nationality': lessorNationality,
-      'lessor_phone': lessorPhone,
-      'lessor_address': lessorAddress,
-      'lessor_iban': lessorIban,
       'lessor_royal_deed_type': _getLessorRoyalDeedType(lessorRoyalDeedType),
-      'lessor_royal_deed_number': lessorRoyalDeedNumber,
-      'tenant_date_birth': tenantDateBirth,
-      'tenant_full_name': tenantFullName,
-      'tenant_identity_num': tenantIdentityNum,
-      'tenant_identity_type': _getLessorIdentityType(tenantIdentityType),
-      'tenant_nationality': tenantNationality,
-      'tenant_phone': tenantPhone,
-      'tenant_address': tenantAddress,
-      'office_additional_no': officeAdditionalNo,
-      'office_building_no': officeBuildingNo,
-      'office_address': officeAddress ?? _getAddress(),
-      'office_city': officeCity,
-      'office_neighborhood': officeNeighborhood,
-      'office_latitude': officeLatitude,
-      'office_longitude': officeLongitude,
-      'office_street': officeStreet,
-      'office_postal_code': officePostalCode,
-      'office_name': officeName,
-      'office_unit_no': officeUnitNo,
-      'office_no_floor': officeNoFloor,
-      'office_type_aqar': officeTypeAqar,
-      'office_category_aqar': officeCategoryAqar,
-      'office_space': officeSpace,
-      'office_length_front_end': officeLengthFrontEnd,
+      'order_id': order?.id.toString(),
+      'tenant_type': _getTenantType(tenantType),
       'office_is_mushtab': _getOfficeIsMushtab(officeIsMushtab),
-      'record_file': recordFile,
-      'record_number': recordNumber,
+      'tenant_identity_type': _getLessorIdentityType(tenantIdentityType),
       'no_central_conditioners': conditionsType == ConditionsType.central ? conditionsCount : 0,
       'no_window_conditioners': conditionsType == ConditionsType.window ? conditionsCount : 0,
       'no_split_conditioners': conditionsType == ConditionsType.split ? conditionsCount : 0,
@@ -556,15 +614,10 @@ class ContractEntity extends Equatable {
       'electricity_const_amount': electricityType == WaterElectricityType.sameWithCounter ? 0 : 1,
       'electricity_money': electricityType == WaterElectricityType.amount ? electricityConstAmount : null,
       'rent_payment_cycle': _getPaymentCycle(rentPaymentCycle),
-      'duration_days_open_contract': durationDaysOpenContract,
-      'duration_days_cancel_contract': durationDaysCancelContract,
-      'notes': notes,
       'id_type_reservation': _getTypeReservation(idTypeReservation),
-      'down_payment': downPayment,
-      'insurance_amount': insuranceAmount,
-      'total_price': totalPrice,
-      'contract_model_id': contractModelId,
-      'order_id': orderId,
+      'required_approve': (mustAccept??false) ? 2 : 1,
+      if(recordFile != null) 'record_file': recordFile,
+
       // 'lessor_id': ,
       // 'facility_type': ,
       // 'facility_name': ,
@@ -574,7 +627,9 @@ class ContractEntity extends Equatable {
   }
 
   String? _getAddress() {
-    if (officeCity != null && officeNeighborhood != null && officeStreet != null) return '${officeCity!}, ${officeNeighborhood!}, ${officeStreet!}';
+    if (officeCity != null && officeNeighborhood != null && officeStreet != null) {
+      return '${officeCity!}, ${officeNeighborhood!}, ${officeStreet!}';
+    }
     if (officeCity != null && officeNeighborhood != null) return '${officeCity!}, ${officeNeighborhood!}';
     if (officeCity != null) return officeCity!;
     return null;
@@ -663,6 +718,18 @@ class ContractEntity extends Equatable {
         return "4";
       default:
         return "3";
+    }
+  }
+
+  // individual,facility
+  String? _getTenantType(TenantType? tenantType) {
+    switch (tenantType) {
+      case TenantType.organisation:
+        return "facility";
+      case TenantType.personally:
+        return "individual";
+      default:
+        return "individual";
     }
   }
 
