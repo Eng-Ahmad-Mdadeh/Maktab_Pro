@@ -193,6 +193,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
                 },
               ),
               SizedBox(height: 20.v),
+              if (state.selectedAccountTypeIndex == 5 || state.selectedAccountTypeIndex == 1)
               MaktabTextFormField(
                 title: 'رقم السجل التجاري',
                 controller: commercialRecordController,
@@ -250,7 +251,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
                             cityController.text,
                             neighborhoodController.text,
                             identityNumberController.text,
-                            commercialRecordController.text,
+                            state.selectedAccountTypeIndex == 5 || state.selectedAccountTypeIndex == 1 ? commercialRecordController.text:null,
                             phoneController.text,
                             aboutController.text,
                             state.selectedAccountTypeIndex,
