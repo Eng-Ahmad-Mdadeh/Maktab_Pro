@@ -1,5 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../resources/app_colors.dart';
@@ -26,6 +29,16 @@ class MaktabSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if(Platform.isIOS){
+      return Theme(
+        data: theme != null ? theme! : Theme.of(context),
+        child: CupertinoSwitch(
+          value: value,
+          onChanged: onChanged,
+          activeColor: activeColor ?? AppColors.emeraldGreen,
+        ),
+      );
+    }
     return Theme(
       data: theme != null ? theme! : Theme.of(context),
       child: Switch.adaptive(
