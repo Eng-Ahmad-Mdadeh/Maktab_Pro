@@ -201,11 +201,11 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
                 hintText: 'أدخل رقم رقم السجل التجاري',
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                  LengthLimitingTextInputFormatter(5),
+                  LengthLimitingTextInputFormatter(10),
                 ],
                 validator: (value) {
-                  if (value!.length < 5) {
-                    return 'الرجاء ادخال رقم من خمس محارف';
+                  if (value!.length < 10) {
+                    return 'الرجاء ادخال رقم من 10 محارف';
                   }
                   return null;
                 },
