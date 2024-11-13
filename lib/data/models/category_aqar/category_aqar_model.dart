@@ -19,7 +19,7 @@ class CategoryAqar extends Equatable{
 
   factory CategoryAqar.fromJson(Map<String, dynamic> json) => CategoryAqar(
         id: json["id"],
-        status: int.parse(json["status"]),
+        status: int.parse(json["status"].toString()),
         arName: json["ar_name"],
         enName: json["en_name"],
         icon: ApiEndpoints.siteUrl + json["icon"],

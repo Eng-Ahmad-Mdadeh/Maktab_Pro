@@ -24,7 +24,7 @@ class InterfaceAqar extends Equatable {
   factory InterfaceAqar.fromJson(Map<String, dynamic> json) {
     return InterfaceAqar(
       id: json["id"],
-      status: json["status"],
+      status: json["status"].toString(),
       arName: json["ar_name"],
       enName: json["en_name"],
       pivot: json["pivot"] == null ? null : InterfaceAqarPivot.fromJson(json["pivot"]),
@@ -93,9 +93,9 @@ class InterfaceAqarPivot extends Equatable{
 
   factory InterfaceAqarPivot.fromJson(Map<String, dynamic> json) {
     return InterfaceAqarPivot(
-      adsId: json["ads_id"],
-      comfortId: json["comfort_id"],
-      id: json["id"],
+      adsId: json["ads_id"].toString(),
+      comfortId: json["comfort_id"].toString(),
+      id: json["id"].toString(),
     );
   }
 
