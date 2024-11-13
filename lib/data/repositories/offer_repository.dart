@@ -1,4 +1,5 @@
-// ignore_for_file: unused_local_variable
+
+import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
@@ -24,7 +25,9 @@ class OfferRepository {
             right.data.map((data) => Office.fromJson(data)),
           );
           return Right(prices);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -41,7 +44,9 @@ class OfferRepository {
             right.data.map((data) => Office.fromJson(data)),
           );
           return Right(prices);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -56,7 +61,9 @@ class OfferRepository {
         try {
           final Office prices = Office.fromJson(right.data);
           return Right(prices);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -91,12 +98,16 @@ class OfferRepository {
         (right) {
           try {
             return const Right(null);
-          } catch (e) {
+          } catch (e, s) {
+            log(e.toString());
+            log(s.toString());
             return Left(ConversionException(e.toString()));
           }
         },
       );
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(ConversionException(e.toString()));
     }
   }
@@ -130,12 +141,16 @@ class OfferRepository {
           try {
             final Office offer = Office.fromJson(right.data);
             return Right(offer);
-          } catch (e) {
+          } catch (e, s) {
+            log(e.toString());
+            log(s.toString());
             return Left(ConversionException(e.toString()));
           }
         },
       );
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(ConversionException(e.toString()));
     }
   }
@@ -156,12 +171,16 @@ class OfferRepository {
           try {
             final Office offer = Office.fromJson(right.data);
             return Right(offer);
-          } catch (e) {
+          } catch (e, s) {
+            log(e.toString());
+            log(s.toString());
             return Left(ConversionException(e.toString()));
           }
         },
       );
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(ConversionException(e.toString()));
     }
   }
@@ -174,7 +193,9 @@ class OfferRepository {
         try {
           final Offer offer = Offer.fromJson(right.data);
           return Right(offer);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -188,7 +209,9 @@ class OfferRepository {
       (right) {
         try {
           return const Right(null);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -204,7 +227,9 @@ class OfferRepository {
       (right) {
         try {
           return const Right(null);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },

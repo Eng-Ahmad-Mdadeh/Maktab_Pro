@@ -15,7 +15,7 @@ class Feature {
 
   factory Feature.fromJson(Map<String, dynamic> json) => Feature(
         id: json["id"],
-        status: int.parse(json["status"]),
+        status: int.parse(json["status"].toString()),
         arName: json["ar_name"],
         enName: json["en_name"],
         icon: 'https://maktab.sa/${json["icon"]}',

@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_use_of_visible_for_testing_member, depend_on_referenced_packages, use_build_context_synchronously
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -100,47 +98,52 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
               .stream
               .firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading)
               .then((e) {
-            context.read<HomeBloc>().add(GetStatisticsEvent());
-            context
-                .read<HomeBloc>()
-                .stream
-                .firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading)
-                .then((e) {
-              // context.pushReplacement(AppRoutes.homeScreen);
-            });
+            if (context.mounted) {
+              context.read<HomeBloc>().add(GetStatisticsEvent());
+              context.read<HomeBloc>().stream.firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading).then((e) {
+                // context.pushReplacement(AppRoutes.homeScreen);
+              });
+            }
           });
-
         } else if (state.codeState == CodeStates.failure) {
           LoadingDialog.hide(context);
           MaktabSnackbar.showError(context, state.message);
         }
         if (state.profileCompleteness == ProfileCompleteness.unComplete) {
-          Navigator.popUntil(context, (route) => route.isFirst);
-          context.pushReplacementNamed(AppRoutes.homeScreen);
-          locator<ProfileBloc>().add(GetUserTypes());
-          context.pushNamed(AppRoutes.editProfileScreen, extra: true);
+          if(context.mounted) {
+            Navigator.popUntil(context, (route) => route.isFirst);
+            context.pushReplacementNamed(AppRoutes.homeScreen);
+            locator<ProfileBloc>().add(GetUserTypes());
+            context.pushNamed(AppRoutes.editProfileScreen, extra: true);
+          }
+
         } else if (state.profileCompleteness == ProfileCompleteness.complete) {
-          context.read<ReceivingMethodBloc>().add(GetReceivingMoneyMethodEvent());
-          context.read<OfficesCubit>().getIncompleteUnits();
-          context
-              .read<OfficesCubit>()
-              .stream
-              .firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading)
-              .then((e) {
-            context.read<HomeBloc>().add(GetStatisticsEvent());
+          if(context.mounted) {
+            context.read<ReceivingMethodBloc>().add(GetReceivingMoneyMethodEvent());
+            context.read<OfficesCubit>().getIncompleteUnits();
             context
-                .read<HomeBloc>()
+                .read<OfficesCubit>()
                 .stream
-                .firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading)
+                .firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading)
                 .then((e) {
-              Navigator.popUntil(context, (route) => route.isFirst);
-              context.read<NotificationsBloc>().add(GetNotificationsEvent());
-              context.pushReplacementNamed(AppRoutes.homeScreen);
+              if (context.mounted) {
+                context.read<HomeBloc>().add(GetStatisticsEvent());
+                context.read<HomeBloc>().stream.firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading).then((e) {
+                  if (context.mounted) {
+                    Navigator.popUntil(context, (route) => route.isFirst);
+                    context.read<NotificationsBloc>().add(GetNotificationsEvent());
+                    context.pushReplacementNamed(AppRoutes.homeScreen);
+                  }
+                });
+              }
             });
-          });
+          }
+
         } else if (state.profileCompleteness == ProfileCompleteness.unknown) {
-          Navigator.popUntil(context, (route) => route.isFirst);
-          context.pushReplacementNamed(AppRoutes.splashScreen);
+          if (context.mounted) {
+            Navigator.popUntil(context, (route) => route.isFirst);
+            context.pushReplacementNamed(AppRoutes.splashScreen);
+          }
         }
       },
       builder: (context, state) {
@@ -240,8 +243,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                                             child: SectionTitle(
                                               title: "ارسال رمز جديد",
                                               textAlign: TextAlign.right,
-                                              textColor:
-                                                  snapshot.data == 0 ? AppColors.mintGreen : AppColors.softAsh,
+                                              textColor: snapshot.data == 0 ? AppColors.mintGreen : AppColors.softAsh,
                                               fontSize: 19.0,
                                             ),
                                           ),

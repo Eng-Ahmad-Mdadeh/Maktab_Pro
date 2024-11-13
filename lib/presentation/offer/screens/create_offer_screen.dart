@@ -1,4 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/services.dart';
 import 'package:collection/collection.dart';
@@ -313,7 +312,9 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                         },
                                       );
                                       if (range != null) {
-                                        context.read<OfferBloc>().add(SelectOfferDateRangeEvent(range!));
+                                        if(context.mounted) {
+                                          context.read<OfferBloc>().add(SelectOfferDateRangeEvent(range!));
+                                        }
                                         offerDateRangeController.value = TextEditingValue(
                                             text:
                                                 '${DateFormatterHelper.getFormated(range!.start)} - ${DateFormatterHelper.getFormated(range!.end)}');

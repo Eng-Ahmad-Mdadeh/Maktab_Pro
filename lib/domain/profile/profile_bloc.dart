@@ -1,8 +1,7 @@
-// ignore_for_file: depend_on_referenced_packages
 
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:maktab_lessor/core/helpers/file_picker_helper.dart';
 import 'package:maktab_lessor/core/helpers/image_cropper_helper.dart';

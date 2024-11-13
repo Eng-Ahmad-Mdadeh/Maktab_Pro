@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
 import 'package:maktab_lessor/core/classes/exception/data_exceptions.dart';
@@ -48,7 +50,9 @@ class ComfortRepository {
         (error) => Left(error),
         (right) => _handleResult(right.data),
       );
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(ConversionException(e.toString()));
     }
   }
@@ -57,7 +61,9 @@ class ComfortRepository {
     try {
       final Office comforts = Office.fromJson(right);
       return Right(comforts);
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(ConversionException(e.toString()));
     }
   }

@@ -23,7 +23,7 @@ class BankAccount {
 
   factory BankAccount.fromJson(Map<String, dynamic> json) => BankAccount(
         id: json["id"],
-        status: json["status"],
+        status: json["status"].toString(),
         arTitle: json["ar_title"],
         enTitle: json["en_title"],
         image: json["image"],

@@ -23,9 +23,9 @@ class OfficePrice extends Equatable {
   factory OfficePrice.fromJson(Map<String, dynamic> json) {
     return OfficePrice(
       id: json["id"],
-      price: num.parse(json["price"]??'0'),
-      status: json["status"],
-      typeResId: int.parse(json["type_res_id"]??'-1'),
+      price: num.parse(json["price"]?.toString()??'0'),
+      status: json["status"].toString(),
+      typeResId: int.parse(json["type_res_id"]?.toString()??'-1'),
       typeRes: json["type_res"] == null ? null : TypeRes.fromJson(json["type_res"]),
       offers: json["offers"] == null ? [] : List<Offer>.from(json["offers"]!.map((x) => Offer.fromJson(x))),
     );

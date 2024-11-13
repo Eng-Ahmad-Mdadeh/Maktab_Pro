@@ -44,10 +44,15 @@ class AuthRepository {
       (error) => Left(error),
       (right) async {
         try {
+          log('checkCode message');
           log(right.message?? 'Unknown error');
+          log(right.data['access_token'] ?? 'No Token');
           await _localDataSource.setUserToken(right.data['access_token']);
           return Right(right.message?? 'Unknown error');
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
+
           return Left(ConversionException(e.toString()));
         }
       },
@@ -63,7 +68,9 @@ class AuthRepository {
         try {
           log('Code changed');
           return const Right(null);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -97,13 +104,17 @@ class AuthRepository {
         },
         (r) async {
           String? token = await _localDataSource.getUserToken();
-          log("USER_TOKEN: $token");
-          print("USER_TOKEN: $token");
+          log("TOKEN IS HERE FROM STORAGE");
+          log(token.toString(), time: DateTime.now());
           return true;
         },
       );
       return logged;
-    } catch (e) {
+    } catch (e, s) {
+      log("checkAuthentication ERROR");
+      log(e.toString());
+      log(s.toString());
+
       return false;
     }
   }

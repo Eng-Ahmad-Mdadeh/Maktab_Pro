@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:maktab_lessor/core/classes/exception/api_exceptions.dart';
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
@@ -51,15 +53,17 @@ class CalendarRepository {
           try {
             final Office calendar = Office.fromJson(right.data);
             return Right(calendar);
-          } catch (e) {
-            rethrow;
-            // return Left(ConversionException(e.toString()));
+          } catch (e, s) {
+            log(e.toString());
+            log(s.toString());
+            return Left(ConversionException(e.toString()));
           }
         },
       );
-    } catch (e) {
-      rethrow;
-      // return Left(ConversionException(e.toString()));
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
+      return Left(ConversionException(e.toString()));
     }
   }
 
@@ -77,7 +81,10 @@ class CalendarRepository {
         try {
           final Office calendar = Office.fromJson(right.data);
           return Right(calendar);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
+
           return Left(ConversionException(e.toString()));
         }
       },

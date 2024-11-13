@@ -1,4 +1,4 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:maktab_lessor/data/models/office/office_model.dart';
 import 'package:maktab_lessor/data/models/office/search_data_model.dart';

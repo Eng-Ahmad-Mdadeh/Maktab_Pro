@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
 import 'package:maktab_lessor/core/classes/exception/data_exceptions.dart';
@@ -18,7 +20,9 @@ class FavouriteRepository {
           final List<Favourite> favourites = List<Favourite>.from(
               right.data.map((coupon) => Favourite.fromJson(coupon)));
           return Right(favourites);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -34,7 +38,10 @@ class FavouriteRepository {
         try {
           final Favourite favourite = Favourite.fromJson(right.data);
           return Right(favourite);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
+
           return Left(ConversionException(e.toString()));
         }
       },

@@ -10,8 +10,8 @@ class UnitSettings {
   });
 
   factory UnitSettings.fromJson(Map<String, dynamic> json) => UnitSettings(
-        isInsuranceRequired: json["required"] == '1' ? true : false,
-        price: num.parse(json["price"]),
+        isInsuranceRequired: json["required"].toString() == '1' ? true : false,
+        price: num.parse(json["price"].toString()),
         text: json["text"],
       );
 

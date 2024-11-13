@@ -22,7 +22,9 @@ class NotificationRepository {
           final List<n.NotificationModel> notifications = List<n.NotificationModel>.from(
               pagination.data.map((dynamic data) => n.NotificationModel.fromJson(data)));
           return Right(notifications);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -38,7 +40,9 @@ class NotificationRepository {
           final n.NotificationModel notification =
               n.NotificationModel.fromJson(right.data);
           return Right(notification);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -55,7 +59,9 @@ class NotificationRepository {
           final List<n.NotificationModel> notifications = List<n.NotificationModel>.from(
               right.data.map((dynamic data) => n.NotificationModel.fromJson(data)));
           return Right(notifications);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -72,7 +78,9 @@ class NotificationRepository {
           final List<n.NotificationModel> notifications = List<n.NotificationModel>.from(
               right.data.map((dynamic data) => n.NotificationModel.fromJson(data)));
           return Right(notifications);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -86,7 +94,9 @@ class NotificationRepository {
       (right) {
         try {
           return const Right(null);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },

@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:maktab_lessor/data/models/office/unit_settings.dart';
 import 'package:maktab_lessor/data/models/user/user_agreement_model.dart';

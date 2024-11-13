@@ -342,7 +342,9 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                                     },
                                   ).then((range) {
                                     if (range != null) {
-                                      context.read<CouponBloc>().add(SelectOfferDateRangeEvent(range));
+                                      if(context.mounted) {
+                                        context.read<CouponBloc>().add(SelectOfferDateRangeEvent(range));
+                                      }
                                       couponDateRangeController.value = TextEditingValue(
                                           text:
                                               '${DateFormatterHelper.getFormated(range.start)} - ${DateFormatterHelper.getFormated(range.end)}');

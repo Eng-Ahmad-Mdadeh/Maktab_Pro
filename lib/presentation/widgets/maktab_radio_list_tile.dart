@@ -1,4 +1,3 @@
-// ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 import 'package:maktab_lessor/presentation/widgets/section_title.dart';

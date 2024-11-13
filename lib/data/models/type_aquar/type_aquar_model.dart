@@ -13,7 +13,7 @@ class TypeAquar {
 
   factory TypeAquar.fromJson(Map<String, dynamic> json) => TypeAquar(
         id: json["id"],
-        status: int.parse(json["status"]),
+        status: int.parse(json["status"].toString()),
         arName: json["ar_name"],
         enName: json["en_name"],
       );

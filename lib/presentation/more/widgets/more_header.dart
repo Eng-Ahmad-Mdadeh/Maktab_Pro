@@ -95,7 +95,9 @@ class MoreHeader extends StatelessWidget {
                         ),
                       ).then((confirmed) {
                         if (confirmed ?? false) {
-                          context.read<ProfileBloc>().add(LogOutEvent());
+                          if(context.mounted) {
+                            context.read<ProfileBloc>().add(LogOutEvent());
+                          }
                         }
                       });
                     },

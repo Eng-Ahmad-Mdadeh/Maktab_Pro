@@ -507,7 +507,7 @@ class Tax extends Equatable{
 
   factory Tax.fromJson(Map<String, dynamic> json){
     return Tax(
-      rate: json["rate"],
+      rate: json["rate"].toString(),
     );
   }
 
@@ -588,8 +588,8 @@ class Conditions extends Equatable{
 
   factory Conditions.fromJson(Map<String, dynamic> json){
     return Conditions(
-      required: json["required"],
-      price: json["price"],
+      required: json["required"].toString(),
+      price: json["price"].toString(),
       text: json["text"],
     );
   }

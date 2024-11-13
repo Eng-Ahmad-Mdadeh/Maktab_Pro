@@ -56,8 +56,10 @@ class ContractsButtons extends StatelessWidget {
                           onPressed: () {
                             context.read<ContractCubit>().nextPage(state - 1, context).then((e) {
                               if (e) {
-                                final ContractEntity entity = context.read<ContractCubit>().state;
-                                context.read<ContractBloc>().add(CreateContractEvent(entity));
+                                if (context.mounted) {
+                                  final ContractEntity entity = context.read<ContractCubit>().state;
+                                  context.read<ContractBloc>().add(CreateContractEvent(entity));
+                                }
                               }
                             });
                           },

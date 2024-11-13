@@ -123,8 +123,8 @@ class _ContractScreenState extends State<ContractScreen> {
           ],
         ),
         body: BlocConsumer<ContractBloc, ContractState>(
-          listener: (context, state){
-            if(state is ContractDeletedSuccess){
+          listener: (context, state) {
+            if (state is ContractDeletedSuccess) {
               context.read<ContractsBloc>().add(GetContractsEvent());
             }
           },
@@ -140,7 +140,6 @@ class _ContractScreenState extends State<ContractScreen> {
             }
             if (state is ContractSuccess) {
               final contract = state.contract;
-              print(contract.contractType);
               return Column(
                 children: [
                   Padding(
@@ -166,32 +165,38 @@ class _ContractScreenState extends State<ContractScreen> {
                       ],
                     ),
                   ),
-                  if(!(contract.tenantApproved ?? false) || !(contract.lessorApproved ?? false))
-                  SizedBox(
-                    width: SizeHelper.width * .5,
-                    child: ContractButton(
-                      onPressed: !(contract.tenantApproved ?? false) && (contract.lessorApproved ?? false)
-                          ? null
-                          : () {
-                              showDialog(
-                                context: context,
-                                builder: (context2) {
-                                  return ConfirmAlertDialog(
-                                    alertText: 'سوف يتم الغاء العقد',
-                                    confirmOnPressed: () {
-                                      context.read<ContractBloc>().add(DeleteContractEvent(contract.id!));
-                                      context.pop();
-                                    },
-                                    cancelOnPressed: () => context.pop(),
-                                  );
-                                },
-                              );
-                            },
-                      text: !(contract.tenantApproved ?? false) && (contract.lessorApproved ?? false) ? 'بانتظار الطرف الاخر' : 'الغاء',
-                      color: !(contract.tenantApproved ?? false) && (contract.lessorApproved ?? false) ? AppColors.gray : AppColors.cherryRed,
-                      icon: !(contract.tenantApproved ?? false) && (contract.lessorApproved ?? false) ? null : AppAssets.deleteContract,
+                  if (!(contract.tenantApproved ?? false) || !(contract.lessorApproved ?? false))
+                    SizedBox(
+                      width: SizeHelper.width * .5,
+                      child: ContractButton(
+                        onPressed: !(contract.tenantApproved ?? false) && (contract.lessorApproved ?? false)
+                            ? null
+                            : () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context2) {
+                                    return ConfirmAlertDialog(
+                                      alertText: 'سوف يتم الغاء العقد',
+                                      confirmOnPressed: () {
+                                        context.read<ContractBloc>().add(DeleteContractEvent(contract.id!));
+                                        context.pop();
+                                      },
+                                      cancelOnPressed: () => context.pop(),
+                                    );
+                                  },
+                                );
+                              },
+                        text: !(contract.tenantApproved ?? false) && (contract.lessorApproved ?? false)
+                            ? 'بانتظار الطرف الاخر'
+                            : 'الغاء',
+                        color: !(contract.tenantApproved ?? false) && (contract.lessorApproved ?? false)
+                            ? AppColors.gray
+                            : AppColors.cherryRed,
+                        icon: !(contract.tenantApproved ?? false) && (contract.lessorApproved ?? false)
+                            ? null
+                            : AppAssets.deleteContract,
+                      ),
                     ),
-                  ),
                   SizedBox(
                     height: 7.0.v,
                   ),
@@ -259,7 +264,9 @@ class _ContractScreenState extends State<ContractScreen> {
     await file.writeAsBytes(await pdf.save());
     //   await Printing.layoutPdf(onLayout: (PdfPageFormat format) async => pdf.save());
     Share.shareXFiles([XFile(file.path)]).then((e) {
-      context.read<PrintingContractCubit>().setIdle();
+      if (context.mounted) {
+        context.read<PrintingContractCubit>().setIdle();
+      }
     });
   }
 }

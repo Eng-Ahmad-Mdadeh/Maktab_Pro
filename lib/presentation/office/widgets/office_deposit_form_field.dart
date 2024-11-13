@@ -1,4 +1,3 @@
-// ignore_for_file: must_be_immutables, body_might_complete_normally_nullable
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

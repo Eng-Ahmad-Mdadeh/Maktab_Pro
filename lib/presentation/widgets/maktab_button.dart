@@ -1,4 +1,3 @@
-// ignore_for_file: must_be_immutable, depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
 import 'package:maktab_lessor/core/helpers/size_helper.dart';

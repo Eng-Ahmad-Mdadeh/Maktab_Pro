@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 
 import '../../core/classes/exception/app_exception.dart';
@@ -20,7 +22,9 @@ class MenusRepository {
         try {
           final FooterModel footer = FooterModel.fromJson(right.data);
           return Right(footer);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
