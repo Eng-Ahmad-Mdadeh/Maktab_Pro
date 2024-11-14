@@ -29,7 +29,7 @@
         android:name="${applicationName}"
         android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/launcher_icon"
-        android:label="مكتب Business"
+        android:label="مكتب أعمال"
         tools:targetApi="tiramisu">
         <activity
             android:name=".MainActivity"
