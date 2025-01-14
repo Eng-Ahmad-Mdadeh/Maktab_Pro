@@ -1,4 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -73,8 +72,7 @@ class _UnitSettingsScreenState extends State<UnitSettingsScreen> {
                         // }
                       },
                       builder: (context, state) {
-                        if (state.getUnitSettingsApiCallState == UserApiCallState.loading)
-                          return const LoadingWidget(0);
+                        if (state.getUnitSettingsApiCallState == UserApiCallState.loading) return const LoadingWidget(0);
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

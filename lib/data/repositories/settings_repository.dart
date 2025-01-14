@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 
 import '../../core/classes/exception/app_exception.dart';
@@ -21,7 +23,9 @@ class SettingsRepository {
         try {
           final AqarFilterModel settings = AqarFilterModel.fromJson(right.data);
           return Right(settings);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -36,7 +40,9 @@ class SettingsRepository {
         try {
           final GeneralSettingsModel settings = GeneralSettingsModel.fromJson(right.data);
           return Right(settings);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },

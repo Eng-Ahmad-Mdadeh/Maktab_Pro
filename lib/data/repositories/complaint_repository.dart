@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:maktab_lessor/core/classes/exception/api_exceptions.dart';
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
@@ -39,7 +41,9 @@ class ComplaintRepository {
             right.data['reports'].map((data) => Office.fromJson(data)),
           );
           return Right(reports);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -61,12 +65,16 @@ class ComplaintRepository {
           try {
             final Office report = Office.fromJson(right.data);
             return Right(report);
-          } catch (e) {
+          } catch (e, s) {
+            log(e.toString());
+            log(s.toString());
             return Left(ConversionException(e.toString()));
           }
         },
       );
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(ConversionException(e.toString()));
     }
   }
@@ -78,7 +86,9 @@ class ComplaintRepository {
       (right) {
         try {
           return const Right(null);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },

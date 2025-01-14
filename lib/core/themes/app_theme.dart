@@ -1,4 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages
 
 import 'package:flutter/material.dart';
 import 'package:maktab_lessor/core/themes/app_bar_theme.dart';

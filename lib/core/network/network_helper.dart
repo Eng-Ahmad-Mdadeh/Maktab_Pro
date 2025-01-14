@@ -40,6 +40,8 @@ class NetworkHelper {
     log(queryParams.toString());
     log("____________________ get _______________________");
     String? token = await getToken();
+    log("____________________ TOKEN ____________________");
+    log(token.toString());
     return _performRequest(
         googleApi: googleApi,
         () => _dio.get(

@@ -1,4 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -27,7 +26,7 @@ class AccountInformationForm extends StatefulWidget {
   const AccountInformationForm({super.key});
 
   @override
-  _AccountInformationFormState createState() => _AccountInformationFormState();
+  State<AccountInformationForm> createState() => _AccountInformationFormState();
 }
 
 class _AccountInformationFormState extends State<AccountInformationForm> {
@@ -193,6 +192,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
                 },
               ),
               SizedBox(height: 20.v),
+              if (state.selectedAccountTypeIndex == 5 || state.selectedAccountTypeIndex == 1)
               MaktabTextFormField(
                 title: 'رقم السجل التجاري',
                 controller: commercialRecordController,
@@ -200,11 +200,11 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
                 hintText: 'أدخل رقم رقم السجل التجاري',
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                  LengthLimitingTextInputFormatter(5),
+                  LengthLimitingTextInputFormatter(10),
                 ],
                 validator: (value) {
-                  if (value!.length < 5) {
-                    return 'الرجاء ادخال رقم من خمس محارف';
+                  if (value!.length < 10) {
+                    return 'الرجاء ادخال رقم من 10 محارف';
                   }
                   return null;
                 },
@@ -250,7 +250,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
                             cityController.text,
                             neighborhoodController.text,
                             identityNumberController.text,
-                            commercialRecordController.text,
+                            state.selectedAccountTypeIndex == 5 || state.selectedAccountTypeIndex == 1 ? commercialRecordController.text:null,
                             phoneController.text,
                             aboutController.text,
                             state.selectedAccountTypeIndex,

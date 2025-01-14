@@ -1,4 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages, must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -82,7 +81,6 @@ class UnitsCard extends StatelessWidget {
                                   await context
                                       .read<OfficesCubit>()
                                       .getOfficeById(state.incompleteOffices[index].id);
-                                  print("object");
                                   selectedOffice = state.incompleteOffices[index];
                                 },
                               );

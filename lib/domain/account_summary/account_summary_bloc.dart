@@ -42,22 +42,17 @@ class AccountSummaryBloc extends Bloc<AccountSummaryEvent, AccountSummaryState> 
       }
     });
     on<FetchNextPage>((event, emit) async {
-      print("FetchNextPage 1");
       if (event.currentPage < event.lastPage) {
-        print("FetchNextPage 2");
         emit(MoreAccountSummaryLoading(_accountSummaries, _filteredList, event.currentPage));
-        print("FetchNextPage 3");
         try {
           int cPage = event.currentPage;
           cPage++;
           currentPage = cPage;
           final result = await _repository.getAccountSummaries(cPage);
-          print("FetchNextPage 4");
 
           result.fold(
             (l) => emit(AccountSummaryError(l.message)),
             (r) {
-              print("FetchNextPage 5");
               log("--------------------------------");
               log(_accountSummaries?.accountStatement?.data.length.toString() ?? '');
               final List pAccountSummaries = _accountSummaries?.accountStatement?.data ?? [];
@@ -78,7 +73,6 @@ class AccountSummaryBloc extends Bloc<AccountSummaryEvent, AccountSummaryState> 
         } catch (e, s) {
           log(e.toString());
           log(s.toString());
-          print("FetchNextPage 6");
           emit(AccountSummaryError(e.toString()));
         }
       }

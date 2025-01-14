@@ -1,13 +1,11 @@
-// ignore_for_file: depend_on_referenced_packages, prefer_const_literals_to_create_immutables
 
 import 'dart:developer';
 
 import 'package:collection/collection.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';

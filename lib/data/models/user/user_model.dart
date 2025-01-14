@@ -58,7 +58,7 @@ class User {
         neighborhood: json["neighborhood"] ?? '',
         commercialRecord: json["commercial_record"] ?? '',
         membershipValidity: json["membership_validity"] ?? '',
-        idNumber: json["IdNumber"] ?? '',
+        idNumber: json["IdNumber"]?.toString() ?? '',
         image: json["image"] != null
             ? 'https://maktab.sa/${json["image"]["name"]}'
             : '',

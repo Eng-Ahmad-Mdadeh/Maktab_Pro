@@ -84,8 +84,8 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   OfficeInfoBox(
                     title: 'معلومات الوحدة',
                     enableEdit: !widget.office.isMarketing,
-                    editOnTap: () =>
-                        context.pushNamed(AppRoutes.updateUnitInfoScreen, extra: {'office': widget.office, 'unit': state.selectedOffice}),
+                    editOnTap: () => context.pushNamed(AppRoutes.updateUnitInfoScreen,
+                        extra: {'office': widget.office, 'unit': state.selectedOffice}),
                     infoWidget: Column(
                       children: [
                         OfficeInfoItem(
@@ -102,8 +102,9 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                         ),
                         OfficeInfoItem(
                           title: 'التجهيز',
-                          value:
-                              (state.selectedOffice?.furnisher ?? '').isNotEmpty ? state.selectedOffice!.furnisher.toString() : 'غير محدد',
+                          value: (state.selectedOffice?.furnisher ?? '').isNotEmpty
+                              ? state.selectedOffice!.furnisher.toString()
+                              : 'غير محدد',
                         ),
                         OfficeInfoItem(
                           title: 'علاقة المعلن',
@@ -134,8 +135,10 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                               listener: (ctx, unitState) {
                                 if (unitState.unitApiCallState == UnitApiCallState.success) {
                                   context.read<OfficesCubit>().getMyOffices().then((e) {
-                                    ctx.read<OfficesCubit>().getOfficeById(state.selectedOffice!.id, isUpdate: true);
-                                    ctx.pop();
+                                    if (ctx.mounted) {
+                                      ctx.read<OfficesCubit>().getOfficeById(state.selectedOffice!.id, isUpdate: true);
+                                      ctx.pop();
+                                    }
                                   });
                                 }
                               },
@@ -170,8 +173,8 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                   OfficeInfoBox(
                     title: 'تصنيف المكتب',
                     enableEdit: !widget.office.isMarketing,
-                    editOnTap: () => context
-                        .pushNamed(AppRoutes.updateUnitCategoryScreen, extra: {'office': widget.office, 'unit': state.selectedOffice}),
+                    editOnTap: () => context.pushNamed(AppRoutes.updateUnitCategoryScreen,
+                        extra: {'office': widget.office, 'unit': state.selectedOffice}),
                     infoWidget: BodyText(
                       text: context
                           .read<OfficesCubit>()
@@ -191,12 +194,17 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                       children: [
                         OfficeInfoItem(
                           title: 'الدور',
-                          value: state.selectedOffice!.details.firstWhere((detail) => detail.arName == 'الدور').numberDetails.toString(),
+                          value: state.selectedOffice!.details
+                              .firstWhere((detail) => detail.arName == 'الدور')
+                              .numberDetails
+                              .toString(),
                         ),
                         OfficeInfoItem(
                           title: 'عمر المكتب',
-                          value:
-                              state.selectedOffice!.details.firstWhere((detail) => detail.arName == 'عمر المكتب').numberDetails.toString(),
+                          value: state.selectedOffice!.details
+                              .firstWhere((detail) => detail.arName == 'عمر المكتب')
+                              .numberDetails
+                              .toString(),
                         ),
                         if (state.selectedOffice!.details.firstWhereOrNull((detail) => detail.arName == 'عدد المكاتب') != null)
                           OfficeInfoItem(
@@ -222,7 +230,8 @@ class _UnitDetailsScreenState extends State<UnitDetailsScreen> {
                                 .numberDetails
                                 .toString(),
                           ),
-                        if (state.selectedOffice!.details.firstWhereOrNull((detail) => detail.arName == 'مساحات عمل مشتركة') != null)
+                        if (state.selectedOffice!.details.firstWhereOrNull((detail) => detail.arName == 'مساحات عمل مشتركة') !=
+                            null)
                           OfficeInfoItem(
                             title: 'مساحات عمل مشتركة',
                             value: state.selectedOffice!.details

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
 import 'package:maktab_lessor/core/classes/exception/data_exceptions.dart';
@@ -19,9 +21,10 @@ class OrderRepository {
             right.data['data'].map((dynamic data) => o.OrderModel.fromJson(data, int.parse(right.data['last_page'].toString()))),
           );
           return Right(orders);
-        } catch (e) {
-          rethrow;
-          // return Left(ConversionException(e.toString()));
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
+          return Left(ConversionException(e.toString()));
         }
       },
     );
@@ -37,9 +40,10 @@ class OrderRepository {
             right.data.map((dynamic data) => o.OrderModel.fromJson(data)),
           );
           return Right(orders);
-        } catch (e) {
-          rethrow;
-          // return Left(ConversionException(e.toString()));
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
+          return Left(ConversionException(e.toString()));
         }
       },
     );
@@ -53,7 +57,9 @@ class OrderRepository {
         try {
           final o.OrderModel order = o.OrderModel.fromJson(right.data);
           return Right(order);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -68,7 +74,9 @@ class OrderRepository {
         try {
           final o.OrderModel order = o.OrderModel.fromJson(right.data);
           return Right(order);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -83,7 +91,9 @@ class OrderRepository {
         try {
           final o.OrderModel order = o.OrderModel.fromJson(right.data);
           return Right(order);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },

@@ -149,36 +149,36 @@ class Office extends Equatable{
   factory Office.fromJson(Map<String, dynamic> json, [num? lPage]){
     return Office(
       id: json["id"],
-      status: json["status"] == '1',
-      active: json["active"] == '1',
-      isMarketing: json["is_marketing"] == '1',
+      status: json["status"].toString() == '1',
+      active: json["active"].toString() == '1',
+      isMarketing: json["is_marketing"].toString() == '1',
       isReservation: json["is_reservation"].toString(),
       title: json["title"],
-      refNumber: json["ref_number"],
+      refNumber: json["ref_number"].toString(),
       licenseNumber: json["license_number"].toString(),
       viewerName: json["viewer_name"],
       viewerPhone: json["viewer_phone"],
       mainImage: json["main_image"] != null ? ApiEndpoints.siteUrl + json["main_image"] : json["main_image"],
       furnisher: json["furnisher"],
       views: json["views"].toString(),
-      isSpecial: json["is_special"],
-      space: num.tryParse(json["space"]??''),
+      isSpecial: json["is_special"].toString(),
+      space: num.tryParse(json["space"].toString()),
       width: num.tryParse(json["width"].toString()),
       height: num.tryParse(json["height"].toString()),
       description: json["description"],
       advertiserRelationship: json["advertiser_relationship"],
       advertiserRelationshipType: json["advertiser_relationship_type"],
       lastUpdate: DateTime.tryParse(json["lastUpdate"] ?? ""),
-      downPayment: num.tryParse(json["down_payment"]??''),
+      downPayment: num.tryParse(json["down_payment"].toString()),
       typeDownPayment: json["type_down_payment"],
-      categoryId: int.parse(json["category_id"]??'-1'),
-      typeAqarId: json["type_aqar_id"],
-      interfaceId: int.tryParse(json["interface_id"]??''),
-      unitId: int.tryParse(json["unit_id"]??''),
+      categoryId: int.parse(json["category_id"]?.toString()??'-1'),
+      typeAqarId: json["type_aqar_id"].toString(),
+      interfaceId: int.tryParse(json["interface_id"].toString()),
+      unitId: int.tryParse(json["unit_id"].toString()),
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
       updatedAt: DateTime.tryParse(json["updated_at"] ?? ""),
-      isCompleted: json["is_completed"],
-      isCentral: json["is_central"] == '1',
+      isCompleted: json["is_completed"].toString(),
+      isCentral: json["is_central"].toString() == '1',
       myRate: json["my_rate"] == null ? null : int.parse(json["my_rate"].toString()),
       tenantCommission: json["tenant_commission"] == null ? null : Tax.fromJson(json["tenant_commission"]),
       tax: json["tax"] == null ? null : Tax.fromJson(json["tax"]),
@@ -507,7 +507,7 @@ class Tax extends Equatable{
 
   factory Tax.fromJson(Map<String, dynamic> json){
     return Tax(
-      rate: json["rate"],
+      rate: json["rate"].toString(),
     );
   }
 
@@ -544,7 +544,7 @@ class FeatureaAd extends Equatable{
   factory FeatureaAd.fromJson(Map<String, dynamic> json){
     return FeatureaAd(
       id: json["id"],
-      boolfeatureaId: json["boolfeaturea_id"],
+      boolfeatureaId: json["boolfeaturea_id"].toString(),
     );
   }
 
@@ -588,8 +588,8 @@ class Conditions extends Equatable{
 
   factory Conditions.fromJson(Map<String, dynamic> json){
     return Conditions(
-      required: json["required"],
-      price: json["price"],
+      required: json["required"].toString(),
+      price: json["price"].toString(),
       text: json["text"],
     );
   }

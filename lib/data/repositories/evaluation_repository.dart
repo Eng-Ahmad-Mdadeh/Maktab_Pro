@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
 import 'package:maktab_lessor/core/classes/exception/data_exceptions.dart';
@@ -18,7 +20,9 @@ class EvaluationRepository {
           final List<Office> evaluations = List<Office>.from(
               right.data.map((evaluation) => Office.fromJson(evaluation)));
           return Right(evaluations);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -34,7 +38,9 @@ class EvaluationRepository {
           final List<Office> evaluations = List<Office>.from(
               right.data.map((evaluation) => Office.fromJson(evaluation)));
           return Right(evaluations);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -57,7 +63,9 @@ class EvaluationRepository {
         try {
           final Office evaluation = Office.fromJson(right.data);
           return Right(evaluation);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -78,7 +86,9 @@ class EvaluationRepository {
         try {
           final Office evaluation = Office.fromJson(right.data);
           return Right(evaluation);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },

@@ -217,7 +217,9 @@ class OrderScreen extends StatelessWidget {
                                   ).then((value) {
                                     final canCancel = value ?? false;
                                     if (canCancel) {
-                                      context.read<OrderBloc>().add(SetOrderCancelEvent(order.id!));
+                                      if (context.mounted) {
+                                        context.read<OrderBloc>().add(SetOrderCancelEvent(order.id!));
+                                      }
                                     }
                                   });
                                 }
@@ -255,10 +257,8 @@ class OrderScreen extends StatelessWidget {
                           title: 'الموقع',
                           value:
                               '${order.office?.location?.city ?? ''},${order.office?.location?.neighborhood ?? ''},${order.office?.location?.street ?? ''}'),
-                      OrderDetailsItemData(
-                          title: 'تاريخ الحجز', value: order.startDate?.dayFormatWithLocale('ar') ?? ''),
-                      OrderDetailsItemData(
-                          title: 'تاريخ الانتهاء', value: order.endDate?.dayFormatWithLocale('ar') ?? ''),
+                      OrderDetailsItemData(title: 'تاريخ الحجز', value: order.startDate?.dayFormatWithLocale('ar') ?? ''),
+                      OrderDetailsItemData(title: 'تاريخ الانتهاء', value: order.endDate?.dayFormatWithLocale('ar') ?? ''),
                       OrderDetailsItemData(title: 'مدة الإيجار', value: '${order.durationRes ?? ''} يوم'),
                     ],
                   ),

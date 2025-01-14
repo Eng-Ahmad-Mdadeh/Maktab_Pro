@@ -39,8 +39,9 @@ class ContractRepository {
         try {
           final ContractModel contract = ContractModel.fromJson(right.data);
           return Right(contract);
-        } catch (e) {
-          // rethrow;
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -97,12 +98,16 @@ class ContractRepository {
           try {
             final ContractModel contract = ContractModel.fromJson(right.data);
             return Right(contract);
-          } catch (e) {
+          } catch (e, s) {
+            log(e.toString());
+            log(s.toString());
             return Left(ConversionException(e.toString()));
           }
         },
       );
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(ConversionException(e.toString()));
     }
   }
@@ -114,7 +119,9 @@ class ContractRepository {
       (right) {
         try {
           return Right(right.status);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },

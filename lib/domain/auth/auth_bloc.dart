@@ -1,7 +1,6 @@
-// ignore_for_file: invalid_use_of_visible_for_testing_member, depend_on_referenced_packages
 
 import 'dart:async';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:maktab_lessor/core/services/service_locator.dart';
 import 'package:maktab_lessor/data/repositories/auth_repository.dart';
@@ -122,7 +121,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             emit(state.copyWith(
               loginState: LoginStates.initial
             ));
-            startTimer();
+            startTimer(emit);
           },
         );
       } catch (e) {
@@ -180,7 +179,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           ));
   }
 
-  cancelTimer() {
+  cancelTimer(emit) {
     timer?.cancel();
     emit(state.copyWith(
         loginState: LoginStates.initial,
@@ -189,9 +188,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         codeState: CodeStates.initial));
   }
 
-  startTimer() {
+  startTimer(emit) {
     if (timer?.isActive == true) {
-      cancelTimer();
+      cancelTimer(emit);
     }
     state.copyWith(duration: 120);
 

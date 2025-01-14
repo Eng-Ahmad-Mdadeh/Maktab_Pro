@@ -42,17 +42,19 @@ class _SplashScreenState extends State<SplashScreen> {
               .stream
               .firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading)
               .then((e) {
-            context.read<HomeBloc>().add(GetStatisticsEvent());
-            context
-                .read<HomeBloc>()
-                .stream
-                .firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading)
-                .then((e) {
-              context.read<OfficesCubit>().getIncompleteOffices().then((e) {
-                context.pushReplacement(AppRoutes.homeScreen);
-                context.read<NotificationsBloc>().add(GetNotificationsEvent());
+            if (context.mounted) {
+              context.read<HomeBloc>().add(GetStatisticsEvent());
+              context.read<HomeBloc>().stream.firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading).then((e) {
+                if (context.mounted) {
+                  context.read<OfficesCubit>().getIncompleteOffices().then((e) {
+                    if (context.mounted) {
+                      context.pushReplacement(AppRoutes.homeScreen);
+                      context.read<NotificationsBloc>().add(GetNotificationsEvent());
+                    }
+                  });
+                }
               });
-            });
+            }
           });
         } else if (state is NavigationToEditProfileScreen) {
           MaktabSnackbar.showWarning(context, "الرجاء اكمال الملف الشخصي");

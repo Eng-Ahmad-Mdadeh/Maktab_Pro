@@ -1,4 +1,3 @@
-// ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,7 +53,6 @@ class LatestEvaluationsSection extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 10.v),
                       itemBuilder: (context, index) {
                         evaluation = context.read<HomeBloc>().state.statistics!.evaluations[index];
-                        print(evaluation?.unit);
                         return Card(
                           elevation: 0,
                           color: AppColors.white,

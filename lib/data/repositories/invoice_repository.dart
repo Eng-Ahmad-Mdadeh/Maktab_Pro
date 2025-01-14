@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 
 import '../../core/classes/exception/app_exception.dart';
@@ -18,7 +20,9 @@ class InvoiceRepository {
         try {
           final InvoiceModel invoices = InvoiceModel.fromJson(right.data);
           return Right(invoices);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -33,7 +37,9 @@ class InvoiceRepository {
         try {
           final Invoice invoices = Invoice.fromJson(right.data);
           return Right(invoices);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },

@@ -1,4 +1,3 @@
-// ignore: depend_on_referenced_packages
 import 'package:flutter/material.dart';
 import 'package:maktab_lessor/core/helpers/size_helper.dart';
 import 'package:maktab_lessor/data/models/office/office_model.dart';

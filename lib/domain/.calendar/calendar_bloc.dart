@@ -1,6 +1,6 @@
 // // ignore_for_file: depend_on_referenced_packages, prefer_const_literals_to_create_immutables
 //
-// import 'package:bloc/bloc.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:equatable/equatable.dart';
 // import 'package:table_calendar/table_calendar.dart';
 // import 'package:maktab_lessor/data/models/calendar/calender_model.dart';

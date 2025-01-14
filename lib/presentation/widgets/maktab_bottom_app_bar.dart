@@ -18,8 +18,6 @@ class MaktabBottomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(SizeHelper.width);
-    print(SizeHelper.height);
     return BlocBuilder<NavigationBloc, NavigationState>(
       builder: (context, state) {
         return BottomAppBar(

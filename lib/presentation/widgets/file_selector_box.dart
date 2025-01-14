@@ -1,4 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:maktab_lessor/core/helpers/size_helper.dart';

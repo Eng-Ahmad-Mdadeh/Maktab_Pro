@@ -115,7 +115,7 @@ class GeneralSettingsModel extends Equatable {
       siteKeywordsAr: json["site_keywords_ar"],
       siteKeywordsEn: json["site_keywords_en"],
       siteUrl: json["site_url"],
-      siteStatus: json["site_status"],
+      siteStatus: json["site_status"].toString(),
       vIos: json["v_ios"],
       vAndroid: json["v_android"],
       vAppGallery: json["v_app_gallery"],

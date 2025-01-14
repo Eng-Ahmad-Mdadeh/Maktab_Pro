@@ -19,7 +19,7 @@ class OfficeMarketing {
         fileEstateDeed: json["file_estate_deed"],
         fileBuildingLicense: json["file_building_license"],
         fileCivilDefense: json["file_civil_defense"],
-        isAccept: json["is_accept"],
+        isAccept: json["is_accept"].toString(),
       );
 
   Map<String, dynamic> toJson() => {

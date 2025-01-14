@@ -1,6 +1,6 @@
-// ignore_for_file: implementation_imports, prefer_const_literals_to_create_immutables
 import 'dart:developer';
-import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:maktab_lessor/core/helpers/file_picker_helper.dart';
@@ -13,7 +13,6 @@ import 'package:maktab_lessor/data/models/office/office_price_model.dart';
 import 'package:maktab_lessor/data/models/office/search_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:maktab_lessor/data/repositories/office_repository.dart';
-import 'package:flutter/src/foundation/collections.dart';
 
 part 'unit_event.dart';
 part 'unit_state.dart';
@@ -708,8 +707,10 @@ class UnitBloc extends Bloc<UnitEvent, UnitState> {
       if (state.selectedUnitPrices.values.min > state.depositAmount &&
           state.selectedUnitPriceOptions.contains(UnitPriceOptions.yearly) &&
           state.depositAmount > 0) {
+        print("obdasdsfsdklfjdslkjfdslkjklfsdject");
         await updateDepositInfo(emit);
       } else {
+        print("obdasdsfsdklfjdslkjfdslkjklfsdject else");
         emit(state.copyWith(unitApiCallState: UnitApiCallState.noCall));
       }
     });

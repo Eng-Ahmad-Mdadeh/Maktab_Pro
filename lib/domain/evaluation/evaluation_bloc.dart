@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../data/models/office/office_model.dart';

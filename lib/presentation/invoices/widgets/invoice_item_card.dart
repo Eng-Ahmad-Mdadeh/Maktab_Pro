@@ -71,8 +71,8 @@ class InvoiceItemCard extends StatelessWidget {
                     title: invoice.invoiceStatus == 'paid'
                         ? "مسدد"
                         : invoice.invoiceStatus == 'partial'
-                        ? 'مسدد جزئي'
-                        : '',
+                            ? 'مسدد جزئي'
+                            : '',
                     textColor: invoice.invoiceStatus == 'paid' ? AppColors.deepForestGreen : AppColors.coralPink,
                     fontSize: 15.0,
                   ),
@@ -98,17 +98,17 @@ class InvoiceItemCard extends StatelessWidget {
               ),
               gradient: invoice.invoiceStatus == 'paid'
                   ? const LinearGradient(
-                colors: [
-                  AppColors.lushGreen,
-                  AppColors.mintGreen,
-                ],
-              )
+                      colors: [
+                        AppColors.lushGreen,
+                        AppColors.mintGreen,
+                      ],
+                    )
                   : const LinearGradient(
-                colors: [
-                  AppColors.cherryRed,
-                  AppColors.coralPink,
-                ],
-              ),
+                      colors: [
+                        AppColors.cherryRed,
+                        AppColors.coralPink,
+                      ],
+                    ),
             ),
             child: Align(
               alignment: const Alignment(0, .6),
@@ -121,18 +121,21 @@ class InvoiceItemCard extends StatelessWidget {
                   ),
                   BlocBuilder<InvoiceDownloadingCubit, int?>(
                     builder: (context, state) {
-                      if(state == invoice.id) {
-                        return LoadingWidget(1, size: 30.adaptSize,);
+                      if (state == invoice.id) {
+                        return LoadingWidget(
+                          1,
+                          size: 30.adaptSize,
+                        );
                       }
                       return InkWell(
                         onTap: () async {
                           context.read<InvoiceDownloadingCubit>().setInvoiceDownloadingOn(invoice.id);
                           await locator<InvoiceRepository>().getInvoice(invoice.id).then((fullInvoice) {
                             return fullInvoice.fold(
-                                  (l) async {
+                              (l) async {
                                 return null;
                               },
-                                  (r) async {
+                              (r) async {
                                 final pdf = pw.Document();
                                 final font = await PdfGoogleFonts.tajawalMedium();
                                 final materialFont = await PdfGoogleFonts.materialIcons();
@@ -144,26 +147,26 @@ class InvoiceItemCard extends StatelessWidget {
 
                                 pdf.addPage(
                                   pw.Page(
-                                    build: (pw.Context context) =>
-                                        InvoicePrintScreen(
-                                          r,
-                                          font: font,
-                                          materialFont: materialFont,
-                                          logo: logo,
-                                        ),
+                                    build: (pw.Context context) => InvoicePrintScreen(
+                                      r,
+                                      font: font,
+                                      materialFont: materialFont,
+                                      logo: logo,
+                                    ),
                                   ),
                                 );
                                 final path = await getDownloadsDirectory();
 
-                                final file = File(
-                                    '${path?.path}/invoice ${invoice.releaseDate?.toIso8601String()}.pdf');
+                                final file = File('${path?.path}/invoice ${invoice.releaseDate?.toIso8601String()}.pdf');
 
                                 await file.writeAsBytes(await pdf.save());
                                 return Share.shareXFiles([XFile(file.path)]);
                               },
                             );
                           }).then((e) {
-                            context.read<InvoiceDownloadingCubit>().setInvoiceDownloadingOf();
+                            if (context.mounted) {
+                              context.read<InvoiceDownloadingCubit>().setInvoiceDownloadingOf();
+                            }
                           });
                         },
                         child: const Icon(

@@ -60,38 +60,36 @@ class HomeScreen extends StatelessWidget {
                   : Platform.isIOS
                       ? (vIos ?? '1.0.0')
                       : '1.0.0');
-              print("vAndroid: $vAndroid");
-              print("vIos: $vIos");
-              print("lVersion: $lVersion");
-              print("rVersion: $rVersion");
               if (lVersion < rVersion) {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return PopScope(
-                      canPop: false,
-                      child: AlertDialog(
-                        content: const SectionTitle(title: 'يجب تحديث نسخة التطبيق لديك'),
-                        actions: [
-                          TextButton(
-                            onPressed: () async {
-                              final url = Uri.parse(Platform.isAndroid
-                                  ? 'market://details?id=${packageInfo.packageName}'
-                                  : Platform.isIOS
-                                      ? 'https://apps.apple.com/sa/app/id${packageInfo.packageName}'
-                                      : '');
+                if (context.mounted) {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return PopScope(
+                        canPop: false,
+                        child: AlertDialog(
+                          content: const SectionTitle(title: 'يجب تحديث نسخة التطبيق لديك'),
+                          actions: [
+                            TextButton(
+                              onPressed: () async {
+                                final url = Uri.parse(Platform.isAndroid
+                                    ? 'market://details?id=${packageInfo.packageName}'
+                                    : Platform.isIOS
+                                        ? 'https://apps.apple.com/sa/app/id${packageInfo.packageName}'
+                                        : '');
 
-                              if (await canLaunchUrl(url)) {
-                                launchUrl(url);
-                              }
-                            },
-                            child: const BodyText(text: "تحديث"),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                );
+                                if (await canLaunchUrl(url)) {
+                                  launchUrl(url);
+                                }
+                              },
+                              child: const BodyText(text: "تحديث"),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                }
               }
               return packageInfo;
             });

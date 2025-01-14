@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../data/models/calendar/calender_model.dart';
@@ -30,8 +30,8 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
 
         result.fold(
               (l) {
-                throw(l);
-                // emit(CalendarFailure(l.message));
+                // throw(l);
+                emit(CalendarFailure(l.message));
               },
               (r) {
                 emit(CalendarSuccess(r));
@@ -39,8 +39,8 @@ class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {
               },
         );
       }catch(e){
-        rethrow;
-        // emit(CalendarFailure(e.toString()));
+        // rethrow;
+        emit(CalendarFailure(e.toString()));
       }
     });
 

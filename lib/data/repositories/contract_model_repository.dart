@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
 import 'package:maktab_lessor/core/classes/exception/data_exceptions.dart';
@@ -19,7 +21,9 @@ class ContractModelRepository {
             right.data.map((dynamic data) => ContractModelModel.fromJson(data)),
           );
           return Right(contracts);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -37,7 +41,9 @@ class ContractModelRepository {
             right.data.map((dynamic data) => ContractModelModel.fromJson(data)),
           );
           return Right(contracts);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -52,7 +58,9 @@ class ContractModelRepository {
         try {
           final ContractModelModel contract = ContractModelModel.fromJson(right.data);
           return Right(contract);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -79,12 +87,16 @@ class ContractModelRepository {
           try {
             final ContractModelModel contract = ContractModelModel.fromJson(right.data);
             return Right(contract);
-          } catch (e) {
+          } catch (e, s) {
+            log(e.toString());
+            log(s.toString());
             return Left(ConversionException(e.toString()));
           }
         },
       );
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(ConversionException(e.toString()));
     }
   }
@@ -110,12 +122,16 @@ class ContractModelRepository {
           try {
             final ContractModelModel contract = ContractModelModel.fromJson(right.data);
             return Right(contract);
-          } catch (e) {
+          } catch (e, s) {
+            log(e.toString());
+            log(s.toString());
             return Left(ConversionException(e.toString()));
           }
         },
       );
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(ConversionException(e.toString()));
     }
   }
@@ -127,7 +143,9 @@ class ContractModelRepository {
       (right) {
         try {
           return const Right(null);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -142,7 +160,9 @@ class ContractModelRepository {
         try {
           final ContractModelModel contract = ContractModelModel.fromJson(right.data);
           return Right(contract);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },

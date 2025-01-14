@@ -1,4 +1,6 @@
-import 'package:bloc/bloc.dart';
+import 'dart:developer';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../data/models/notification/notification_model.dart';
@@ -21,8 +23,8 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
           (r) => emit(NotificationsSuccess(r)),
         );
       } catch (e, s) {
-        print(e);
-        print(s);
+        log(e.toString());
+        log(s.toString());
         emit(NotificationsFailure(e.toString()));
       }
     });
@@ -36,7 +38,8 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
               (r) => add(GetNotificationsEvent()),
         );
       } catch (e, s) {
-        print(s);
+        log(e.toString());
+        log(s.toString());
         emit(NotificationsFailure(e.toString()));
       }
     });
@@ -50,7 +53,8 @@ class NotificationsBloc extends Bloc<NotificationsEvent, NotificationsState> {
               (r) => add(GetNotificationsEvent()),
         );
       } catch (e, s) {
-        print(s);
+        log(e.toString());
+        log(s.toString());
         emit(NotificationsFailure(e.toString()));
       }
     });

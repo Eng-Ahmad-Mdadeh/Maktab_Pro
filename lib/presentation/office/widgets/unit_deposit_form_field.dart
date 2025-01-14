@@ -1,4 +1,3 @@
-// ignore_for_file: must_be_immutables, body_might_complete_normally_nullable
 import 'package:collection/collection.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -98,6 +97,9 @@ class _UnitDepositFormFieldState extends State<UnitDepositFormField> {
                       controller: _depositController,
                       textInputType: TextInputType.number,
                       errorStyle: TextStyle(height: 0.v),
+                      onChanged: (value){
+                        context.read<UnitBloc>().add(ChangeDepositAmountEvent(value));
+                      },
                       suffix: SizedBox(
                         width: 50.h,
                         child: Align(

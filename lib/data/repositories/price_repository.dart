@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
 import 'package:maktab_lessor/core/classes/exception/data_exceptions.dart';
@@ -22,7 +24,9 @@ class PriceRepository {
             right.data.map((data) => Office.fromJson(data)),
           );
           return Right(prices);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -37,7 +41,9 @@ class PriceRepository {
         try {
           final Office price = Office.fromJson(right.data);
           return Right(price);
-        } catch (e) {
+        } catch (e, s) {
+          log(e.toString());
+          log(s.toString());
           return Left(ConversionException(e.toString()));
         }
       },
@@ -87,7 +93,9 @@ class PriceRepository {
         (error) => Left(error),
         (right) => _handleResult(right.data),
       );
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(ConversionException(e.toString()));
     }
   }
@@ -96,7 +104,9 @@ class PriceRepository {
     try {
       final Office office = Office.fromJson(right);
       return Right(office);
-    } catch (e) {
+    } catch (e, s) {
+      log(e.toString());
+      log(s.toString());
       return Left(ConversionException(e.toString()));
     }
   }
