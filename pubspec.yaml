@@ -7,7 +7,7 @@ publish_to: 'none'
 version: 1.0.21+23
 
 environment:
-  sdk: ^3.5.4
+  sdk: ^3.5.3
 
 
 dependencies:
@@ -51,6 +51,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   dio: ^5.7.0
+  pretty_dio_logger: ^1.4.0
+
   connectivity_plus: ^6.1.0
   flutter_bloc: ^8.1.6
 
@@ -61,10 +63,10 @@ dependencies:
   share_plus: ^10.1.2
   html_editor_enhanced: ^2.6.0
   flutter_widget_from_html: ^0.15.2
-  pusher_channels_flutter: ^2.3.0
+  pusher_channels_flutter: ^2.5.0
   flutter_local_notifications: ^18.0.1
   pinput: ^5.0.0
-  app_links: ^6.3.2
+#  app_links: ^6.4.0
   package_info_plus: ^8.1.1
   permission_handler: ^11.3.1
   flutter_quill: ^10.8.5

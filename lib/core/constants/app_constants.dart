@@ -1,6 +1,7 @@
 
 class AppConstants {
-  static const String GOOGLE_MAP_API_KEY = 'AIzaSyCUSxdxRLpvkegxpk9-82sUjCylgekfGUk';
+  static const String GOOGLE_MAP_API_KEY = 'AIzaSyClODLUuvRdPLo_AslqJ40ObrSn2Rl0clU';
+  // static const String GOOGLE_MAP_API_KEY = 'AIzaSyDQRxaX2THkrlhzRaWloCUE8KQGk297qCY';
 
   static const String mapStyle = '''
   [

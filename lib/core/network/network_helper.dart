@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:maktab_lessor/core/classes/exception/api_exceptions.dart';
 import 'package:maktab_lessor/core/network/api_endpoints.dart';
 import 'package:maktab_lessor/core/services/service_locator.dart';
 import 'package:maktab_lessor/data/data_sources/local/user_local_data_source.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 class NetworkHelper {
   late Dio _dio;
@@ -25,6 +27,26 @@ class NetworkHelper {
     );
 
     _dio = Dio(options);
+    dio.interceptors.add(
+      PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseBody: true,
+        responseHeader: false,
+        error: true,
+        compact: true,
+        maxWidth: 90,
+        enabled: kDebugMode,
+        filter: (options, args) {
+          // don't print requests with uris containing '/posts'
+          if (options.path.contains('/posts')) {
+            return false;
+          }
+          // don't print responses with unit8 list data
+          return !args.isResponse || !args.hasUint8ListData;
+        },
+      ),
+    );
 
     _dio.options.headers.addAll({
       'apiKey': 'XTK4qAkmbzrynAmh80rpCOqcZGXz6nNc',
@@ -100,8 +122,7 @@ class NetworkHelper {
         ));
   }
 
-  Future<Either<Exception, dynamic>> _performRequest(Future<Response> Function() request,
-      {bool googleApi = false}) async {
+  Future<Either<Exception, dynamic>> _performRequest(Future<Response> Function() request, {bool googleApi = false}) async {
     if (!(await Connectivity().checkConnectivity()).contains(ConnectivityResult.none)) {
       try {
         Response response = await request();
@@ -117,7 +138,11 @@ class NetworkHelper {
         log("S T A C K");
         log(s.toString());
         if (e is DioException) {
-          return Left(_handleError(e.response?.statusCode, e.message));
+          print('!!!!!!!!!!!!!!!!');
+          print(e.response!.data["message"]);
+          print(e.response?.statusCode);
+          print('!!!!!!!!!!!!!!!!');
+          return Left(_handleError(e.response?.statusCode, e.response!.data["message"]));
         }
         return Left(ApiException('أعد المحاولة'));
       }
@@ -143,7 +168,7 @@ class NetworkHelper {
       case "500":
         return InternalServerErrorException(message);
       default:
-        return ApiException('خطأ غير معروف');
+        return ApiException(message ?? 'خطأ غير معروف');
     }
   }
 

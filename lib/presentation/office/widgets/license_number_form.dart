@@ -38,12 +38,12 @@ class _LicenseNumberFormState extends State<LicenseNumberForm> {
             title:
                 'بناء على نظام الوساطة العقارية لا يمكن الاعلان في المنصات العقارية الا بوجود رخصة اعلان',
           ),
-          SizedBox(height: 25.v),
-          const BodyText(
-            text: ' ماهي رخصة الإعلان وكيفية الحصول عليها؟',
-            textColor: AppColors.skyBlue,
-          ),
-          SizedBox(height: 25.v),
+          // SizedBox(height: 25.v),
+          // const BodyText(
+          //   text: ' ماهي رخصة الإعلان وكيفية الحصول عليها؟',
+          //   textColor: AppColors.skyBlue,
+          // ),
+          SizedBox(height: 10.v),
           Form(
             key: _licenseNumberFormKey,
             child: MaktabTextFormField(

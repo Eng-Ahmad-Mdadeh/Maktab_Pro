@@ -46,6 +46,8 @@ class _OfficeFirstInfoStepState extends State<OfficeFirstInfoStep> {
           Form(
             key: _officeNameFormKey,
             child: MaktabTextFormField(
+              maxLines: 1,
+              maxLength: 35,
               controller: _officeNameController,
               title: 'أضف عنواناً لإعلانك',
               hintText: 'أدخل اسم المكان/الخدمة الذي سيظهر للضيوف',
@@ -59,9 +61,7 @@ class _OfficeFirstInfoStepState extends State<OfficeFirstInfoStep> {
                 return null;
               },
               onChanged: (value) {
-                context
-                    .read<OfficeBloc>()
-                    .add(SetOfficeNameEvent(value.trim()));
+                context.read<OfficeBloc>().add(SetOfficeNameEvent(value.trim()));
               },
             ),
           ),
@@ -76,20 +76,14 @@ class _OfficeFirstInfoStepState extends State<OfficeFirstInfoStep> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 10.v,
-                  crossAxisSpacing: 8.h,
-                  childAspectRatio: 5/4
-                ),
+                    crossAxisCount: 3, mainAxisSpacing: 10.v, crossAxisSpacing: 8.h, childAspectRatio: 5 / 4),
                 itemCount: state.searchData!.officeCategories.length,
                 itemBuilder: (context, index) {
                   return OfficeCategoryBox(
                     officeCategory: state.searchData!.officeCategories[index],
-                    isSelected: context.read<OfficeBloc>().state.categoryId ==
-                        state.searchData!.officeCategories[index].id,
+                    isSelected: context.read<OfficeBloc>().state.categoryId == state.searchData!.officeCategories[index].id,
                     onTap: () {
-                      context.read<OfficeBloc>().add(SelectCategoryEvent(
-                          state.searchData!.officeCategories[index].id));
+                      context.read<OfficeBloc>().add(SelectCategoryEvent(state.searchData!.officeCategories[index].id));
                     },
                   );
                 },
@@ -108,25 +102,18 @@ class _OfficeFirstInfoStepState extends State<OfficeFirstInfoStep> {
                         value: state.acceptingUserAgreement,
                         activeColor: AppColors.mintTeal,
                         checkColor: AppColors.white,
-                        side: const BorderSide(
-                            color: AppColors.gray
-                        ),
-                        onChanged: (value) => context
-                            .read<OfficeBloc>()
-                            .add(ToggleAccepingUserAgreementEvent()),
+                        side: const BorderSide(color: AppColors.gray),
+                        onChanged: (value) => context.read<OfficeBloc>().add(ToggleAccepingUserAgreementEvent()),
                       ),
                       Flexible(
                         child: BlocListener<UserBloc, UserState>(
                           listener: (context, state) {
-                            if (state.userAgreementApiCallState ==
-                                UserApiCallState.loading) {
+                            if (state.userAgreementApiCallState == UserApiCallState.loading) {
                               LoadingDialog.show(context);
-                            } else if (state.userAgreementApiCallState ==
-                                UserApiCallState.success) {
+                            } else if (state.userAgreementApiCallState == UserApiCallState.success) {
                               LoadingDialog.hide(context);
                               context.pushNamed(AppRoutes.userAgreementScreen);
-                            } else if (state.userAgreementApiCallState ==
-                                UserApiCallState.failure) {
+                            } else if (state.userAgreementApiCallState == UserApiCallState.failure) {
                               LoadingDialog.hide(context);
                               MaktabSnackbar.showError(context, state.message);
                             }
@@ -138,14 +125,11 @@ class _OfficeFirstInfoStepState extends State<OfficeFirstInfoStep> {
                                 color: AppColors.slateGray,
                               ),
                               MaktabRichTextModel(
-                                text: 'إتفاقية الاستخدام',
-                                color: AppColors.mintTeal,
-                                onTap: () {
-                                  context
-                                      .read<UserBloc>()
-                                      .add(GetUserAgreementEvent());
-                                }
-                              ),
+                                  text: 'إتفاقية الاستخدام',
+                                  color: AppColors.mintTeal,
+                                  onTap: () {
+                                    context.read<UserBloc>().add(GetUserAgreementEvent());
+                                  }),
                             ],
                           ),
                         ),

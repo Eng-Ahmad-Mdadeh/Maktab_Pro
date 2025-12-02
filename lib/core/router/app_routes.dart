@@ -71,4 +71,7 @@ class AppRoutes {
   static const String unitCouponsScreen = 'unitCouponsScreen';
   static const String createCouponScreen = 'createCouponScreen';
   static const String marketingRequestsScreen = 'marketingRequestsScreen';
+
+  static const String nafazScreen = '$moreScreen/nafazScreen';
+  static const String verifyNafazScreen = 'verifyNafazScreen';
 }

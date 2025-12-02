@@ -15,6 +15,8 @@ import 'package:maktab_lessor/presentation/auth/screens/verify_code_screen.dart'
 import 'package:maktab_lessor/presentation/calendar/screens/calendar_screen.dart';
 import 'package:maktab_lessor/presentation/calendar/screens/unit_calendar_screen.dart';
 import 'package:maktab_lessor/presentation/invoices/screens/invoices_screen.dart';
+import 'package:maktab_lessor/presentation/more/nafath/nafath_screen.dart';
+import 'package:maktab_lessor/presentation/more/nafath/screens/verify_nafath_screen.dart';
 import 'package:maktab_lessor/presentation/more/screens/contact_us_screen.dart';
 import 'package:maktab_lessor/presentation/coupon/screens/create_coupon_screen.dart';
 import 'package:maktab_lessor/presentation/error/screens/error_screen.dart';
@@ -593,6 +595,18 @@ final GoRouter appRouter = GoRouter(
               },
             ),
           ],
+        ),
+        GoRoute(
+          path: AppRoutes.nafazScreen,
+          name: AppRoutes.nafazScreen,
+          routes: [
+            GoRoute(
+              path: AppRoutes.verifyNafazScreen,
+              name: AppRoutes.verifyNafazScreen,
+              builder: (context, state) => VerifyNafathScreen(verify: state.extra as String),
+            ),
+          ],
+          builder: (context, state) => const NafathScreen(),
         ),
         GoRoute(
           path: AppRoutes.couponsScreen,

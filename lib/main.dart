@@ -11,6 +11,8 @@ import 'package:maktab_lessor/domain/auth/auth_bloc.dart';
 import 'package:maktab_lessor/domain/coupon/coupon_bloc.dart';
 import 'package:maktab_lessor/domain/home/home_bloc.dart';
 import 'package:maktab_lessor/domain/map/map_cubit.dart';
+import 'package:maktab_lessor/domain/nafath/request_status/request_status_bloc.dart';
+import 'package:maktab_lessor/domain/nafath/send_request/send_request_bloc.dart';
 import 'package:maktab_lessor/domain/offices/offices_cubit.dart';
 import 'package:maktab_lessor/domain/receiving_method/receiving_method_bloc.dart';
 import 'package:maktab_lessor/domain/location/location_bloc.dart';
@@ -51,33 +53,34 @@ class MaktabApp extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) => MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => locator<SplashBloc>()),
-          BlocProvider(create: (context) => locator<ShimmerBloc>()),
-          BlocProvider(create: (context) => locator<AuthBloc>()),
-          BlocProvider(create: (context) => locator<HomeBloc>()),
-          BlocProvider(create: (context) => locator<MapCubit>()),
-          BlocProvider(create: (context) => locator<VideoBloc>()),
-          BlocProvider(create: (context) => locator<LocationBloc>()),
-          BlocProvider(create: (context) => locator<OfficesCubit>()),
-          BlocProvider(create: (context) => locator<UnitBloc>()),
-          BlocProvider(create: (context) => locator<ProfileBloc>()),
-          BlocProvider(create: (context) => locator<ReceivingMethodBloc>()),
-          BlocProvider(create: (context) => locator<UserBloc>()),
-          BlocProvider(create: (context) => locator<CouponBloc>()),
-          BlocProvider(create: (context) => locator<TransferBloc>()),
-          BlocProvider(create: (context) => locator<OrdersBloc>()),
-          BlocProvider(create: (context) => locator<OrderBloc>()),
-          BlocProvider(create: (context) => locator<AccountSummaryBloc>()),
-          BlocProvider(create: (context) => locator<InvoiceBloc>()),
-          BlocProvider(create: (context) => locator<ContractsBloc>()),
-          BlocProvider(create: (context) => locator<ContractBloc>()),
-          BlocProvider(create: (context) => locator<GeneralSettingBloc>()),
-          BlocProvider(create: (context) => locator<ContractModelsBloc>()),
-          BlocProvider(create: (context) => locator<ContractModelBloc>()),
-          BlocProvider(create: (context) => locator<NotificationsBloc>()),
-          BlocProvider(create: (context) => locator<EvaluationBloc>()),
-
-          BlocProvider(create: (context) => NavigationBloc()),
+          BlocProvider<SplashBloc>(create: (context) => locator<SplashBloc>()),
+          BlocProvider<ShimmerBloc>(create: (context) => locator<ShimmerBloc>()),
+          BlocProvider<AuthBloc>(create: (context) => locator<AuthBloc>()),
+          BlocProvider<HomeBloc>(create: (context) => locator<HomeBloc>()),
+          BlocProvider<MapCubit>(create: (context) => locator<MapCubit>()),
+          BlocProvider<VideoBloc>(create: (context) => locator<VideoBloc>()),
+          BlocProvider<LocationBloc>(create: (context) => locator<LocationBloc>()),
+          BlocProvider<OfficesCubit>(create: (context) => locator<OfficesCubit>()),
+          BlocProvider<UnitBloc>(create: (context) => locator<UnitBloc>()),
+          BlocProvider<ProfileBloc>(create: (context) => locator<ProfileBloc>()),
+          BlocProvider<ReceivingMethodBloc>(create: (context) => locator<ReceivingMethodBloc>()),
+          BlocProvider<UserBloc>(create: (context) => locator<UserBloc>()),
+          BlocProvider<CouponBloc>(create: (context) => locator<CouponBloc>()),
+          BlocProvider<TransferBloc>(create: (context) => locator<TransferBloc>()),
+          BlocProvider<OrdersBloc>(create: (context) => locator<OrdersBloc>()),
+          BlocProvider<OrderBloc>(create: (context) => locator<OrderBloc>()),
+          BlocProvider<AccountSummaryBloc>(create: (context) => locator<AccountSummaryBloc>()),
+          BlocProvider<InvoiceBloc>(create: (context) => locator<InvoiceBloc>()),
+          BlocProvider<ContractsBloc>(create: (context) => locator<ContractsBloc>()),
+          BlocProvider<ContractBloc>(create: (context) => locator<ContractBloc>()),
+          BlocProvider<GeneralSettingBloc>(create: (context) => locator<GeneralSettingBloc>()),
+          BlocProvider<ContractModelsBloc>(create: (context) => locator<ContractModelsBloc>()),
+          BlocProvider<ContractModelBloc>(create: (context) => locator<ContractModelBloc>()),
+          BlocProvider<NotificationsBloc>(create: (context) => locator<NotificationsBloc>()),
+          BlocProvider<EvaluationBloc>(create: (context) => locator<EvaluationBloc>()),
+          BlocProvider<SendRequestBloc>(create: (context) => locator<SendRequestBloc>()),
+          BlocProvider<RequestStatusBloc>(create: (context) => locator<RequestStatusBloc>()),
+          BlocProvider<NavigationBloc>(create: (context) => NavigationBloc()),
         ],
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

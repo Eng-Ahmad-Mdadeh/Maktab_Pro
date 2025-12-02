@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/services/service_locator.dart';
+import 'package:maktab_lessor/domain/profile/profile_bloc.dart';
 import 'package:maktab_lessor/domain/shimmer/shimmer_bloc.dart';
 import 'package:maktab_lessor/presentation/more/widgets/more_header.dart';
 import 'package:maktab_lessor/presentation/more/widgets/more_items_list.dart';
@@ -29,6 +31,7 @@ class _MoreScreenState extends State<MoreScreen> {
   @override
   void initState() {
     context.read<ShimmerBloc>().add(BeginShimmerEffectEvent());
+
     _getAppVersion();
     super.initState();
   }

@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:maktab_lessor/core/extension/email_validation_extension.dart';
 import 'package:maktab_lessor/core/helpers/size_helper.dart';
 import 'package:maktab_lessor/data/models/user/user_model.dart';
+import 'package:maktab_lessor/domain/license/license_cubit.dart';
 import 'package:maktab_lessor/domain/profile/profile_bloc.dart';
 import 'package:maktab_lessor/presentation/profile/widgets/license_option.dart';
 import 'package:maktab_lessor/presentation/profile/widgets/license_text_fields.dart';
@@ -73,266 +74,273 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(child: BlocBuilder<ProfileBloc, ProfileState>(
-      builder: (context, state) {
-        return Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              MaktabTextFormField(
-                title: 'اسم المستخدم',
-                controller: userNameController,
-                textInputType: TextInputType.name,
-                hintText: 'أدخل اسم المستخدم',
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'الرجاء ادخال اسم المستخدم';
-                  }
-                  return null;
-                },
-              ),
-              //شركة
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return BlocProvider<LicenseCubit>(
+      create: (context) => LicenseCubit(),
+      child: Form(
+        child: BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            return Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 20.v),
-                  if (state.selectedAccountTypeIndex == 1)
-                    MaktabTextFormField(
-                      title: 'الشركة',
-                      controller: companyNameController,
-                      textInputType: TextInputType.name,
-                      hintText: 'أدخل اسم الشركة',
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'الرجاء ادخال اسم الشركة';
-                        }
-                        return null;
-                      },
-                    ),
-                ],
-              ),
-              //مكتب
-              if (state.selectedAccountTypeIndex == 5)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20.v),
-                    MaktabTextFormField(
-                      title: 'المكتب',
-                      controller: officeNameController,
-                      textInputType: TextInputType.name,
-                      hintText: 'أدخل اسم المكتب',
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'الرجاء ادخال اسم المكتب';
-                        }
-                        return null;
-                      },
-                    ),
-                  ],
-                ),
-              SizedBox(height: 20.v),
-              MaktabTextFormField(
-                title: 'الايميل',
-                controller: emailController,
-                textInputType: TextInputType.emailAddress,
-                hintText: 'أدخل الايميل',
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'الرجاء ادخال الايميل';
-                  }
-                  if (!value.isValidEmail) {
-                    return 'الرجاء ادخال ايميل صالح';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20.v),
-              MaktabTextFormField(
-                title: 'المدينة',
-                controller: cityController,
-                textInputType: TextInputType.text,
-                hintText: 'أدخل المدينة',
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'الرجاء ادخال اسم المدينة';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20.v),
-              MaktabTextFormField(
-                title: 'الحي',
-                controller: neighborhoodController,
-                textInputType: TextInputType.text,
-                hintText: 'أدخل الحي',
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'الرجاء ادخال اسم الحي';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20.v),
-              MaktabTextFormField(
-                title: 'رقم الهوية / الإقامة',
-                controller: identityNumberController,
-                textInputType: TextInputType.number,
-                hintText: 'أدخل رقم الهوية / الإقامة',
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                  LengthLimitingTextInputFormatter(10),
-                ],
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'الرجاء ادخال رقم الهوية / الاقامة';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20.v),
-              if (state.selectedAccountTypeIndex == 5 || state.selectedAccountTypeIndex == 1)
-              MaktabTextFormField(
-                title: 'رقم السجل التجاري',
-                controller: commercialRecordController,
-                textInputType: TextInputType.number,
-                hintText: 'أدخل رقم رقم السجل التجاري',
-                inputFormatters: [
-                  FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                  LengthLimitingTextInputFormatter(10),
-                ],
-                validator: (value) {
-                  if (value!.length < 10) {
-                    return 'الرجاء ادخال رقم من 10 محارف';
-                  }
-                  return null;
-                },
-              ),
-              SizedBox(height: 20.v),
-              PhoneTextfield(
-                controller: phoneController,
-                textFieldFontSize: 15,
-                titleSize: 17.0,
-                hintSize: 15,
-                countryCodeSize: 35,
-              ),
-              SizedBox(height: 20.v),
-              MaktabTextFormField(
-                title: 'نبذة',
-                controller: aboutController,
-                textInputType: TextInputType.text,
-                maxLines: 3,
-                hintText: 'نبذة',
-              ),
-              SizedBox(height: 25.v),
-              const LicenseOption(),
-              LicenseTextFields(
-                licenseLinkController: licenseLinkController,
-                licenseNumberController: licenseNumberController,
-              ),
-              SizedBox(height: 25.v),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  MaktabButton(
-                    text: 'حفظ واستمرار',
-                    width: SizeHelper.width * 0.4,
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        log("selected:${aboutController.text}");
-                        context.read<ProfileBloc>().add(UpdateProfileEvent(
-                            state.user!.id.toString(),
-                            userNameController.text,
-                            companyNameController.text,
-                            officeNameController.text,
-                            emailController.text,
-                            cityController.text,
-                            neighborhoodController.text,
-                            identityNumberController.text,
-                            state.selectedAccountTypeIndex == 5 || state.selectedAccountTypeIndex == 1 ? commercialRecordController.text:null,
-                            phoneController.text,
-                            aboutController.text,
-                            state.selectedAccountTypeIndex,
-                            state.pickedImage,
-                            licenseNumberController.text,
-                            licenseLinkController.text));
+                  MaktabTextFormField(
+                    title: 'اسم المستخدم',
+                    controller: userNameController,
+                    textInputType: TextInputType.name,
+                    hintText: 'أدخل اسم المستخدم',
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'الرجاء ادخال اسم المستخدم';
                       }
+                      return null;
                     },
                   ),
-                  state.profileState == ProfileStates.loading
-                      ? const LoadingWidget(0)
-                      : Column(
+                  //شركة
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 20.v),
+                      if (state.selectedAccountTypeIndex == 1)
+                        MaktabTextFormField(
+                          title: 'الشركة',
+                          controller: companyNameController,
+                          textInputType: TextInputType.name,
+                          hintText: 'أدخل اسم الشركة',
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'الرجاء ادخال اسم الشركة';
+                            }
+                            return null;
+                          },
+                        ),
+                    ],
+                  ),
+                  //مكتب
+                  if (state.selectedAccountTypeIndex == 5)
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 20.v),
+                        MaktabTextFormField(
+                          title: 'المكتب',
+                          controller: officeNameController,
+                          textInputType: TextInputType.name,
+                          hintText: 'أدخل اسم المكتب',
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'الرجاء ادخال اسم المكتب';
+                            }
+                            return null;
+                          },
+                        ),
+                      ],
+                    ),
+                  SizedBox(height: 20.v),
+                  MaktabTextFormField(
+                    title: 'الايميل',
+                    controller: emailController,
+                    textInputType: TextInputType.emailAddress,
+                    hintText: 'أدخل الايميل',
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'الرجاء ادخال الايميل';
+                      }
+                      if (!value.isValidEmail) {
+                        return 'الرجاء ادخال ايميل صالح';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 20.v),
+                  MaktabTextFormField(
+                    title: 'المدينة',
+                    controller: cityController,
+                    textInputType: TextInputType.text,
+                    hintText: 'أدخل المدينة',
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'الرجاء ادخال اسم المدينة';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 20.v),
+                  MaktabTextFormField(
+                    title: 'الحي',
+                    controller: neighborhoodController,
+                    textInputType: TextInputType.text,
+                    hintText: 'أدخل الحي',
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'الرجاء ادخال اسم الحي';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 20.v),
+                  MaktabTextFormField(
+                    title: 'رقم الهوية / الإقامة',
+                    controller: identityNumberController,
+                    textInputType: TextInputType.number,
+                    hintText: 'أدخل رقم الهوية / الإقامة',
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                      LengthLimitingTextInputFormatter(10),
+                    ],
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'الرجاء ادخال رقم الهوية / الاقامة';
+                      }
+                      return null;
+                    },
+                  ),
+                  SizedBox(height: 20.v),
+                  if (state.selectedAccountTypeIndex == 5 || state.selectedAccountTypeIndex == 1)
+                    MaktabTextFormField(
+                      title: 'رقم السجل التجاري',
+                      controller: commercialRecordController,
+                      textInputType: TextInputType.number,
+                      hintText: 'أدخل رقم رقم السجل التجاري',
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                        LengthLimitingTextInputFormatter(10),
+                      ],
+                      validator: (value) {
+                        if (value!.length < 10) {
+                          return 'الرجاء ادخال رقم من 10 محارف';
+                        }
+                        return null;
+                      },
+                    ),
+                  SizedBox(height: 20.v),
+                  PhoneTextfield(
+                    controller: phoneController,
+                    textFieldFontSize: 15,
+                    titleSize: 17.0,
+                    hintSize: 15,
+                    countryCodeSize: 35,
+                  ),
+                  SizedBox(height: 20.v),
+                  MaktabTextFormField(
+                    title: 'نبذة',
+                    controller: aboutController,
+                    textInputType: TextInputType.text,
+                    maxLines: 3,
+                    hintText: 'نبذة',
+                  ),
+                  SizedBox(height: 25.v),
+                  const LicenseOption(),
+                  LicenseTextFields(
+                    licenseLinkController: licenseLinkController,
+                    licenseNumberController: licenseNumberController,
+                  ),
+                  SizedBox(height: 25.v),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       MaktabButton(
-                        text: "حذف الحساب",
-                        backgroundColor: AppColors.cherryRed,
+                        text: 'حفظ واستمرار',
                         width: SizeHelper.width * 0.4,
                         onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const PageTitle(
-                                title: "تأكيد الحذف",
-                              ),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  MaktabImageView(
-                                    imagePath: AppAssets.deleteContract,
-                                    color: AppColors.cherryRed,
-                                    width: 100.adaptSize,
-                                  ),
-                                  const SectionTitle(title: "هل تريد تأكيد حذف حسابك"),
-                                  SizedBox(
-                                    height: 10.v,
-                                  ),
-                                  const BodyText(
-                                    text: "ملاحظة: سيتم حذف حسابك بعد الموفقة على طلب الحذف",
-                                    overflow: TextOverflow.visible,
-                                  ),
-                                ],
-                              ),
-                              actionsAlignment: MainAxisAlignment.center,
-                              actions: [
+                          if (_formKey.currentState!.validate()) {
+                            log("selected:${aboutController.text}");
+                            context.read<ProfileBloc>().add(UpdateProfileEvent(
+                                state.user!.id.toString(),
+                                userNameController.text,
+                                companyNameController.text,
+                                officeNameController.text,
+                                emailController.text,
+                                cityController.text,
+                                neighborhoodController.text,
+                                identityNumberController.text,
+                                state.selectedAccountTypeIndex == 5 || state.selectedAccountTypeIndex == 1
+                                    ? commercialRecordController.text
+                                    : null,
+                                phoneController.text,
+                                aboutController.text,
+                                state.selectedAccountTypeIndex,
+                                state.pickedImage,
+                                licenseNumberController.text,
+                                licenseLinkController.text));
+                          }
+                        },
+                      ),
+                      state.profileState == ProfileStates.loading
+                          ? const LoadingWidget(0)
+                          : Column(
+                              children: [
                                 MaktabButton(
-                                  text: "لا",
-                                  width: SizeHelper.width * 0.3,
-                                  onPressed: context.pop,
-                                ),
-                                MaktabButton(
-                                  text: "نعم",
-                                  width: SizeHelper.width * 0.3,
+                                  text: "حذف الحساب",
                                   backgroundColor: AppColors.cherryRed,
+                                  width: SizeHelper.width * 0.4,
                                   onPressed: () {
-                                    context.read<ProfileBloc>().add(DeleteProfileEvent());
-                                    context.pop();
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: const PageTitle(
+                                          title: "تأكيد الحذف",
+                                        ),
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            MaktabImageView(
+                                              imagePath: AppAssets.deleteContract,
+                                              color: AppColors.cherryRed,
+                                              width: 100.adaptSize,
+                                            ),
+                                            const SectionTitle(title: "هل تريد تأكيد حذف حسابك"),
+                                            SizedBox(
+                                              height: 10.v,
+                                            ),
+                                            const BodyText(
+                                              text: "ملاحظة: سيتم حذف حسابك بعد الموفقة على طلب الحذف",
+                                              overflow: TextOverflow.visible,
+                                            ),
+                                          ],
+                                        ),
+                                        actionsAlignment: MainAxisAlignment.center,
+                                        actions: [
+                                          MaktabButton(
+                                            text: "لا",
+                                            width: SizeHelper.width * 0.3,
+                                            onPressed: context.pop,
+                                          ),
+                                          MaktabButton(
+                                            text: "نعم",
+                                            width: SizeHelper.width * 0.3,
+                                            backgroundColor: AppColors.cherryRed,
+                                            onPressed: () {
+                                              context.read<ProfileBloc>().add(DeleteProfileEvent());
+                                              context.pop();
+                                            },
+                                          ),
+                                        ],
+                                      ),
+                                    );
                                   },
                                 ),
                               ],
                             ),
-                          );
-                        },
-                      ),
                     ],
                   ),
+                  if (state.user != null)
+                    if (state.user!.requestDeleteAccount)
+                      Center(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 14.v),
+                          child: const BodyText(
+                            text: "تم ارسال طلب حذف حسابك",
+                            textColor: AppColors.cherryRed,
+                          ),
+                        ),
+                      ),
                 ],
               ),
-              if (state.user != null)
-                if (state.user!.requestDeleteAccount)
-                  Center(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 14.v),
-                      child: const BodyText(
-                        text: "تم ارسال طلب حذف حسابك",
-                        textColor: AppColors.cherryRed,
-                      ),
-                    ),
-                  ),
-            ],
-          ),
-        );
-      },
-    ));
+            );
+          },
+        ),
+      ),
+    );
   }
 }

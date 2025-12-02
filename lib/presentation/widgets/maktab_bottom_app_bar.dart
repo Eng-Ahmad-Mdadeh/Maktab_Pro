@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:maktab_lessor/domain/profile/profile_bloc.dart';
+import 'package:maktab_lessor/presentation/widgets/required_info_dialog.dart';
 
 import '../../core/helpers/size_helper.dart';
 import '../../core/router/app_routes.dart';
@@ -77,32 +79,43 @@ class MaktabBottomAppBar extends StatelessWidget {
                 ),
               ),
               // if (SizeHelper.width > 400)
-                Align(
-                  alignment: Alignment(0.0, SizeHelper.width < 420 ? -1.1 : -1.5),
-                  child: FloatingActionButton(
-                    backgroundColor: AppColors.lushGreen,
-                    shape: const CircleBorder(side: BorderSide(color: AppColors.lushGreen)),
-                    mini: SizeHelper.width < 420,
-                    foregroundColor: AppColors.white,
-                    elevation: 0,
-                    onPressed: () {
-                      context.pushNamed(AppRoutes.createOfficeScreen);
-                    },
-                    child: Icon(
-                      Icons.add,
-                      size: 25.0.adaptSize,
+              BlocBuilder<ProfileBloc, ProfileState>(
+                builder: (context, state) {
+                  return Align(
+                    alignment: Alignment(0.0, SizeHelper.width < 420 ? -1.1 : -1.5),
+                    child: FloatingActionButton(
+                      backgroundColor: AppColors.lushGreen,
+                      shape: const CircleBorder(side: BorderSide(color: AppColors.lushGreen)),
+                      mini: SizeHelper.width < 420,
+                      foregroundColor: AppColors.white,
+                      elevation: 0,
+                      onPressed: () {
+                        // if (state.profileState == ProfileStates.success && !state.user!.isNafathVerified) {
+                        //   showDialog(
+                        //     context: context,
+                        //     builder: (context) => const RequiredInfoDialog(),
+                        //   );
+                        // } else {
+                          context.pushNamed(AppRoutes.createOfficeScreen);
+                        // }
+                      },
+                      child: Icon(
+                        Icons.add,
+                        size: 25.0.adaptSize,
+                      ),
                     ),
-                  ),
-                ),
+                  );
+                },
+              ),
               // if (SizeHelper.width > 400)
-                const Align(
-                  alignment: Alignment(0.0, 0.4),
-                  child: BodyText(
-                    text: "اضف مكتبك",
-                    textColor: AppColors.lushGreen,
-                    fontSize: 13.0,
-                  ),
+              const Align(
+                alignment: Alignment(0.0, 0.4),
+                child: BodyText(
+                  text: "اضف مكتبك",
+                  textColor: AppColors.lushGreen,
+                  fontSize: 13.0,
                 ),
+              ),
               // Align(
               //   alignment: Alignment(0, SizeHelper.height > 600 ? -2 : -5),
               //   child: const AddOfficeButton(),

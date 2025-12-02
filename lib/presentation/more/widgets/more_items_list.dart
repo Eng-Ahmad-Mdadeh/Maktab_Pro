@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab_lessor/core/router/app_routes.dart';
 import 'package:maktab_lessor/domain/offices/offices_cubit.dart';
+import 'package:maktab_lessor/domain/profile/profile_bloc.dart';
 import 'package:maktab_lessor/domain/user/user_bloc.dart';
 import 'package:maktab_lessor/presentation/more/widgets/more_list_tile.dart';
 import 'package:maktab_lessor/presentation/widgets/loading_dialog.dart';
@@ -52,6 +53,19 @@ class MoreItemsList extends StatelessWidget {
           title: 'إعدادات الوحدة',
           icon: FontAwesomeIcons.gear,
           onTap: () => context.pushNamed(AppRoutes.unitSettingsScreen),
+        ),
+        BlocBuilder<ProfileBloc, ProfileState>(
+          builder: (context, state) {
+            if (state.profileState == ProfileStates.success && !state.user!.isNafathVerified) {
+              return MoreListTile(
+                title: "التحقق من نفاذ",
+                icon: FontAwesomeIcons.circleCheck,
+                onTap: () => context.pushNamed(AppRoutes.nafazScreen),
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
         ),
         BlocListener<UserBloc, UserState>(
           listener: (context, state) {

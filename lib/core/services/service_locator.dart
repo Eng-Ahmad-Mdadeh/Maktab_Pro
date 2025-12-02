@@ -11,6 +11,7 @@ import 'package:maktab_lessor/data/data_sources/remote/coupon_remote_data_source
 import 'package:maktab_lessor/data/data_sources/remote/feature_remote_data_source.dart';
 import 'package:maktab_lessor/data/data_sources/remote/financial_transactions_data_source.dart';
 import 'package:maktab_lessor/data/data_sources/remote/map_remote_data_source.dart';
+import 'package:maktab_lessor/data/data_sources/remote/nafath_remote_data_source.dart';
 import 'package:maktab_lessor/data/data_sources/remote/offer_remote_data_source.dart';
 import 'package:maktab_lessor/data/data_sources/remote/office_remote_data_source.dart';
 import 'package:maktab_lessor/data/data_sources/remote/price_remote_data_source.dart';
@@ -24,6 +25,7 @@ import 'package:maktab_lessor/data/repositories/complaint_repository.dart';
 import 'package:maktab_lessor/data/repositories/coupon_repository.dart';
 import 'package:maktab_lessor/data/repositories/financial_transactions_repository.dart';
 import 'package:maktab_lessor/data/repositories/map_repository.dart';
+import 'package:maktab_lessor/data/repositories/nafath_repository.dart';
 import 'package:maktab_lessor/data/repositories/offer_repository.dart';
 import 'package:maktab_lessor/data/repositories/office_repository.dart';
 import 'package:maktab_lessor/data/repositories/price_repository.dart';
@@ -35,6 +37,8 @@ import 'package:maktab_lessor/domain/calendar/calendar_bloc.dart';
 import 'package:maktab_lessor/domain/coupon/coupon_bloc.dart';
 import 'package:maktab_lessor/domain/home/home_bloc.dart';
 import 'package:maktab_lessor/domain/map/map_cubit.dart';
+import 'package:maktab_lessor/domain/nafath/request_status/request_status_bloc.dart';
+import 'package:maktab_lessor/domain/nafath/send_request/send_request_bloc.dart';
 import 'package:maktab_lessor/domain/national_access/national_access_bloc.dart';
 import 'package:maktab_lessor/domain/offer/offer_bloc.dart';
 import 'package:maktab_lessor/domain/offices/offices_cubit.dart';
@@ -130,7 +134,7 @@ Future<void> setup() async {
     ),
   );
   locator.registerFactory<TransferBloc>(
-        () => TransferBloc(
+    () => TransferBloc(
       transferMoneyRepository: locator<TransferMoneyRepository>(),
     ),
   );
@@ -176,82 +180,100 @@ Future<void> setup() async {
   );
 
   locator.registerFactory<OrdersBloc>(
-        () => OrdersBloc(
+    () => OrdersBloc(
       locator<OrderRepository>(),
     ),
   );
 
   locator.registerFactory<OrderBloc>(
-        () => OrderBloc(
+    () => OrderBloc(
       locator<OrderRepository>(),
     ),
   );
 
   locator.registerFactory<AccountSummaryBloc>(
-        () => AccountSummaryBloc(
+    () => AccountSummaryBloc(
       locator<AccountSummaryRepository>(),
     ),
   );
 
   locator.registerFactory<InvoiceBloc>(
-        () => InvoiceBloc(
+    () => InvoiceBloc(
       locator<InvoiceRepository>(),
     ),
   );
 
   locator.registerFactory<ContractsBloc>(
-        () => ContractsBloc(
+    () => ContractsBloc(
       locator<ContractRepository>(),
     ),
   );
 
   locator.registerFactory<ContractBloc>(
-        () => ContractBloc(
+    () => ContractBloc(
       locator<ContractRepository>(),
     ),
   );
 
   locator.registerFactory<GeneralSettingBloc>(
-        () => GeneralSettingBloc(
+    () => GeneralSettingBloc(
       locator<SettingsRepository>(),
     ),
   );
   locator.registerFactory<SearchDataBloc>(
-        () => SearchDataBloc(
+    () => SearchDataBloc(
       locator<OfficeRepository>(),
     ),
   );
 
   locator.registerFactory<ContractModelsBloc>(
-        () => ContractModelsBloc(
+    () => ContractModelsBloc(
       locator<ContractModelRepository>(),
     ),
   );
 
   locator.registerFactory<ContractModelBloc>(
-        () => ContractModelBloc(
+    () => ContractModelBloc(
       locator<ContractModelRepository>(),
     ),
   );
 
   locator.registerFactory<NotificationsBloc>(
-        () => NotificationsBloc(
+    () => NotificationsBloc(
       locator<NotificationRepository>(),
     ),
   );
 
+  locator.registerFactory<SendRequestBloc>(
+    () => SendRequestBloc(
+      locator<NafathRepository>(),
+    ),
+  );
+  locator.registerFactory<RequestStatusBloc>(
+    () => RequestStatusBloc(
+      locator<NafathRepository>(),
+    ),
+  );
+  locator.registerFactory<NafathRepository>(
+    () => NafathRepository(
+      locator<NafathRemoteDataSource>(),
+    ),
+  );
+  locator.registerFactory<NafathRemoteDataSource>(
+    () => NafathRemoteDataSource(),
+  );
+
   locator.registerFactory<EvaluationBloc>(
-        () => EvaluationBloc(
+    () => EvaluationBloc(
       locator<EvaluationRepository>(),
     ),
   );
 
   locator.registerFactory<MenusBloc>(
-        () => MenusBloc(
+    () => MenusBloc(
       locator<MenusRepository>(),
     ),
   );
-
 
   //Repositories
   locator.registerLazySingleton<AuthRepository>(
@@ -266,7 +288,7 @@ Future<void> setup() async {
     ),
   );
   locator.registerLazySingleton<TransferMoneyRepository>(
-        () => TransferMoneyRepository(
+    () => TransferMoneyRepository(
       transferMoneyRemoteDataSource: locator<TransferMoneyRemoteDataSource>(),
     ),
   );
@@ -319,55 +341,55 @@ Future<void> setup() async {
   );
 
   locator.registerLazySingleton<OrderRepository>(
-        () => OrderRepository(
-     locator<OrderRemoteDataSource>(),
+    () => OrderRepository(
+      locator<OrderRemoteDataSource>(),
     ),
   );
 
   locator.registerLazySingleton<AccountSummaryRepository>(
-        () => AccountSummaryRepository(
+    () => AccountSummaryRepository(
       locator<AccountSummaryDataSource>(),
     ),
   );
 
   locator.registerLazySingleton<SettingsRepository>(
-        () => SettingsRepository(
+    () => SettingsRepository(
       locator<SettingsRemoteDataSource>(),
     ),
   );
 
   locator.registerLazySingleton<InvoiceRepository>(
-        () => InvoiceRepository(
+    () => InvoiceRepository(
       locator<InvoiceRemoteDataSource>(),
     ),
   );
 
   locator.registerLazySingleton<ContractRepository>(
-        () => ContractRepository(
+    () => ContractRepository(
       locator<ContractRemoteDataSource>(),
     ),
   );
 
   locator.registerLazySingleton<ContractModelRepository>(
-        () => ContractModelRepository(
+    () => ContractModelRepository(
       locator<ContractModelRemoteDataSource>(),
     ),
   );
 
   locator.registerLazySingleton<NotificationRepository>(
-        () => NotificationRepository(
+    () => NotificationRepository(
       locator<NotificationRemoteDataSource>(),
     ),
   );
 
   locator.registerLazySingleton<EvaluationRepository>(
-        () => EvaluationRepository(
+    () => EvaluationRepository(
       locator<EvaluationRemoteDataSource>(),
     ),
   );
 
   locator.registerLazySingleton<MenusRepository>(
-        () => MenusRepository(
+    () => MenusRepository(
       locator<MenusRemoteDataSource>(),
     ),
   );
@@ -377,7 +399,7 @@ Future<void> setup() async {
     () => AuthRemoteDataSource(),
   );
   locator.registerLazySingleton<TransferMoneyRemoteDataSource>(
-        () => TransferMoneyRemoteDataSource(),
+    () => TransferMoneyRemoteDataSource(),
   );
   locator.registerLazySingleton<UserLocalDataSource>(
     () => UserLocalDataSource(),
@@ -420,35 +442,35 @@ Future<void> setup() async {
   );
 
   locator.registerLazySingleton<OrderRemoteDataSource>(
-        () => OrderRemoteDataSource(),
+    () => OrderRemoteDataSource(),
   );
 
   locator.registerLazySingleton<AccountSummaryDataSource>(
-        () => AccountSummaryDataSource(),
+    () => AccountSummaryDataSource(),
   );
 
   locator.registerLazySingleton<InvoiceRemoteDataSource>(
-        () => InvoiceRemoteDataSource(),
+    () => InvoiceRemoteDataSource(),
   );
 
   locator.registerLazySingleton<ContractRemoteDataSource>(
-        () => ContractRemoteDataSource(),
+    () => ContractRemoteDataSource(),
   );
 
   locator.registerLazySingleton<ContractModelRemoteDataSource>(
-        () => ContractModelRemoteDataSource(),
+    () => ContractModelRemoteDataSource(),
   );
 
   locator.registerLazySingleton<NotificationRemoteDataSource>(
-        () => NotificationRemoteDataSource(),
+    () => NotificationRemoteDataSource(),
   );
 
   locator.registerLazySingleton<EvaluationRemoteDataSource>(
-        () => EvaluationRemoteDataSource(),
+    () => EvaluationRemoteDataSource(),
   );
 
   locator.registerLazySingleton<MenusRemoteDataSource>(
-        () => MenusRemoteDataSource(),
+    () => MenusRemoteDataSource(),
   );
 
   //External

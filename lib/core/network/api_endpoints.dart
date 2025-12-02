@@ -1,7 +1,8 @@
 class ApiEndpoints {
   //Base URL
   static const siteUrl = 'https://maktab.sa/';
-  static const baseUrl = 'https://maktab.sa/apiBack/v1/user/';
+  // static const baseUrl = 'https://maktab.sa/apiBack/v1/user/';
+  static const baseUrl = 'https://dev.maktab.sa/apiBack/v1/user/';
   //Auth
   static const login = "login";
   static const checkCode = "checkCode";
@@ -30,6 +31,10 @@ class ApiEndpoints {
   static const menus = 'menus/';
   static const getFooter = 'getFooter';
 
+  // nafath
+  static const nafath = 'nafath';
+  static const sendRequest = '/send-request';
+  static const requestStatus = '/request-status';
 
   //Office
   static const offices = 'offices/';

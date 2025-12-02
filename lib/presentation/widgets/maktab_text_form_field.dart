@@ -20,6 +20,7 @@ class MaktabTextFormField extends StatelessWidget {
     this.textInputAction = TextInputAction.next,
     this.textInputType = TextInputType.text,
     this.maxLines,
+    this.maxLength,
     this.hintText,
     this.hintStyle,
     this.prefix,
@@ -61,6 +62,7 @@ class MaktabTextFormField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final TextInputType? textInputType;
   final int? maxLines;
+  final int? maxLength;
   final String? hintText;
   final TextStyle? hintStyle;
   final Widget? prefix;
@@ -117,6 +119,7 @@ class MaktabTextFormField extends StatelessWidget {
         )
             : const SizedBox.shrink(),
         TextFormField(
+          maxLength: maxLength,
           controller: controller,
           style: textStyle ?? textTheme.titleMedium!.copyWith(fontSize: textFieldFontSize ?? 15.fSize),
           obscureText: obscureText!,

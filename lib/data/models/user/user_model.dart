@@ -20,6 +20,7 @@ class User {
   UserType? type;
   String? membership;
   bool isNafath;
+  bool isNafathVerified;
 
   User({
     required this.id,
@@ -41,6 +42,7 @@ class User {
     required this.type,
     required this.membership,
     required this.isNafath,
+    required this.isNafathVerified,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -50,7 +52,7 @@ class User {
         phone: json["phone"].toString().replaceRange(0, 3, ''),
         email: json["email"] ?? '',
         officeName: json["office_name"] ?? '',
-    requestDeleteAccount: json["request_delete_account"] == '1',
+        requestDeleteAccount: json["request_delete_account"] == '1',
         about: json["about"] ?? '',
         licenseLink: json["licenseLink"] ?? '',
         licenseNumber: json["license_number"] ?? '',
@@ -59,9 +61,7 @@ class User {
         commercialRecord: json["commercial_record"] ?? '',
         membershipValidity: json["membership_validity"] ?? '',
         idNumber: json["IdNumber"]?.toString() ?? '',
-        image: json["image"] != null
-            ? 'https://maktab.sa/${json["image"]["name"]}'
-            : '',
+        image: json["image"] != null ? 'https://maktab.sa/${json["image"]["name"]}' : '',
         type: json["type"] != null ? UserType.fromJson(json["type"]) : null,
         membership: json["membership"] ?? '',
         isNafath: json["is_nafath"] != null
@@ -69,6 +69,7 @@ class User {
                 ? true
                 : false
             : false,
+        isNafathVerified: json["is_nafath_verified"],
       );
 
   Map<String, dynamic> toJson() => {
