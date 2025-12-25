@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:collection/collection.dart';
@@ -61,25 +60,25 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
         state.progressValue = 0;
         state.createdOffice = event.office;
         state.createdUnit = event.office!.units.firstWhereOrNull((unit) => unit.isCentral);
-        state.marketingRequestState = (state.createdUnit?.isMarketing??false) ? VisibilityStates.show : VisibilityStates.hide;
-        state.licenseOfficeState = !(state.createdUnit?.isMarketing??false) ? VisibilityStates.show : VisibilityStates.hide;
+        state.marketingRequestState =
+            (state.createdUnit?.isMarketing ?? false) ? VisibilityStates.show : VisibilityStates.hide;
+        state.licenseOfficeState =
+            !(state.createdUnit?.isMarketing ?? false) ? VisibilityStates.show : VisibilityStates.hide;
         log("-----------------------------------------------");
         log(state.marketingRequestState.toString());
         log(state.licenseOfficeState.toString());
         log(state.licenseNumber.toString());
-        log(state.createdUnit?.isMarketing.toString()??'');
+        log(state.createdUnit?.isMarketing.toString() ?? '');
         log("-----------------------------------------------");
         // _toggleAddingLicenseOffice(emit);
         // _toggleAddingMarketingRequest(emit);
         state.name = state.createdUnit?.title ?? '';
         state.categoryId = state.createdUnit?.categoryId ?? 0;
         if ((state.createdUnit?.advertiserRelationship ?? '').isNotEmpty) {
-          state.advertiserRelationshipOption =
-              getAdvertiserRelationship(state.createdUnit!.advertiserRelationship!);
+          state.advertiserRelationshipOption = getAdvertiserRelationship(state.createdUnit!.advertiserRelationship!);
         }
         if ((state.createdUnit?.advertiserRelationshipType ?? '').isNotEmpty) {
-          state.marketerTypeOption =
-              getAdvertiserRelationshipType(state.createdUnit!.advertiserRelationshipType);
+          state.marketerTypeOption = getAdvertiserRelationshipType(state.createdUnit!.advertiserRelationshipType);
         }
         if (state.createdUnit?.space != null) {
           state.space = state.createdUnit!.space.toString();
@@ -124,8 +123,8 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
         state.features = state.createdUnit?.features.map((feature) => feature.id).toList() ?? [];
         state.comforts = state.createdUnit?.comforts.map((comfort) => comfort.id).toList() ?? [];
         if (state.createdOffice?.location != null) {
-          state.addressPosition = LatLng(
-              state.createdOffice!.location!.lat.toDouble(), state.createdOffice!.location!.lng.toDouble());
+          state.addressPosition =
+              LatLng(state.createdOffice!.location!.lat.toDouble(), state.createdOffice!.location!.lng.toDouble());
           state.city = state.createdOffice!.location!.city;
           state.neighborhood = state.createdOffice!.location!.neighborhood;
           state.street = state.createdOffice!.location!.street;
@@ -160,10 +159,9 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
                   ? DepositTypes.percentage
                   : null;
         }
-        if ((state.createdUnit?.viewerName ?? '').isNotEmpty &&
-            (state.createdUnit?.viewerPhone ?? '').isNotEmpty) {
+        if ((state.createdUnit?.viewerName ?? '').isNotEmpty && (state.createdUnit?.viewerPhone ?? '').isNotEmpty) {
           state.viewerName = state.createdUnit?.viewerName ?? '';
-          state.viewerPhone = state.createdUnit?.viewerPhone??'';
+          state.viewerPhone = state.createdUnit?.viewerPhone ?? '';
         }
       }
       emit(state.copyWith(isInitialized: true));
@@ -174,8 +172,8 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
       state.searchData = event.searchData;
       state.createdUnit = event.office.units.firstWhere((unit) => unit.isCentral);
       if (state.createdOffice!.location != null) {
-        state.addressPosition = LatLng(
-            state.createdOffice!.location!.lat.toDouble(), state.createdOffice!.location!.lng.toDouble());
+        state.addressPosition =
+            LatLng(state.createdOffice!.location!.lat.toDouble(), state.createdOffice!.location!.lng.toDouble());
         state.city = state.createdOffice!.location!.city;
         state.neighborhood = state.createdOffice!.location!.neighborhood;
         state.street = state.createdOffice!.location!.street;
@@ -209,15 +207,13 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
     });
     on<SelectAdertiserRelationshipEvent>((event, emit) {
       emit(state.copyWith(
-          advertiserRelationshipOption: event.option != state.advertiserRelationshipOption
-              ? event.option
-              : state.advertiserRelationshipOption));
+          advertiserRelationshipOption:
+              event.option != state.advertiserRelationshipOption ? event.option : state.advertiserRelationshipOption));
       emit(state.copyWith(isStepCompleted: checkIfOfficeSecondStepCompleted()));
     });
     on<SelectMarketerTypeEvent>((event, emit) {
       emit(state.copyWith(
-          marketerTypeOption:
-              event.option != state.marketerTypeOption ? event.option : state.marketerTypeOption));
+          marketerTypeOption: event.option != state.marketerTypeOption ? event.option : state.marketerTypeOption));
       emit(state.copyWith(isStepCompleted: checkIfOfficeSecondStepCompleted()));
     });
     on<SetSpaceEvent>((event, emit) {
@@ -412,8 +408,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
     });
     on<SelectAddressPositionEvent>((event, emit) async {
       emit(state.copyWith(
-          addressPosition: LatLng(event.position.latitude, event.position.longitude),
-          currentMapZoom: event.zoom));
+          addressPosition: LatLng(event.position.latitude, event.position.longitude), currentMapZoom: event.zoom));
     });
     on<GoToSelectedAddressEvent>((event, emit) async {
       log("POSITION 1");
@@ -421,7 +416,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
       result.fold(
         (failure) {},
         (position) {
-          log("POSITION 2" );
+          log("POSITION 2");
           log(position.toString());
           if (position != null) {
             emit(state.copyWith(addressPosition: position));
@@ -454,9 +449,8 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
       ));
     });
     on<SetInterfaceEvent>((event, emit) {
-      state.interfaceId = state.searchData!.officeInterfaces
-          .firstWhere((interface) => interface.arName == event.interface)
-          .id;
+      state.interfaceId =
+          state.searchData!.officeInterfaces.firstWhere((interface) => interface.arName == event.interface).id;
       emit(state.copyWith(isStepCompleted: checkIfConfirmAddressStepCompleted()));
     });
     on<ToggleUnitPriceOptionEvent>((event, emit) {
@@ -611,8 +605,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
           if (state.createdUnit!.facilities.isEmpty && state.facilities.isNotEmpty) {
             temp2 = await updateFacilities(emit);
           } else {
-            if (!listEquals(
-                state.createdUnit!.facilities.map((facility) => facility.id).toList(), state.facilities)) {
+            if (!listEquals(state.createdUnit!.facilities.map((facility) => facility.id).toList(), state.facilities)) {
               temp2 = await updateFacilities(emit);
             }
           }
@@ -622,8 +615,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
           break;
         case 4:
           bool temp1 = false;
-          if ((state.createdUnit!.description ?? '').isEmpty ||
-              state.createdUnit!.description != state.description) {
+          if ((state.createdUnit!.description ?? '').isEmpty || state.createdUnit!.description != state.description) {
             temp1 = await updateDescription(emit);
             if (temp1) {
               navigateAfterSuccessStep(emit, event.index);
@@ -639,8 +631,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
           if (state.createdUnit!.features.isEmpty && state.features.isNotEmpty) {
             temp1 = await updateFeatures(emit);
           } else {
-            if (!listEquals(
-                state.createdUnit!.features.map((feature) => feature.id).toList(), state.features)) {
+            if (!listEquals(state.createdUnit!.features.map((feature) => feature.id).toList(), state.features)) {
               temp1 = await updateFeatures(emit);
             }
           }
@@ -656,8 +647,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
           if (state.createdUnit!.comforts.isEmpty && state.comforts.isNotEmpty) {
             temp2 = await updateComforts(emit);
           } else {
-            if (!listEquals(
-                state.createdUnit!.comforts.map((comfort) => comfort.id).toList(), state.comforts)) {
+            if (!listEquals(state.createdUnit!.comforts.map((comfort) => comfort.id).toList(), state.comforts)) {
               temp2 = await updateComforts(emit);
             }
           }
@@ -671,8 +661,6 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
               (state.addressPosition.latitude != state.createdUnit!.location!.lat.toDouble() &&
                   state.addressPosition.longitude != state.createdUnit!.location!.lng.toDouble())) {
             temp1 = await getOfficeAddressDetails(emit);
-            log("TEMP1111111111111");
-            log(temp1.toString());
           }
           if (temp1) {
             navigateAfterSuccessStep(emit, event.index);
@@ -708,7 +696,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
           temp1 = await updatePrices(emit);
           if (state.selectedUnitPriceOptions.contains(UnitPriceOptions.yearly)) {
             if (state.depositAmount != state.createdUnit!.downPayment ||
-                getCounterDepositType(state.depositType??DepositTypes.price) != state.createdUnit!.typeDownPayment) {
+                getCounterDepositType(state.depositType ?? DepositTypes.price) != state.createdUnit!.typeDownPayment) {
               temp2 = await updateDepositInfo(emit);
             }
           }
@@ -749,8 +737,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
     on<SelectAndGetAddressPositionEvent>(
       (event, emit) async {
         emit(state.copyWith(
-            addressPosition: LatLng(event.position.latitude, event.position.longitude),
-            currentMapZoom: event.zoom));
+            addressPosition: LatLng(event.position.latitude, event.position.longitude), currentMapZoom: event.zoom));
         var result = await _mapRepository.getAddressDetails(
             lat: state.addressPosition.latitude, long: state.addressPosition.longitude);
         return result.fold(
@@ -928,7 +915,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
   //   emit(state.copyWith(additionalServiceKeys: additionalServiceKeys));
   // }
 
-  Future<void>  _pickImage(OfficeState state, Emitter<OfficeState> emit, bool isMainImage) async {
+  Future<void> _pickImage(OfficeState state, Emitter<OfficeState> emit, bool isMainImage) async {
     emit(state.copyWith(imagesErrorMessage: ''));
     selectedImage = await locator<FilePickerHelper>().pickImage();
     if (selectedImage != null) {
@@ -1089,8 +1076,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
         return false;
       },
       (updatedOffice) async {
-        emit(state.copyWith(
-            createdOffice: state.createdOffice!.copyWith(categoryId: updatedOffice!.categoryId)));
+        emit(state.copyWith(createdOffice: state.createdOffice!.copyWith(categoryId: updatedOffice!.categoryId)));
         var result = await _officeRepository.updateCategory(
           categoryId: state.categoryId,
           officeId: state.createdUnit!.id,
@@ -1266,8 +1252,8 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
 
   Future<bool> updateDescription(Emitter emit) async {
     emit(state.copyWith(officeApiCallState: OfficeApiCallState.loading));
-    var result = await _officeRepository.updateDescription(
-        officeId: state.createdUnit!.id, description: state.description);
+    var result =
+        await _officeRepository.updateDescription(officeId: state.createdUnit!.id, description: state.description);
     return result.fold(
       (failure) {
         emit(state.copyWith(officeApiCallState: OfficeApiCallState.failure));
@@ -1567,8 +1553,8 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
       (updatedUnit) async {
         emit(state.copyWith(
           officeApiCallState: OfficeApiCallState.success,
-          createdUnit: state.createdUnit!
-              .copyWith(viewerName: updatedUnit.viewerName, viewerPhone: updatedUnit.viewerPhone),
+          createdUnit:
+              state.createdUnit!.copyWith(viewerName: updatedUnit.viewerName, viewerPhone: updatedUnit.viewerPhone),
         ));
         return true;
       },

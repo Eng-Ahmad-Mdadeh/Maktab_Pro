@@ -91,9 +91,7 @@ class _CreateOfficeScreenState extends State<CreateOfficeScreen> {
                           ),
                           CreateOfficeNavigationSection(
                             pageController: _pageController,
-                            onCreateSuccess: (){
-
-                            },
+                            onCreateSuccess: () {},
                           ),
                         ],
                       ),

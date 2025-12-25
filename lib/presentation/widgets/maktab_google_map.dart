@@ -64,6 +64,7 @@ class _MaktabGoogleMapState extends State<MaktabGoogleMap> {
                       Stack(
                         children: [
                           GoogleMap(
+                            // minMaxZoomPreference: const MinMaxZoomPreference(20, 20),
                             gestureRecognizers: {
                               Factory<OneSequenceGestureRecognizer>(
                                 () => EagerGestureRecognizer(),
