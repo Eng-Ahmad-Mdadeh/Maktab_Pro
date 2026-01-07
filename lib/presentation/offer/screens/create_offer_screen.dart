@@ -23,10 +23,11 @@ import 'package:maktab_lessor/presentation/widgets/maktab_text_form_field.dart';
 import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 class CreateOfferScreen extends StatefulWidget {
-  const CreateOfferScreen({super.key, this.offer, this.unit});
+  const CreateOfferScreen({super.key, this.offer, this.unit,this.offices});
 
   final Offer? offer;
   final Office? unit;
+  final List<Office>? offices;
 
   @override
   State<CreateOfferScreen> createState() => _CreateOfferScreenState();
@@ -37,7 +38,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
   late TextEditingController offerDepositController;
   late TextEditingController offerDateRangeController;
   final GlobalKey<FormState> _formKey = GlobalKey();
-  late List<Office> units;
+  // late List<Office> units;
   DateTimeRange? range;
 
   final List<Map<String, dynamic>> disCountTypes = [
@@ -48,9 +49,9 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
   @override
   void initState() {
     OfferState offerState = context.read<OfferBloc>().state;
-    units = List.from(context.read<OfficesCubit>().state.offers.expand(
-          (office) => office.units,
-        ));
+    // units = List.from(context.read<OfficesCubit>().state.offers.expand(
+    //       (office) => office.units,
+    //     ));
     offerNameController = TextEditingController(text: widget.offer?.name);
     offerDepositController = TextEditingController(text: widget.offer?.discount.toString());
     offerDateRangeController = TextEditingController(
@@ -121,6 +122,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                 },
                               ),
                               SizedBox(height: 20.v),
+                              if(widget.offices!=null)...[
                               const SectionTitle(title: 'الوحدات التي تريد أن يطبق عليها العرض:'),
                               SizedBox(height: 5.v),
                               DropdownButtonFormField2(
@@ -135,7 +137,7 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                     size: 25.adaptSize,
                                   ),
                                 ),
-                                items: units
+                                items: widget.offices!
                                     .map(
                                       (unit) => DropdownMenuItem<int>(
                                         value: unit.id,
@@ -160,10 +162,11 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                 },
                                 onChanged: (value) {
                                   context.read<OfferBloc>().add(
-                                      SelectUnitEvent(units.firstWhereOrNull((unit) => unit.id == value)!));
+                                      SelectUnitEvent(widget.offices!.firstWhereOrNull((unit) => unit.id == value)!));
                                 },
                               ),
                               SizedBox(height: 20.v),
+                              ],
                               const SectionTitle(title: 'قيمة الخصم:'),
                               SizedBox(height: 5.v),
                               Row(
@@ -323,95 +326,95 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                                   );
                                 },
                               ),
-                              SizedBox(height: 20.v),
-                              BlocBuilder<OfferBloc, OfferState>(
-                                builder: (context, state) {
-                                  return state.unit != null
-                                      ? Column(
-                                          children: [
-                                            const SectionTitle(title: 'أنواع الاسعار التي يطبق العرض عليها:'),
-                                            SizedBox(height: 20.v),
-                                            SizedBox(
-                                              height: 60.v,
-                                              child: BlocBuilder<OfferBloc, OfferState>(
-                                                builder: (context, state) {
-                                                  return ListView(
-                                                    shrinkWrap: true,
-                                                    scrollDirection: Axis.horizontal,
-                                                    children: [
-                                                      if (state.unit != null && state.unit!.prices.isNotEmpty)
-                                                        PriceSelectBox(
-                                                          title: 'الكل',
-                                                          isSelected: state.prices.length ==
-                                                              state.unit!.prices.length,
-                                                          onTap: () {
-                                                            context
-                                                                .read<OfferBloc>()
-                                                                .add(SelectAllUnitPricesEvent());
-                                                          },
-                                                        ),
-                                                      if (state.unit != null &&
-                                                          state.unit!.prices.firstWhereOrNull(
-                                                                  (price) => price.typeResId == 4) !=
-                                                              null)
-                                                        PriceSelectBox(
-                                                          title: 'سنوي',
-                                                          isSelected: state.priceTypes.contains(4),
-                                                          onTap: () {
-                                                            context
-                                                                .read<OfferBloc>()
-                                                                .add(const SelectUnitPriceEvent(4));
-                                                          },
-                                                        ),
-                                                      if (state.unit != null &&
-                                                          state.unit!.prices.firstWhereOrNull(
-                                                                  (price) => price.typeResId == 3) !=
-                                                              null)
-                                                        PriceSelectBox(
-                                                          title: 'شهري',
-                                                          isSelected: state.priceTypes.contains(3),
-                                                          onTap: () {
-                                                            context
-                                                                .read<OfferBloc>()
-                                                                .add(const SelectUnitPriceEvent(3));
-                                                          },
-                                                        ),
-                                                      if (state.unit != null &&
-                                                          state.unit!.prices.firstWhereOrNull(
-                                                                  (price) => price.typeResId == 2) !=
-                                                              null)
-                                                        PriceSelectBox(
-                                                          title: 'يومي',
-                                                          isSelected: state.priceTypes.contains(2),
-                                                          onTap: () {
-                                                            context
-                                                                .read<OfferBloc>()
-                                                                .add(const SelectUnitPriceEvent(2));
-                                                          },
-                                                        ),
-                                                      if (state.unit != null &&
-                                                          state.unit!.prices.firstWhereOrNull(
-                                                                  (price) => price.typeResId == 1) !=
-                                                              null)
-                                                        PriceSelectBox(
-                                                          title: 'ساعة',
-                                                          isSelected: state.priceTypes.contains(1),
-                                                          onTap: () {
-                                                            context
-                                                                .read<OfferBloc>()
-                                                                .add(const SelectUnitPriceEvent(1));
-                                                          },
-                                                        ),
-                                                    ],
-                                                  );
-                                                },
-                                              ),
-                                            ).animate().fade(),
-                                          ],
-                                        )
-                                      : const SizedBox.shrink();
-                                },
-                              ),
+                              // SizedBox(height: 20.v),
+                              // BlocBuilder<OfferBloc, OfferState>(
+                              //   builder: (context, state) {
+                              //     return state.unit != null
+                              //         ? Column(
+                              //             children: [
+                              //               const SectionTitle(title: 'أنواع الاسعار التي يطبق العرض عليها:'),
+                              //               SizedBox(height: 20.v),
+                              //               SizedBox(
+                              //                 height: 60.v,
+                              //                 child: BlocBuilder<OfferBloc, OfferState>(
+                              //                   builder: (context, state) {
+                              //                     return ListView(
+                              //                       shrinkWrap: true,
+                              //                       scrollDirection: Axis.horizontal,
+                              //                       children: [
+                              //                         if (state.unit != null && state.unit!.prices.isNotEmpty)
+                              //                           PriceSelectBox(
+                              //                             title: 'الكل',
+                              //                             isSelected: state.prices.length ==
+                              //                                 state.unit!.prices.length,
+                              //                             onTap: () {
+                              //                               context
+                              //                                   .read<OfferBloc>()
+                              //                                   .add(SelectAllUnitPricesEvent());
+                              //                             },
+                              //                           ),
+                              //                         if (state.unit != null &&
+                              //                             state.unit!.prices.firstWhereOrNull(
+                              //                                     (price) => price.typeResId == 4) !=
+                              //                                 null)
+                              //                           PriceSelectBox(
+                              //                             title: 'سنوي',
+                              //                             isSelected: state.priceTypes.contains(4),
+                              //                             onTap: () {
+                              //                               context
+                              //                                   .read<OfferBloc>()
+                              //                                   .add(const SelectUnitPriceEvent(4));
+                              //                             },
+                              //                           ),
+                              //                         if (state.unit != null &&
+                              //                             state.unit!.prices.firstWhereOrNull(
+                              //                                     (price) => price.typeResId == 3) !=
+                              //                                 null)
+                              //                           PriceSelectBox(
+                              //                             title: 'شهري',
+                              //                             isSelected: state.priceTypes.contains(3),
+                              //                             onTap: () {
+                              //                               context
+                              //                                   .read<OfferBloc>()
+                              //                                   .add(const SelectUnitPriceEvent(3));
+                              //                             },
+                              //                           ),
+                              //                         if (state.unit != null &&
+                              //                             state.unit!.prices.firstWhereOrNull(
+                              //                                     (price) => price.typeResId == 2) !=
+                              //                                 null)
+                              //                           PriceSelectBox(
+                              //                             title: 'يومي',
+                              //                             isSelected: state.priceTypes.contains(2),
+                              //                             onTap: () {
+                              //                               context
+                              //                                   .read<OfferBloc>()
+                              //                                   .add(const SelectUnitPriceEvent(2));
+                              //                             },
+                              //                           ),
+                              //                         if (state.unit != null &&
+                              //                             state.unit!.prices.firstWhereOrNull(
+                              //                                     (price) => price.typeResId == 1) !=
+                              //                                 null)
+                              //                           PriceSelectBox(
+                              //                             title: 'ساعة',
+                              //                             isSelected: state.priceTypes.contains(1),
+                              //                             onTap: () {
+                              //                               context
+                              //                                   .read<OfferBloc>()
+                              //                                   .add(const SelectUnitPriceEvent(1));
+                              //                             },
+                              //                           ),
+                              //                       ],
+                              //                     );
+                              //                   },
+                              //                 ),
+                              //               ).animate().fade(),
+                              //             ],
+                              //           )
+                              //         : const SizedBox.shrink();
+                              //   },
+                              // ),
                               SizedBox(height: 10.v),
                               BlocBuilder<OfferBloc, OfferState>(
                                 builder: (context, state) {
@@ -440,15 +443,17 @@ class _CreateOfferScreenState extends State<CreateOfferScreen> {
                             isLoading: state.offerApiCallState == OfferApiCallState.loading,
                             onPressed: () {
                               if (_formKey.currentState!.validate() &&
-                                  state.pricesCount > 0 &&
+                                  // state.pricesCount > 0 &&
                                   state.isValidOfferDateRange) {
                                 _formKey.currentState!.save();
                                 context.read<OfferBloc>().add(CreateOfferEvent(
                                     isUpdate: widget.offer != null ? true : false,
                                     offerId: widget.offer?.id));
-                              } else if (state.pricesCount == -1) {
-                                context.read<OfferBloc>().add(ClearPriceCountEvent());
-                              } else if (!state.isValidOfferDateRange) {
+                              }
+                              // else if (state.pricesCount == -1) {
+                              //   context.read<OfferBloc>().add(ClearPriceCountEvent());
+                              // }
+                              else if (!state.isValidOfferDateRange) {
                                 context.read<OfferBloc>().add(SelectOfferDateRangeEvent(range!));
                               }
                             },

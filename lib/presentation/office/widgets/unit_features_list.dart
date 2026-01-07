@@ -45,7 +45,7 @@ class UnitFeaturesList extends StatelessWidget {
                           .state
                           .searchData!
                           .features[index]
-                          .id));
+                          .id!));
                     },
                   );
                 },

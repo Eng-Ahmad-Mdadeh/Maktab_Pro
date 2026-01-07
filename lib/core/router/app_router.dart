@@ -556,12 +556,13 @@ final GoRouter appRouter = GoRouter(
                 Map<String, dynamic>? data = state.extra as Map<String, dynamic>?;
                 Offer? offer = data != null ? data['offer'] : null;
                 Office? unit = data != null ? data['unit'] : null;
+                List<Office>? offices = data != null ? data['offices'] : null;
                 return _pageBuilder(
                     context,
                     state,
                     BlocProvider(
                       create: (context) => locator.get<OfferBloc>()..add(InitialOfferEvent(offer, unit)),
-                      child: CreateOfferScreen(offer: offer, unit: unit),
+                      child: CreateOfferScreen(offer: offer, unit: unit,offices: offices),
                     ));
               },
             ),
@@ -638,12 +639,13 @@ final GoRouter appRouter = GoRouter(
                 Map<String, dynamic>? data = state.extra as Map<String, dynamic>?;
                 Coupon? coupon = data != null ? data['coupon'] : null;
                 Office? unit = data != null ? data['unit'] : null;
+                List<Office>? offices = data != null ? data['offices'] : null;
                 return _pageBuilder(
                     context,
                     state,
                     BlocProvider(
                       create: (context) => locator.get<CouponBloc>()..add(InitialCouponEvent(coupon, unit)),
-                      child: CreateCouponScreen(coupon: coupon, unit: unit),
+                      child: CreateCouponScreen(coupon: coupon, unit: unit,offices: offices),
                     ));
               },
             ),

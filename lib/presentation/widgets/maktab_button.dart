@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:maktab_lessor/core/helpers/size_helper.dart';
 import 'package:maktab_lessor/presentation/resources/app_colors.dart';
@@ -77,50 +76,54 @@ class MaktabButton extends StatelessWidget {
               shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                     borderRadius: borderRadius ?? BorderRadius.circular(5.0.adaptSize),
-                    side: isBordered
-                        ? BorderSide(color: borderColor ?? AppColors.softAsh, width: 1)
-                        : BorderSide.none),
+                    side: isBordered ? BorderSide(color: borderColor ?? AppColors.softAsh, width: 1) : BorderSide.none),
               ),
             ),
         child: isLoading
             ? const CircularProgressIndicator(color: AppColors.white)
-            : icon != null && text == null ?
-        Align(
-          alignment: Alignment.center,
-          child: icon!,
-        )
-            : Padding(
-                padding: padding ?? EdgeInsets.symmetric(horizontal: 20.h, vertical: 15.v),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    icon != null
-                        ? Align(
-                          alignment: Alignment.center,
-                          child: icon!,
-                        )
-                        : const SizedBox.shrink(),
-                    SizedBox(width: 10.0.h,),
-                    text != null
-                        ? bold
-                            ? SectionTitle(
-                                title: text!,
-                                textAlign: TextAlign.center,
-                                textColor: color,
-                                fontSize: fontSize ?? 17.0,
-                                textFontWeight: fontWeight,
+            : icon != null && text == null
+                ? Align(
+                    alignment: Alignment.center,
+                    child: icon!,
+                  )
+                : Padding(
+                    padding: padding ?? EdgeInsets.symmetric(horizontal: 0.h, vertical: 15.v),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        icon != null
+                            ? Row(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: icon!,
+                                  ),
+                                  SizedBox(
+                                    width: 10.0.h,
+                                  ),
+                                ],
                               )
-                            : BodyText(
-                                text: text!,
-                                textAlign: TextAlign.center,
-                                textColor: color,
-                                fontSize: fontSize ?? 17.0,
-                                fontWeight: fontWeight,
-                              )
-                        : const SizedBox.shrink()
-                  ],
-                )),
+                            : const SizedBox.shrink(),
+                        text != null
+                            ? bold
+                                ? SectionTitle(
+                                    title: text!,
+                                    textAlign: TextAlign.center,
+                                    textColor: color,
+                                    fontSize: fontSize ?? 17.0,
+                                    textFontWeight: fontWeight,
+                                  )
+                                : BodyText(
+                                    text: text!,
+                                    textAlign: TextAlign.center,
+                                    textColor: color,
+                                    fontSize: fontSize ?? 17.0,
+                                    fontWeight: fontWeight,
+                                  )
+                            : const SizedBox.shrink()
+                      ],
+                    )),
       ),
     );
   }

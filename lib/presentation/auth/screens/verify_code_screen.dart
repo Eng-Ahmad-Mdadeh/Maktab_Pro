@@ -120,7 +120,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         } else if (state.profileCompleteness == ProfileCompleteness.complete) {
           if(context.mounted) {
             context.read<ReceivingMethodBloc>().add(GetReceivingMoneyMethodEvent());
-            context.read<OfficesCubit>().getIncompleteUnits();
+            // context.read<OfficesCubit>().getIncompleteUnits();
             context
                 .read<OfficesCubit>()
                 .stream

@@ -7,9 +7,9 @@ class Evaluation {
   int id;
   num rate;
   String comment;
-  String adsId;
-  String? userBId;
-  String? userOrdId;
+  int adsId;
+  int? userBId;
+  int? userOrdId;
   DateTime createdAt;
   DateTime updatedAt;
   Unit? unit;
@@ -32,7 +32,7 @@ class Evaluation {
 
   factory Evaluation.fromJson(Map<String, dynamic> json) => Evaluation(
         id: json["id"],
-        rate: num.parse(json["rate"]),
+        rate: json["rate"],
         comment: json["comment"],
         adsId: json["ads_id"],
         userBId: json["user_b_id"],

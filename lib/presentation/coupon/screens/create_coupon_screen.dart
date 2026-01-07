@@ -26,10 +26,11 @@ import '../../offer/widgets/price_select_box.dart';
 import '../../widgets/maktab_snack_bar.dart';
 
 class CreateCouponScreen extends StatefulWidget {
-  const CreateCouponScreen({super.key, this.coupon, this.unit});
+  const CreateCouponScreen({super.key, this.coupon, this.unit,this.offices});
 
   final Coupon? coupon;
   final Office? unit;
+  final List<Office>? offices;
 
   @override
   State<CreateCouponScreen> createState() => _CreateCouponScreenState();
@@ -50,14 +51,17 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
   late TextEditingController couponDepositController;
   late TextEditingController couponDateRangeController;
 
-  late List<Office> units;
+  // late List<Office> units;
 
   @override
   void initState() {
+    print('!!!!!!');
+    print(widget.offices);
+    print('!!!!!!');
     CouponState offerState = context.read<CouponBloc>().state;
-    units = List.from(context.read<OfficesCubit>().state.coupons.expand(
-          (office) => office.units,
-        ));
+    // units = List.from(context.read<OfficesCubit>().state.coupons.expand(
+    //       (office) => office.units,
+    //     ));
     couponNameController = TextEditingController(text: widget.coupon?.name);
     couponCodeController = TextEditingController(text: widget.coupon?.code);
     useTimesController = TextEditingController(text: widget.coupon?.numberUsed.toString());
@@ -186,6 +190,7 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                               SizedBox(height: 20.v),
                               const SectionTitle(title: 'الوحدات التي تريد أن يطبق عليها العرض:'),
                               SizedBox(height: 5.v),
+                              if(widget.offices!=null)
                               DropdownButtonFormField2(
                                 value: context.read<CouponBloc>().state.unit?.id,
                                 isDense: true,
@@ -198,7 +203,7 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                                     size: 25.adaptSize,
                                   ),
                                 ),
-                                items: units
+                                items: widget.offices!
                                     .map(
                                       (unit) => DropdownMenuItem<int>(
                                         value: unit.id,
@@ -222,7 +227,7 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                                 },
                                 onChanged: (value) {
                                   context.read<CouponBloc>().add(
-                                      SelectUnitEvent(units.firstWhereOrNull((unit) => unit.id == value)!));
+                                      SelectUnitEvent(widget.offices!.firstWhereOrNull((unit) => unit.id == value)!));
                                 },
                               ),
                               SizedBox(height: 20.v),
@@ -359,91 +364,91 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                       ),
                     ),
                     SizedBox(height: 20.v),
-                    BlocBuilder<CouponBloc, CouponState>(
-                      builder: (context, state) {
-                        return state.unit != null
-                            ? Column(
-                                children: [
-                                  const SectionTitle(title: 'أنواع الاسعار التي يطبق الخصم عليها:'),
-                                  SizedBox(height: 20.v),
-                                  SizedBox(
-                                    height: 60.v,
-                                    child: BlocBuilder<CouponBloc, CouponState>(
-                                      builder: (context, state) {
-                                        return ListView(
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          children: [
-                                            if (state.unit != null && state.unit!.prices.isNotEmpty)
-                                              PriceSelectBox(
-                                                title: 'الكل',
-                                                isSelected: state.prices.length == state.unit!.prices.length,
-                                                onTap: () {
-                                                  context.read<CouponBloc>().add(SelectAllUnitPricesEvent());
-                                                },
-                                              ),
-                                            if (state.unit != null &&
-                                                state.unit!.prices
-                                                        .firstWhereOrNull((price) => price.typeResId == 4) !=
-                                                    null)
-                                              PriceSelectBox(
-                                                title: 'سنوي',
-                                                isSelected: state.priceTypes.contains(4),
-                                                onTap: () {
-                                                  context
-                                                      .read<CouponBloc>()
-                                                      .add(const SelectUnitPriceEvent(4));
-                                                },
-                                              ),
-                                            if (state.unit != null &&
-                                                state.unit!.prices
-                                                        .firstWhereOrNull((price) => price.typeResId == 3) !=
-                                                    null)
-                                              PriceSelectBox(
-                                                title: 'شهري',
-                                                isSelected: state.priceTypes.contains(3),
-                                                onTap: () {
-                                                  context
-                                                      .read<CouponBloc>()
-                                                      .add(const SelectUnitPriceEvent(3));
-                                                },
-                                              ),
-                                            if (state.unit != null &&
-                                                state.unit!.prices
-                                                        .firstWhereOrNull((price) => price.typeResId == 2) !=
-                                                    null)
-                                              PriceSelectBox(
-                                                title: 'يومي',
-                                                isSelected: state.priceTypes.contains(2),
-                                                onTap: () {
-                                                  context
-                                                      .read<CouponBloc>()
-                                                      .add(const SelectUnitPriceEvent(2));
-                                                },
-                                              ),
-                                            if (state.unit != null &&
-                                                state.unit!.prices
-                                                        .firstWhereOrNull((price) => price.typeResId == 1) !=
-                                                    null)
-                                              PriceSelectBox(
-                                                title: 'ساعة',
-                                                isSelected: state.priceTypes.contains(1),
-                                                onTap: () {
-                                                  context
-                                                      .read<CouponBloc>()
-                                                      .add(const SelectUnitPriceEvent(1));
-                                                },
-                                              ),
-                                          ],
-                                        );
-                                      },
-                                    ),
-                                  ).animate().fade(),
-                                ],
-                              )
-                            : const SizedBox.shrink();
-                      },
-                    ),
+                    // BlocBuilder<CouponBloc, CouponState>(
+                    //   builder: (context, state) {
+                    //     return state.unit != null
+                    //         ? Column(
+                    //             children: [
+                    //               const SectionTitle(title: 'أنواع الاسعار التي يطبق الخصم عليها:'),
+                    //               SizedBox(height: 20.v),
+                    //               SizedBox(
+                    //                 height: 60.v,
+                    //                 child: BlocBuilder<CouponBloc, CouponState>(
+                    //                   builder: (context, state) {
+                    //                     return ListView(
+                    //                       shrinkWrap: true,
+                    //                       scrollDirection: Axis.horizontal,
+                    //                       children: [
+                    //                         if (state.unit != null && state.unit!.prices.isNotEmpty)
+                    //                           PriceSelectBox(
+                    //                             title: 'الكل',
+                    //                             isSelected: state.prices.length == state.unit!.prices.length,
+                    //                             onTap: () {
+                    //                               context.read<CouponBloc>().add(SelectAllUnitPricesEvent());
+                    //                             },
+                    //                           ),
+                    //                         if (state.unit != null &&
+                    //                             state.unit!.prices
+                    //                                     .firstWhereOrNull((price) => price.typeResId == 4) !=
+                    //                                 null)
+                    //                           PriceSelectBox(
+                    //                             title: 'سنوي',
+                    //                             isSelected: state.priceTypes.contains(4),
+                    //                             onTap: () {
+                    //                               context
+                    //                                   .read<CouponBloc>()
+                    //                                   .add(const SelectUnitPriceEvent(4));
+                    //                             },
+                    //                           ),
+                    //                         if (state.unit != null &&
+                    //                             state.unit!.prices
+                    //                                     .firstWhereOrNull((price) => price.typeResId == 3) !=
+                    //                                 null)
+                    //                           PriceSelectBox(
+                    //                             title: 'شهري',
+                    //                             isSelected: state.priceTypes.contains(3),
+                    //                             onTap: () {
+                    //                               context
+                    //                                   .read<CouponBloc>()
+                    //                                   .add(const SelectUnitPriceEvent(3));
+                    //                             },
+                    //                           ),
+                    //                         if (state.unit != null &&
+                    //                             state.unit!.prices
+                    //                                     .firstWhereOrNull((price) => price.typeResId == 2) !=
+                    //                                 null)
+                    //                           PriceSelectBox(
+                    //                             title: 'يومي',
+                    //                             isSelected: state.priceTypes.contains(2),
+                    //                             onTap: () {
+                    //                               context
+                    //                                   .read<CouponBloc>()
+                    //                                   .add(const SelectUnitPriceEvent(2));
+                    //                             },
+                    //                           ),
+                    //                         if (state.unit != null &&
+                    //                             state.unit!.prices
+                    //                                     .firstWhereOrNull((price) => price.typeResId == 1) !=
+                    //                                 null)
+                    //                           PriceSelectBox(
+                    //                             title: 'ساعة',
+                    //                             isSelected: state.priceTypes.contains(1),
+                    //                             onTap: () {
+                    //                               context
+                    //                                   .read<CouponBloc>()
+                    //                                   .add(const SelectUnitPriceEvent(1));
+                    //                             },
+                    //                           ),
+                    //                       ],
+                    //                     );
+                    //                   },
+                    //                 ),
+                    //               ).animate().fade(),
+                    //             ],
+                    //           )
+                    //         : const SizedBox.shrink();
+                    //   },
+                    // ),
                     SizedBox(height: 10.v),
                     BlocBuilder<CouponBloc, CouponState>(
                       builder: (context, state) {
@@ -464,18 +469,23 @@ class _CreateCouponScreenState extends State<CreateCouponScreen> {
                         isBordered: true,
                         onPressed: () {
                           if (_formKey.currentState!.validate() &&
-                              state.pricesCount > 0 &&
+                              // state.pricesCount > 0 &&
                               state.isValidOfferDateRange) {
                             _formKey.currentState!.save();
+                            // context
+                            //     .read<CouponBloc>()
+                            //     .add(const SelectUnitPriceEvent(4));
                             context.read<CouponBloc>().add(
                                   CreateCouponEvent(
                                     isUpdate: widget.coupon != null ? true : false,
                                     couponId: widget.coupon?.id,
                                   ),
                                 );
-                          } else if (state.pricesCount == -1) {
-                            context.read<CouponBloc>().add(ClearPriceCountEvent());
-                          } else if (!state.isValidOfferDateRange) {
+                          }
+                            // else if (state.pricesCount == -1) {
+                            // context.read<CouponBloc>().add(ClearPriceCountEvent());
+                          // }
+                          else if (!state.isValidOfferDateRange) {
                             context.read<CouponBloc>().add(SelectOfferDateRangeEvent(range!));
                           }
                         },

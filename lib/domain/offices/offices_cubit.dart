@@ -64,6 +64,9 @@ class OfficesCubit extends Cubit<OfficesState> {
           },
         );
       } else {
+        print('&&&&&&&&&&&&&&&&&&&&&&');
+        print(offices);
+        print('&&&&&&&&&&&&&&&&&&&&&&');
         emit(state.copyWith(
           myOffices: offices,
           myOfficesApiCallState: OfficesApiCallState.success,
@@ -92,43 +95,44 @@ class OfficesCubit extends Cubit<OfficesState> {
     );
   }
 
-  Future<void> getIncompleteUnits() async {
-    emit(state.copyWith(
-      incompleteUnitsApiCallState: OfficesApiCallState.loading,
-      marketingRequestsApiCallState: OfficesApiCallState.initial,
-      officeApiCallState: OfficesApiCallState.initial,
-      unitApiCallState: OfficesApiCallState.initial,
-      pricesApiCallState: OfficesApiCallState.initial,
-      offersApiCallState: OfficesApiCallState.initial,
-      complaintsApiCallState: OfficesApiCallState.initial,
-    ));
-    var result = await _officeRepository.getIncompleteUnits();
-    result.fold((failure) => emit(state.copyWith(incompleteUnitsApiCallState: OfficesApiCallState.failure)), (units) async {
-      if (state.searchData == null) {
-        var result = await _officeRepository.getSearchData();
-        return result.fold(
-          (failure) {
-            emit(state.copyWith(
-              incompleteUnitsApiCallState: OfficesApiCallState.failure,
-              searchData: null,
-            ));
-          },
-          (searchData) {
-            emit(state.copyWith(
-              incompleteUnits: units,
-              searchData: searchData,
-              incompleteUnitsApiCallState: OfficesApiCallState.success,
-            ));
-          },
-        );
-      } else {
-        emit(state.copyWith(
-          incompleteUnits: units,
-          incompleteUnitsApiCallState: OfficesApiCallState.success,
-        ));
-      }
-    });
-  }
+  // Future<void> getIncompleteUnits() async {
+  //   emit(state.copyWith(
+  //     incompleteUnitsApiCallState: OfficesApiCallState.loading,
+  //     marketingRequestsApiCallState: OfficesApiCallState.initial,
+  //     officeApiCallState: OfficesApiCallState.initial,
+  //     unitApiCallState: OfficesApiCallState.initial,
+  //     pricesApiCallState: OfficesApiCallState.initial,
+  //     offersApiCallState: OfficesApiCallState.initial,
+  //     complaintsApiCallState: OfficesApiCallState.initial,
+  //   ));
+  //   var result = await _officeRepository.getIncompleteUnits();
+  //   result.fold((failure) => emit(state.copyWith(incompleteUnitsApiCallState: OfficesApiCallState.failure)),
+  //       (units) async {
+  //     if (state.searchData == null) {
+  //       var result = await _officeRepository.getSearchData();
+  //       return result.fold(
+  //         (failure) {
+  //           emit(state.copyWith(
+  //             incompleteUnitsApiCallState: OfficesApiCallState.failure,
+  //             searchData: null,
+  //           ));
+  //         },
+  //         (searchData) {
+  //           emit(state.copyWith(
+  //             incompleteUnits: units,
+  //             searchData: searchData,
+  //             incompleteUnitsApiCallState: OfficesApiCallState.success,
+  //           ));
+  //         },
+  //       );
+  //     } else {
+  //       emit(state.copyWith(
+  //         incompleteUnits: units,
+  //         incompleteUnitsApiCallState: OfficesApiCallState.success,
+  //       ));
+  //     }
+  //   });
+  // }
 
   Future<void> getOfficeById(int id, {bool isUpdate = false}) async {
     emit(state.copyWith(
@@ -268,7 +272,8 @@ class OfficesCubit extends Cubit<OfficesState> {
       complaintsApiCallState: OfficesApiCallState.initial,
     ));
     var result = await _officeRepository.getMarketingRequests();
-    result.fold((failure) => emit(state.copyWith(marketingRequestsApiCallState: OfficesApiCallState.failure)), (marketingRequests) {
+    result.fold((failure) => emit(state.copyWith(marketingRequestsApiCallState: OfficesApiCallState.failure)),
+        (marketingRequests) {
       if (isUpdate) {
         emit(state.copyWith(
           marketingRequests: marketingRequests,

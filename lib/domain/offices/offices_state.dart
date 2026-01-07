@@ -13,7 +13,7 @@ class OfficesState extends Equatable {
   List<Office> marketingRequests;
   List<Office> complaints;
   List<Office> calendars;
-  Office? selectedOffice;
+  Office?   selectedOffice;
   SearchData? searchData;
   OfficesApiCallState myOfficesApiCallState;
   OfficesApiCallState incompleteOfficesApiCallState;

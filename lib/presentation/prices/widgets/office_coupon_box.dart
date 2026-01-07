@@ -47,9 +47,10 @@ class OfficeCouponBox extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 15.v),
             child: MaktabPageSlider(
               height: 180.v,
-              widgets: office.units
-                  .map((unit) => UnitCouponBox(unit: unit))
-                  .toList(),
+              widgets: [UnitCouponBox(unit: office)],
+              // widgets: office.units
+              //     .map((unit) => UnitCouponBox(unit: unit))
+              //     .toList(),
             ),
           ),
         ],

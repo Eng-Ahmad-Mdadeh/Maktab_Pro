@@ -37,8 +37,9 @@ class CouponsScreen extends StatelessWidget {
                       text: 'إنشاء كود خصم',
                       padding: EdgeInsets.symmetric(horizontal: 10.h),
                       icon: const Icon(Icons.add),
-                      onPressed: () =>
-                          context.pushNamed(AppRoutes.createCouponScreen),
+                      // onPressed: () => print( context.read<OfficesCubit>().state.coupons),
+                      onPressed: () => context.pushNamed(AppRoutes.createCouponScreen,
+                          extra: {'offices': context.read<OfficesCubit>().state.coupons}),
                     ),
                   ),
                 ],
@@ -48,21 +49,15 @@ class CouponsScreen extends StatelessWidget {
                 child: BlocBuilder<OfficesCubit, OfficesState>(
                   builder: (context, state) {
                     return RefreshIndicator(
-                      onRefresh: () =>
-                          context.read<OfficesCubit>().getAllCoupons(),
+                      onRefresh: () => context.read<OfficesCubit>().getAllCoupons(),
                       child: ListView.separated(
                         itemBuilder: (context, index) {
                           return OfficeCouponBox(
-                            office: context
-                                .read<OfficesCubit>()
-                                .state
-                                .coupons[index],
+                            office: context.read<OfficesCubit>().state.coupons[index],
                           );
                         },
-                        separatorBuilder: (context, index) =>
-                            SizedBox(height: 10.v),
-                        itemCount:
-                            context.read<OfficesCubit>().state.coupons.length,
+                        separatorBuilder: (context, index) => SizedBox(height: 10.v),
+                        itemCount: context.read<OfficesCubit>().state.coupons.length,
                       ),
                     );
                   },

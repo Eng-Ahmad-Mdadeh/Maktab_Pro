@@ -3,8 +3,10 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab_lessor/core/helpers/size_helper.dart';
 import 'package:maktab_lessor/domain/office/office_bloc.dart';
+import 'package:maktab_lessor/presentation/office/widgets/advertiser_relationship_options.dart';
 import 'package:maktab_lessor/presentation/office/widgets/office_type_option.dart';
 import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/maktab_button.dart';
 import 'package:maktab_lessor/presentation/widgets/maktab_switch.dart';
 
 import 'license_number_form.dart';
@@ -17,8 +19,9 @@ class AddingLicensedOfficeSection extends StatelessWidget {
     return Column(
       children: [
         OfficeTypeOption(
-          onTap: () =>
-              context.read<OfficeBloc>().state.createdOffice == null ? context.read<OfficeBloc>().add(AddLicensedOfficeEvent()) : null,
+          onTap: () => context.read<OfficeBloc>().state.createdOffice == null
+              ? context.read<OfficeBloc>().add(AddLicensedOfficeEvent())
+              : null,
           leading: SizedBox(
             width: 50.h,
             height: 50.v,
@@ -55,7 +58,13 @@ class AddingLicensedOfficeSection extends StatelessWidget {
         BlocBuilder<OfficeBloc, OfficeState>(
           builder: (context, state) {
             return state.licenseOfficeState == VisibilityStates.show
-                ? const LicenseNumberForm().animate().fade()
+                ? Column(
+                    children: [
+                      const AdvertiserRelationshipOptions().animate().fade(),
+                      SizedBox(height: 15.v),
+                      const LicenseNumberForm().animate().fade(),
+                    ],
+                  )
                 : const SizedBox.shrink();
           },
         ),

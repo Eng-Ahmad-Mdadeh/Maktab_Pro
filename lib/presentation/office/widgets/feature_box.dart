@@ -18,7 +18,7 @@ class FeatureBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OfficeItemBox(
-      title: feature.arName,
+      title: feature.arName!,
       icon: feature.icon,
       backgroundColor: isSelected ? AppColors.lightCyan : AppColors.white,
       textColor: isSelected ? AppColors.white : AppColors.smokeGray,

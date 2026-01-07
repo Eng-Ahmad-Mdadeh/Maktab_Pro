@@ -16,6 +16,7 @@ class MaktabDropDownFormField extends StatelessWidget {
     this.hint,
     this.fillColor,
     this.icon,
+    this.readOnly,
     this.validator,
     this.onChanged,
     this.onSaved,
@@ -29,6 +30,7 @@ class MaktabDropDownFormField extends StatelessWidget {
   final Widget? hint;
   final Color? fillColor;
   final Widget? icon;
+  final bool? readOnly;
   final double? fontSize;
   final FormFieldValidator<String>? validator;
   final void Function(String?)? onChanged;
@@ -36,45 +38,48 @@ class MaktabDropDownFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButtonFormField2(
-      value: (initialValue ?? '').isNotEmpty ? initialValue : null,
-      isDense: true,
-      isExpanded: true,
-      hint: hint,
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      iconStyleData: IconStyleData(
-        icon: icon ??
-            const Icon(
-              Icons.keyboard_arrow_down_sharp,
-              color: AppColors.slateGray,
-              size: 25,
-            ),
-        openMenuIcon: const Icon(
-          Icons.keyboard_arrow_up_sharp,
-          color: AppColors.slateGray,
-          size: 25,
+    return AbsorbPointer(
+     absorbing: readOnly ?? false,
+      child: DropdownButtonFormField2(
+        value: (initialValue ?? '').isNotEmpty ? initialValue : null,
+        isDense: true,
+        isExpanded: true,
+        hint: hint,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        iconStyleData: IconStyleData(
+          icon: icon ??
+              const Icon(
+                Icons.keyboard_arrow_down_sharp,
+                color: AppColors.slateGray,
+                size: 25,
+              ),
+          openMenuIcon: const Icon(
+            Icons.keyboard_arrow_up_sharp,
+            color: AppColors.slateGray,
+            size: 25,
+          ),
         ),
-      ),
-      items: items
-          .mapIndexed(
-            (i, item) => DropdownMenuItem(
-              value: idItems != null ? idItems![i] : item,
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: BodyText(
-                  text: item,
-                  fontSize: fontSize,
+        items: items
+            .mapIndexed(
+              (i, item) => DropdownMenuItem(
+                value: idItems != null ? idItems![i] : item,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: BodyText(
+                    text: item,
+                    fontSize: fontSize,
+                  ),
                 ),
               ),
+            )
+            .toList(),
+        decoration: (const InputDecoration()).applyDefaults(Theme.of(context).inputDecorationTheme).copyWith(
+              fillColor: fillColor,
             ),
-          )
-          .toList(),
-      decoration: (const InputDecoration()).applyDefaults(Theme.of(context).inputDecorationTheme).copyWith(
-            fillColor: fillColor,
-          ),
-      validator: validator,
-      onChanged: onChanged,
-      onSaved: onSaved,
+        validator: validator,
+        onChanged: onChanged,
+        onSaved: onSaved,
+      ),
     );
   }
 }

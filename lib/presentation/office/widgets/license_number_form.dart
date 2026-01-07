@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,8 +21,7 @@ class _LicenseNumberFormState extends State<LicenseNumberForm> {
 
   @override
   void initState() {
-    _licenseNumberController = TextEditingController(
-        text: context.read<OfficeBloc>().state.licenseNumber);
+    _licenseNumberController = TextEditingController(text: context.read<OfficeBloc>().state.licenseNumber);
     _licenseNumberFormKey = GlobalKey<FormState>();
     super.initState();
   }
@@ -35,8 +33,7 @@ class _LicenseNumberFormState extends State<LicenseNumberForm> {
       child: Column(
         children: [
           const SectionTitle(
-            title:
-                'بناء على نظام الوساطة العقارية لا يمكن الاعلان في المنصات العقارية الا بوجود رخصة اعلان',
+            title: 'بناء على نظام الوساطة العقارية لا يمكن الاعلان في المنصات العقارية الا بوجود رخصة اعلان',
           ),
           // SizedBox(height: 25.v),
           // const BodyText(
@@ -54,20 +51,19 @@ class _LicenseNumberFormState extends State<LicenseNumberForm> {
               readOnly: context.read<OfficeBloc>().state.createdOffice != null,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
-                LengthLimitingTextInputFormatter(7),
+                LengthLimitingTextInputFormatter(10),
               ],
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'الرجاء ادخال رقم الرخصة';
-                } else if (value.length < 7) {
+                } else if (value.length < 10) {
                   return 'يجب أن يكون سبع أرقام';
                 }
                 return null;
               },
               onChanged: (value) {
-                context
-                    .read<OfficeBloc>()
-                    .add(SetLicenseNumberEvent(_licenseNumberController.text));
+                context.read<OfficeBloc>().add(SetLicenseNumberEvent(_licenseNumberController.text));
+                context.read<OfficeBloc>().add(const SetCreateAdEvent(1));
               },
             ),
           ),

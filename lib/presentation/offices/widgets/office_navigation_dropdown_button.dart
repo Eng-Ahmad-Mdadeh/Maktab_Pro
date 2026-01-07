@@ -51,22 +51,22 @@ class OfficeNavigationDropDownButton extends StatelessWidget {
           }
         },
       ),
-      _buildDropdownMenuItem(
-        title: 'وحدة تابعة لمكتب حالي',
-        value: 1,
-        context: context,
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (context) => ChooseOfficeDialog(
-              title: 'حدد المكتب',
-              officesList: MyOfficesItemsList(
-                onMyOfficeDelete: onMyOfficeDelete,
-              ),
-            ),
-          );
-        },
-      ),
+      // _buildDropdownMenuItem(
+      //   title: 'وحدة تابعة لمكتب حالي',
+      //   value: 1,
+      //   context: context,
+      //   onTap: () {
+      //     showDialog(
+      //       context: context,
+      //       builder: (context) => ChooseOfficeDialog(
+      //         title: 'حدد المكتب',
+      //         officesList: MyOfficesItemsList(
+      //           onMyOfficeDelete: onMyOfficeDelete,
+      //         ),
+      //       ),
+      //     );
+      //   },
+      // ),
       if (incompleteOffices != 0)
         _buildDropdownMenuItem(
           title: 'مكتب لاستكماله',
@@ -85,24 +85,24 @@ class OfficeNavigationDropDownButton extends StatelessWidget {
             );
           },
         ),
-      if (incompleteUnits != 0)
-        _buildDropdownMenuItem(
-          title: 'وحدة لأستكمالها',
-          number: incompleteUnits.toString(),
-          value: 3,
-          context: context,
-          onTap: () {
-            showDialog(
-              context: context,
-              builder: (context) => ChooseOfficeDialog(
-                title: 'حدد الوحدة',
-                officesList: IncompleteUnitItemsList(
-                  onIncompleteUnitDelete: onIncompleteUnitDelete,
-                ),
-              ),
-            );
-          },
-        ),
+      // if (incompleteUnits != 0)
+      //   _buildDropdownMenuItem(
+      //     title: 'وحدة لأستكمالها',
+      //     number: incompleteUnits.toString(),
+      //     value: 3,
+      //     context: context,
+      //     onTap: () {
+      //       showDialog(
+      //         context: context,
+      //         builder: (context) => ChooseOfficeDialog(
+      //           title: 'حدد الوحدة',
+      //           officesList: IncompleteUnitItemsList(
+      //             onIncompleteUnitDelete: onIncompleteUnitDelete,
+      //           ),
+      //         ),
+      //       );
+      //     },
+      //   ),
     ];
   }
 

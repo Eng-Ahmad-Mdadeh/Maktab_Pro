@@ -1,4 +1,3 @@
-
 part of 'office_bloc.dart';
 
 enum OfficeTypes { none, license, request }
@@ -7,11 +6,24 @@ enum VisibilityStates { show, hide }
 
 enum ToggleStates { on, off }
 
-enum AdertiserRelationshipOptions { none, owner, agent, marketer }
+enum AdertiserRelationshipOptions {
+  none,
+  individual_owner,
+  individual_broker,
+  owner_agent,
+  establishment_broker,
+  establishment_owner
+}
+
+enum TransactionType {
+  sell,
+  rent,
+  none,
+}
 
 enum MarketerTypes { none, exclusive, notExclusive }
 
-enum UnitPriceOptions { hourly, daily, monthly, yearly }
+enum UnitPriceOptions { hourly, daily, monthly, yearly, cash }
 
 enum DepositTypes { price, percentage }
 
@@ -36,6 +48,12 @@ final class SetLicenseNumberEvent extends OfficeEvent {
   const SetLicenseNumberEvent(this.licenseNumber);
 }
 
+final class SetCreateAdEvent extends OfficeEvent {
+  final int createAd;
+
+  const SetCreateAdEvent(this.createAd);
+}
+
 final class AddMarketingRequestEvent extends OfficeEvent {}
 
 final class SetOfficeNameEvent extends OfficeEvent {
@@ -58,6 +76,12 @@ final class SelectAdertiserRelationshipEvent extends OfficeEvent {
   const SelectAdertiserRelationshipEvent(this.option);
 }
 
+final class SelectTransactionTypeEvent extends OfficeEvent {
+  final TransactionType transactionType;
+
+  const SelectTransactionTypeEvent(this.transactionType);
+}
+
 final class SelectMarketerTypeEvent extends OfficeEvent {
   final MarketerTypes option;
 
@@ -68,6 +92,12 @@ final class SetSpaceEvent extends OfficeEvent {
   final String space;
 
   const SetSpaceEvent(this.space);
+}
+
+final class SetWidthEvent extends OfficeEvent {
+  final String width;
+
+  const SetWidthEvent(this.width);
 }
 
 final class SetEquipmentEvent extends OfficeEvent {
@@ -82,6 +112,12 @@ final class SetTypeEvent extends OfficeEvent {
   const SetTypeEvent(this.type);
 }
 
+class SetMultiTypeEvent extends OfficeEvent {
+  final List<int> typeIds;
+
+  const SetMultiTypeEvent(this.typeIds);
+}
+
 final class IncreaseFloorEvent extends OfficeEvent {
   int floor;
 
@@ -92,6 +128,12 @@ final class DecreaseFloorEvent extends OfficeEvent {
   int floor;
 
   DecreaseFloorEvent(this.floor);
+}
+
+final class SetOfficeAgeEvent extends OfficeEvent {
+  int idAge;
+
+  SetOfficeAgeEvent(this.idAge);
 }
 
 final class IncreaseOfficeAgeEvent extends OfficeEvent {
@@ -112,6 +154,12 @@ final class IncreaseOfficesCountEvent extends OfficeEvent {
   int count;
 
   IncreaseOfficesCountEvent(this.count);
+}
+
+final class SetOfficesCountEvent extends OfficeEvent {
+  num count;
+
+  SetOfficesCountEvent(this.count);
 }
 
 final class DecreaseOfficesCountEvent extends OfficeEvent {
@@ -178,6 +226,12 @@ final class SelectFeatureEvent extends OfficeEvent {
   int id;
 
   SelectFeatureEvent(this.id);
+}
+
+final class SelectPropertyUtilitiesEvent extends OfficeEvent {
+  int id;
+
+  SelectPropertyUtilitiesEvent(this.id);
 }
 
 final class SelectServiceEvent extends OfficeEvent {
@@ -279,10 +333,10 @@ final class ToggleUnitPriceOptionEvent extends OfficeEvent {
 }
 
 final class ChangeUnitPriceEvent extends OfficeEvent {
-  UnitPriceOptions option;
-  String price;
+  // UnitPriceOptions option;
+  num price;
 
-  ChangeUnitPriceEvent(this.option, this.price);
+  ChangeUnitPriceEvent(this.price);
 }
 
 final class SelectDepositTypeEvent extends OfficeEvent {

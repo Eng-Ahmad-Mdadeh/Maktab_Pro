@@ -36,7 +36,7 @@ class _OfficesScreenState extends State<OfficesScreen> {
     if (context.read<OfficesCubit>().state.myOfficesApiCallState != OfficesApiCallState.success) {
       context.read<OfficesCubit>().getMyOffices();
       context.read<OfficesCubit>().getIncompleteOffices();
-      context.read<OfficesCubit>().getIncompleteUnits();
+      // context.read<OfficesCubit>().getIncompleteUnits();
     }
     super.initState();
   }
@@ -64,9 +64,9 @@ class _OfficesScreenState extends State<OfficesScreen> {
             },
             child: BlocListener<UnitBloc, UnitState>(
               listener: (context, state) {
-                if(state.unitApiCallState == UnitApiCallState.success){
-                  context.read<OfficesCubit>().getIncompleteUnits();
-                }
+                // if(state.unitApiCallState == UnitApiCallState.success){
+                //   context.read<OfficesCubit>().getIncompleteUnits();
+                // }
               },
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 25.v),

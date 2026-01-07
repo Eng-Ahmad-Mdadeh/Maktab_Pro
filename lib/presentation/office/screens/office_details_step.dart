@@ -33,7 +33,7 @@ class _OfficeDetailsStepState extends State<OfficeDetailsStep> {
           const OfficeFloorSection(),
           const OfficeAgeSection(),
           const OfficesCountSection(),
-          const OfficeMeetingRoomsCountSection(),
+          // const OfficeMeetingRoomsCountSection(),
           const OfficeTablesCountSection(),
           const OfficeSharedWorkSpacesSection(),
           SizedBox(height: 10.v),

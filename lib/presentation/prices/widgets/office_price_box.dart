@@ -47,8 +47,7 @@ class OfficePriceBox extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 15.v),
             child: MaktabPageSlider(
               height: 230.v,
-              widgets:
-                  office.units.map((unit) => UnitPriceBox(unit: unit)).toList(),
+              widgets: [ UnitPriceBox(unit: office)]
             ),
           ),
         ],

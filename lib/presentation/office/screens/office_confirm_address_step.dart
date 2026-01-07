@@ -14,8 +14,7 @@ class OfficeConfirmAddressStep extends StatefulWidget {
   const OfficeConfirmAddressStep({super.key});
 
   @override
-  State<OfficeConfirmAddressStep> createState() =>
-      _OfficeConfirmAddressStepState();
+  State<OfficeConfirmAddressStep> createState() => _OfficeConfirmAddressStepState();
 }
 
 class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
@@ -24,17 +23,58 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
   late TextEditingController _streetController;
   late GlobalKey<FormState> _addressConfirmFormKey;
   late InterfaceAqar? interface;
+  late OfficeState state;
+
+  // @override
+  // void initState() {
+  //   OfficeState state = context.read<OfficeBloc>().state;
+  //   _cityController = TextEditingController(text: state.city);
+  //   _neighborhoodController = TextEditingController(text: state.neighborhood);
+  //   _streetController = TextEditingController(text: state.street);
+  //   _addressConfirmFormKey = GlobalKey<FormState>();
+  //   interface = state.searchData!.officeInterfaces
+  //       .firstWhereOrNull((interface) => interface.id == state.interfaceId);
+  //   super.initState();
+  // }
 
   @override
   void initState() {
-    OfficeState state = context.read<OfficeBloc>().state;
-    _cityController = TextEditingController(text: state.city);
-    _neighborhoodController = TextEditingController(text: state.neighborhood);
-    _streetController = TextEditingController(text: state.street);
+    state = context.read<OfficeBloc>().state;
+    // _cityController = TextEditingController(text: state.verifyLicenseNumberModel!.location!.city ?? state.city);
+    // _neighborhoodController = TextEditingController(text: state.verifyLicenseNumberModel!.location!.district ?? state.neighborhood);
+    // _streetController = TextEditingController(text: state.verifyLicenseNumberModel!.location!.street ?? state.street);
+    _cityController = TextEditingController(text: state.verifyLicenseNumberModel?.location?.city ?? state.city);
+    _neighborhoodController =
+        TextEditingController(text: state.verifyLicenseNumberModel?.location?.neighborhood ?? state.neighborhood);
+    _streetController = TextEditingController(text: state.verifyLicenseNumberModel?.location?.street ?? state.street);
     _addressConfirmFormKey = GlobalKey<FormState>();
-    interface = state.searchData!.officeInterfaces
-        .firstWhereOrNull((interface) => interface.id == state.interfaceId);
+    interface = state.searchData!.officeInterfaces.firstWhereOrNull((interface) => interface.id == state.interfaceId);
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (state.verifyLicenseNumberModel != null) {
+      context
+          .read<OfficeBloc>()
+          .add(SetCityNameEvent(state.verifyLicenseNumberModel!.location!.city ?? state.location!.city));
+      context.read<OfficeBloc>().add(SetNeighborhoodNameEvent(
+          state.verifyLicenseNumberModel?.location?.neighborhood ?? state.location!.neighborhood));
+      context
+          .read<OfficeBloc>()
+          .add(SetStreetNameEvent(state.verifyLicenseNumberModel!.location?.street ?? state.street));
+      // context
+      //     .read<OfficeBloc>()
+      //     .add(SetDistrictCodeEvent(state.verifyLicenseNumberModel!.location?.districtCode ?? state.districtCode));
+      // context
+      //     .read<OfficeBloc>()
+      //     .add(SetRegionCodeEvent(int.parse(state.verifyLicenseNumberModel!.location?.regionCode ?? '0')));
+
+      context.read<OfficeBloc>().add(
+          SetInterfaceEvent(state.verifyLicenseNumberModel!.interfaceAqar?.arName ?? state.interfaceAqar!.arName!));
+    }
+
+    super.didChangeDependencies();
   }
 
   @override
@@ -51,6 +91,8 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MaktabTextFormField(
+                  readOnly:
+                      state.officeType == OfficeTypes.license && state.verifyLicenseNumberModel!.location!.city != null,
                   controller: _cityController,
                   title: 'المدينة',
                   validator: (value) {
@@ -60,13 +102,13 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                     return null;
                   },
                   onChanged: (value) {
-                    context
-                        .read<OfficeBloc>()
-                        .add(SetCityNameEvent(value.trim()));
+                    context.read<OfficeBloc>().add(SetCityNameEvent(value.trim()));
                   },
                 ),
                 SizedBox(height: 20.v),
                 MaktabTextFormField(
+                  readOnly: state.officeType == OfficeTypes.license &&
+                      state.verifyLicenseNumberModel!.location!.neighborhood != null,
                   controller: _neighborhoodController,
                   title: 'الحي',
                   validator: (value) {
@@ -76,13 +118,13 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                     return null;
                   },
                   onChanged: (value) {
-                    context
-                        .read<OfficeBloc>()
-                        .add(SetNeighborhoodNameEvent(value.trim()));
+                    context.read<OfficeBloc>().add(SetNeighborhoodNameEvent(value.trim()));
                   },
                 ),
                 SizedBox(height: 20.v),
                 MaktabTextFormField(
+                  readOnly: state.officeType == OfficeTypes.license &&
+                      state.verifyLicenseNumberModel!.location!.street != null,
                   controller: _streetController,
                   title: 'اسم الشارع',
                   validator: (value) {
@@ -92,9 +134,7 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                     return null;
                   },
                   onChanged: (value) {
-                    context
-                        .read<OfficeBloc>()
-                        .add(SetStreetNameEvent(value.trim()));
+                    context.read<OfficeBloc>().add(SetStreetNameEvent(value.trim()));
                   },
                 ),
                 SizedBox(height: 20.v),
@@ -103,7 +143,10 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                 const BodyText(text: 'اختر اتجاه الحي في المدينة'),
                 SizedBox(height: 5.v),
                 MaktabDropDownFormField(
-                  initialValue: interface != null ? interface!.arName : '',
+                  // initialValue: interface != null ? interface!.arName : '',
+                  initialValue: state.verifyLicenseNumberModel?.interfaceAqar?.arName ?? interface?.arName,
+                  // readOnly: state.officeType == OfficeTypes.license,
+
                   items: context
                       .read<OfficeBloc>()
                       .state
@@ -119,9 +162,8 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                     return null;
                   },
                   onChanged: (value) {
-                    context
-                        .read<OfficeBloc>()
-                        .add(SetInterfaceEvent(value!.trim()));
+                    print(value);
+                    context.read<OfficeBloc>().add(SetInterfaceEvent(value!.trim()));
                   },
                 ),
               ],

@@ -25,7 +25,7 @@ class OfficeFeaturesList extends StatelessWidget {
                           feature: e,
                           isSelected: state.features.contains(e.id),
                           onTap: () => context.read<OfficeBloc>().add(
-                                SelectFeatureEvent(e.id),
+                                SelectFeatureEvent(e.id!),
                               ),
                         );
                       },

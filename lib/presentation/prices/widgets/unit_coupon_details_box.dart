@@ -44,15 +44,15 @@ class UnitCouponDetailsBox extends StatelessWidget {
               SectionTitle(title: coupon.name),
               Row(
                 children: [
-                  IconButton(
-                    onPressed: () => context.pushNamed(
-                        AppRoutes.createCouponScreen,
-                        extra: {'coupon': coupon, 'unit': unit}),
-                    icon: const Icon(
-                      Icons.edit,
-                      color: AppColors.emeraldTeal,
-                    ),
-                  ),
+                  // IconButton(
+                  //   onPressed: () => context.pushNamed(
+                  //       AppRoutes.createCouponScreen,
+                  //       extra: {'coupon': coupon, 'unit': unit}),
+                  //   icon: const Icon(
+                  //     Icons.edit,
+                  //     color: AppColors.emeraldTeal,
+                  //   ),
+                  // ),
                   IconButton(
                     onPressed: () {
                       showDialog(

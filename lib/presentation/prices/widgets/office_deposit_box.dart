@@ -45,9 +45,7 @@ class OfficeDepositBox extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 15.v),
             child: MaktabPageSlider(
               height: 200.v,
-              widgets: office.units
-                  .map((unit) => UnitDepositBox(unit: unit))
-                  .toList(),
+              widgets: [UnitDepositBox(unit: office)],
             ),
           ),
         ],

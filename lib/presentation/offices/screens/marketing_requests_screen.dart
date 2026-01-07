@@ -22,32 +22,16 @@ class MarketingRequestsScreen extends StatelessWidget {
                 child: BlocBuilder<OfficesCubit, OfficesState>(
                   builder: (context, state) {
                     return RefreshIndicator(
-                      onRefresh: () async => context
-                          .read<OfficesCubit>()
-                          .getMarketingRequests(isUpdate: true),
-                      child: context
-                              .read<OfficesCubit>()
-                              .state
-                              .marketingRequests
-                              .isNotEmpty
+                      onRefresh: () async => context.read<OfficesCubit>().getMarketingRequests(isUpdate: true),
+                      child: context.read<OfficesCubit>().state.marketingRequests.isNotEmpty
                           ? ListView.separated(
                               itemBuilder: (context, index) {
-                                return OfficeBox(
-                                    office: context
-                                        .read<OfficesCubit>()
-                                        .state
-                                        .marketingRequests[index]);
+                                return OfficeBox(office: context.read<OfficesCubit>().state.marketingRequests[index]);
                               },
-                              separatorBuilder: (context, index) =>
-                                  SizedBox(height: 15.v),
-                              itemCount: context
-                                  .read<OfficesCubit>()
-                                  .state
-                                  .marketingRequests
-                                  .length,
+                              separatorBuilder: (context, index) => SizedBox(height: 15.v),
+                              itemCount: context.read<OfficesCubit>().state.marketingRequests.length,
                             )
-                          : const Center(
-                              child: BodyText(text: 'لا يوجد طلبات تسويق')),
+                          : const Center(child: BodyText(text: 'لا يوجد طلبات تسويق')),
                     );
                   },
                 ),

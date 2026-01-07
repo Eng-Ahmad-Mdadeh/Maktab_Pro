@@ -10,7 +10,7 @@ import 'package:maktab_lessor/data/models/office/office_unit_model.dart';
 import 'package:maktab_lessor/data/models/office/search_data_model.dart';
 
 import '../../domain/unit/unit_bloc.dart';
-
+import '../models/verify_license_number/verify_license_number_model.dart';
 
 class OfficeRepository {
   final OfficeRemoteDataSource _officeRemoteDataSource;
@@ -31,7 +31,7 @@ class OfficeRepository {
           final Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
@@ -43,11 +43,10 @@ class OfficeRepository {
       (error) => Left(error),
       (right) {
         if (right.status) {
-          final List<Office> offices = List<Office>.from(
-              right.data.map((data) => Office.fromJson(data)));
+          final List<Office> offices = List<Office>.from(right.data.map((data) => Office.fromJson(data)));
           return Right(offices);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
@@ -59,11 +58,10 @@ class OfficeRepository {
       (error) => Left(error),
       (right) {
         if (right.status) {
-          final List<OfficeUnit> units = List<OfficeUnit>.from(
-              right.data.map((data) => OfficeUnit.fromJson(data)));
+          final List<OfficeUnit> units = List<OfficeUnit>.from(right.data.map((data) => OfficeUnit.fromJson(data)));
           return Right(units);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
@@ -75,11 +73,10 @@ class OfficeRepository {
       (error) => Left(error),
       (right) {
         if (right.status) {
-          final List<Office> offices = List<Office>.from(
-              right.data.map((data) => Office.fromJson(data)));
+          final List<Office> offices = List<Office>.from(right.data.map((data) => Office.fromJson(data)));
           return Right(offices);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
@@ -91,11 +88,10 @@ class OfficeRepository {
       (error) => Left(error),
       (right) {
         if (right.status) {
-          final List<Office> offices = List<Office>.from(
-              right.data.map((data) => Office.fromJson(data)));
+          final List<Office> offices = List<Office>.from(right.data.map((data) => Office.fromJson(data)));
           return Right(offices);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
@@ -107,21 +103,17 @@ class OfficeRepository {
       (error) => Left(error),
       (right) {
         if (right.status) {
-          final List<Office> offices = List<Office>.from(
-              right.data.map((data) => Office.fromJson(data)));
+          final List<Office> offices = List<Office>.from(right.data.map((data) => Office.fromJson(data)));
           return Right(offices);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
   Future<Either<AppException, Office?>> createOffice(
-      {required String title,
-      licenseNumber,
-      required int categoryId,
-      required bool isMarketing}) async {
+      {required String title, licenseNumber, required int categoryId, required bool isMarketing}) async {
     var officeData = {
       "title": title,
       "category_aqar_id": categoryId,
@@ -138,38 +130,78 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
-  Future<Either<AppException, Office?>> updateOfficeInfo(
-      {officeId,
-      equipment,
-      space,
-      typeId,
-      advertiserRelationship,
-      advertiserRelationshipType}) async {
+  Future<Either<AppException, VerifyLicenseNumberModel?>> verifyLicenseNumber({
+    String? licenseNumber,
+    int? createAd,
+    String? advertiserType,
+  }) async {
+    var officeData = {
+      "ad_license_number": licenseNumber,
+      "create_ad": createAd,
+      "advertiser_type": advertiserType,
+    };
+    // if (licenseNumber != null) {
+    //   officeData['license_number'] = licenseNumber;
+    // }
+    final result = await _officeRemoteDataSource.verifyLicenseNumber(officeData);
+    return result.fold(
+      (error) => Left(error),
+      (right) async {
+        if (right.status) {
+          VerifyLicenseNumberModel result = VerifyLicenseNumberModel.fromJson(right.data);
+
+          return Right(result);
+        } else {
+          return Left(AppException(right.message ?? ''));
+        }
+      },
+    );
+  }
+
+  Future<Either<AppException, Office?>> updateOfficeInfo({
+    space,
+    propertyAgeId,
+    streetWidth,
+    transactionType,
+    officeId,
+    price,
+    equipment,
+    // typeId,
+    // advertiserRelationship,
+    // advertiserRelationshipType,
+  }) async {
     Map<String, dynamic> officeData = {};
     if (space != null) {
       officeData["space"] = space;
     }
+    if (propertyAgeId != null) {
+      officeData["property_age_id"] = propertyAgeId;
+    }
     if (equipment != null) {
       officeData["furnisher"] = equipment;
     }
-    if (typeId != null) {
-      officeData["type_aqar_id"] = typeId;
+    if (streetWidth != null) {
+      officeData["street_width"] = streetWidth;
     }
-    if (advertiserRelationship != null) {
-      officeData["advertiser_relationship"] = advertiserRelationship;
-    }
-    if (advertiserRelationshipType != null &&
-        advertiserRelationshipType.isNotEmpty) {
-      officeData["advertiser_relationship_type"] = advertiserRelationshipType;
-    }
-    final result =
-        await _officeRemoteDataSource.updateInfo(officeId, officeData);
+    // if (transactionType != null) {
+    //   officeData["transaction_type"] = transactionType;
+    // }
+    // if (price != null) {
+    //   officeData["price"] = price;
+    // }
+    // if (advertiserRelationship != null) {
+    //   officeData["advertiser_relationship"] = advertiserRelationship;
+    // }
+    // if (advertiserRelationshipType != null && advertiserRelationshipType.isNotEmpty) {
+    //   officeData["advertiser_relationship_type"] = advertiserRelationshipType;
+    // }
+    final result = await _officeRemoteDataSource.updateInfo(officeId, officeData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -177,45 +209,40 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
   Future<Either<AppException, Office?>> addOfficeDetails(
-      {required List<Map<String, dynamic>> details,
-      required int officeId}) async {
+      {required List<Map<String, dynamic>> details, required int officeId}) async {
     Map<String, dynamic> officeData = {};
     for (int index = 0; index < details.length; index++) {
-      if (details[index].keys.first == 'floor') {
+      if (details[index].keys.first == 'floors') {
         officeData['newDetails[$index][ar_name]'] = 'الدور';
-        officeData['newDetails[$index][en_name]'] = 'floor';
+        officeData['newDetails[$index][en_name]'] = 'floors';
         officeData['newDetails[$index][status]'] = 1;
-        officeData['newDetails[$index][number_details]'] =
-            details[index]['floor'];
+        officeData['newDetails[$index][number_details]'] = details[index]['floors'];
       } else if (details[index].keys.first == 'age') {
         officeData['newDetails[$index][ar_name]'] = 'عمر المكتب';
         officeData['newDetails[$index][en_name]'] = 'age';
         officeData['newDetails[$index][status]'] = 1;
-        officeData['newDetails[$index][number_details]'] =
-            details[index]['age'];
-      } else if (details[index].keys.first == 'officescount') {
-        officeData['newDetails[$index][ar_name]'] = 'عدد المكاتب';
-        officeData['newDetails[$index][en_name]'] = 'officescount';
+        officeData['newDetails[$index][number_details]'] = details[index]['age'];
+      } else if (details[index].keys.first == 'Number of rooms') {
+        // officeData['newDetails[$index][ar_name]'] = 'عدد المكاتب';
+        officeData['newDetails[$index][ar_name]'] = 'عدد الغرف';
+        officeData['newDetails[$index][en_name]'] = 'Number of rooms';
         officeData['newDetails[$index][status]'] = 1;
-        officeData['newDetails[$index][number_details]'] =
-            details[index]['officescount'];
+        officeData['newDetails[$index][number_details]'] = details[index]['Number of rooms'];
       } else if (details[index].keys.first == 'meetingroomscount') {
         officeData['newDetails[$index][ar_name]'] = 'غرف الاجتماعات';
         officeData['newDetails[$index][en_name]'] = 'meetingroomscount';
         officeData['newDetails[$index][status]'] = 1;
-        officeData['newDetails[$index][number_details]'] =
-            details[index]['meetingroomscount'];
+        officeData['newDetails[$index][number_details]'] = details[index]['meetingroomscount'];
       }
     }
-    final result =
-        await _officeRemoteDataSource.updateDetails(officeId, officeData);
+    final result = await _officeRemoteDataSource.updateDetails(officeId, officeData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -223,7 +250,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
@@ -233,19 +260,21 @@ class OfficeRepository {
       {required Map<String, dynamic> newDetails,
       required Map<String, Map<int, dynamic>> updatedDetails,
       required List<int> deletedDetails,
-      required int officeId}) async {
+      required int? officeId}) async {
     Map<String, dynamic> officeData = {};
     int index = 0;
     newDetails.forEach((key, value) {
-      if (key == 'floor') {
+      if (key == 'floors') {
         officeData['details[$index][ar_name]'] = 'الدور';
         officeData['details[$index][en_name]'] = 'floors';
       } else if (key == 'age') {
         officeData['details[$index][ar_name]'] = 'عمر المكتب';
         officeData['details[$index][en_name]'] = 'office Age';
-      } else if (key == 'officescount') {
-        officeData['details[$index][ar_name]'] = 'عدد المكاتب';
-        officeData['details[$index][en_name]'] = 'offices numbers';
+      } else if (key == 'Number of rooms') {
+        // officeData['details[$index][ar_name]'] = 'عدد المكاتب';
+        officeData['details[$index][ar_name]'] = "عدد الغرف";
+        // officeData['details[$index][en_name]'] = 'offices numbers';
+        officeData['details[$index][en_name]'] = "Number of rooms";
       } else if (key == 'meetingroomscount') {
         officeData['details[$index][ar_name]'] = 'غرف الاجتماعات';
         officeData['details[$index][en_name]'] = 'Meeting Rooms';
@@ -262,15 +291,17 @@ class OfficeRepository {
       index++;
     });
     updatedDetails.forEach((key, value) {
-      if (key == 'floor') {
+      if (key == 'floors') {
         officeData['details[$index][ar_name]'] = 'الدور';
         officeData['details[$index][en_name]'] = 'floors';
       } else if (key == 'age') {
         officeData['details[$index][ar_name]'] = 'عمر المكتب';
         officeData['details[$index][en_name]'] = 'office Age';
-      } else if (key == 'officescount') {
-        officeData['details[$index][ar_name]'] = 'عدد المكاتب';
-        officeData['details[$index][en_name]'] = 'offices numbers';
+      } else if (key == 'Number of rooms') {
+        officeData['details[$index][ar_name]'] = "عدد الغرف";
+        // officeData['details[$index][ar_name]'] = 'عدد المكاتب';
+        // officeData['details[$index][en_name]'] = 'offices numbers';
+        officeData['details[$index][en_name]'] = "Number of rooms";
       } else if (key == 'meetingroomscount') {
         officeData['details[$index][ar_name]'] = 'غرف الاجتماعات';
         officeData['details[$index][en_name]'] = 'Meeting Rooms';
@@ -293,8 +324,7 @@ class OfficeRepository {
 
     log("OFFICE DATA");
     log(officeData.toString());
-    final result =
-        await _officeRemoteDataSource.updateDetails(officeId, officeData);
+    final result = await _officeRemoteDataSource.updateDetails(officeId, officeData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -302,20 +332,19 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
   Future<Either<AppException, Office?>> updateOfficeFacilities(
-      {required List<int> facilities, required int officeId}) async {
+      {required List<int> facilities, required int? officeId}) async {
     Map<String, dynamic> officeData = {};
     for (int id in facilities) {
       officeData['facilities[$id]'] = id;
     }
-    final result =
-        await _officeRemoteDataSource.updateFacilites(officeId, officeData);
+    final result = await _officeRemoteDataSource.updateFacilites(officeId, officeData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -323,20 +352,19 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
   Future<Either<AppException, Office?>> updateOfficeFeatures(
-      {required List<int> features, required int officeId}) async {
+      {required List<int> features, required int? officeId}) async {
     Map<String, dynamic> officeData = {};
     for (int id in features) {
       officeData['features[$id]'] = id;
     }
-    final result =
-        await _officeRemoteDataSource.updateFeatures(officeId, officeData);
+    final result = await _officeRemoteDataSource.updateFeatures(officeId, officeData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -344,20 +372,63 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
-  Future<Either<AppException, Office?>> updateOfficeComforts(
-      {required List<int> comforts, required int officeId}) async {
+  Future<Either<AppException, Office?>> updateOfficePropertyUtilities(
+      {required List<int> propertyUtilities, required int? officeId}) async {
+    Map<String, dynamic> officeData = {};
+    for (int id in propertyUtilities) {
+      officeData['property_utility_ids[$id]'] = id;
+    }
+    final result = await _officeRemoteDataSource.updatePropertyUtilities(officeId, officeData);
+    return result.fold(
+      (error) => Left(error),
+      (right) async {
+        if (right.status) {
+          Office office = Office.fromJson(right.data);
+          return Right(office);
+        } else {
+          return Left(AppException(right.message ?? 'Unknown error'));
+        }
+      },
+    );
+  }
+
+  Future<Either<AppException, Office?>> updateOfficeTypeAqar({
+    required List<int> typeAqar,
+    required int? officeId,
+  }) async {
+    Map<String, dynamic> officeData = {};
+    for (int id in typeAqar) {
+      officeData['type_aqar_ids[$id]'] = id;
+    }
+    final result = await _officeRemoteDataSource.updateTypeAqar(officeId, officeData);
+    return result.fold(
+      (error) => Left(error),
+      (right) async {
+        if (right.status) {
+          Office office = Office.fromJson(right.data);
+          return Right(office);
+        } else {
+          return Left(AppException(right.message ?? 'Unknown error'));
+        }
+      },
+    );
+  }
+
+  Future<Either<AppException, Office?>> updateOfficeComforts({
+    required List<int> comforts,
+    required int? officeId,
+  }) async {
     Map<String, dynamic> officeData = {};
     for (int id in comforts) {
       officeData['comforts[$id]'] = id;
     }
-    final result =
-        await _officeRemoteDataSource.updateComforts(officeId, officeData);
+    final result = await _officeRemoteDataSource.updateComforts(officeId, officeData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -365,20 +436,18 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
-  Future<Either<AppException, Office>> updateViewer(
-      {officeId, viewerName, viewerPhone}) async {
+  Future<Either<AppException, Office>> updateViewer({officeId, viewerName, viewerPhone}) async {
     var viewerData = {
       "viewer_name": viewerName,
       "viewer_phone": '+966$viewerPhone',
     };
-    final result =
-        await _officeRemoteDataSource.updateViewer(officeId, viewerData);
+    final result = await _officeRemoteDataSource.updateViewer(officeId, viewerData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -386,18 +455,21 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
-  Future<Either<AppException, Office>> updateDownPayment(
-      {officeId, downPayment, DepositTypes? downPaymentType}) async {
+  Future<Either<AppException, Office>> updateDownPayment({officeId, downPayment, DepositTypes? downPaymentType}) async {
     var downPaymentData = {
       "id": officeId,
       "down_payment": downPayment,
-      "type_down_payment": downPaymentType == DepositTypes.price ? 'rial' : downPaymentType == DepositTypes.percentage ? 'percent' : 'unknown',
+      "type_down_payment": downPaymentType == DepositTypes.price
+          ? 'rial'
+          : downPaymentType == DepositTypes.percentage
+              ? 'percent'
+              : 'unknown',
     };
     log("************************************************");
     log(downPaymentData.toString());
@@ -411,7 +483,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
@@ -442,14 +514,14 @@ class OfficeRepository {
           Office unit = Office.fromJson(right.data);
           return Right(unit);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
   Future<Either<AppException, void>> addOfficeFiles({
-    required int officeId,
+    required int? officeId,
     String? video,
     String? mainImage,
     List<String>? images,
@@ -465,15 +537,14 @@ class OfficeRepository {
     if (images != null) {
       officeFiles.add({'field_name': 'images[]', 'path': images});
     }
-    final result =
-        await _officeRemoteDataSource.addFiles(officeId, officeFiles);
+    final result = await _officeRemoteDataSource.addFiles(officeId, officeFiles);
     return result.fold(
       (error) => Left(error),
       (right) async {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
@@ -488,8 +559,7 @@ class OfficeRepository {
     if (mainImage.isNotEmpty) {
       officeFiles.add({'field_name': 'main_image', 'path': mainImage});
     }
-    final result = await _officeRemoteDataSource.updateFiles(
-        officeId, officeData, officeFiles);
+    final result = await _officeRemoteDataSource.updateFiles(officeId, officeData, officeFiles);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -508,10 +578,7 @@ class OfficeRepository {
   }) async {
     final result = await _officeRemoteDataSource.deleteFiles(
       officeId,
-      {
-        for (int i = 0; i < filesIds.length; i++)
-          "file_ids[${i + 1}]": filesIds[i]
-      },
+      {for (int i = 0; i < filesIds.length; i++) "file_ids[${i + 1}]": filesIds[i]},
     );
     return result.fold(
       (error) => Left(error),
@@ -519,14 +586,13 @@ class OfficeRepository {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
-  Future<Either<AppException, void>> deleteMainImage(
-      {required int officeId}) async {
+  Future<Either<AppException, void>> deleteMainImage({required int officeId}) async {
     final result = await _officeRemoteDataSource.deleteMainImage(officeId);
     return result.fold(
       (error) => Left(error),
@@ -534,17 +600,15 @@ class OfficeRepository {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
-  Future<Either<AppException, Office>> updateDescription(
-      {required int officeId, required String description}) async {
+  Future<Either<AppException, Office>> updateDescription({required int? officeId, required String description}) async {
     final descriptionData = {"description": description};
-    final result = await _officeRemoteDataSource.updateDescription(
-        officeId, descriptionData);
+    final result = await _officeRemoteDataSource.updateDescription(officeId, descriptionData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -552,17 +616,15 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
-  Future<Either<AppException, Office?>> updateCategory(
-      {required int officeId, required int categoryId}) async {
+  Future<Either<AppException, Office?>> updateCategory({required int? officeId, required int categoryId}) async {
     final categoryData = {"category_aqar_id": categoryId};
-    final result =
-        await _officeRemoteDataSource.updateCategory(officeId, categoryData);
+    final result = await _officeRemoteDataSource.updateCategory(officeId, categoryData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -570,17 +632,18 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
-  Future<Either<AppException, Office?>> updateTitle(
-      {required int officeId, required String title}) async {
+  Future<Either<AppException, Office?>> updateTitle({
+    required int? officeId,
+    required String title,
+  }) async {
     final officeData = {"title": title};
-    final result =
-        await _officeRemoteDataSource.updateTitle(officeId, officeData);
+    final result = await _officeRemoteDataSource.updateTitle(officeId, officeData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -588,14 +651,13 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
-  Future<Either<AppException, void>> updateStatus(
-      {required int officeId}) async {
+  Future<Either<AppException, void>> updateStatus({required int officeId}) async {
     final result = await _officeRemoteDataSource.updateStatus(officeId);
     return result.fold(
       (error) => Left(error),
@@ -603,17 +665,15 @@ class OfficeRepository {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
-  Future<Either<AppException, Office>> updateInterface(
-      {required int officeId, required int interfaceId}) async {
+  Future<Either<AppException, Office>> updateInterface({required int? officeId, required int interfaceId}) async {
     var interfaceData = {"interface_id": interfaceId};
-    final result =
-        await _officeRemoteDataSource.updateInterface(officeId, interfaceData);
+    final result = await _officeRemoteDataSource.updateInterface(officeId, interfaceData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -621,32 +681,34 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
   Future<Either<AppException, Office>> updateLocation({
-    required int officeId,
+    required int? officeId,
     required num lat,
     required num lng,
     required double zoom,
     required String city,
     required String neighborhood,
     required String street,
+    required String? region,
   }) async {
     var locationData = {
       "lat": lat,
       "lng": lng,
       "zoom": zoom,
-      "address": '$city, $neighborhood, $street',
+      // "address": '$city, $neighborhood, $street',
+      if (region == null) "address": '$city, $neighborhood, $street',
+      "region": region,
       "city": city,
       "neighborhood": neighborhood,
       "street": street,
     };
-    final result =
-        await _officeRemoteDataSource.updateLocation(officeId, locationData);
+    final result = await _officeRemoteDataSource.updateLocation(officeId, locationData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -654,7 +716,7 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
@@ -668,7 +730,7 @@ class OfficeRepository {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
@@ -682,7 +744,7 @@ class OfficeRepository {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
@@ -697,38 +759,41 @@ class OfficeRepository {
           SearchData data = SearchData.fromJson(right.data);
           return Right(data);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
   Future<Either<AppException, Office?>> updateOfficePrices(
-      {required Map<int, dynamic> newPrices,
-      required Map<int, Map<int, dynamic>> updatedPrices,
-      required List<int> deletedPrices,
-      required int officeId}) async {
+      {
+      // required Map<int, dynamic> newPrices,
+      // required Map<int, Map<int, dynamic>> updatedPrices,
+      // required List<int> deletedPrices,
+      required num price,
+      required int? officeId}) async {
     Map<String, dynamic> officeData = {};
     int index = 0;
-    newPrices.forEach((key, value) {
-      officeData['prices[$index][type_res_id]'] = key;
-      officeData['prices[$index][status]'] = 1;
-      officeData['prices[$index][price]'] = value;
-      index++;
-    });
-    updatedPrices.forEach((key, value) {
-      officeData['prices[$index][id]'] = key;
-      officeData['prices[$index][status]'] = 1;
-      officeData['prices[$index][type_res_id]'] = value.keys.first;
-      officeData['prices[$index][price]'] = value[value.keys.first];
-      index++;
-    });
-    for (var detailId in deletedPrices) {
-      officeData['delete_ids[$index]'] = detailId;
-      index++;
-    }
-    final result =
-        await _officeRemoteDataSource.updatePrices(officeId, officeData);
+    // newPrices.forEach((key, value) {
+    //   officeData['prices[$index][type_res_id]'] = key;
+    //   officeData['prices[$index][status]'] = 1;
+    //   officeData['prices[$index][price]'] = value;
+    //   index++;
+    // });
+    // updatedPrices.forEach((key, value) {
+    //   officeData['prices[$index][id]'] = key;
+    //   officeData['prices[$index][status]'] = 1;
+    //   officeData['prices[$index][type_res_id]'] = value.keys.first;
+    //   officeData['prices[$index][price]'] = value[value.keys.first];
+    //   index++;
+    // });
+    // for (var detailId in deletedPrices) {
+    //   officeData['delete_ids[$index]'] = detailId;
+    //   index++;
+    // }
+    officeData['price'] = price;
+
+    final result = await _officeRemoteDataSource.updatePrices(officeId, officeData);
     return result.fold(
       (error) => Left(error),
       (right) async {
@@ -736,14 +801,14 @@ class OfficeRepository {
           Office office = Office.fromJson(right.data);
           return Right(office);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );
   }
 
   Future<Either<AppException, void>> addMarketingFiles({
-    required int officeId,
+    required int? officeId,
     String? officeLicensingFile,
     String? buildingLicesnsingFile,
     String? civilDefenseFile,
@@ -754,15 +819,14 @@ class OfficeRepository {
       {'field_name': 'file_building_license', 'path': buildingLicesnsingFile},
       {'field_name': 'file_civil_defense', 'path': civilDefenseFile},
     ]);
-    final result =
-        await _officeRemoteDataSource.addMarketingFiles(officeId, officeFiles);
+    final result = await _officeRemoteDataSource.addMarketingFiles(officeId, officeFiles);
     return result.fold(
       (error) => Left(error),
       (right) async {
         if (right.status) {
           return const Right(null);
         } else {
-          return Left(AppException(right.message?? 'Unknown error'));
+          return Left(AppException(right.message ?? 'Unknown error'));
         }
       },
     );

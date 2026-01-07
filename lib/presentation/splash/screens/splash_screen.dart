@@ -36,26 +36,40 @@ class _SplashScreenState extends State<SplashScreen> {
           context.pushReplacement(AppRoutes.introScreen);
         } else if (state is NavigationToHomeScreenState) {
           context.read<ReceivingMethodBloc>().add(GetReceivingMoneyMethodEvent());
-          context.read<OfficesCubit>().getIncompleteUnits();
-          await context
-              .read<OfficesCubit>()
-              .stream
-              .firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading)
-              .then((e) {
-            if (context.mounted) {
-              context.read<HomeBloc>().add(GetStatisticsEvent());
-              context.read<HomeBloc>().stream.firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading).then((e) {
-                if (context.mounted) {
-                  context.read<OfficesCubit>().getIncompleteOffices().then((e) {
-                    if (context.mounted) {
-                      context.pushReplacement(AppRoutes.homeScreen);
-                      context.read<NotificationsBloc>().add(GetNotificationsEvent());
-                    }
-                  });
-                }
-              });
-            }
-          });
+          // context.read<OfficesCubit>().getIncompleteUnits();
+
+          // await context
+          //     .read<OfficesCubit>()
+          //     .stream
+          //     .firstWhere((state) => state.incompleteUnitsApiCallState != OfficesApiCallState.loading)
+          //     .then((e) {
+          //   if (context.mounted) {
+          //     context.read<HomeBloc>().add(GetStatisticsEvent());
+          //     context.read<HomeBloc>().stream.firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading).then((e) {
+          //       if (context.mounted) {
+          //         context.read<OfficesCubit>().getIncompleteOffices().then((e) {
+          //           if (context.mounted) {
+          //             context.pushReplacement(AppRoutes.homeScreen);
+          //             context.read<NotificationsBloc>().add(GetNotificationsEvent());
+          //           }
+          //         });
+          //       }
+          //     });
+          //   }
+          // });
+          if (context.mounted) {
+            context.read<HomeBloc>().add(GetStatisticsEvent());
+            context.read<HomeBloc>().stream.firstWhere((state) => state.homeApiCallState != HomeApiCallState.loading).then((e) {
+              if (context.mounted) {
+                context.read<OfficesCubit>().getIncompleteOffices().then((e) {
+                  if (context.mounted) {
+                    context.pushReplacement(AppRoutes.homeScreen);
+                    context.read<NotificationsBloc>().add(GetNotificationsEvent());
+                  }
+                });
+              }
+            });
+          }
         } else if (state is NavigationToEditProfileScreen) {
           MaktabSnackbar.showWarning(context, "الرجاء اكمال الملف الشخصي");
           //context.pushReplacement(AppRoutes.homeScreen);

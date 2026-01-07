@@ -7,6 +7,8 @@ import 'package:maktab_lessor/presentation/office/widgets/adding_marketing_reque
 import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
+import '../../widgets/maktab_button.dart';
+
 class OfficeTypeStep extends StatefulWidget {
   const OfficeTypeStep({super.key});
 
@@ -15,6 +17,7 @@ class OfficeTypeStep extends StatefulWidget {
 }
 
 class _OfficeTypeStepState extends State<OfficeTypeStep> {
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -26,13 +29,13 @@ class _OfficeTypeStepState extends State<OfficeTypeStep> {
                 title: state.officeType == OfficeTypes.none
                     ? 'يرجى اختيار نوع الإعلان (النوع اجباري)'
                     : state.createdOffice != null
-                        ? 'لا يمكنك تعديل هذه الخطوة بعد حفظها'
-                        : 'يرجى اختيار نوع الإعلان ',
+                    ? 'لا يمكنك تعديل هذه الخطوة بعد حفظها'
+                    : 'يرجى اختيار نوع الإعلان ',
                 textColor: state.officeType == OfficeTypes.none
                     ? AppColors.cherryRed
                     : state.createdOffice != null
-                        ? AppColors.cherryRed
-                        : AppColors.black,
+                    ? AppColors.cherryRed
+                    : AppColors.black,
               );
             },
           ),

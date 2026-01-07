@@ -36,11 +36,11 @@ class Coupon {
                 ? false
                 : true,
         code: json["code"],
-        discount: num.parse(json["discount"]),
+        discount: json["discount"],
         discountType: json["type_discount"],
         startDate: DateTime.parse(json["start_date"]),
         endDate: DateTime.parse(json["end_date"]),
-        numberUsed: int.parse(json["number_used"]),
+        numberUsed: json["number_used"],
     priceTypeIds: json["ads_prices"] != null
         ? List<int>.from(json["ads_prices"]
         .map((price) => OfficePrice.fromJson(price).typeResId))

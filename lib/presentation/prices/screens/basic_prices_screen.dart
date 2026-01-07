@@ -21,21 +21,15 @@ class BasicPricesScreen extends StatelessWidget {
                 child: BlocBuilder<OfficesCubit, OfficesState>(
                   builder: (context, state) {
                     return RefreshIndicator(
-                      onRefresh: () =>
-                          context.read<OfficesCubit>().getAllPrices(),
+                      onRefresh: () => context.read<OfficesCubit>().getAllPrices(),
                       child: ListView.separated(
                         itemBuilder: (context, index) {
                           return OfficePriceBox(
-                            office: context
-                                .read<OfficesCubit>()
-                                .state
-                                .prices[index],
+                            office: context.read<OfficesCubit>().state.prices[index],
                           );
                         },
-                        separatorBuilder: (context, index) =>
-                            SizedBox(height: 10.v),
-                        itemCount:
-                            context.read<OfficesCubit>().state.prices.length,
+                        separatorBuilder: (context, index) => SizedBox(height: 10.v),
+                        itemCount: context.read<OfficesCubit>().state.prices.length,
                       ),
                     );
                   },

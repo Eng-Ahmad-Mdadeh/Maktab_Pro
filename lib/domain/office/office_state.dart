@@ -1,4 +1,3 @@
-
 part of 'office_bloc.dart';
 
 class OfficeState extends Equatable {
@@ -6,16 +5,24 @@ class OfficeState extends Equatable {
   VisibilityStates marketingRequestState;
   OfficeTypes officeType;
   String licenseNumber = '';
+  int createAd = 0;
   String name = '';
+  int id = -1;
   int categoryId;
   bool acceptingUserAgreement;
   AdertiserRelationshipOptions advertiserRelationshipOption;
+  TransactionType transactionType;
   MarketerTypes marketerTypeOption;
   String space;
+  String streetWidth;
   String equipment;
   int type;
+  List<int> officeTypeIds;
+
   int floor;
-  int officeAge;
+  String? officeAge;
+  OfficeLocation? location;
+  String? officeAgeId;
   ToggleStates officesCountSelectorState;
   int officesCount;
   ToggleStates meetingRoomsCountSelectorState;
@@ -28,6 +35,7 @@ class OfficeState extends Equatable {
   List<int> facilities;
   String description;
   List<int> features;
+  List<int> propertyUtilities;
   List<int> services;
   List<int> comforts;
   Map<UniqueKey, GlobalKey<FormState>> additionalServiceKeys;
@@ -38,9 +46,13 @@ class OfficeState extends Equatable {
   String neighborhood;
   String street;
   int interfaceId;
-  List<UnitPriceOptions> selectedUnitPriceOptions;
-  Map<UnitPriceOptions, num> selectedUnitPrices;
-  int selectedUnitPricesCount;
+  InterfaceAqar? interfaceAqar;
+  // List<UnitPriceOptions> selectedUnitPriceOptions;
+  // Map<UnitPriceOptions, num> selectedUnitPrices;
+  // int selectedUnitPricesCount;
+  num officePrices  ;
+   List<OfficePrice> adsPrices;
+
   DepositTypes? depositType;
   num depositAmount;
   String viewerName;
@@ -66,23 +78,32 @@ class OfficeState extends Equatable {
   bool isInitialized = false;
   bool editNameAndCategory;
   bool editLocation;
+  VerifyLicenseNumberModel? verifyLicenseNumberModel;
 
   OfficeState({
     this.licenseOfficeState = VisibilityStates.show,
     this.marketingRequestState = VisibilityStates.hide,
     this.officeType = OfficeTypes.license,
     this.licenseNumber = '',
+    this.createAd = 0,
     this.name = '',
     this.categoryId = -1,
+    this.id = -1,
     this.acceptingUserAgreement = false,
     this.advertiserRelationshipOption = AdertiserRelationshipOptions.none,
+    this.transactionType = TransactionType.sell,
     this.marketerTypeOption = MarketerTypes.none,
     this.space = '',
+    this.streetWidth = '',
     this.equipment = '',
     this.type = -1,
+    this.officeTypeIds = const[],
     this.floor = 0,
-    this.officeAge = 1,
-    this.officesCountSelectorState = ToggleStates.off,
+    this.officeAge ,
+    this.interfaceAqar ,
+    this.location ,
+    this.officeAgeId ,
+    this.officesCountSelectorState = ToggleStates.on,
     this.officesCount = 0,
     this.meetingRoomsCountSelectorState = ToggleStates.off,
     this.meetingRoomsCount = 0,
@@ -94,8 +115,10 @@ class OfficeState extends Equatable {
     this.facilities = const [],
     this.description = '',
     this.features = const [],
+    this.propertyUtilities = const [],
     this.services = const [],
     this.comforts = const [],
+    this.adsPrices = const [],
     required this.additionalServiceKeys,
     required this.additionalServices,
     this.addressPosition = const LatLng(24.786743064871313, 46.71276479959488),
@@ -104,9 +127,10 @@ class OfficeState extends Equatable {
     this.neighborhood = '',
     this.street = '',
     this.interfaceId = -1,
-    required this.selectedUnitPriceOptions,
-    required this.selectedUnitPrices,
-    this.selectedUnitPricesCount = -1,
+    // required this.selectedUnitPriceOptions,
+    // required this.selectedUnitPrices,
+    // this.selectedUnitPricesCount = -1,
+    this.officePrices = -1,
     this.depositType = DepositTypes.price,
     this.depositAmount = -2,
     this.viewerName = '',
@@ -132,6 +156,7 @@ class OfficeState extends Equatable {
     this.isInitialized = false,
     this.editNameAndCategory = false,
     this.editLocation = false,
+    this.verifyLicenseNumberModel,
   });
 
   @override
@@ -140,16 +165,23 @@ class OfficeState extends Equatable {
         marketingRequestState,
         officeType,
         licenseNumber,
+        createAd,
         name,
         categoryId,
+    id,
         acceptingUserAgreement,
         advertiserRelationshipOption,
+    transactionType,
         marketerTypeOption,
         space,
+    streetWidth,
         equipment,
         type,
+    officeTypeIds,
         floor,
+    location,
         officeAge,
+    officeAgeId,
         officesCountSelectorState,
         officesCount,
         meetingRoomsCountSelectorState,
@@ -162,6 +194,7 @@ class OfficeState extends Equatable {
         facilities,
         description,
         features,
+    propertyUtilities,
         services,
         comforts,
         additionalServiceKeys,
@@ -172,9 +205,10 @@ class OfficeState extends Equatable {
         neighborhood,
         street,
         interfaceId,
-        selectedUnitPriceOptions,
-        selectedUnitPrices,
-        selectedUnitPricesCount,
+        // selectedUnitPriceOptions,
+        // selectedUnitPrices,
+        // selectedUnitPricesCount,
+    officePrices,
         depositType,
         depositAmount,
         viewerName,
@@ -184,11 +218,13 @@ class OfficeState extends Equatable {
         isMainImageSelected,
         selectedImagesMap,
         selectedImagesCount,
+    adsPrices,
         imagesErrorMessage,
         selectedOfficeLicensingFile,
         selectedBuildingLicesnsingFile,
         selectedBuildingLicesnsingFile,
         selectedCivilDefenseFile,
+    interfaceAqar,
         filesErrorMessage,
         isStepCompleted,
         stepNavigationState,
@@ -200,6 +236,7 @@ class OfficeState extends Equatable {
         isInitialized,
         editNameAndCategory,
         editLocation,
+        verifyLicenseNumberModel,
       ];
 
   OfficeState copyWith({
@@ -207,16 +244,22 @@ class OfficeState extends Equatable {
     VisibilityStates? marketingRequestState,
     OfficeTypes? officeType,
     String? licenseNumber,
+    int? createAd,
     String? name,
     int? categoryId,
+    int? id,
     bool? acceptingUserAgreement,
     AdertiserRelationshipOptions? advertiserRelationshipOption,
+    TransactionType? transactionType,
     MarketerTypes? marketerTypeOption,
     String? space,
+    String? streetWidth,
     String? equipment,
     int? type,
+    List<int> ? officeTypeIds,
     int? floor,
-    int? officeAge,
+    String? officeAge,
+    String? officeAgeId,
     ToggleStates? officesCountSelectorState,
     int? officesCount,
     ToggleStates? meetingRoomsCountSelectorState,
@@ -225,11 +268,14 @@ class OfficeState extends Equatable {
     int? tablesCount,
     ToggleStates? sharedWorkSpacesSelectorState,
     int? sharedWorkSpaces,
+    InterfaceAqar? interfaceAqar,
+    OfficeLocation? location,
     Map<String, dynamic>? detailsMap,
     int? selectedDetailsCount,
     List<int>? facilities,
     String? description,
     List<int>? features,
+    List<int>? propertyUtilities,
     List<int>? services,
     List<int>? comforts,
     Map<UniqueKey, GlobalKey<FormState>>? additionalServiceKeys,
@@ -240,9 +286,10 @@ class OfficeState extends Equatable {
     String? neighborhood,
     String? street,
     int? interfaceId,
-    List<UnitPriceOptions>? selectedUnitPriceOptions,
-    Map<UnitPriceOptions, num>? selectedUnitPrices,
-    int? selectedUnitPricesCount,
+    // UnitPriceOptions? selectedUnitPriceOption,
+    // Map<UnitPriceOptions, num>? selectedUnitPrices,
+    // int? selectedUnitPricesCount,
+    num? officePrices,
     DepositTypes? depositType,
     num? depositAmount,
     String? viewerName,
@@ -257,6 +304,7 @@ class OfficeState extends Equatable {
     String? selectedBuildingLicesnsingFile,
     String? selectedCivilDefenseFile,
     String? filesErrorMessage,
+    List<OfficePrice>? adsPrices,
     bool? isStepCompleted,
     StepNavigationState? stepNavigationState,
     SearchData? searchData,
@@ -268,45 +316,47 @@ class OfficeState extends Equatable {
     bool? isInitialized,
     bool? editNameAndCategory,
     bool? editLocation,
+    VerifyLicenseNumberModel? verifyLicenseNumberModel,
   }) {
     return OfficeState(
       licenseOfficeState: licenseOfficeState ?? this.licenseOfficeState,
-      marketingRequestState:
-          marketingRequestState ?? this.marketingRequestState,
+      marketingRequestState: marketingRequestState ?? this.marketingRequestState,
       officeType: officeType ?? this.officeType,
       licenseNumber: licenseNumber ?? this.licenseNumber,
+      createAd: createAd ?? this.createAd,
       name: name ?? this.name,
       categoryId: categoryId ?? this.categoryId,
-      acceptingUserAgreement:
-          acceptingUserAgreement ?? this.acceptingUserAgreement,
-      advertiserRelationshipOption:
-          advertiserRelationshipOption ?? this.advertiserRelationshipOption,
+      id: id ?? this.id,
+      interfaceAqar: interfaceAqar ?? this.interfaceAqar,
+      acceptingUserAgreement: acceptingUserAgreement ?? this.acceptingUserAgreement,
+      advertiserRelationshipOption: advertiserRelationshipOption ?? this.advertiserRelationshipOption,
+      transactionType: transactionType ?? this.transactionType,
       marketerTypeOption: marketerTypeOption ?? this.marketerTypeOption,
       space: space ?? this.space,
+      streetWidth: streetWidth ?? this.streetWidth,
       equipment: equipment ?? this.equipment,
       type: type ?? this.type,
+      officeTypeIds: officeTypeIds ?? this.officeTypeIds,
       floor: floor ?? this.floor,
       officeAge: officeAge ?? this.officeAge,
-      officesCountSelectorState:
-          officesCountSelectorState ?? this.officesCountSelectorState,
+      officeAgeId: officeAgeId ?? this.officeAgeId,
+      officesCountSelectorState: officesCountSelectorState ?? this.officesCountSelectorState,
       officesCount: officesCount ?? this.officesCount,
-      meetingRoomsCountSelectorState:
-          meetingRoomsCountSelectorState ?? this.meetingRoomsCountSelectorState,
+      meetingRoomsCountSelectorState: meetingRoomsCountSelectorState ?? this.meetingRoomsCountSelectorState,
       meetingRoomsCount: meetingRoomsCount ?? this.meetingRoomsCount,
-      tablesCountSelectorState:
-          tablesCountSelectorState ?? this.tablesCountSelectorState,
+      tablesCountSelectorState: tablesCountSelectorState ?? this.tablesCountSelectorState,
       tablesCount: tablesCount ?? this.tablesCount,
-      sharedWorkSpacesSelectorState:
-          sharedWorkSpacesSelectorState ?? this.sharedWorkSpacesSelectorState,
+      sharedWorkSpacesSelectorState: sharedWorkSpacesSelectorState ?? this.sharedWorkSpacesSelectorState,
       sharedWorkSpaces: sharedWorkSpaces ?? this.sharedWorkSpaces,
       detailsMap: detailsMap ?? this.detailsMap,
+      adsPrices: adsPrices ?? this.adsPrices,
       facilities: facilities ?? this.facilities,
       description: description ?? this.description,
       features: features ?? this.features,
+      propertyUtilities: propertyUtilities ?? this.propertyUtilities,
       services: services ?? this.services,
       comforts: comforts ?? this.comforts,
-      additionalServiceKeys:
-          additionalServiceKeys ?? this.additionalServiceKeys,
+      additionalServiceKeys: additionalServiceKeys ?? this.additionalServiceKeys,
       additionalServices: additionalServices ?? this.additionalServices,
       addressPosition: addressPosition ?? this.addressPosition,
       currentMapZoom: currentMapZoom ?? this.currentMapZoom,
@@ -314,11 +364,11 @@ class OfficeState extends Equatable {
       neighborhood: neighborhood ?? this.neighborhood,
       street: street ?? this.street,
       interfaceId: interfaceId ?? this.interfaceId,
-      selectedUnitPriceOptions:
-          selectedUnitPriceOptions ?? this.selectedUnitPriceOptions,
-      selectedUnitPrices: selectedUnitPrices ?? this.selectedUnitPrices,
-      selectedUnitPricesCount:
-          selectedUnitPricesCount ?? this.selectedUnitPricesCount,
+      // selectedUnitPriceOptions: selectedUnitPriceOptions ?? this.selectedUnitPriceOptions,
+      // selectedUnitPrices: selectedUnitPrices ?? this.selectedUnitPrices,
+      // selectedUnitPricesCount: selectedUnitPricesCount ?? this.selectedUnitPricesCount,
+      officePrices: officePrices ?? this.officePrices,
+      location: location ?? this.location,
       depositType: depositType ?? this.depositType,
       depositAmount: depositAmount ?? this.depositAmount,
       viewerName: viewerName ?? this.viewerName,
@@ -329,12 +379,9 @@ class OfficeState extends Equatable {
       selectedImagesMap: selectedImagesMap ?? this.selectedImagesMap,
       selectedImagesCount: selectedImagesCount ?? this.selectedImagesCount,
       imagesErrorMessage: imagesErrorMessage ?? this.imagesErrorMessage,
-      selectedOfficeLicensingFile:
-          selectedOfficeLicensingFile ?? this.selectedOfficeLicensingFile,
-      selectedBuildingLicesnsingFile:
-          selectedBuildingLicesnsingFile ?? this.selectedBuildingLicesnsingFile,
-      selectedCivilDefenseFile:
-          selectedCivilDefenseFile ?? this.selectedCivilDefenseFile,
+      selectedOfficeLicensingFile: selectedOfficeLicensingFile ?? this.selectedOfficeLicensingFile,
+      selectedBuildingLicesnsingFile: selectedBuildingLicesnsingFile ?? this.selectedBuildingLicesnsingFile,
+      selectedCivilDefenseFile: selectedCivilDefenseFile ?? this.selectedCivilDefenseFile,
       filesErrorMessage: filesErrorMessage ?? this.filesErrorMessage,
       isStepCompleted: isStepCompleted ?? this.isStepCompleted,
       stepNavigationState: stepNavigationState ?? this.stepNavigationState,
@@ -347,6 +394,7 @@ class OfficeState extends Equatable {
       isInitialized: isInitialized ?? this.isInitialized,
       editNameAndCategory: editNameAndCategory ?? this.editNameAndCategory,
       editLocation: editLocation ?? this.editLocation,
+      verifyLicenseNumberModel: verifyLicenseNumberModel ?? this.verifyLicenseNumberModel,
     );
   }
 }

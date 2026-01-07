@@ -37,7 +37,7 @@ class OfferPricesScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 15.h),
                       icon: const Icon(Icons.add, color: AppColors.white),
                       onPressed: () =>
-                          context.pushNamed(AppRoutes.createOfferScreen),
+                          context.pushNamed(AppRoutes.createOfferScreen, extra: { 'offices': context.read<OfficesCubit>().state.offers}),
                     ),
                   ),
                 ],
@@ -47,21 +47,15 @@ class OfferPricesScreen extends StatelessWidget {
                 child: BlocBuilder<OfficesCubit, OfficesState>(
                   builder: (context, state) {
                     return RefreshIndicator(
-                      onRefresh: () =>
-                          context.read<OfficesCubit>().getAllOffers(),
+                      onRefresh: () => context.read<OfficesCubit>().getAllOffers(),
                       child: ListView.separated(
                         itemBuilder: (context, index) {
                           return OfficeOfferBox(
-                            office: context
-                                .read<OfficesCubit>()
-                                .state
-                                .offers[index],
+                            office: context.read<OfficesCubit>().state.offers[index],
                           );
                         },
-                        separatorBuilder: (context, index) =>
-                            SizedBox(height: 10.v),
-                        itemCount:
-                            context.read<OfficesCubit>().state.offers.length,
+                        separatorBuilder: (context, index) => SizedBox(height: 10.v),
+                        itemCount: context.read<OfficesCubit>().state.offers.length,
                       ),
                     );
                   },

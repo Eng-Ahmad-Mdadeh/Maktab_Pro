@@ -16,6 +16,14 @@ class OfficeRemoteDataSource extends BaseRemoteDataSource<r.Response> {
     );
   }
 
+  Future<Either<AppException, r.Response>> verifyLicenseNumber(data) async {
+    return postData(
+      endpoint: ApiEndpoints.verifyLicenseNumber,
+      data: data,
+    );
+  }
+
+
   Future<Either<AppException, r.Response>> updateInfo(officeId, data) async {
     return postData(
       endpoint: '${ApiEndpoints.updateOfficeInfo}/$officeId',
@@ -199,6 +207,22 @@ class OfficeRemoteDataSource extends BaseRemoteDataSource<r.Response> {
     return postData(
       endpoint: '${ApiEndpoints.features}${ApiEndpoints.crud}/$officeId',
       data: features,
+    );
+  }
+
+  Future<Either<AppException, r.Response>> updatePropertyUtilities(
+      officeId, propertyUtilities) async {
+    return postData(
+      endpoint: '${ApiEndpoints.update_property_utility}$officeId',
+      data: propertyUtilities,
+    );
+  }
+
+  Future<Either<AppException, r.Response>> updateTypeAqar(
+      officeId, propertyUtilities) async {
+    return postData(
+      endpoint: '${ApiEndpoints.update_type_aqar}$officeId',
+      data: propertyUtilities,
     );
   }
 

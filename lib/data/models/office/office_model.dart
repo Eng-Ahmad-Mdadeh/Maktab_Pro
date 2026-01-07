@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:maktab_lessor/core/network/api_endpoints.dart';
+import 'package:maktab_lessor/data/models/type_aquar/type_aquar_model.dart';
+import 'package:maktab_lessor/data/models/verify_license_number/verify_license_number_model.dart';
 
 import '../aqar_filter/type_res.dart';
 import '../calendar/calender_model.dart';
@@ -17,7 +19,7 @@ import 'office_marketing.dart';
 import 'office_price_model.dart';
 import 'office_service_model.dart';
 
-class Office extends Equatable{
+class Office extends Equatable {
   const Office({
     required this.id,
     required this.status,
@@ -39,6 +41,7 @@ class Office extends Equatable{
     required this.description,
     required this.advertiserRelationship,
     required this.advertiserRelationshipType,
+    required this.advertiserType,
     required this.lastUpdate,
     required this.downPayment,
     required this.typeDownPayment,
@@ -54,10 +57,11 @@ class Office extends Equatable{
     required this.tenantCommission,
     required this.tax,
     required this.conditions,
+    required this.location,
     required this.isFavourite,
     required this.rate,
     required this.offer,
-    required this.location,
+    required this.typeAqars,
     required this.typeRes,
     required this.files,
     required this.typeAqar,
@@ -68,6 +72,7 @@ class Office extends Equatable{
     required this.featureaAds,
     required this.features,
     required this.services,
+    required this.propertyUtilities,
     required this.prices,
     required this.offers,
     required this.calendars,
@@ -78,7 +83,9 @@ class Office extends Equatable{
     required this.user,
     required this.lastPage,
     required this.coupons,
+    required this.propertyAgeId,
     required this.marketing,
+    required this.propertyAge,
     required this.reject,
   });
 
@@ -102,6 +109,7 @@ class Office extends Equatable{
   final String? description;
   final String? advertiserRelationship;
   final String? advertiserRelationshipType;
+  final String? advertiserType;
   final DateTime? lastUpdate;
   final num? downPayment;
   final String? typeDownPayment;
@@ -131,6 +139,8 @@ class Office extends Equatable{
   final List<FeatureaAd> featureaAds;
   final List<InterfaceAqar> features;
   final List<OfficeService> services;
+  final List<PropertyUtility> propertyUtilities;
+  final List<TypeAquar> typeAqars;
   final List<OfficePrice> prices;
   final List<Offer> offers;
   final List<Calendar> calendars;
@@ -143,10 +153,11 @@ class Office extends Equatable{
 
   final List<Coupon> coupons;
   final OfficeMarketing? marketing;
+  final PropertyAge? propertyAge;
+  final dynamic propertyAgeId;
   final bool reject;
 
-
-  factory Office.fromJson(Map<String, dynamic> json, [num? lPage]){
+  factory Office.fromJson(Map<String, dynamic> json, [num? lPage]) {
     return Office(
       id: json["id"],
       status: json["status"].toString() == '1',
@@ -154,6 +165,7 @@ class Office extends Equatable{
       isMarketing: json["is_marketing"].toString() == '1',
       isReservation: json["is_reservation"].toString(),
       title: json["title"],
+      propertyAgeId: json["property_age_id"],
       refNumber: json["ref_number"].toString(),
       licenseNumber: json["license_number"].toString(),
       viewerName: json["viewer_name"],
@@ -163,15 +175,16 @@ class Office extends Equatable{
       views: json["views"].toString(),
       isSpecial: json["is_special"].toString(),
       space: num.tryParse(json["space"].toString()),
-      width: num.tryParse(json["width"].toString()),
+      width: num.tryParse(json["street_width"].toString()),
       height: num.tryParse(json["height"].toString()),
       description: json["description"],
       advertiserRelationship: json["advertiser_relationship"],
       advertiserRelationshipType: json["advertiser_relationship_type"],
+      advertiserType: json["advertiser_type"],
       lastUpdate: DateTime.tryParse(json["lastUpdate"] ?? ""),
       downPayment: num.tryParse(json["down_payment"].toString()),
       typeDownPayment: json["type_down_payment"],
-      categoryId: int.parse(json["category_id"]?.toString()??'-1'),
+      categoryId: int.parse(json["category_id"]?.toString() ?? '-1'),
       typeAqarId: json["type_aqar_id"].toString(),
       interfaceId: int.tryParse(json["interface_id"].toString()),
       unitId: int.tryParse(json["unit_id"].toString()),
@@ -188,161 +201,181 @@ class Office extends Equatable{
       offer: json["offer"] == null ? null : Offer.fromJson(json["offer"]),
       location: json["location"] == null ? null : OfficeLocation.fromJson(json["location"]),
       typeRes: json["type_res"] == null ? [] : List<TypeRes>.from(json["type_res"]!.map((x) => TypeRes.fromJson(x))),
-      files: json["ads_files"] == null ? [] : List<OfficeFile>.from(json["ads_files"]!.map((x) => OfficeFile.fromJson(x))),
+      files:
+          json["ads_files"] == null ? [] : List<OfficeFile>.from(json["ads_files"]!.map((x) => OfficeFile.fromJson(x))),
       typeAqar: json["type_aqar"] == null ? null : InterfaceAqar.fromJson(json["type_aqar"]),
       interfaceAqar: json["interface_aqar"] == null ? null : InterfaceAqar.fromJson(json["interface_aqar"]),
       categoryAqar: json["category_aqar"] == null ? null : CategoryAqar.fromJson(json["category_aqar"]),
-      comforts: json["comforts"] == null ? [] : List<InterfaceAqar>.from(json["comforts"]!.map((x) => InterfaceAqar.fromJson(x))),
+      comforts: json["comforts"] == null
+          ? []
+          : List<InterfaceAqar>.from(json["comforts"]!.map((x) => InterfaceAqar.fromJson(x))),
       complaints: json["reports"] == null ? [] : List<Report>.from(json["reports"]!.map((x) => Report.fromJson(x))),
-      featureaAds: json["featurea_ads"] == null ? [] : List<FeatureaAd>.from(json["featurea_ads"]!.map((x) => FeatureaAd.fromJson(x))),
-      features: json["features"] == null ? [] : List<InterfaceAqar>.from(json["features"]!.map((x) => InterfaceAqar.fromJson(x))),
-      services: json["services"] == null ? [] : List<OfficeService>.from(json["services"]!.map((x) => OfficeService.fromJson(x))),
-      prices: json["ads_prices"] == null ? [] : List<OfficePrice>.from(json["ads_prices"]!.map((x) => OfficePrice.fromJson(x))),
+      featureaAds: json["featurea_ads"] == null
+          ? []
+          : List<FeatureaAd>.from(json["featurea_ads"]!.map((x) => FeatureaAd.fromJson(x))),
+      typeAqars: json["type_aqars"] == null
+          ? []
+          : List<TypeAquar>.from(json["type_aqars"]!.map((x) => TypeAquar.fromJson(x))),
+      features: json["features"] == null
+          ? []
+          : List<InterfaceAqar>.from(json["features"]!.map((x) => InterfaceAqar.fromJson(x))),
+      services: json["services"] == null
+          ? []
+          : List<OfficeService>.from(json["services"]!.map((x) => OfficeService.fromJson(x))),
+      propertyUtilities: json["property_utilities"] == null
+          ? []
+          : List<PropertyUtility>.from(json["property_utilities"]!.map((x) => PropertyUtility.fromJson(x))),
+      prices: json["ads_prices"] == null
+          ? []
+          : List<OfficePrice>.from(json["ads_prices"]!.map((x) => OfficePrice.fromJson(x))),
       offers: json["offers"] == null ? [] : List<Offer>.from(json["offers"]!.map((x) => Offer.fromJson(x))),
-      calendars: json["calendar"] == null ? [] : List<Calendar>.from(json["calendar"]!.map((x) => Calendar.fromJson(x))),
-      facilities: json["facilities"] == null ? [] : List<CategoryAqar>.from(json["facilities"]!.map((x) => CategoryAqar.fromJson(x))),
-      details: json["ads_details"] == null ? [] : List<OfficeDetail>.from(json["ads_details"]!.map((x) => OfficeDetail.fromJson(x))),
-      evaluations: json["evaluations"] == null ? [] : List<Evaluation>.from(json["evaluations"]!.map((x) => Evaluation.fromJson(x))),
+      calendars:
+          json["calendar"] == null ? [] : List<Calendar>.from(json["calendar"]!.map((x) => Calendar.fromJson(x))),
+      facilities: json["facilities"] == null
+          ? []
+          : List<CategoryAqar>.from(json["facilities"]!.map((x) => CategoryAqar.fromJson(x))),
+      details: json["ads_details"] == null
+          ? []
+          : List<OfficeDetail>.from(json["ads_details"]!.map((x) => OfficeDetail.fromJson(x))),
+      evaluations: json["evaluations"] == null
+          ? []
+          : List<Evaluation>.from(json["evaluations"]!.map((x) => Evaluation.fromJson(x))),
       units: json["units"] == null ? [] : List<Office>.from(json["units"]!.map((x) => Office.fromJson(x))),
       user: json["user"] == null ? null : User.fromJson(json["user"]),
-      coupons: json["coupons"] != null
-          ? List<Coupon>.from(json["coupons"].map((x) => Coupon.fromJson(x)))
-          : [],
-      marketing: json["marketing"] != null
-          ? OfficeMarketing.fromJson(json["marketing"])
-          : null,
+      coupons: json["coupons"] != null ? List<Coupon>.from(json["coupons"].map((x) => Coupon.fromJson(x))) : [],
+      marketing: json["marketing"] != null ? OfficeMarketing.fromJson(json["marketing"]) : null,
+      propertyAge: json["property_age"] != null ? PropertyAge.fromJson(json["property_age"]) : null,
       reject: json["reject"] != null ? true : false,
       lastPage: lPage,
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "status": status,
-    "active": active,
-    "is_marketing": isMarketing,
-    "is_reservation": isReservation,
-    "title": title,
-    "ref_number": refNumber,
-    "license_number": licenseNumber,
-    "viewer_name": viewerName,
-    "viewer_phone": viewerPhone,
-    "main_image": mainImage,
-    "furnisher": furnisher,
-    "views": views,
-    "is_special": isSpecial,
-    "space": space,
-    "width": width,
-    "height": height,
-    "description": description,
-    "advertiser_relationship": advertiserRelationship,
-    "advertiser_relationship_type": advertiserRelationshipType,
-    "lastUpdate": "${lastUpdate!.year.toString().padLeft(4,'0')}-${lastUpdate!.month.toString().padLeft(2,'0')}-${lastUpdate!.day.toString().padLeft(2,'0')}",
-    "down_payment": downPayment,
-    "type_down_payment": typeDownPayment,
-    "category_id": categoryId,
-    "type_aqar_id": typeAqarId,
-    "interface_id": interfaceId,
-    "unit_id": unitId,
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "is_completed": isCompleted,
-    "is_central": isCentral,
-    "my_rate": myRate,
-    "tenant_commission": tenantCommission?.toJson(),
-    "tax": tax?.toJson(),
-    "conditions": conditions?.toJson(),
-    "is_favourite": isFavourite,
-    "rate": rate,
-    "offer": offer?.toJson(),
-    "location": location?.toJson(),
-    "type_res": typeRes.map((x) => x.toJson()).toList(),
-    "ads_files": files.map((x) => x.toJson()).toList(),
-    "type_aqar": typeAqar?.toJson(),
-    "interface_aqar": interfaceAqar?.toJson(),
-    "category_aqar": categoryAqar?.toJson(),
-    "comforts": comforts.map((x) => x.toJson()).toList(),
-    "reports": complaints.map((x) => x.toJson()).toList(),
-    "featurea_ads": featureaAds.map((x) => x.toJson()).toList(),
-    "features": features.map((x) => x.toJson()).toList(),
-    "services": services.map((x) => x.toJson()).toList(),
-    "ads_prices": prices.map((x) => x.toJson()).toList(),
-    "offers": offers.map((x) => x.toJson()).toList(),
-    "calendar": calendars.map((x) => x.toJson()).toList(),
-    "facilities": facilities.map((x) => x.toJson()).toList(),
-    "ads_details": details.map((x) => x.toJson()).toList(),
-    "evaluations": evaluations.map((x) => x.toJson()).toList(),
-    "units": units.map((x) => x.toJson()).toList(),
-    "user": user?.toJson(),
-
-  };
-
-  @override
-  String toString(){
-    return "$id, $status, $active, $isMarketing, $isReservation, $title, $refNumber, $licenseNumber, $viewerName, $viewerPhone, $mainImage, $furnisher, $views, $isSpecial, $space, $width, $height, $description, $advertiserRelationship, $advertiserRelationshipType, $lastUpdate, $downPayment, $typeDownPayment, $categoryId, $typeAqarId, $interfaceId, $unitId, $createdAt, $updatedAt, $isCompleted, $isCentral, $myRate, $tenantCommission, $tax, $conditions, $isFavourite, $rate, $offer, $location, $typeRes, $files, $typeAqar, $interfaceAqar, $categoryAqar, $comforts, $complaints, $featureaAds, $features, $services, $prices, $offers, $calendars, $facilities, $details, $evaluations, $units, $user, ";
-  }
+        "id": id,
+        "status": status,
+        "active": active,
+        "is_marketing": isMarketing,
+        "is_reservation": isReservation,
+        "title": title,
+        "ref_number": refNumber,
+        "license_number": licenseNumber,
+        "viewer_name": viewerName,
+        "viewer_phone": viewerPhone,
+        "main_image": mainImage,
+        "furnisher": furnisher,
+        "views": views,
+        "is_special": isSpecial,
+        "space": space,
+        "width": width,
+        "height": height,
+        "description": description,
+        "advertiser_relationship": advertiserRelationship,
+        "advertiser_relationship_type": advertiserRelationshipType,
+        "lastUpdate":
+            "${lastUpdate!.year.toString().padLeft(4, '0')}-${lastUpdate!.month.toString().padLeft(2, '0')}-${lastUpdate!.day.toString().padLeft(2, '0')}",
+        "down_payment": downPayment,
+        "type_down_payment": typeDownPayment,
+        "category_id": categoryId,
+        "type_aqar_id": typeAqarId,
+        "interface_id": interfaceId,
+        "unit_id": unitId,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+        "is_completed": isCompleted,
+        "is_central": isCentral,
+        "my_rate": myRate,
+        "tenant_commission": tenantCommission?.toJson(),
+        "tax": tax?.toJson(),
+        "conditions": conditions?.toJson(),
+        "is_favourite": isFavourite,
+        "rate": rate,
+        "offer": offer?.toJson(),
+        "location": location?.toJson(),
+        "type_res": typeRes.map((x) => x.toJson()).toList(),
+        "ads_files": files.map((x) => x.toJson()).toList(),
+        "type_aqar": typeAqar?.toJson(),
+        "interface_aqar": interfaceAqar?.toJson(),
+        "category_aqar": categoryAqar?.toJson(),
+        "comforts": comforts.map((x) => x.toJson()).toList(),
+        "reports": complaints.map((x) => x.toJson()).toList(),
+        "featurea_ads": featureaAds.map((x) => x.toJson()).toList(),
+        "features": features.map((x) => x.toJson()).toList(),
+        "services": services.map((x) => x.toJson()).toList(),
+        "ads_prices": prices.map((x) => x.toJson()).toList(),
+        "offers": offers.map((x) => x.toJson()).toList(),
+        "calendar": calendars.map((x) => x.toJson()).toList(),
+        "facilities": facilities.map((x) => x.toJson()).toList(),
+        "ads_details": details.map((x) => x.toJson()).toList(),
+        "evaluations": evaluations.map((x) => x.toJson()).toList(),
+        "units": units.map((x) => x.toJson()).toList(),
+        "user": user?.toJson(),
+      };
 
   @override
   List<Object?> get props => [
-    id,
-    status,
-    active,
-    isMarketing,
-    isReservation,
-    title,
-    refNumber,
-    licenseNumber,
-    viewerName,
-    viewerPhone,
-    mainImage,
-    furnisher,
-    views,
-    isSpecial,
-    space,
-    width,
-    height,
-    description,
-    advertiserRelationship,
-    advertiserRelationshipType,
-    lastUpdate,
-    downPayment,
-    typeDownPayment,
-    categoryId,
-    typeAqarId,
-    interfaceId,
-    unitId,
-    createdAt,
-    updatedAt,
-    isCompleted,
-    isCentral,
-    myRate,
-    tenantCommission,
-    tax,
-    conditions,
-    isFavourite,
-    rate,
-    offer,
-    location,
-    typeRes,
-    files,
-    typeAqar,
-    interfaceAqar,
-    categoryAqar,
-    comforts,
-    complaints,
-    featureaAds,
-    features,
-    services,
-    prices,
-    offers,
-    calendars,
-    facilities,
-    details,
-    evaluations,
-    units,
-    user,
-    lastPage,
-  ];
+        id,
+        status,
+        active,
+        isMarketing,
+        isReservation,
+        title,
+        refNumber,
+        licenseNumber,
+        viewerName,
+        viewerPhone,
+        mainImage,
+        furnisher,
+    propertyAgeId,
+        views,
+        isSpecial,
+        space,
+    typeAqars,
+        width,
+        height,
+        description,
+        advertiserRelationship,
+        advertiserRelationshipType,
+    advertiserType,
+        lastUpdate,
+        downPayment,
+        typeDownPayment,
+        categoryId,
+        typeAqarId,
+        interfaceId,
+        unitId,
+    propertyUtilities,
+        createdAt,
+        updatedAt,
+        isCompleted,
+        isCentral,
+        myRate,
+        tenantCommission,
+        tax,
+        conditions,
+        isFavourite,
+        rate,
+        offer,
+        location,
+        typeRes,
+        files,
+        typeAqar,
+        interfaceAqar,
+        categoryAqar,
+        comforts,
+        complaints,
+        featureaAds,
+        features,
+        services,
+        prices,
+        offers,
+        calendars,
+        facilities,
+        details,
+        evaluations,
+        units,
+        user,
+        lastPage,
+      ];
 
   Office copyWith({
     int? id,
@@ -358,6 +391,7 @@ class Office extends Equatable{
     String? mainImage,
     String? furnisher,
     String? views,
+    num? propertyAgeId,
     String? isSpecial,
     num? space,
     num? width,
@@ -365,6 +399,7 @@ class Office extends Equatable{
     String? description,
     String? advertiserRelationship,
     String? advertiserRelationshipType,
+    String? advertiserType,
     DateTime? lastUpdate,
     num? downPayment,
     String? typeDownPayment,
@@ -394,9 +429,11 @@ class Office extends Equatable{
     List<FeatureaAd>? featureaAds,
     List<InterfaceAqar>? features,
     List<OfficeService>? services,
+    List<PropertyUtility>? propertyUtilities,
     List<OfficePrice>? prices,
     List<Offer>? offers,
     List<Calendar>? calendars,
+    List<TypeAquar>? typeAqars,
     List<CategoryAqar>? facilities,
     List<OfficeDetail>? details,
     List<Evaluation>? evaluations,
@@ -405,6 +442,7 @@ class Office extends Equatable{
     num? lastPage,
     List<Coupon>? coupons,
     OfficeMarketing? marketing,
+    PropertyAge? propertyAge,
     bool? reject,
   }) {
     return Office(
@@ -421,6 +459,7 @@ class Office extends Equatable{
       mainImage: mainImage ?? this.mainImage,
       furnisher: furnisher ?? this.furnisher,
       views: views ?? this.views,
+      propertyAgeId: propertyAgeId ?? this.propertyAgeId,
       isSpecial: isSpecial ?? this.isSpecial,
       space: space ?? this.space,
       width: width ?? this.width,
@@ -428,6 +467,7 @@ class Office extends Equatable{
       description: description ?? this.description,
       advertiserRelationship: advertiserRelationship ?? this.advertiserRelationship,
       advertiserRelationshipType: advertiserRelationshipType ?? this.advertiserRelationshipType,
+      advertiserType: advertiserType ?? this.advertiserType,
       lastUpdate: lastUpdate ?? this.lastUpdate,
       downPayment: downPayment ?? this.downPayment,
       typeDownPayment: typeDownPayment ?? this.typeDownPayment,
@@ -455,8 +495,10 @@ class Office extends Equatable{
       comforts: comforts ?? this.comforts,
       complaints: complaints ?? this.complaints,
       featureaAds: featureaAds ?? this.featureaAds,
+      typeAqars: typeAqars ?? this.typeAqars,
       features: features ?? this.features,
       services: services ?? this.services,
+      propertyUtilities: propertyUtilities ?? this.propertyUtilities,
       prices: prices ?? this.prices,
       offers: offers ?? this.offers,
       calendars: calendars ?? this.calendars,
@@ -467,11 +509,11 @@ class Office extends Equatable{
       user: user ?? this.user,
       coupons: coupons ?? this.coupons,
       marketing: marketing ?? this.marketing,
+      propertyAge: propertyAge ?? this.propertyAge,
       reject: reject ?? this.reject,
       lastPage: lastPage ?? this.lastPage,
     );
   }
-
 
   static String getOfficeState(bool state, bool active) {
     if (state && active) {
@@ -485,38 +527,42 @@ class Office extends Equatable{
 
   static int getUnitCompleteStepsCount(Office unit) {
     int count = 1;
-    if (unit.details.isNotEmpty && unit.space != null && (unit.furnisher??'').isNotEmpty && unit.interfaceId != null && unit.typeAqarId != null) {
+    if (unit.details.isNotEmpty &&
+        unit.space != null &&
+        (unit.furnisher ?? '').isNotEmpty &&
+        unit.interfaceId != null &&
+        unit.typeAqarId != null) {
       count = count + 2;
     }
-    if ((unit.description??'').isNotEmpty) {
+    if ((unit.description ?? '').isNotEmpty) {
       count++;
     }
-    if (unit.prices.isNotEmpty && (unit.viewerName??'').isNotEmpty && (unit.viewerPhone??'').isNotEmpty) {
+    if (unit.prices.isNotEmpty && (unit.viewerName ?? '').isNotEmpty && (unit.viewerPhone ?? '').isNotEmpty) {
       count++;
     }
     return count;
   }
 }
 
-class Tax extends Equatable{
+class Tax extends Equatable {
   const Tax({
     required this.rate,
   });
 
   final String? rate;
 
-  factory Tax.fromJson(Map<String, dynamic> json){
+  factory Tax.fromJson(Map<String, dynamic> json) {
     return Tax(
       rate: json["rate"].toString(),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    "rate": rate,
-  };
+        "rate": rate,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$rate, ";
   }
 
@@ -532,7 +578,7 @@ class Tax extends Equatable{
   }
 }
 
-class FeatureaAd extends Equatable{
+class FeatureaAd extends Equatable {
   const FeatureaAd({
     required this.id,
     required this.boolfeatureaId,
@@ -541,7 +587,7 @@ class FeatureaAd extends Equatable{
   final int? id;
   final String? boolfeatureaId;
 
-  factory FeatureaAd.fromJson(Map<String, dynamic> json){
+  factory FeatureaAd.fromJson(Map<String, dynamic> json) {
     return FeatureaAd(
       id: json["id"],
       boolfeatureaId: json["boolfeaturea_id"].toString(),
@@ -549,20 +595,20 @@ class FeatureaAd extends Equatable{
   }
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "boolfeaturea_id": boolfeatureaId,
-  };
+        "id": id,
+        "boolfeaturea_id": boolfeatureaId,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$id, $boolfeatureaId, ";
   }
 
   @override
   List<Object?> get props => [
-    id,
-    boolfeatureaId,
-  ];
+        id,
+        boolfeatureaId,
+      ];
 
   FeatureaAd copyWith({
     int? id,
@@ -575,7 +621,7 @@ class FeatureaAd extends Equatable{
   }
 }
 
-class Conditions extends Equatable{
+class Conditions extends Equatable {
   const Conditions({
     required this.required,
     required this.price,
@@ -586,7 +632,7 @@ class Conditions extends Equatable{
   final String? price;
   final String? text;
 
-  factory Conditions.fromJson(Map<String, dynamic> json){
+  factory Conditions.fromJson(Map<String, dynamic> json) {
     return Conditions(
       required: json["required"].toString(),
       price: json["price"].toString(),
@@ -595,22 +641,22 @@ class Conditions extends Equatable{
   }
 
   Map<String, dynamic> toJson() => {
-    "required": required,
-    "price": price,
-    "text": text,
-  };
+        "required": required,
+        "price": price,
+        "text": text,
+      };
 
   @override
-  String toString(){
+  String toString() {
     return "$required, $price, $text, ";
   }
 
   @override
   List<Object?> get props => [
-    required,
-    price,
-    text,
-  ];
+        required,
+        price,
+        text,
+      ];
 
   Conditions copyWith({
     String? required,

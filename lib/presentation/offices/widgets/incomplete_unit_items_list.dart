@@ -31,50 +31,47 @@ class _IncompleteUnitItemsListState extends State<IncompleteUnitItemsList> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 350.v,
-      child: RefreshIndicator(
-        onRefresh: () async => context.read<OfficesCubit>().getIncompleteUnits(),
-        child: BlocConsumer<OfficesCubit, OfficesState>(
-          listener: (context, state) {
-            if (state.unitApiCallState == OfficesApiCallState.loading) {
-              LoadingDialog.show(context);
-            } else if (state.unitApiCallState == OfficesApiCallState.success) {
-              LoadingDialog.hide(context);
-              context.pushNamed(
-                AppRoutes.createUnitScreen,
-                extra: {
-                  'office': state.selectedOffice,
-                  'unit': selectedUnit,
-                },
-              );
-            } else if (state.unitApiCallState == OfficesApiCallState.failure) {
-              LoadingDialog.hide(context);
-            }
-          },
-          builder: (context, state) {
-            if (state.incompleteUnitsApiCallState == OfficesApiCallState.loading) {
-              return Center(child: loadingItem());
-            } else if (state.incompleteUnitsApiCallState == OfficesApiCallState.success) {
-              return ListView.separated(
-                itemBuilder: (context, index) {
-                  return OfficeItem(
-                    office: state.incompleteUnits[index],
-                    mode: 'complete',
-                    onTap: () async {
-                      await context.read<OfficesCubit>().getUnitById(state.myOffices[index].id);
-                      selectedUnit = state.incompleteUnits[index];
-                    },
-                    onDelete: () => widget.onIncompleteUnitDelete(state.incompleteUnits[index].id),
-                  );
-                },
-                separatorBuilder: (context, index) => SizedBox(height: 20.v),
-                itemCount: state.incompleteUnits.length,
-              );
-            } else if (state.incompleteUnitsApiCallState == OfficesApiCallState.failure) {
-              return const Center(child: BodyText(text: 'حدث خطأ ما'));
-            }
-            return const SizedBox.shrink();
-          },
-        ),
+      child: BlocConsumer<OfficesCubit, OfficesState>(
+        listener: (context, state) {
+          if (state.unitApiCallState == OfficesApiCallState.loading) {
+            LoadingDialog.show(context);
+          } else if (state.unitApiCallState == OfficesApiCallState.success) {
+            LoadingDialog.hide(context);
+            context.pushNamed(
+              AppRoutes.createUnitScreen,
+              extra: {
+                'office': state.selectedOffice,
+                'unit': selectedUnit,
+              },
+            );
+          } else if (state.unitApiCallState == OfficesApiCallState.failure) {
+            LoadingDialog.hide(context);
+          }
+        },
+        builder: (context, state) {
+          if (state.incompleteUnitsApiCallState == OfficesApiCallState.loading) {
+            return Center(child: loadingItem());
+          } else if (state.incompleteUnitsApiCallState == OfficesApiCallState.success) {
+            return ListView.separated(
+              itemBuilder: (context, index) {
+                return OfficeItem(
+                  office: state.incompleteUnits[index],
+                  mode: 'complete',
+                  onTap: () async {
+                    await context.read<OfficesCubit>().getUnitById(state.myOffices[index].id);
+                    selectedUnit = state.incompleteUnits[index];
+                  },
+                  onDelete: () => widget.onIncompleteUnitDelete(state.incompleteUnits[index].id),
+                );
+              },
+              separatorBuilder: (context, index) => SizedBox(height: 20.v),
+              itemCount: state.incompleteUnits.length,
+            );
+          } else if (state.incompleteUnitsApiCallState == OfficesApiCallState.failure) {
+            return const Center(child: BodyText(text: 'حدث خطأ ما'));
+          }
+          return const SizedBox.shrink();
+        },
       ),
     );
   }

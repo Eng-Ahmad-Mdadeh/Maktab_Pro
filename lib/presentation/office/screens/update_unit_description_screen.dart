@@ -29,14 +29,14 @@ class UpdateUnitDescriptionScreen extends StatelessWidget {
           } else if (state.unitApiCallState == UnitApiCallState.success) {
             context.read<OfficesCubit>().getOfficeById(unit.id, isUpdate: true);
             context.pop();
-            MaktabSnackbar.showSuccess(context, 'تم تعديل وصف الوحدة بنجاح');
+            MaktabSnackbar.showSuccess(context, 'تم تعديل الوصف بنجاح');
           } else if (state.unitApiCallState == UnitApiCallState.failure) {
             MaktabSnackbar.showError(context, 'فشل تعديل الوصف');
           }
         },
         builder: (context, state) => state.isInitialized
             ? Scaffold(
-                appBar: const MaktabAppBar(title: 'تعديل وصف الوحدة'),
+                appBar: const MaktabAppBar(title: 'تعديل الوصف'),
                 body: SafeArea(
                   child: SingleChildScrollView(
                     padding:

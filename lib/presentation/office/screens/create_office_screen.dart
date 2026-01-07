@@ -29,6 +29,7 @@ class CreateOfficeScreen extends StatefulWidget {
 
 class _CreateOfficeScreenState extends State<CreateOfficeScreen> {
   final PageController _pageController = PageController();
+
   List<Widget> pages = const [
     OfficeTypeStep(),
     OfficeFirstInfoStep(),

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maktab_lessor/domain/office/office_bloc.dart';
 import 'package:maktab_lessor/presentation/resources/app_colors.dart';
-import 'package:maktab_lessor/presentation/widgets/maktab_switch.dart';
 import 'package:maktab_lessor/presentation/widgets/maktab_text_form_field.dart';
 import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
@@ -11,13 +10,16 @@ class OfficePriceFormField extends StatelessWidget {
   const OfficePriceFormField({
     super.key,
     required this.title,
+    required this.readOnly,
     required this.controller,
-    required this.option,
+    // required this.option,
   });
 
   final String title;
+  final bool? readOnly;
   final TextEditingController controller;
-  final UnitPriceOptions option;
+
+  // final UnitPriceOptions? option;
 
   @override
   Widget build(BuildContext context) {
@@ -29,31 +31,31 @@ class OfficePriceFormField extends StatelessWidget {
             Expanded(
               child: MaktabTextFormField(
                 controller: controller,
-                readOnly: !state.selectedUnitPriceOptions.contains(option),
-                fillColor: state.selectedUnitPriceOptions.contains(option)
-                    ? AppColors.white
-                    : AppColors.palePlatinum,
+                readOnly: readOnly ?? false,
+
+                // fillColor: state.selectedUnitPriceOptions.contains(option)
+                //     ? AppColors.white
+                //     : AppColors.palePlatinum,
+                fillColor: AppColors.palePlatinum,
                 textInputType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 onChanged: (value) {
-                  context
-                      .read<OfficeBloc>()
-                      .add(ChangeUnitPriceEvent(option, value.trim()));
+                  context.read<OfficeBloc>().add(ChangeUnitPriceEvent(num.parse(value.trim())));
                 },
               ),
             ),
-            Expanded(
-              child: MaktabSwitch(
-                value: state.selectedUnitPriceOptions.contains(option),
-                // activeColor: AppColors.emeraldTeal,
-                // activeTrackColor: AppColors.mintGreen,
-                onChanged: (value) {
-                  context.read<OfficeBloc>()
-                    ..add(ToggleUnitPriceOptionEvent(option))
-                    ..add(ChangeUnitPriceEvent(option, controller.text.trim()));
-                },
-              ),
-            ),
+            // Expanded(
+            //   child: MaktabSwitch(
+            //     value: state.selectedUnitPriceOptions.contains(option),
+            //     // activeColor: AppColors.emeraldTeal,
+            //     // activeTrackColor: AppColors.mintGreen,
+            //     onChanged: (value) {
+            //       context.read<OfficeBloc>()
+            //         ..add(ToggleUnitPriceOptionEvent(option))
+            //         ..add(ChangeUnitPriceEvent(option, controller.text.trim()));
+            //     },
+            //   ),
+            // ),
           ],
         );
       },

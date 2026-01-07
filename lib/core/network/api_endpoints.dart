@@ -1,6 +1,7 @@
 class ApiEndpoints {
   //Base URL
-  static const siteUrl = 'https://maktab.sa/';
+  static const siteUrl = 'https://dev.maktab.sa/';
+  // static const siteUrl = 'https://maktab.sa/';
   // static const baseUrl = 'https://maktab.sa/apiBack/v1/user/';
   static const baseUrl = 'https://dev.maktab.sa/apiBack/v1/user/';
   //Auth
@@ -16,8 +17,8 @@ class ApiEndpoints {
   static const userAgreement = "term";
   //Financial Transactions
   static const receivingMoneyMethod = 'receive_monies/';
-  static const bankMethod = 'Bank';
-  static const stcMethod = 'Stc';
+  static const bankMethod = 'bank';
+  static const stcMethod = 'stc';
   static const bankAccounts = 'bank_accounts';
   //Languages
   static const languages = "languages";
@@ -78,6 +79,8 @@ class ApiEndpoints {
   static const services = 'services/';
   //Features
   static const features = 'features/';
+  static const update_property_utility = 'update_property_utility/';
+  static const update_type_aqar = 'update_type_aqar/';
   //Prices
   static const prices = 'prices/';
   static const all = 'all';
@@ -137,6 +140,7 @@ class ApiEndpoints {
   static const crud = 'crud';
   static const cud = 'cud';
   static const create = 'create';
+  static const verifyLicenseNumber = 'advertisement-validator';
   static const save = 'save';
   static const update = 'update';
   static const delete = 'delete';

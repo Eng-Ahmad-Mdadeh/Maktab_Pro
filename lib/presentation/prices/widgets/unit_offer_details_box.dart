@@ -43,7 +43,8 @@ class UnitOfferDetailsBox extends StatelessWidget {
                   IconButton(
                     onPressed: () => context.pushNamed(
                         AppRoutes.createOfferScreen,
-                        extra: {'offer': offer, 'unit': unit}),
+                        extra: {'offer': offer, 'unit': unit}
+                    ),
                     icon: const Icon(
                       Icons.edit,
                       color: AppColors.emeraldTeal,
