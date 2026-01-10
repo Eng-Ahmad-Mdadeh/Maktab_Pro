@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:go_router/go_router.dart';
-import 'package:html_editor_enhanced/html_editor.dart';
+// import 'package:html_editor_enhanced/html_editor.dart';
 
 import '../../../../contracts/screens/contract/screens/add/widgets/contract_input_widget.dart';
 import '../../../../contracts/screens/contract/screens/add/widgets/contract_select_widget.dart';
@@ -138,7 +138,7 @@ class _EditContractsModelScreenState extends State<EditContractsModelScreen> {
                         initText: state.contractModel.contentContractModel,
                         title: "محتوى النموذج",
                         hint: "محتوى النموذج",
-                        toolbarType: ToolbarType.nativeExpandable,
+                        // toolbarType: ToolbarType.nativeExpandable,
                         height: 600,
                       )else
                         const LoadingWidget(0),

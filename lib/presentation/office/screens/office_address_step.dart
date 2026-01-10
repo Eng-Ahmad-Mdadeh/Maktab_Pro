@@ -30,10 +30,10 @@ class _OfficeAddressStepState extends State<OfficeAddressStep> {
                 title: 'يرجى تحديد موقع المكان والخدمة',
                 textFontWeight: FontWeight.w500,
               ),
-              if (state.officeType == OfficeTypes.request) ...[
-                SizedBox(height: 20.v),
-                const MaktabMapSearchTextField(),
-              ],
+              // if (state.officeType == OfficeTypes.request) ...[
+              //   SizedBox(height: 20.v),
+              //   const MaktabMapSearchTextField(),
+              // ],
               SizedBox(height: 20.v),
               const BodyText(
                 text: '(نأمل مطابقة الموقع أدناه مع الموقع المذكور في وصف موقع العقار المكتوب)',

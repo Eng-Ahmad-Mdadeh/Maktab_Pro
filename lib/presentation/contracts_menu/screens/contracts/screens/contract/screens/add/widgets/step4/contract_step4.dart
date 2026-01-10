@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:html_editor_enhanced/html_editor.dart';
+
+// import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:maktab_lessor/presentation/resources/app_colors.dart';
 import 'package:maktab_lessor/presentation/widgets/maktab_switch.dart';
 
@@ -77,7 +78,8 @@ class ContractHtmlEditorWidget extends StatelessWidget {
   final String? initText;
   final String? hint;
   final bool disabled;
-  final ToolbarType? toolbarType;
+
+  // final ToolbarType? toolbarType;
   final double? height;
   final QuillController _quillController;
 
@@ -88,7 +90,7 @@ class ContractHtmlEditorWidget extends StatelessWidget {
     this.disabled = false,
     this.initText,
     this.hint,
-    this.toolbarType,
+    // this.toolbarType,
     this.height,
   });
 
@@ -97,12 +99,9 @@ class ContractHtmlEditorWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        BodyText(
-          text: title,
-        ),
-        QuillToolbar.simple(
-          configurations: QuillSimpleToolbarConfigurations(
-            controller: _quillController,
+        BodyText(text: title),
+        QuillSimpleToolbar(
+          config: const QuillSimpleToolbarConfig(
             showClipboardCopy: false,
             showClipboardPaste: false,
             showClipboardCut: false,
@@ -115,16 +114,14 @@ class ContractHtmlEditorWidget extends StatelessWidget {
             showSubscript: false,
             showSuperscript: false,
             showDividers: false,
-            sharedConfigurations: const QuillSharedConfigurations(
-              locale: Locale('ar'),
-            ),
           ),
+          controller: _quillController,
         ),
         QuillEditor.basic(
-          configurations: QuillEditorConfigurations(
+          config: QuillEditorConfig(
             minHeight: 450.0.v,
-            controller: _quillController,
           ),
+          controller: _quillController,
         ),
       ],
     );
