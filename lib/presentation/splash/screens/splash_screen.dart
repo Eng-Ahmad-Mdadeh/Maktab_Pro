@@ -3,9 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:maktab_lessor/core/helpers/size_helper.dart';
 import 'package:maktab_lessor/core/router/app_routes.dart';
+import 'package:maktab_lessor/core/services/service_locator.dart';
+import 'package:maktab_lessor/data/repositories/office_repository.dart';
 import 'package:maktab_lessor/domain/home/home_bloc.dart';
 import 'package:maktab_lessor/domain/offices/offices_cubit.dart';
 import 'package:maktab_lessor/domain/receiving_method/receiving_method_bloc.dart';
+import 'package:maktab_lessor/domain/settings/settings_bloc.dart';
 import 'package:maktab_lessor/domain/splash/splash_bloc.dart';
 import 'package:maktab_lessor/presentation/resources/app_assets.dart';
 import 'package:maktab_lessor/presentation/resources/app_colors.dart';
@@ -23,6 +26,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  late SearchDataBloc _searchDataBloc;
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +41,11 @@ class _SplashScreenState extends State<SplashScreen> {
           context.pushReplacement(AppRoutes.introScreen);
         } else if (state is NavigationToHomeScreenState) {
           context.read<ReceivingMethodBloc>().add(GetReceivingMoneyMethodEvent());
+
+
+          context.read<OfficesCubit>().getMyOffices();
+          context.read<OfficesCubit>().getIncompleteOffices();
+
           // context.read<OfficesCubit>().getIncompleteUnits();
 
           // await context

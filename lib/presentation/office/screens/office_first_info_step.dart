@@ -77,7 +77,7 @@ class _OfficeFirstInfoStepState extends State<OfficeFirstInfoStep> {
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3, mainAxisSpacing: 10.v, crossAxisSpacing: 8.h, childAspectRatio: 5 / 4),
-                itemCount: state.searchData!.officeCategories.length,
+                itemCount: state.searchData?.officeCategories.length,
                 itemBuilder: (context, index) {
                   return OfficeCategoryBox(
                     officeCategory: state.searchData!.officeCategories[index],

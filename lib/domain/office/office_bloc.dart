@@ -638,12 +638,12 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
       switch (event.index) {
         case 0:
           // navigateAfterSuccessStep(emit, event.index);
-          if (state.marketingRequestState == VisibilityStates.show) {
+          if (state.marketingRequestState == VisibilityStates.show || state.createdUnit != null) {
             navigateAfterSuccessStep(emit, event.index);
           } else {
-            bool temp = false;
-            temp = await verifyLicenseNumber(emit);
-            if (temp) {
+            // bool temp = false;
+            // temp = await verifyLicenseNumber(emit);
+            if (true) {
               navigateAfterSuccessStep(emit, event.index);
             }
           }
@@ -809,8 +809,8 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
           // if (state.selectedUnitPriceOptions.contains(UnitPriceOptions.yearly)) {
           //   if (state.depositAmount != state.createdUnit!.downPayment ||
           //       getCounterDepositType(state.depositType ?? DepositTypes.price) != state.createdUnit!.typeDownPayment) {
-              temp2 = await updateDepositInfo(emit);
-            // }
+          temp2 = await updateDepositInfo(emit);
+          // }
           // }
           // if (state.viewerName != state.createdUnit!.viewerName ||
           //     state.viewerPhone != state.createdUnit!.viewerPhone) {
@@ -950,20 +950,21 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
   }
 
   bool checkIfConfirmAddressStepCompleted() {
-    return state.city.isEmpty || state.neighborhood.isEmpty | state.street.isEmpty || state.interfaceId < 0
+    return state.city.isEmpty || state.neighborhood.isEmpty | state.street.isEmpty
         ? false
         : true;
   }
 
   bool checkIfOfficePricesStepCompleted() {
-    bool result = state.officePrices == -1 ||
-            (state.viewerName.isEmpty && state.licenseOfficeState == VisibilityStates.show) ||
-            (state.viewerPhone.isEmpty && state.licenseOfficeState == VisibilityStates.show)
-        ? false
-        : true;
-
-    log("Final result: $result");
-    return result;
+    // bool result = state.officePrices == -1
+    //     // ||
+    //     //     (state.viewerName.isEmpty && state.licenseOfficeState == VisibilityStates.show) ||
+    //     //     (state.viewerPhone.isEmpty && state.licenseOfficeState == VisibilityStates.show)
+    //     ? false
+    //     : true;
+    //
+    // log("Final result: $result");
+    return true;
   }
 
   bool checkIfOfficeFilesStepCompleted() {

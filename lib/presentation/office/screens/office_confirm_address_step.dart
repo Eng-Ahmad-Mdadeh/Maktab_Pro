@@ -71,7 +71,7 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
       //     .add(SetRegionCodeEvent(int.parse(state.verifyLicenseNumberModel!.location?.regionCode ?? '0')));
 
       context.read<OfficeBloc>().add(
-          SetInterfaceEvent(state.verifyLicenseNumberModel!.interfaceAqar?.arName ?? state.interfaceAqar!.arName!));
+          SetInterfaceEvent(state.verifyLicenseNumberModel!.interfaceAqar?.arName ?? state.interfaceAqar?.arName?? ''));
     }
 
     super.didChangeDependencies();
@@ -92,7 +92,7 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
               children: [
                 MaktabTextFormField(
                   readOnly:
-                      state.officeType == OfficeTypes.license && state.verifyLicenseNumberModel!.location!.city != null,
+                      state.officeType == OfficeTypes.license && state.verifyLicenseNumberModel?.location?.city != null,
                   controller: _cityController,
                   title: 'المدينة',
                   validator: (value) {
@@ -108,7 +108,7 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                 SizedBox(height: 20.v),
                 MaktabTextFormField(
                   readOnly: state.officeType == OfficeTypes.license &&
-                      state.verifyLicenseNumberModel!.location!.neighborhood != null,
+                      state.verifyLicenseNumberModel?.location?.neighborhood != null,
                   controller: _neighborhoodController,
                   title: 'الحي',
                   validator: (value) {
@@ -124,7 +124,7 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                 SizedBox(height: 20.v),
                 MaktabTextFormField(
                   readOnly: state.officeType == OfficeTypes.license &&
-                      state.verifyLicenseNumberModel!.location!.street != null,
+                      state.verifyLicenseNumberModel?.location?.street != null,
                   controller: _streetController,
                   title: 'اسم الشارع',
                   validator: (value) {
@@ -145,7 +145,7 @@ class _OfficeConfirmAddressStepState extends State<OfficeConfirmAddressStep> {
                 MaktabDropDownFormField(
                   // initialValue: interface != null ? interface!.arName : '',
                   initialValue: state.verifyLicenseNumberModel?.interfaceAqar?.arName ?? interface?.arName,
-                  // readOnly: state.officeType == OfficeTypes.license,
+                  readOnly: state.officeType == OfficeTypes.license,
 
                   items: context
                       .read<OfficeBloc>()

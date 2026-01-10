@@ -160,15 +160,16 @@ class OfficeBox extends StatelessWidget {
                                   OfficeInfoItem(title: 'المدينة', value: office.location!.city),
                                   OfficeInfoItem(title: 'الحي', value: office.location!.neighborhood),
                                   OfficeInfoItem(title: 'الشارع', value: office.location!.street),
-                                  OfficeInfoItem(
-                                      title: 'الاتجاه',
-                                      value: context
-                                          .read<OfficesCubit>()
-                                          .state
-                                          .searchData!
-                                          .officeInterfaces
-                                          .firstWhereOrNull((interface) => interface.id == office.interfaceId)!
-                                          .arName),
+                                  if (office.interfaceId != null)
+                                    OfficeInfoItem(
+                                        title: 'الاتجاه',
+                                        value: context
+                                            .read<OfficesCubit>()
+                                            .state
+                                            .searchData!
+                                            .officeInterfaces
+                                            .firstWhereOrNull((interface) => interface.id == office.interfaceId)!
+                                            .arName),
                                 ],
                               ),
                             ),
