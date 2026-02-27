@@ -641,9 +641,9 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
           if (state.marketingRequestState == VisibilityStates.show || state.createdUnit != null) {
             navigateAfterSuccessStep(emit, event.index);
           } else {
-            // bool temp = false;
-            // temp = await verifyLicenseNumber(emit);
-            if (true) {
+            bool temp = false;
+            temp = await verifyLicenseNumber(emit);
+            if (temp) {
               navigateAfterSuccessStep(emit, event.index);
             }
           }
