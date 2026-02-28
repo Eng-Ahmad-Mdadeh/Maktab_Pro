@@ -152,6 +152,7 @@ class _OfficeSecondInfoStepState extends State<OfficeSecondInfoStep> {
                     return null;
                   },
                   onChanged: (value) {
+
                     context.read<OfficeBloc>().add(SetEquipmentEvent(value));
                   },
                 ),
