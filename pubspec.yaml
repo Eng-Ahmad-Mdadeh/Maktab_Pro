@@ -4,7 +4,7 @@ description: "تطبيق مكتب أعمال هو تطبيق يوفر خدمة �
 publish_to: 'none'
 
 
-version: 1.1.2+26
+version: 1.1.4+28
 
 environment:
   sdk: ^3.5.3

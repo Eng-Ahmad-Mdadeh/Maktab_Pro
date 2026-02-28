@@ -119,7 +119,7 @@ class OfficeRepository {
       "category_aqar_id": categoryId,
       "is_marketing": isMarketing ? 1 : 0,
     };
-    if (licenseNumber.isNotEmpty) {
+    if (licenseNumber!=null) {
       officeData['license_number'] = 0000000;
     }
     final result = await _officeRemoteDataSource.createOffice(officeData);
@@ -703,7 +703,8 @@ class OfficeRepository {
       "zoom": zoom,
       // "address": '$city, $neighborhood, $street',
       if (region == null) "address": '$city, $neighborhood, $street',
-      "region": region,
+      if (region != null) "region": region,
+      if (region == null) "region" : city,
       "city": city,
       "neighborhood": neighborhood,
       "street": street,

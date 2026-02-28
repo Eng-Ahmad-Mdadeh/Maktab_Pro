@@ -5,9 +5,44 @@ import 'package:maktab_lessor/presentation/widgets/maktab_switch.dart';
 import 'package:maktab_lessor/presentation/widgets/quantity_selector.dart';
 import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
-class OfficeSharedWorkSpacesSection extends StatelessWidget {
+class OfficeSharedWorkSpacesSection extends StatefulWidget {
   const OfficeSharedWorkSpacesSection({super.key});
 
+  @override
+  State<OfficeSharedWorkSpacesSection> createState() => _OfficeSharedWorkSpacesSectionState();
+}
+
+class _OfficeSharedWorkSpacesSectionState extends State<OfficeSharedWorkSpacesSection> {
+  late OfficeState state;
+
+  @override
+  void initState() {
+    state = context.read<OfficeBloc>().state;
+
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+
+    if ( state.createdUnit?.details!=null) {
+
+      if (state.createdUnit!.details.isNotEmpty && state.createdUnit!.details.any((element) => element.arName=="مساحات عمل مشتركة",)) {
+
+        context.read<OfficeBloc>().add(ToggleSharedWorkSpacesSelectorEvent());
+        final adDetails = state.createdUnit!.details;
+
+
+        context.read<OfficeBloc>().add(IncreaseSharedWorkSpacesCountEvent(adDetails
+        .firstWhere(
+              (element) => element.arName == "مساحات عمل مشتركة",
+        )
+            .numberDetails
+            .toInt(),true));
+      }
+    }
+    super.didChangeDependencies();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OfficeBloc, OfficeState>(
@@ -35,7 +70,7 @@ class OfficeSharedWorkSpacesSection extends StatelessWidget {
               : false,
           increaseOnPressed: () => context
               .read<OfficeBloc>()
-              .add(IncreaseSharedWorkSpacesCountEvent(state.sharedWorkSpaces)),
+              .add(IncreaseSharedWorkSpacesCountEvent(state.sharedWorkSpaces,false)),
           decreaseOnPressed: () => context
               .read<OfficeBloc>()
               .add(DecreaseSharedWorkSpacesCountEvent(state.sharedWorkSpaces)),

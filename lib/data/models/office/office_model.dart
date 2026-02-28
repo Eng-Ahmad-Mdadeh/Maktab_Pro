@@ -167,7 +167,7 @@ class Office extends Equatable {
       title: json["title"],
       propertyAgeId: json["property_age_id"],
       refNumber: json["ref_number"].toString(),
-      licenseNumber: json["license_number"].toString(),
+      licenseNumber:json["license_number"]?.toString(),
       viewerName: json["viewer_name"],
       viewerPhone: json["viewer_phone"],
       mainImage: json["main_image"] != null ? ApiEndpoints.siteUrl + json["main_image"] : json["main_image"],

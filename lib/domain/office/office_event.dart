@@ -56,6 +56,12 @@ final class SetCreateAdEvent extends OfficeEvent {
 
 final class AddMarketingRequestEvent extends OfficeEvent {}
 
+final class SetOfficeTypesEvent extends OfficeEvent {
+  final OfficeTypes type;
+
+  const SetOfficeTypesEvent(this.type);
+}
+
 final class SetOfficeNameEvent extends OfficeEvent {
   final String name;
 
@@ -186,8 +192,9 @@ final class ToggleTablesCountSelectorEvent extends OfficeEvent {}
 
 final class IncreaseTablesCountEvent extends OfficeEvent {
   int count;
+  bool isSet;
 
-  IncreaseTablesCountEvent(this.count);
+  IncreaseTablesCountEvent(this.count, this.isSet);
 }
 
 final class DecreaseTablesCountEvent extends OfficeEvent {
@@ -200,8 +207,9 @@ final class ToggleSharedWorkSpacesSelectorEvent extends OfficeEvent {}
 
 final class IncreaseSharedWorkSpacesCountEvent extends OfficeEvent {
   int count;
+  bool isSet;
 
-  IncreaseSharedWorkSpacesCountEvent(this.count);
+  IncreaseSharedWorkSpacesCountEvent(this.count, this.isSet);
 }
 
 final class DecreaseSharedWorkSpacesCountEvent extends OfficeEvent {

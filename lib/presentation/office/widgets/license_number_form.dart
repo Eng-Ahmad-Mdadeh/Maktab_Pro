@@ -57,7 +57,7 @@ class _LicenseNumberFormState extends State<LicenseNumberForm> {
                 if (value!.isEmpty) {
                   return 'الرجاء ادخال رقم الرخصة';
                 } else if (value.length < 10) {
-                  return 'يجب أن يكون عشر أرقام';
+                  return 'يجب أن يكون عشرة أرقام';
                 }
                 return null;
               },

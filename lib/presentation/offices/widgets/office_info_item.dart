@@ -37,7 +37,7 @@ class OfficeInfoItem extends StatelessWidget {
                   )
                 : Padding(
                     padding: EdgeInsets.only(right: 15.h),
-                    child: valueWidget!,
+                    child: valueWidget,
                   ),
           ),
         ],

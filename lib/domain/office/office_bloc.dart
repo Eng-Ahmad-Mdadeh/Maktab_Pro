@@ -252,6 +252,9 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
     on<AddMarketingRequestEvent>((event, emit) {
       _toggleAddingMarketingRequest(emit);
     });
+    on<SetOfficeTypesEvent>((event, emit) {
+      emit(state.copyWith(officeType: event.type));
+    });
     on<SetOfficeNameEvent>((event, emit) {
       state.name = event.name.length >= 4 ? event.name : '';
       emit(state.copyWith(isStepCompleted: checkIfOfficeFirstInfoStepCompleted()));
@@ -393,7 +396,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
       emit(state.copyWith(isStepCompleted: checkIfOfficeDetailsStepCompleted()));
     });
     on<IncreaseTablesCountEvent>((event, emit) {
-      state.detailsMap['tablescount'] = ++event.count;
+      state.detailsMap['tablescount'] = event.isSet ? event.count : ++event.count;
       emit(state.copyWith(tablesCount: state.detailsMap['tablescount']));
       emit(state.copyWith(isStepCompleted: checkIfOfficeDetailsStepCompleted()));
     });
@@ -417,7 +420,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
       emit(state.copyWith(isStepCompleted: checkIfOfficeDetailsStepCompleted()));
     });
     on<IncreaseSharedWorkSpacesCountEvent>((event, emit) {
-      state.detailsMap['sharedworkspacescount'] = ++event.count;
+      state.detailsMap['sharedworkspacescount'] = event.isSet ? event.count : ++event.count;
       emit(state.copyWith(sharedWorkSpaces: state.detailsMap['sharedworkspacescount']));
       emit(state.copyWith(isStepCompleted: checkIfOfficeDetailsStepCompleted()));
     });
@@ -700,18 +703,20 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
         case 3:
           bool temp1 = false;
           bool temp2 = true;
+          bool temp3 = true;
           temp1 = await updateOfficeDetails(emit);
           if (state.licenseOfficeState == VisibilityStates.hide) {
             temp2 = await updateInfo(emit);
           }
-          // if (state.createdUnit?.facilities.isEmpty && state.facilities.isNotEmpty) {
-          //   temp2 = await updateFacilities(emit);
-          // } else {
+          if ( state.facilities.isNotEmpty) {
+            temp3 = await updateFacilities(emit);
+          }
+          // else {
           //   if (!listEquals(state.createdUnit!.facilities.map((facility) => facility.id).toList(), state.facilities)) {
           //     temp2 = await updateFacilities(emit);
           //   }
           // }
-          if (temp1 && temp2) {
+          if (temp1 && temp2 && temp3) {
             navigateAfterSuccessStep(emit, event.index);
           }
           break;
@@ -950,9 +955,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
   }
 
   bool checkIfConfirmAddressStepCompleted() {
-    return state.city.isEmpty || state.neighborhood.isEmpty | state.street.isEmpty
-        ? false
-        : true;
+    return state.city.isEmpty || state.neighborhood.isEmpty | state.street.isEmpty ? false : true;
   }
 
   bool checkIfOfficePricesStepCompleted() {
@@ -1123,12 +1126,15 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
   }
 
   Future<bool> createOffice(Emitter emit) async {
+    print('111111111');
+    print(state.officeType);
+    print('111111111');
     emit(state.copyWith(officeApiCallState: OfficeApiCallState.loading));
     var result = await _officeRepository.createOffice(
       title: state.name,
       categoryId: state.categoryId,
-      isMarketing: state.officeType == OfficeTypes.request ? true : false,
-      licenseNumber: state.officeType == OfficeTypes.license ? state.licenseNumber : '',
+      isMarketing: state.officeType == OfficeTypes.request || state.licenseNumber == '' ? true : false,
+      licenseNumber: state.officeType == OfficeTypes.license ? state.licenseNumber : null,
     );
     return result.fold(
       (failure) {
@@ -1361,6 +1367,17 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
           }
         }
       }
+      if (state.createdUnit != null) {
+        for (OfficeDetail detail in state.createdUnit!.details) {
+          if (detail.enName == key) {
+            isExisting = true;
+            if (detail.numberDetails != value || state.verifyLicenseNumberModel != null) {
+              updatedDetails[key] = {detail.id: state.detailsMap[key]};
+            }
+            break;
+          }
+        }
+      }
       if (!isExisting) {
         newDetails[key] = value;
       }
@@ -1417,7 +1434,7 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
       (updatedUnit) async {
         emit(state.copyWith(
           officeApiCallState: OfficeApiCallState.success,
-          createdUnit: state.createdUnit!.copyWith(facilities: updatedUnit!.facilities),
+          // createdUnit: state.createdUnit!.copyWith(facilities: updatedUnit!.facilities),
         ));
         return true;
       },

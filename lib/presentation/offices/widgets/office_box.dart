@@ -157,9 +157,9 @@ class OfficeBox extends StatelessWidget {
                               },
                               infoWidget: Column(
                                 children: [
-                                  OfficeInfoItem(title: 'المدينة', value: office.location!.city),
-                                  OfficeInfoItem(title: 'الحي', value: office.location!.neighborhood),
-                                  OfficeInfoItem(title: 'الشارع', value: office.location!.street),
+                                  OfficeInfoItem(title: 'المدينة', value: office.location?.city),
+                                  OfficeInfoItem(title: 'الحي', value: office.location?.neighborhood),
+                                  OfficeInfoItem(title: 'الشارع', value: office.location?.street),
                                   if (office.interfaceId != null)
                                     OfficeInfoItem(
                                         title: 'الاتجاه',
@@ -208,6 +208,23 @@ class OfficeBox extends StatelessWidget {
                                     title: 'عمر المكتب',
                                     value: office.propertyAge?.nameAr,
                                   ),
+
+                                  OfficeInfoItem(
+                                    title: 'المساحة',
+                                    value: office.space.toString(),
+                                  ),
+                                  OfficeInfoItem(
+                                    title: 'عرض الشارع',
+                                    value: office.width.toString(),
+                                  ),
+                                  OfficeInfoItem(
+                                    title: 'التجهيز',
+                                    value: office.furnisher,
+                                  ),
+                                  OfficeInfoItem(
+                                    title: 'التجهيز',
+                                    value: office.furnisher,
+                                  ),
                                   // if (office.details
                                   //         .firstWhereOrNull((detail) => detail.arName == 'عدد المكاتب') !=
                                   //     null)
@@ -222,6 +239,22 @@ class OfficeBox extends StatelessWidget {
                               ),
                             ),
                             SizedBox(height: 20.h),
+                            if (office.prices.isNotEmpty)...[
+                              OfficeInfoBox(
+                                title: 'السعر',
+                                enableEdit: false,
+                                editOnTap: () => context.pushNamed(AppRoutes.updateUnitPricesScreen, extra: office),
+                                infoWidget: Column(
+                                  children: [
+                                    OfficeInfoItem(
+                                      title: 'السعر',
+                                      value: office.prices.first.price.toString() ?? '',
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            SizedBox(height: 20.h),
+                            ],
                             OfficeInfoBox(
                               title: 'وصف وحدتك',
                               enableEdit: true,

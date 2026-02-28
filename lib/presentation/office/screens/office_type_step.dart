@@ -17,6 +17,25 @@ class OfficeTypeStep extends StatefulWidget {
 }
 
 class _OfficeTypeStepState extends State<OfficeTypeStep> {
+  late OfficeState state;
+
+  @override
+  void initState() {
+    state = context.read<OfficeBloc>().state;
+
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if ((state.licenseNumber.isEmpty || state.licenseNumber == '') && state.createdUnit != null) {
+      context.read<OfficeBloc>().add(const SetOfficeTypesEvent(OfficeTypes.request));
+      print('!!!!!!');
+      print(state.officeType);
+      print('!!!!!!');
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +48,13 @@ class _OfficeTypeStepState extends State<OfficeTypeStep> {
                 title: state.officeType == OfficeTypes.none
                     ? 'يرجى اختيار نوع الإعلان (النوع اجباري)'
                     : state.createdOffice != null
-                    ? 'لا يمكنك تعديل هذه الخطوة بعد حفظها'
-                    : 'يرجى اختيار نوع الإعلان ',
+                        ? 'لا يمكنك تعديل هذه الخطوة بعد حفظها'
+                        : 'يرجى اختيار نوع الإعلان ',
                 textColor: state.officeType == OfficeTypes.none
                     ? AppColors.cherryRed
                     : state.createdOffice != null
-                    ? AppColors.cherryRed
-                    : AppColors.black,
+                        ? AppColors.cherryRed
+                        : AppColors.black,
               );
             },
           ),
