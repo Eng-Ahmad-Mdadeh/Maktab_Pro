@@ -39,14 +39,14 @@ class _OfficeTypeStepState extends State<OfficeTypeStep> {
                 alignment: AlignmentDirectional.centerEnd,
                 child: InkWell(
                   onTap: () => Navigator.of(dialogContext).pop(),
-                  child: const Icon(Icons.close, color: AppColors.steelGray),
+                  child: const Icon(Icons.close, color: AppColors.gray),
                 ),
               ),
               SizedBox(height: 8.v),
               const Text(
                 'لا يمكن التحقق من الرخصة قبل إكمال رقم رخصة\nالوساطة في بيانات الحساب',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 24, color: AppColors.steelGray),
+                style: TextStyle(fontSize: 24, color: AppColors.gray),
               ),
               SizedBox(height: 24.v),
               Text(
@@ -58,8 +58,8 @@ class _OfficeTypeStepState extends State<OfficeTypeStep> {
                 children: [
                   Expanded(
                     child: MaktabButton(
-                      title: 'تعديل',
-                      buttonColor: AppColors.emeraldTeal,
+                      text: 'تعديل',
+                      color: AppColors.emeraldTeal,
                       onPressed: () {
                         Navigator.of(dialogContext).pop();
                       },
@@ -71,7 +71,7 @@ class _OfficeTypeStepState extends State<OfficeTypeStep> {
                       onPressed: () => Navigator.of(dialogContext).pop(),
                       style: OutlinedButton.styleFrom(
                         foregroundColor: AppColors.black,
-                        side: const BorderSide(color: AppColors.steelGray),
+                        side: const BorderSide(color: AppColors.gray),
                         minimumSize: Size(double.infinity, 54.v),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                       ),
