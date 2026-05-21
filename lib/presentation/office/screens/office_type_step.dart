@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:maktab_lessor/core/helpers/size_helper.dart';
+import 'package:maktab_lessor/core/router/app_routes.dart';
 import 'package:maktab_lessor/domain/office/office_bloc.dart';
 import 'package:maktab_lessor/presentation/office/widgets/adding_licensed_office_section.dart';
 import 'package:maktab_lessor/presentation/office/widgets/adding_marketing_request_section.dart';
 import 'package:maktab_lessor/presentation/resources/app_colors.dart';
+import 'package:maktab_lessor/presentation/widgets/body_text.dart';
 import 'package:maktab_lessor/presentation/widgets/section_title.dart';
 
 import '../../widgets/maktab_button.dart';
@@ -19,9 +22,12 @@ class OfficeTypeStep extends StatefulWidget {
 class _OfficeTypeStepState extends State<OfficeTypeStep> {
   late OfficeState state;
 
-  bool _isMarketingLicenseMismatchError(String message) {
-    if (message.isEmpty) return false;
-    return message.contains('MARKETING_LICENSE_MISMATCH');
+  bool _isMarketingLicenseMismatchError(OfficeState state) {
+    if (state.errorKeyMessage.isNotEmpty) {
+      return state.errorKeyMessage == 'MARKETING_LICENSE_MISMATCH';
+    }
+    if (state.imagesErrorMessage.isEmpty) return false;
+    return state.imagesErrorMessage.contains('MARKETING_LICENSE_MISMATCH');
   }
 
   void _showMarketingLicenseMismatchDialog(BuildContext context, String licenseNumber) {
@@ -43,15 +49,14 @@ class _OfficeTypeStepState extends State<OfficeTypeStep> {
                 ),
               ),
               SizedBox(height: 8.v),
-              const Text(
-                'لا يمكن التحقق من الرخصة قبل إكمال رقم رخصة\nالوساطة في بيانات الحساب',
+              const BodyText(
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 24, color: AppColors.gray),
+                text: 'لا يمكن التحقق من الرخصة قبل إكمال رقم رخصة الوساطة في بيانات الحساب',
+                textColor: AppColors.black2,
               ),
               SizedBox(height: 24.v),
-              Text(
-                licenseNumber,
-                style: const TextStyle(fontSize: 28, color: AppColors.black, fontWeight: FontWeight.w500),
+              SectionTitle(
+                title: licenseNumber,
               ),
               SizedBox(height: 28.v),
               Row(
@@ -59,26 +64,25 @@ class _OfficeTypeStepState extends State<OfficeTypeStep> {
                   Expanded(
                     child: MaktabButton(
                       text: 'تعديل',
-                      color: AppColors.emeraldTeal,
+                      backgroundColor: AppColors.emeraldTeal,
+                      color: AppColors.white,
                       onPressed: () {
-                        Navigator.of(dialogContext).pop();
+                        context.pushNamed(AppRoutes.editProfileScreen, extra: true);
+                        context.pop();
                       },
                     ),
                   ),
                   SizedBox(width: 12.h),
                   Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => Navigator.of(dialogContext).pop(),
-                      style: OutlinedButton.styleFrom(
-                        foregroundColor: AppColors.black,
-                        side: const BorderSide(color: AppColors.gray),
-                        minimumSize: Size(double.infinity, 54.v),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-                      ),
-                      child: const Text(
-                        'CANCEL',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                      ),
+                    child: MaktabButton(
+                      text: 'رجوع',
+                      isBordered: true,
+                      backgroundColor: AppColors.white,
+                      borderColor: AppColors.black,
+                      color: AppColors.black,
+                      onPressed: () {
+                        context.pop();
+                      },
                     ),
                   ),
                 ],
@@ -112,10 +116,13 @@ class _OfficeTypeStepState extends State<OfficeTypeStep> {
   Widget build(BuildContext context) {
     return BlocListener<OfficeBloc, OfficeState>(
       listenWhen: (previous, current) =>
-          previous.imagesErrorMessage != current.imagesErrorMessage &&
-          _isMarketingLicenseMismatchError(current.imagesErrorMessage),
+          (previous.imagesErrorMessage != current.imagesErrorMessage ||
+              previous.errorKeyMessage != current.errorKeyMessage) &&
+          _isMarketingLicenseMismatchError(current),
       listener: (context, state) {
-        _showMarketingLicenseMismatchDialog(context, state.licenseNumber);
+        if (state.errorKeyMessage == "MARKETING_LICENSE_MISMATCH") {
+          _showMarketingLicenseMismatchDialog(context, state.licenseNumber);
+        }
       },
       child: SingleChildScrollView(
         child: Column(

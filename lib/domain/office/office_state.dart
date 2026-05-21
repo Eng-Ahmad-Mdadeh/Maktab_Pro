@@ -63,6 +63,7 @@ class OfficeState extends Equatable {
   Map<UniqueKey, String> selectedImagesMap;
   int selectedImagesCount;
   String imagesErrorMessage;
+  String errorKeyMessage;
   String selectedOfficeLicensingFile;
   String selectedBuildingLicesnsingFile;
   String selectedCivilDefenseFile;
@@ -141,6 +142,7 @@ class OfficeState extends Equatable {
     required this.selectedImagesMap,
     this.selectedImagesCount = -1,
     this.imagesErrorMessage = '',
+    this.errorKeyMessage = '',
     this.selectedOfficeLicensingFile = '',
     this.selectedBuildingLicesnsingFile = '',
     this.selectedCivilDefenseFile = '',
@@ -220,6 +222,7 @@ class OfficeState extends Equatable {
         selectedImagesCount,
     adsPrices,
         imagesErrorMessage,
+        errorKeyMessage,
         selectedOfficeLicensingFile,
         selectedBuildingLicesnsingFile,
         selectedBuildingLicesnsingFile,
@@ -300,6 +303,7 @@ class OfficeState extends Equatable {
     Map<UniqueKey, String>? selectedImagesMap,
     int? selectedImagesCount,
     String? imagesErrorMessage,
+    String? errorKeyMessage,
     String? selectedOfficeLicensingFile,
     String? selectedBuildingLicesnsingFile,
     String? selectedCivilDefenseFile,
@@ -379,6 +383,7 @@ class OfficeState extends Equatable {
       selectedImagesMap: selectedImagesMap ?? this.selectedImagesMap,
       selectedImagesCount: selectedImagesCount ?? this.selectedImagesCount,
       imagesErrorMessage: imagesErrorMessage ?? this.imagesErrorMessage,
+      errorKeyMessage: errorKeyMessage ?? this.errorKeyMessage,
       selectedOfficeLicensingFile: selectedOfficeLicensingFile ?? this.selectedOfficeLicensingFile,
       selectedBuildingLicesnsingFile: selectedBuildingLicesnsingFile ?? this.selectedBuildingLicesnsingFile,
       selectedCivilDefenseFile: selectedCivilDefenseFile ?? this.selectedCivilDefenseFile,
