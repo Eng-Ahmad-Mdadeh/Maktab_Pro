@@ -2,32 +2,33 @@
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
 
 class ApiException extends AppException {
-  ApiException(super.message);
+  final String? errorKey;
+
+  ApiException(super.message, {this.errorKey});
 
   @override
   String toString() => message;
 }
 
 class BadRequestException extends ApiException {
-  BadRequestException(String message) : super('BadRequestException: $message');
+  BadRequestException(String message, {String? errorKey}) : super('BadRequestException: $message', errorKey: errorKey);
 }
 
 class UnauthorizedException extends ApiException {
-  UnauthorizedException(String message)
-      : super('UnauthorizedException: $message');
+  UnauthorizedException(String message, {String? errorKey}) : super('UnauthorizedException: $message', errorKey: errorKey);
 }
 
 class ForbiddenException extends ApiException {
-  ForbiddenException(String message) : super('ForbiddenException: $message');
+  ForbiddenException(String message, {String? errorKey}) : super('ForbiddenException: $message', errorKey: errorKey);
 }
 
 class NotFoundException extends ApiException {
-  NotFoundException(String message) : super('NotFoundException: $message');
+  NotFoundException(String message, {String? errorKey}) : super('NotFoundException: $message', errorKey: errorKey);
 }
 
 class InternalServerErrorException extends ApiException {
-  InternalServerErrorException(String message)
-      : super('InternalServerErrorException: $message');
+  InternalServerErrorException(String message, {String? errorKey})
+      : super('InternalServerErrorException: $message', errorKey: errorKey);
 }
 
 class NoInternetConnectionException extends ApiException {

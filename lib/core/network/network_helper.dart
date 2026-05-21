@@ -130,7 +130,11 @@ class NetworkHelper {
         if ((bool.tryParse(response.data['status'].toString()) ?? false)) {
           return Right(response.data);
         } else {
-          return Left(_handleError(response.data['errNum'] ?? 0, response.data['message'] ?? ''));
+          return Left(_handleError(
+            response.data['errNum'] ?? 0,
+            response.data['message'] ?? '',
+            response.data['error_key'] ?? '',
+          ));
         }
       } catch (e, s) {
         log("E R O R R");
@@ -142,7 +146,11 @@ class NetworkHelper {
           print(e.response!.data["message"]);
           print(e.response?.statusCode);
           print('!!!!!!!!!!!!!!!!');
-          return Left(_handleError(e.response?.statusCode, e.response!.data["message"]));
+          return Left(_handleError(
+            e.response?.statusCode,
+            e.response!.data["message"],
+            e.response?.data["error_key"] ?? '',
+          ));
         }
         return Left(ApiException('أعد المحاولة'));
       }
@@ -155,20 +163,20 @@ class NetworkHelper {
     return await locator<UserLocalDataSource>().getUserToken();
   }
 
-  ApiException _handleError(statusCode, message) {
+  ApiException _handleError(statusCode, message, [String? errorKey]) {
     switch (statusCode) {
       case "400":
-        return BadRequestException(message);
+        return BadRequestException(message, errorKey: errorKey);
       case "401":
-        return UnauthorizedException(message);
+        return UnauthorizedException(message, errorKey: errorKey);
       case "403":
-        return ForbiddenException(message);
+        return ForbiddenException(message, errorKey: errorKey);
       case "404":
-        return NotFoundException(message);
+        return NotFoundException(message, errorKey: errorKey);
       case "500":
-        return InternalServerErrorException(message);
+        return InternalServerErrorException(message, errorKey: errorKey);
       default:
-        return ApiException(message ?? 'خطأ غير معروف');
+        return ApiException(message ?? 'خطأ غير معروف', errorKey: errorKey);
     }
   }
 
