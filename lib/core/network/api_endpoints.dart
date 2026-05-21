@@ -1,8 +1,8 @@
 class ApiEndpoints {
   //Base URL
   // static const siteUrl = 'https://dev.maktab.sa/';
-  static const siteUrl = 'https://maktab.sa/';
-  static const baseUrl = 'https://maktab.sa/apiBack/v1/user/';
+  static const siteUrl = 'https://backend.maktab.sa/';
+  static const baseUrl = 'https://backend.maktab.sa/apiBack/v1/user/';
   // static const baseUrl = 'https://dev.maktab.sa/apiBack/v1/user/';
   //Auth
   static const login = "login";

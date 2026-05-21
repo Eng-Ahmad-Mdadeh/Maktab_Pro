@@ -180,6 +180,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
                   ),
                   SizedBox(height: 20.v),
                   MaktabTextFormField(
+                    readOnly: true,
                     title: 'رقم الهوية / الإقامة',
                     controller: identityNumberController,
                     textInputType: TextInputType.number,

@@ -14,6 +14,7 @@ class AppAssets {
   static String logoStarsTech = 'assets/images/logoStarsTech.png';
   static String soon = '$imagePath/soon.svg';
   static String soonJpg = '$imagePath/soon.jpg';
+  static String maktabFal = '$imagePath/maktab_fal.png';
 
   static String viewListDetails = '$imagePath/view-list-details.svg';
   static String printer = '$imagePath/printer.svg';
