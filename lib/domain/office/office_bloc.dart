@@ -8,6 +8,7 @@ import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maktab_lessor/core/classes/exception/app_exception.dart';
+import 'package:maktab_lessor/core/classes/exception/api_exceptions.dart';
 import 'package:maktab_lessor/core/helpers/file_picker_helper.dart';
 import 'package:maktab_lessor/core/helpers/image_cropper_helper.dart';
 import 'package:maktab_lessor/core/helpers/location_helper.dart';
@@ -1098,9 +1099,13 @@ class OfficeBloc extends Bloc<OfficeEvent, OfficeState> {
       );
       return result.fold(
         (failure) {
+          final String errorMessage =
+              failure is ApiException && (failure.errorKey?.isNotEmpty ?? false)
+                  ? failure.errorKey!
+                  : failure.message;
           emit(state.copyWith(
             officeApiCallState: OfficeApiCallState.failure,
-            imagesErrorMessage: failure.message,
+            imagesErrorMessage: errorMessage,
             createdOffice: null,
           ));
           emit(state.copyWith(imagesErrorMessage: ''));
