@@ -185,10 +185,10 @@ class _OfficeUnitPricesStepState extends State<OfficeUnitPricesStep> {
           //       ),
           //       MaktabTextFormField(
           //         controller: _viewerNameController,
-          //         title: 'اسم المعاين',
+          //         title: 'اسم المعلن',
           //         validator: (value) {
           //           if (value!.isEmpty) {
-          //             return 'الرجاء ادخال اسم المعاين';
+          //             return 'الرجاء ادخال اسم المعلن';
           //           }
           //           return null;
           //         },
@@ -218,7 +218,7 @@ class _OfficeUnitPricesStepState extends State<OfficeUnitPricesStep> {
                   controller: _officePriceController,
                 ),
                 SizedBox(height: 20.v),
-                OfficeDepositFormField(),
+                const OfficeDepositFormField(),
                 SizedBox(height: 20.v),
               ],
             ),
@@ -228,10 +228,10 @@ class _OfficeUnitPricesStepState extends State<OfficeUnitPricesStep> {
             return state.licenseOfficeState == VisibilityStates.show
                 ? MaktabTextFormField(
                     controller: _viewerNameController,
-                    title: 'اسم المعاين',
+                    title: 'اسم المعلن',
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'الرجاء ادخال اسم المعاين';
+                        return 'الرجاء ادخال اسم المعلن';
                       }
                       return null;
                     },

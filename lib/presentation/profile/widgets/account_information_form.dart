@@ -49,7 +49,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
   late TextEditingController phoneController;
   late TextEditingController aboutController;
 
-  late TextEditingController licenseLinkController;
+  // late TextEditingController licenseLinkController;
   late TextEditingController licenseNumberController;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -67,7 +67,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
     commercialRecordController = TextEditingController(text: user?.commercialRecord ?? '');
     phoneController = TextEditingController(text: user?.phone ?? '');
     aboutController = TextEditingController(text: user?.about ?? '');
-    licenseLinkController = TextEditingController(text: user?.licenseLink ?? '');
+    // licenseLinkController = TextEditingController(text: user?.licenseLink ?? '');
     licenseNumberController = TextEditingController(text: user?.licenseNumber ?? '');
     super.initState();
   }
@@ -85,13 +85,19 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   MaktabTextFormField(
-                    title: 'اسم المستخدم',
+                    title: state.selectedAccountTypeIndex == 1
+                        ? 'اسم منشئ الإعلان الكامل'
+                        : state.selectedAccountTypeIndex == 2
+                            ? 'اسم المعلن الكامل'
+                            : state.selectedAccountTypeIndex == 2
+                                ? 'اسم المالك الكامل'
+                                : 'اسم المستخدم',
                     controller: userNameController,
                     textInputType: TextInputType.name,
-                    hintText: 'أدخل اسم المستخدم',
+                    hintText: 'أدخل اسم منشئ الإعلان الكامل',
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'الرجاء ادخال اسم المستخدم';
+                        return 'الرجاء ادخال اسم منشئ الإعلان الكامل';
                       }
                       return null;
                     },
@@ -233,7 +239,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
                   SizedBox(height: 25.v),
                   const LicenseOption(),
                   LicenseTextFields(
-                    licenseLinkController: licenseLinkController,
+                    // licenseLinkController: licenseLinkController,
                     licenseNumberController: licenseNumberController,
                   ),
                   SizedBox(height: 25.v),
@@ -263,7 +269,7 @@ class _AccountInformationFormState extends State<AccountInformationForm> {
                                 state.selectedAccountTypeIndex,
                                 state.pickedImage,
                                 licenseNumberController.text,
-                                licenseLinkController.text));
+                                ));
                           }
                         },
                       ),

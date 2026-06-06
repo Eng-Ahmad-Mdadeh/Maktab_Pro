@@ -30,7 +30,7 @@ class _OfficeTypeStepState extends State<OfficeTypeStep> {
     return state.imagesErrorMessage.contains('MARKETING_LICENSE_MISMATCH');
   }
 
-  void _showMarketingLicenseMismatchDialog(BuildContext context, String licenseNumber) {
+  void _showMarketingLicenseMismatchDialog(BuildContext context, String licenseNumber, bool isCommercial) {
     showDialog<void>(
       context: context,
       barrierDismissible: true,
@@ -49,15 +49,22 @@ class _OfficeTypeStepState extends State<OfficeTypeStep> {
                 ),
               ),
               SizedBox(height: 8.v),
-              const BodyText(
-                textAlign: TextAlign.center,
-                text: 'لا يمكن التحقق من الرخصة قبل إكمال رقم رخصة الوساطة في بيانات الحساب',
-                textColor: AppColors.black2,
-              ),
-              SizedBox(height: 24.v),
-              SectionTitle(
-                title: licenseNumber,
-              ),
+              if (isCommercial)
+                const BodyText(
+                  textAlign: TextAlign.center,
+                  text: 'لا يمكن التحقق من الرخصة قبل إكمال رقم السجل التجاري في بيانات الحساب',
+                  textColor: AppColors.black2,
+                )
+              else
+                const BodyText(
+                  textAlign: TextAlign.center,
+                  text: 'لا يمكن التحقق من الرخصة قبل إكمال رقم رخصة الوساطة في بيانات الحساب',
+                  textColor: AppColors.black2,
+                ),
+              // SizedBox(height: 24.v),
+              // SectionTitle(
+              //   title: licenseNumber,
+              // ),
               SizedBox(height: 28.v),
               Row(
                 children: [
@@ -115,15 +122,21 @@ class _OfficeTypeStepState extends State<OfficeTypeStep> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<OfficeBloc, OfficeState>(
-      listenWhen: (previous, current) =>
-          (previous.imagesErrorMessage != current.imagesErrorMessage ||
-              previous.errorKeyMessage != current.errorKeyMessage) &&
-          _isMarketingLicenseMismatchError(current),
+      // listenWhen: (previous, current) =>
+      //     (previous.imagesErrorMessage != current.imagesErrorMessage ||
+      //         previous.errorKeyMessage != current.errorKeyMessage) &&
+      //     _isMarketingLicenseMismatchError(current),
       listener: (context, state) {
-        if (state.errorKeyMessage == "MARKETING_LICENSE_MISMATCH") {
-          _showMarketingLicenseMismatchDialog(context, state.licenseNumber);
+        if (state.errorKeyMessage == "MARKETING_LICENSE_MISMATCH" ||
+            state.errorKeyMessage == 'COMMERCIAL_REG_NO_NOT_LINKED') {
+          _showMarketingLicenseMismatchDialog(
+            context,
+            state.licenseNumber,
+            state.errorKeyMessage == 'COMMERCIAL_REG_NO_NOT_LINKED',
+          );
         }
       },
+
       child: SingleChildScrollView(
         child: Column(
           children: [

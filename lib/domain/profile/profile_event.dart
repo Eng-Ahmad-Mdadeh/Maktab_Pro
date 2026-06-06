@@ -28,7 +28,6 @@ class UpdateProfileEvent extends ProfileEvent {
   final int typeId;
   final String? image;
   final String? licenseNumber;
-  final String? licenseLink;
 
 
   const UpdateProfileEvent(
@@ -46,7 +45,7 @@ class UpdateProfileEvent extends ProfileEvent {
       this.typeId,
       this.image,
       this.licenseNumber,
-      this.licenseLink);
+    );
 }
 
 class PickImageEvent extends ProfileEvent {

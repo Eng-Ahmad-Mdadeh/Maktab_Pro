@@ -100,10 +100,10 @@ class NotificationsScreen extends StatelessWidget {
 
                         child: const Icon(Icons.delete, color: AppColors.cherryRed),
                       ),
-                      BodyText(
-                        text: notification.createdAt!.dayFormatWithLocale('ar'),
-                        textColor: notification.seen ? AppColors.gray : null,
-                      ),
+                      // BodyText(
+                      //   text: notification.createdAt?.dayFormatWithLocale('ar'),
+                      //   textColor: notification.seen ? AppColors.gray : null,
+                      // ),
                     ],
                   ),
                   leading: SectionTitle(

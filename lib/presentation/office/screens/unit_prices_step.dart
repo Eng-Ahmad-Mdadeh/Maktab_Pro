@@ -108,10 +108,10 @@ class _UnitPricesStepState extends State<UnitPricesStep> {
                 ),
                 MaktabTextFormField(
                   controller: _viewerNameController,
-                  title: 'اسم المعاين',
+                  title: 'اسم المعلن',
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'الرجاء ادخال اسم المعاين';
+                      return 'الرجاء ادخال اسم المعلن';
                     }
                     return null;
                   },

@@ -37,7 +37,6 @@ class ProfileRepository {
     String? idNumber,
     String? commercialRecord,
     String? licenseNumber,
-    String? licenseLink,
     String? phone,
     String? about,
     int? typeId,
@@ -51,7 +50,6 @@ class ProfileRepository {
       if ((neighborhood??'').isNotEmpty) "neighborhood": neighborhood,
       if ((about??'').isNotEmpty) "about": about,
       if ((licenseNumber??'').isNotEmpty) "license_number": licenseNumber,
-      if ((licenseLink??'').isNotEmpty) "licenseLink": licenseLink,
       if (typeId != null) "type_id": typeId,
     };
     if (commercialRecord != '') {

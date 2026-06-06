@@ -37,6 +37,12 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return BlocConsumer<SplashBloc, SplashState>(
       listener: (context, state) async {
+        print('!!!!!!!!!!!!');
+        print('!!!!!!!!!!!!');
+        print('!!!!!!!!!!!!');
+        print('!!!!!!!!!!!!');
+        print('!!!!!!!!!!!!');
+        print('!!!!!!!!!!!!');
         if (state is NavigationToIntroScreenState) {
           context.pushReplacement(AppRoutes.introScreen);
         } else if (state is NavigationToHomeScreenState) {
@@ -80,6 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
               }
             });
           }
+
         } else if (state is NavigationToEditProfileScreen) {
           MaktabSnackbar.showWarning(context, "الرجاء اكمال الملف الشخصي");
           //context.pushReplacement(AppRoutes.homeScreen);

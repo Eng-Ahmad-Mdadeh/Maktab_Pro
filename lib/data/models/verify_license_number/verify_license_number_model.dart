@@ -46,6 +46,7 @@ class VerifyLicenseNumberModel extends Equatable {
   final int? propertyAgeId;
   final int? streetWidth;
   final String? transactionType;
+
   // final num? price;
   final String? advertiserId;
   final String? advertiserType;
@@ -98,7 +99,7 @@ class VerifyLicenseNumberModel extends Equatable {
           json["type_aqars"] == null ? [] : List<TypeAquar>.from(json["type_aqars"]!.map((x) => TypeAquar.fromJson(x))),
       // typeAqar: json["type_aqar"] == null ? null : EAqar.fromJson(json["type_aqar"]),
       propertyAge: json["property_age"] == null ? null : PropertyAge.fromJson(json["property_age"]),
-        adsPrices: json["ads_prices"] == null
+      adsPrices: json["ads_prices"] == null
           ? []
           : List<OfficePrice>.from(json["ads_prices"]!.map((x) => OfficePrice.fromJson(x))),
     );
@@ -359,8 +360,17 @@ class Pivot extends Equatable {
 
   factory Pivot.fromJson(Map<String, dynamic> json) {
     return Pivot(
-      adId: json["ad_id"],
-      propertyUtilityId: json["property_utility_id"],
+      adId: json["ad_id"] != null && json["ad_id"] is String
+          ? int.parse(json["ad_id"])
+          : json["ad_id"] is int
+              ? json["ad_id"]
+              : null,
+      // propertyUtilityId: json["property_utility_id"],
+      propertyUtilityId:  json["property_utility_id"] != null && json["property_utility_id"] is String
+          ? int.parse(json["property_utility_id"])
+          : json["property_utility_id"] is int
+          ? json["property_utility_id"]
+          : null,
     );
   }
 

@@ -12,11 +12,11 @@ import 'package:maktab_lessor/presentation/widgets/maktab_text_form_field.dart';
 class LicenseTextFields extends StatelessWidget {
   const LicenseTextFields({
     super.key,
-    required this.licenseLinkController,
+    // required this.licenseLinkController,
     required this.licenseNumberController,
   });
 
-  final TextEditingController licenseLinkController;
+  // final TextEditingController licenseLinkController;
   final TextEditingController licenseNumberController;
 
   @override

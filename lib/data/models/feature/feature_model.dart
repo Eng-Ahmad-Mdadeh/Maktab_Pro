@@ -35,14 +35,12 @@ import 'package:maktab_lessor/core/network/api_endpoints.dart';
 class Feature extends Equatable {
   const Feature({
     this.id,
-    this.status,
     this.arName,
     this.enName,
     this.icon,
   });
 
   final int? id;
-  final num? status;
   final String? arName;
   final String? enName;
   final String? icon;
@@ -50,7 +48,6 @@ class Feature extends Equatable {
   factory Feature.fromJson(Map<String, dynamic> json) {
     return Feature(
       id: json["id"],
-      status: json["status"],
       arName: json["ar_name"],
       enName: json["en_name"],
       icon: "${ApiEndpoints.siteUrl}/${json["icon"]}",
@@ -59,7 +56,6 @@ class Feature extends Equatable {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "status": status,
         "ar_name": arName,
         "en_name": enName,
         "icon": icon,
@@ -68,7 +64,6 @@ class Feature extends Equatable {
   @override
   List<Object?> get props => [
         id,
-        status,
         arName,
         enName,
         icon,

@@ -45,7 +45,7 @@ class _LicenseNumberFormState extends State<LicenseNumberForm> {
             key: _licenseNumberFormKey,
             child: MaktabTextFormField(
               controller: _licenseNumberController,
-              title: 'رقم الرخصة:',
+              title: 'رقم رخصة الإعلان العقاري:',
               hintText: 'يرجى ادخال رقم رخصة اعلان صحيح يبدأ برقم 7',
               textInputType: TextInputType.number,
               readOnly: context.read<OfficeBloc>().state.createdOffice != null,

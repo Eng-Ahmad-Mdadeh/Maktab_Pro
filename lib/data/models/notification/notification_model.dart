@@ -25,7 +25,7 @@ class NotificationModel extends Equatable {
   final bool seen;
   final String? url;
   final String? receiverAdmin;
-  final String? receiverUser;
+  final int? receiverUser;
   final String? receiverOrdinary;
   final DateTime? createdAt;
 
@@ -39,7 +39,7 @@ class NotificationModel extends Equatable {
     bool? seen,
     String? url,
     String? receiverAdmin,
-    String? receiverUser,
+    int? receiverUser,
     String? receiverOrdinary,
     DateTime? createdAt,
   }) {

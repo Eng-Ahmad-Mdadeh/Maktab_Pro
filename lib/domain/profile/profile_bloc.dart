@@ -116,7 +116,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             commercialRecord: event.commercialRecord,
             image: event.image,
             licenseNumber: event.licenseNumber,
-            licenseLink: event.licenseLink);
+          );
         result.fold(
           (failure) {
             // log("error message:${failure.message}");
@@ -241,7 +241,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
     if (user.userName != '' &&
         user.email != '' &&
-        user.licenseLink != '' &&
         user.licenseNumber != '' &&
         user.city != '' &&
         user.neighborhood != '' &&
