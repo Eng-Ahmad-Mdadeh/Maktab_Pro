@@ -46,7 +46,6 @@ class AuthRepository {
         try {
           log('checkCode message');
           log(right.message?? 'Unknown error');
-          log(right.data['access_token'] ?? 'No Token');
           await _localDataSource.setUserToken(right.data['access_token']);
           return Right(right.message?? 'Unknown error');
         } catch (e, s) {
@@ -95,17 +94,15 @@ class AuthRepository {
 
   Future<bool> checkAuthentication() async {
     try {
+      if (await _localDataSource.getUserToken() == null) return false;
       bool logged = false;
       final result = await locator<ProfileRepository>().getProfile();
       logged = await result.fold(
         (l) async {
-          await _localDataSource.removeUserToken();
-          return false;
+          // Offline/5xx failures must not erase an otherwise recoverable session.
+          return (await _localDataSource.getUserToken()) != null;
         },
         (r) async {
-          String? token = await _localDataSource.getUserToken();
-          log("TOKEN IS HERE FROM STORAGE");
-          log(token.toString(), time: DateTime.now());
           return true;
         },
       );

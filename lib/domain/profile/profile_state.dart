@@ -51,7 +51,8 @@ class ProfileState extends Equatable {
   final String imageErrorMessage;
 
   @override
-  List<Object> get props => [
+  List<Object?> get props => [
+        user,
         profileState,
         message,
         pickedImage,
@@ -62,7 +63,8 @@ class ProfileState extends Equatable {
       ];
 
   ProfileState copyWith(
-      {ProfileStates? profileState,
+      {bool clearUser = false,
+      ProfileStates? profileState,
       User? user,
       List<UserType>? userTypes,
       String? message,
@@ -74,7 +76,7 @@ class ProfileState extends Equatable {
       FetchUserTypes? fetchingUserTypes}) {
     return ProfileState(
         profileState: profileState ?? this.profileState,
-        user: user ?? this.user,
+        user: clearUser ? null : (user ?? this.user),
         userTypes: userTypes ?? this.userTypes,
         message: message ?? this.message,
         pickedImage: pickedImage ?? this.pickedImage,

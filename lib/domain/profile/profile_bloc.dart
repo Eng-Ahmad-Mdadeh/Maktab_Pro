@@ -1,3 +1,4 @@
+import 'package:maktab_lessor/core/helpers/session_helper.dart';
 
 import 'dart:developer';
 
@@ -41,11 +42,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             fetchingUserTypes: FetchUserTypes.initial,
             logOutStates: LogOutStates.initial,
             imageErrorMessage: '')) {
+    on<ClearProfileEvent>((event, emit) {
+      emit(state.copyWith(clearUser: true, profileState: ProfileStates.initial,
+          pickedImage: '', message: '', isCompleted: false));
+    });
     on<GetProfileEvent>((event, emit) async {
+      final sessionRevision = SessionHelper.revision.value;
       emit(state.copyWith(profileState: ProfileStates.loading));
       // log(state.toString());
       try {
         var result = await _profileRepository.getProfile();
+        if (sessionRevision != SessionHelper.revision.value) return;
         result.fold(
           (failure) => emit(state.copyWith(
             profileState: ProfileStates.failure,
@@ -203,7 +210,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
           (response) {
             emit(state.copyWith(
               logOutStates: LogOutStates.success,
+              clearUser: true,
+              pickedImage: '',
             ));
+            SessionHelper.clearSession();
           },
         );
       } catch (e) {

@@ -8,6 +8,7 @@ class ApiEndpoints {
   static const login = "login";
   static const checkCode = "checkCode";
   static const changeCode = "changeCode";
+  static const refresh = "auth/refresh";
   static const logout = "logout";
   static const profile = "profile";
   static const deleteAccount = "/DeleteUser";

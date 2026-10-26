@@ -65,3 +65,5 @@ class SelectAccountTypeEvent extends ProfileEvent {
   @override
   List<Object> get props => [index];
 }
+
+class ClearProfileEvent extends ProfileEvent {}

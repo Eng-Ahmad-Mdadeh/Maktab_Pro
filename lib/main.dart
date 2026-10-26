@@ -1,3 +1,4 @@
+import 'package:maktab_lessor/core/helpers/session_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +42,10 @@ void main() async {
   await AppServices.initialServices();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
       overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
-  runApp(const MaktabApp());
+  runApp(ValueListenableBuilder<int>(
+    valueListenable: SessionHelper.revision,
+    builder: (context, revision, child) => MaktabApp(key: ValueKey(revision)),
+  ));
 }
 
 class MaktabApp extends StatelessWidget {
@@ -61,7 +65,7 @@ class MaktabApp extends StatelessWidget {
           BlocProvider<LocationBloc>(create: (context) => locator<LocationBloc>()),
           BlocProvider<OfficesCubit>(create: (context) => locator<OfficesCubit>()),
           BlocProvider<UnitBloc>(create: (context) => locator<UnitBloc>()),
-          BlocProvider<ProfileBloc>(create: (context) => locator<ProfileBloc>()),
+          BlocProvider<ProfileBloc>.value(value: locator<ProfileBloc>()),
           BlocProvider<ReceivingMethodBloc>(create: (context) => locator<ReceivingMethodBloc>()),
           BlocProvider<UserBloc>(create: (context) => locator<UserBloc>()),
           BlocProvider<CouponBloc>(create: (context) => locator<CouponBloc>()),

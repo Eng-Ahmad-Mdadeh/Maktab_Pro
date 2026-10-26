@@ -1,14 +1,17 @@
+import 'package:maktab_lessor/domain/profile/profile_bloc.dart';
 import 'dart:developer';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:maktab_lessor/core/classes/exception/api_exceptions.dart';
 import 'package:maktab_lessor/core/network/api_endpoints.dart';
 import 'package:maktab_lessor/core/services/service_locator.dart';
 import 'package:maktab_lessor/data/data_sources/local/user_local_data_source.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'auth_interceptor.dart';
+import '../helpers/session_helper.dart';
+import '../router/app_router.dart';
+import '../router/app_routes.dart';
 
 class NetworkHelper {
   late Dio _dio;
@@ -27,31 +30,31 @@ class NetworkHelper {
     );
 
     _dio = Dio(options);
-    dio.interceptors.add(
-      PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        responseHeader: false,
-        error: true,
-        compact: true,
-        maxWidth: 90,
-        enabled: kDebugMode,
-        filter: (options, args) {
-          // don't print requests with uris containing '/posts'
-          if (options.path.contains('/posts')) {
-            return false;
-          }
-          // don't print responses with unit8 list data
-          return !args.isResponse || !args.hasUint8ListData;
-        },
-      ),
-    );
-
     _dio.options.headers.addAll({
       'apiKey': 'XTK4qAkmbzrynAmh80rpCOqcZGXz6nNc',
       'Accept': 'application/json',
     });
+    final refreshDio = Dio(BaseOptions(
+      baseUrl: options.baseUrl,
+      connectTimeout: options.connectTimeout,
+      receiveTimeout: options.receiveTimeout,
+      headers: Map<String, dynamic>.from(_dio.options.headers),
+    ));
+    _dio.interceptors.add(AuthInterceptor(
+      dio: _dio,
+      refreshDio: refreshDio,
+      getToken: getToken,
+      saveToken: (oldToken, token, expiresIn) =>
+          locator<UserLocalDataSource>().replaceUserToken(oldToken, token, expiresIn),
+      onSessionExpired: (token) async {
+        if (await locator<UserLocalDataSource>().removeUserTokenIfMatches(token)) {
+          locator<ProfileBloc>().add(ClearProfileEvent());
+          SessionHelper.clearSession();
+          appRouter.go(AppRoutes.loginScreen);
+        }
+      },
+    ));
+
   }
 
   Dio get dio => _dio;
@@ -59,11 +62,8 @@ class NetworkHelper {
   Future<dynamic> get(String url, {Map<String, dynamic>? queryParams, bool googleApi = false}) async {
     log("____________________ get _______________________");
     log(url);
-    log(queryParams.toString());
     log("____________________ get _______________________");
     String? token = await getToken();
-    log("____________________ TOKEN ____________________");
-    log(token.toString());
     return _performRequest(
         googleApi: googleApi,
         () => _dio.get(
@@ -76,7 +76,6 @@ class NetworkHelper {
   Future<dynamic> post(String url, {dynamic data, List<Map<String, dynamic>>? files}) async {
     log("____________________ post _______________________");
     log(url);
-    log(data.toString());
     log("____________________ post _______________________");
     String? token = await getToken();
     FormData formData = FormData();
@@ -110,7 +109,6 @@ class NetworkHelper {
     log("____________________ delete _______________________");
     String? token = await getToken();
     log("REQUEST DATA");
-    log(data.toString());
     log("REQUEST URL");
     log(url.toString());
     return _performRequest(() => _dio.delete(
@@ -142,14 +140,11 @@ class NetworkHelper {
         log("S T A C K");
         log(s.toString());
         if (e is DioException) {
-          print('!!!!!!!!!!!!!!!!');
-          print(e.response!.data["message"]);
-          print(e.response?.statusCode);
-          print('!!!!!!!!!!!!!!!!');
+          final data = e.response?.data;
           return Left(_handleError(
             e.response?.statusCode,
-            e.response!.data["message"],
-            e.response?.data["error_key"] ?? '',
+            data is Map ? data['message'] : 'أعد المحاولة',
+            data is Map ? (data['error_key'] ?? data['code'] ?? '') : '',
           ));
         }
         return Left(ApiException('أعد المحاولة'));
@@ -164,7 +159,7 @@ class NetworkHelper {
   }
 
   ApiException _handleError(statusCode, message, [String? errorKey]) {
-    switch (statusCode) {
+    switch (statusCode?.toString()) {
       case "400":
         return BadRequestException(message, errorKey: errorKey);
       case "401":
