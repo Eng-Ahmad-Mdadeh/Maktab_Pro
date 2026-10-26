@@ -29,9 +29,9 @@ class NotificationService {
     pusher = PusherChannelsFlutter.getInstance();
     try {
       await pusher.init(
-        apiKey: 'ca0abe9343a3d7744c35',
-        authEndpoint: "https://maktab.sa",
-        cluster: 'eu',
+        apiKey: 'ed41791f7556c5bae990',
+        authEndpoint: "https://backend.maktab.sa",
+        cluster: 'ap1',
         onConnectionStateChange: (a, b) {
           log("pusher $a $b");
         },
@@ -43,12 +43,17 @@ class NotificationService {
       log("pusher methodChannel: ${pusher.methodChannel.name}");
 
       await pusher.subscribe(
-          channelName: 'channel_orders_business.$id',
+          channelName: 'channel_orders_business.${11}',
+          onSubscriptionError: (e){
+            print('111111111111111');
+            print(e);
+            print('111111111111111');
+          },
           onEvent: (event) {
             log("channel_orders_business NEW MESSAGE: $event");
             if (event?.eventName == 'event-business-orders') {
               log("event.data.runtimeType: ${event.data.runtimeType}");
-              showNotification(event?.data.toString() ?? '', 'channel_orders_business.$id');
+              showNotification(event?.data.toString() ?? '', 'channel_orders_business.${11}');
             }
           });
     } catch (e) {

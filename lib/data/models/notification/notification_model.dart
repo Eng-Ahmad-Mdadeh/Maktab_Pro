@@ -11,7 +11,6 @@ class NotificationModel extends Equatable {
     required this.seen,
     required this.url,
     required this.receiverAdmin,
-    required this.receiverUser,
     required this.receiverOrdinary,
     required this.createdAt,
   });
@@ -25,7 +24,6 @@ class NotificationModel extends Equatable {
   final bool seen;
   final String? url;
   final String? receiverAdmin;
-  final int? receiverUser;
   final String? receiverOrdinary;
   final DateTime? createdAt;
 
@@ -39,7 +37,6 @@ class NotificationModel extends Equatable {
     bool? seen,
     String? url,
     String? receiverAdmin,
-    int? receiverUser,
     String? receiverOrdinary,
     DateTime? createdAt,
   }) {
@@ -53,7 +50,6 @@ class NotificationModel extends Equatable {
       seen: seen ?? this.seen,
       url: url ?? this.url,
       receiverAdmin: receiverAdmin ?? this.receiverAdmin,
-      receiverUser: receiverUser ?? this.receiverUser,
       receiverOrdinary: receiverOrdinary ?? this.receiverOrdinary,
       createdAt: createdAt ?? this.createdAt,
     );
@@ -70,7 +66,6 @@ class NotificationModel extends Equatable {
       seen: json["seen"] == '1',
       url: json["url"],
       receiverAdmin: json["receiver_admin"],
-      receiverUser: json["receiver_user"],
       receiverOrdinary: json["receiver_ordinary"],
       createdAt: DateTime.tryParse(json["created_at"] ?? ""),
     );
@@ -86,17 +81,16 @@ class NotificationModel extends Equatable {
     "seen": seen,
     "url": url,
     "receiver_admin": receiverAdmin,
-    "receiver_user": receiverUser,
     "receiver_ordinary": receiverOrdinary,
     "created_at": createdAt?.toIso8601String(),
   };
 
   @override
   String toString(){
-    return "$id, $arTitle, $enTitle, $arBody, $enBody, $nameSender, $seen, $url, $receiverAdmin, $receiverUser, $receiverOrdinary, $createdAt, ";
+    return "$id, $arTitle, $enTitle, $arBody, $enBody, $nameSender, $seen, $url, $receiverAdmin, $receiverOrdinary, $createdAt, ";
   }
 
   @override
   List<Object?> get props => [
-    id, arTitle, enTitle, arBody, enBody, nameSender, seen, url, receiverAdmin, receiverUser, receiverOrdinary, createdAt, ];
+    id, arTitle, enTitle, arBody, enBody, nameSender, seen, url, receiverAdmin, receiverOrdinary, createdAt, ];
 }

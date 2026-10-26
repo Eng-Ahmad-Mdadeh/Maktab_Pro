@@ -64,7 +64,17 @@ class NotificationsScreen extends StatelessWidget {
                       }
                       context.read<ContractBloc>().add(GetContractEvent(id));
                       context.pushNamed(AppRoutes.contractScreen, extra: true);
-                    } else if (url.contains('reservations')) {
+                    }
+                   // else if (url.contains('offices')) {
+                   //
+                   //      // "url": "dashboard/contracts/custom-contracts-details/20",
+                   //      id = int.tryParse(url.split('/').last);
+                   //      log(url.split('/').last);
+                   //
+                   //    context.pushNamed(AppRoutes.contractScreen, extra: true);
+                   //  }
+
+                    else if (url.contains('reservations')) {
                       // "url": "/dashboard/reservations/20",
                       id = int.tryParse(url.split('/').last);
                       log(url.split('/').last);
